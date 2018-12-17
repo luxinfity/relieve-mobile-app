@@ -1,4 +1,4 @@
-package id.relieve.relieveapp
+package com.relieve.android
 
 import android.os.Bundle
 
