@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'view/home.dart';
+import 'screen/boarding/boarding_home.dart';
 
 void main() => runApp(MyApp());
 
