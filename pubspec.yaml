@@ -56,10 +56,15 @@ flutter:
     fonts:
       - family: CircularStd
         fonts:
-            - asset: fonts/circular-std-book.otf
+            - asset: fonts/circular-std-book.otf        
+              style: normal      
             - asset: fonts/circular-std-medium.otf
-            - asset: fonts/circular-std-black.otf
+              weight: 200
             - asset: fonts/circular-std-bold.otf
+              weight: 300
+            - asset: fonts/circular-std-black.otf
+              weight: 400
+            
     #
     # For details regarding fonts from package dependencies,
     # see https://flutter.io/custom-fonts/#from-packages
