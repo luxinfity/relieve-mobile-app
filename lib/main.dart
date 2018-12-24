@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'view/home.dart';
 import 'res/font.dart';
+import 'res/color.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Relieve ID',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: AppColor.colorPrimary,
+        primaryColorDark: AppColor.colorPrimaryDark,
+        accentColor: AppColor.colorAccent,
+        backgroundColor: Colors.white,
         fontFamily: CircularStdFont.name,
       ),
       home: MyHomePage(title: 'Relieve ID Home Page'),
