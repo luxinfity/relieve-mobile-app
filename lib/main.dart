@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.white,
                 fontFamily: CircularStdFont.name,
             ),
-            home: MyHomePage(title: 'Relieve ID Home Page'),
+            home: BoadingPage(title: 'Relieve ID Home Page'),
             onGenerateRoute: Application.router.generator,
         );
     }
