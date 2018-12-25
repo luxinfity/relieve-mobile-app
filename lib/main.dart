@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'screen/boarding/boarding.dart';
+import 'screen/boarding/boarding_home.dart';
 import 'config/route.dart';
 import 'config/application.dart';
 import 'res/font.dart';
