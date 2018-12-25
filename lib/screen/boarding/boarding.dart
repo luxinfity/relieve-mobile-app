@@ -16,9 +16,8 @@ class BoadingPage extends StatelessWidget {
             ),
             body: Column(
                 children: <Widget>[
-                    Image.asset(
-                        AppImage.boardingHome,
-                                             
+                    Image.network(
+                        RemoteImage.boardingHome,                                             
                     ),
                 ],
             ),

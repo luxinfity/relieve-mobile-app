@@ -1,4 +1,5 @@
-class AppImage {
-    static final boardingHome = 'images/boarding_landing.png';
-    static final boardingLogin = 'images/boarding_login.png';
+class RemoteImage {
+    static const base_url = 'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/';
+    static const boardingHome = base_url+'sketch-01.png';
+    static const boardingLogin = base_url+'sketch-02.png';
 }
