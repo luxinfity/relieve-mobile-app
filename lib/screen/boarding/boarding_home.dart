@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../res/color.dart';
-import '../../res/font.dart';
-import '../../res/image.dart';
+import '../../res/res.dart';
 import '../../widget/item/title.dart';
 
 class BoadingPage extends StatelessWidget {
@@ -23,12 +21,12 @@ class BoadingPage extends StatelessWidget {
                         color: AppColor.colorPrimary,
                         height: padding.top,
                     ),
-                    Container(height: 12),
+                    Container(height: Dimen.x12),
                     ThemedTitle(
                         title: "Home sweet home",
                         subtitle: ""
                     ),
-                    Container(height: 18),
+                    Container(height: Dimen.x18),
                     Expanded(
                         child: Image.network(
                             RemoteImage.boardingHome,
@@ -37,14 +35,14 @@ class BoadingPage extends StatelessWidget {
                     Container(
                         width: double.infinity,
                         margin: EdgeInsets.only(
-                            top: 21,
-                            left: 16,
-                            right: 16
+                            top: Dimen.x21,
+                            left: Dimen.x16,
+                            right: Dimen.x16
                         ),
                         child: RaisedButton(
                             child: Text('Login Now',
                                 style: CircularStdFont.getFont(
-                                    size: 14,
+                                    size: Dimen.x14,
                                     style: CircularStdFontStyle.Medium
                                 ).apply(
                                     color: Colors.white
@@ -57,20 +55,20 @@ class BoadingPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(4)
                             ),
                             padding: EdgeInsets.only(
-                                top: 16,
-                                bottom: 16,
+                                top: Dimen.x16,
+                                bottom: Dimen.x16,
                             ),
                             onPressed: () {
 
                             },
                         ),
                     ),
-                    Container(height: 8),
+                    Container(height: Dimen.x8),
                     Container(
                         margin: EdgeInsets.only(
-                            top: 6,
-                            left: 16,
-                            right: 16
+                            top: Dimen.x6,
+                            left: Dimen.x16,
+                            right: Dimen.x16
                         ),
                         child: RaisedButton(
                             child: Row(
@@ -84,7 +82,7 @@ class BoadingPage extends StatelessWidget {
                                         flex: 2,
                                         child: Text('Sign In With Google',
                                             style: CircularStdFont.getFont(
-                                                size: 14,
+                                                size: Dimen.x14,
                                                 style: CircularStdFontStyle.Medium
                                             ).apply(
                                                 color: Colors.white
@@ -100,21 +98,21 @@ class BoadingPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(4)
                             ),
                             padding: EdgeInsets.only(
-                                top: 13,
-                                bottom: 13,
+                                top: Dimen.x14,
+                                bottom: Dimen.x14,
                             ),
                             onPressed: () {
 
                             },
                         ),
                     ),
-                    Container(height: 16),
+                    Container(height: Dimen.x16),
                     Row (
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                             Text('Don’t have an account ?',
                                 style: CircularStdFont.getFont(
-                                    size: 14,
+                                    size: Dimen.x14,
                                     style: CircularStdFontStyle.Book
                                 ).apply(
                                     color: AppColor.colorTextGrey
@@ -123,7 +121,7 @@ class BoadingPage extends StatelessWidget {
                             FlatButton(
                                 child: Text('Register Here',
                                     style: CircularStdFont.getFont(
-                                        size: 14,
+                                        size: Dimen.x14,
                                         style: CircularStdFontStyle.Book
                                     ).apply(
                                         color: AppColor.colorPrimary
@@ -135,7 +133,7 @@ class BoadingPage extends StatelessWidget {
                             )
                         ],
                     ),
-                    Container(height: 24),
+                    Container(height: Dimen.x24),
                 ],
             ),
         );
