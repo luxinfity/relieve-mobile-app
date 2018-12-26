@@ -53,16 +53,18 @@ flutter:
     # list giving the asset and other descriptors for the font. For
     # example:
     fonts:
-      - family: CircularStd
+      - family: CircularStdBook
         fonts:
             - asset: fonts/circular-std-book.otf        
-              style: normal      
+      - family: CircularStdMedium
+        fonts:
             - asset: fonts/circular-std-medium.otf
-              weight: 200
+      - family: CircularStdBold
+        fonts:
             - asset: fonts/circular-std-bold.otf
-              weight: 300
+      - family: CircularStdBlack
+        fonts:
             - asset: fonts/circular-std-black.otf
-              weight: 400
             
     #
     # For details regarding fonts from package dependencies,

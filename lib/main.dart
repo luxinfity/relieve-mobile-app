@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
                 primaryColorDark: AppColor.colorPrimaryDark,
                 accentColor: AppColor.colorAccent,
                 backgroundColor: Colors.white,
-                fontFamily: CircularStdFont.name,
+                fontFamily: CircularStdFont.defaultName,
             ),
             home: BoadingPage(title: 'Relieve ID Home Page'),
             onGenerateRoute: Application.router.generator,
