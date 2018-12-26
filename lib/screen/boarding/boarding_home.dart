@@ -57,8 +57,8 @@ class BoadingPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(4)
                             ),
                             padding: EdgeInsets.only(
-                                top: 13,
-                                bottom: 13,
+                                top: 16,
+                                bottom: 16,
                             ),
                             onPressed: () {
 
