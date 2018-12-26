@@ -12,6 +12,7 @@ class ThemedTitle extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return Container(
+            width: double.infinity,
             padding: EdgeInsets.only(left: 26, right: 26, top: 8, bottom: 8),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
