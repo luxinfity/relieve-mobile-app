@@ -21,8 +21,9 @@ class MyRouter extends Router {
         // return UsersScreen(params['id'][0]);
         final page = params['page'][0];
         switch (page) {
-            case 'home': return BoadingHome(title: 'Relieve ID Home Page');
-            case 'login': return BoadingLogin(title: 'Relieve ID Home Page');
+            case 'login': 
+                return BoadingLogin(title: 'Relieve ID Home Page');
+                break;
             case 'register': 
                 final number = params['number'][0];
                 if (number == 1) {
@@ -30,8 +31,9 @@ class MyRouter extends Router {
                 } else {
                     return BoadingRegister2(title: 'Relieve ID Home Page');
                 }
+                break;
+            default : return BoadingHome(title: 'Relieve ID Home Page');
         }
-        return Text('BOARDING');
     });
 
     final callHandler = Handler(handlerFunc: (BuildContext context, Map<String, dynamic> params) {
