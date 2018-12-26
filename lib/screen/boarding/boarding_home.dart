@@ -78,13 +78,25 @@ class BoadingPage extends StatelessWidget {
                                             right: 16
                                         ),
                                         child: RaisedButton(
-                                            child: Text('Sign In With Google', 
-                                                style: CircularStdFont.getFont(
-                                                    size: 14,
-                                                    style: CircularStdFontStyle.Medium
-                                                ).apply(
-                                                    color: Colors.white
-                                                ),
+                                            child: Row(
+                                                // mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                    Expanded(
+                                                        flex: 1,
+                                                        child: SvgPicture.asset('images/google.svg', height: 20),                                                    
+                                                    ),
+                                                    Expanded(
+                                                        flex: 2,
+                                                        child: Text('Sign In With Google', 
+                                                            style: CircularStdFont.getFont(
+                                                                size: 14,
+                                                                style: CircularStdFontStyle.Medium
+                                                            ).apply(
+                                                                color: Colors.white
+                                                            ),
+                                                        )
+                                                    )
+                                                ],
                                             ),
                                             color: AppColor.colorDanger,
                                             elevation: 1,
