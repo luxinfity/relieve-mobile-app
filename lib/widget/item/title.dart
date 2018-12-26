@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../res/font.dart';
+import '../../res/color.dart';
 
 class ThemedTitle extends StatelessWidget {
     final String title;
@@ -10,18 +11,30 @@ class ThemedTitle extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-        return Column(    
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-                Text(
-                    title,
-                    style: CircularStdFont.getFont(
-                        style: CircularStdFontStyle.Bold, 
-                        size: 22
-                    )
-                ),
-                Text(subtitle),
-            ],
+        return Container(
+            padding: EdgeInsets.only(left: 26, right: 26, top: 8, bottom: 8),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                    Text(
+                        title,
+                        style: CircularStdFont.getFont(
+                            style: CircularStdFontStyle.Bold,
+                            size: 22
+                        )
+                    ),
+                    SizedBox(height: 3,),
+                    Text(
+                        subtitle,
+                        style: CircularStdFont.getFont(
+                            style: CircularStdFontStyle.Book,
+                            size: 14
+                        ).apply(
+                            color: AppColor.colorTextGrey
+                        ),
+                    ),
+                ],
+            ),
         );
     }
 }
