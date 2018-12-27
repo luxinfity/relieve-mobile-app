@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../res/res.dart';
-import '../../config/application.dart';
 import '../../widget/item/title.dart';
+import 'boarding_login.dart';
 
 class BoadingHome extends StatelessWidget {
     final String title;
@@ -60,7 +60,9 @@ class BoadingHome extends StatelessWidget {
                                 bottom: Dimen.x16,
                             ),
                             onPressed: () {
-                                Application.router.navigateTo(context, '/boarding/login');
+                                Navigator.push(context, MaterialPageRoute(
+									builder: (context) => BoardingLogin()
+								));
                             },
                         ),
                     ),

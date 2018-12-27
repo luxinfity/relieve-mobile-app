@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'screen/boarding/boarding_home.dart';
-import 'config/route.dart';
-import 'config/application.dart';
 import 'res/font.dart';
 import 'res/color.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-    MyApp() {
-        final router = new MyRouter();
-        Application.router = router;
-    }
 
     // This widget is the root of your application.
     @override
@@ -26,8 +20,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.white,
                 fontFamily: CircularStdFont.defaultName,
             ),
-            home: BoadingHome(title: 'Relieve ID Home Page'),
-            onGenerateRoute: Application.router.generator,
+            home: BoadingHome(title: 'Relieve ID Home Page')
         );
     }
 }

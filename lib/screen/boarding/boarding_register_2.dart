@@ -5,10 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
 
-class BoadingRegister2 extends StatelessWidget {
+class BoardingRegister2 extends StatelessWidget {
     final String title;
 
-    BoadingRegister2({Key key, this.title}) : super(key: key);
+    BoardingRegister2({Key key, this.title}) : super(key: key);
 
     @override
     Widget build(BuildContext context) {
