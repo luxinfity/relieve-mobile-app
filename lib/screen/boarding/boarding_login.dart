@@ -47,71 +47,27 @@ class BoardingLogin extends StatelessWidget {
                             left: Dimen.x16,
                             right: Dimen.x16
                         ),
-                        child: RaisedButton(
-                            child: Text('Login Now',
-                                style: CircularStdFont.getFont(
-                                    size: Dimen.x14,
-                                    style: CircularStdFontStyle.Medium
-                                ).apply(
-                                    color: Colors.white
-                                ),
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                                hintText: 'Username',
                             ),
-                            color: AppColor.colorPrimary,
-                            elevation: 1,
-                            highlightElevation: 1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4)
-                            ),
-                            padding: EdgeInsets.only(
-                                top: Dimen.x16,
-                                bottom: Dimen.x16,
-                            ),
-                            onPressed: () {
-
-                            },
+                            maxLines: 1,
                         ),
                     ),
                     Container(height: Dimen.x8),
                     Container(
+                        width: double.infinity,
                         margin: EdgeInsets.only(
-                            top: Dimen.x6,
+                            // top: Dimen.x21,
                             left: Dimen.x16,
                             right: Dimen.x16
                         ),
-                        child: RaisedButton(
-                            child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                    Expanded(
-                                        flex: 1,
-                                        child: SvgPicture.asset('images/google.svg', height: 20),
-                                    ),
-                                    Expanded(
-                                        flex: 2,
-                                        child: Text('Sign In With Google',
-                                            style: CircularStdFont.getFont(
-                                                size: Dimen.x14,
-                                                style: CircularStdFontStyle.Medium
-                                            ).apply(
-                                                color: Colors.white
-                                            ),
-                                        )
-                                    )
-                                ],
+                        child: TextFormField(
+                            decoration: InputDecoration(
+                                hintText: 'Password',                                
                             ),
-                            color: AppColor.colorDanger,
-                            elevation: 1,
-                            highlightElevation: 1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4)
-                            ),
-                            padding: EdgeInsets.only(
-                                top: Dimen.x14,
-                                bottom: Dimen.x14,
-                            ),
-                            onPressed: () {
-
-                            },
+                            obscureText: true,
+                            maxLines: 1,
                         ),
                     ),
                     Container(height: Dimen.x16),
@@ -140,6 +96,37 @@ class BoardingLogin extends StatelessWidget {
                                 },
                             )
                         ],
+                    ),
+                    Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(
+                            top: Dimen.x21,
+                            left: Dimen.x16,
+                            right: Dimen.x16
+                        ),
+                        child: RaisedButton(
+                            child: Text('Login',
+                                style: CircularStdFont.getFont(
+                                    size: Dimen.x14,
+                                    style: CircularStdFontStyle.Medium
+                                ).apply(
+                                    color: Colors.white
+                                ),
+                            ),
+                            color: AppColor.colorPrimary,
+                            elevation: 1,
+                            highlightElevation: 1,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4)
+                            ),
+                            padding: EdgeInsets.only(
+                                top: Dimen.x16,
+                                bottom: Dimen.x16,
+                            ),
+                            onPressed: () {
+                                
+                            },
+                        ),
                     ),
                     Container(height: Dimen.x24),
                 ],

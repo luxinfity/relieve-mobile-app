@@ -89,7 +89,6 @@ class BoadingHome extends StatelessWidget {
                         ),
                         child: RaisedButton(
                             child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                     Expanded(
                                         flex: 1,
