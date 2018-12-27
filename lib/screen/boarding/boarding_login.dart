@@ -49,6 +49,7 @@ class BoardingLogin extends StatelessWidget {
                                 Container(
                                     width: double.infinity,
                                     margin: EdgeInsets.only(
+                                        top: Dimen.x16,
                                         left: Dimen.x16,
                                         right: Dimen.x16
                                     ),
