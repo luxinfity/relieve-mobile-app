@@ -5,11 +5,30 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
 import 'boarding_login.dart';
+import 'boarding_register_1.dart';
 
 class BoadingHome extends StatelessWidget {
     final String title;
 
     BoadingHome({Key key, this.title}) : super(key: key);
+
+	void loginButtonClicked(BuildContext context) {
+		Navigator.push(context, MaterialPageRoute(
+			builder: (context) => BoardingLogin()
+		));
+	}
+
+	void googleButtonClicked(BuildContext context) {
+		// Navigator.push(context, MaterialPageRoute(
+		// 	builder: (context) => BoardingLogin()
+		// ));
+	}
+
+	void registerButtonClicked(BuildContext context) {
+		Navigator.push(context, MaterialPageRoute(
+			builder: (context) => BoardingRegister1()
+		));
+	}
 
     @override
     Widget build(BuildContext context) {
@@ -59,11 +78,7 @@ class BoadingHome extends StatelessWidget {
                                 top: Dimen.x16,
                                 bottom: Dimen.x16,
                             ),
-                            onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(
-									builder: (context) => BoardingLogin()
-								));
-                            },
+                            onPressed: () => loginButtonClicked(context),
                         ),
                     ),
                     Container(height: Dimen.x8),
@@ -104,9 +119,7 @@ class BoadingHome extends StatelessWidget {
                                 top: Dimen.x14,
                                 bottom: Dimen.x14,
                             ),
-                            onPressed: () {
-
-                            },
+                            onPressed: () => googleButtonClicked(context),
                         ),
                     ),
                     Container(height: Dimen.x16),
@@ -130,9 +143,7 @@ class BoadingHome extends StatelessWidget {
                                         color: AppColor.colorPrimary
                                     )
                                 ),
-                                onPressed: () {
-
-                                },
+                                onPressed: () => registerButtonClicked(context),
                             )
                         ],
                     ),
