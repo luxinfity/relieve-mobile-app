@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../res/res.dart';
@@ -31,10 +30,10 @@ class BoadingHome extends StatelessWidget {
 	}
 
     @override
-    Widget build(BuildContext context) {
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    Widget build(BuildContext context) {        
         final EdgeInsets padding = MediaQuery.of(context).padding;
         return Scaffold(
+			backgroundColor: Colors.white,
             body: Column(
                 children: <Widget>[
                     Container( // status bar color

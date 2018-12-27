@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../res/res.dart';
@@ -10,26 +9,35 @@ class BoardingLogin extends StatelessWidget {
 
     BoardingLogin({Key key, this.title}) : super(key: key);
 
+    void onBackPressed(BuildContext context) {
+        Navigator.pop(context);
+    }
+
     @override
-    Widget build(BuildContext context) {
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-        final EdgeInsets padding = MediaQuery.of(context).padding;
+    Widget build(BuildContext context) {  
+        final EdgeInsets padding = MediaQuery.of(context).padding;   
         return Scaffold(
+            backgroundColor: Colors.white,
             body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                     Container( // status bar color
                         color: AppColor.colorPrimary,
                         height: padding.top,
                     ),
-                    Container(height: Dimen.x12),
+                    IconButton(
+                        icon: SvgPicture.asset('images/back_arrow.svg', height: 26),
+                        onPressed: () => onBackPressed(context),
+                    ),
                     ThemedTitle(
-                        title: "Home sweet home",
-                        subtitle: ""
+                        title: "Login Now",
+                        subtitle: "Please login to continue using our app"
                     ),
                     Container(height: Dimen.x18),
                     Expanded(
                         child: Image.network(
-                            RemoteImage.boardingHome,
+                            RemoteImage.boardingLogin,
+                            width: double.infinity,
                         ),
                     ),
                     Container(
