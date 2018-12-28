@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
+import '../walkthrough/walkthrough.dart';
 import 'boarding_login.dart';
 import 'boarding_register_1.dart';
 
@@ -18,9 +19,9 @@ class BoadingHome extends StatelessWidget {
 	}
 
 	void googleButtonClicked(BuildContext context) {
-		// Navigator.push(context, MaterialPageRoute(
-		// 	builder: (context) => BoardingLogin()
-		// ));
+		Navigator.push(context, MaterialPageRoute(
+			builder: (context) => WalkthroughPage(title: 'Alif',)
+		));
 	}
 
 	void registerButtonClicked(BuildContext context) {
