@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
+import '../walkthrough/walkthrough.dart';
 
 class BoardingLogin extends StatelessWidget {
     final String title;
@@ -13,9 +15,34 @@ class BoardingLogin extends StatelessWidget {
         Navigator.pop(context);
     }
 
+    void onLoginClick(BuildContext context) {
+        Navigator.push(context, MaterialPageRoute(
+			builder: (context) => WalkthroughPage(title: 'Alif',)
+		));
+    }
+
+    Widget createImageWidget(BuildContext context) {
+        if (Theme.of(context).platform == TargetPlatform.iOS) {
+            // handle screen too big, in iphone x
+            return  SizedBox(
+                child: Image.network(
+                    RemoteImage.boardingLogin,
+                    height: 360,
+                ),
+            );
+        } else {
+            return  SizedBox(
+                child: Image.network(
+                    RemoteImage.boardingLogin,
+                ),
+            );
+        }
+    }
+
     @override
     Widget build(BuildContext context) {
         final EdgeInsets padding = MediaQuery.of(context).padding;
+
         return Scaffold(
             backgroundColor: Colors.white,
             body: Column(
@@ -26,6 +53,9 @@ class BoardingLogin extends StatelessWidget {
                         height: padding.top,
                     ),
                     IconButton(
+                        padding: EdgeInsets.only(
+                            left: Dimen.x8
+                        ),
                         icon: SvgPicture.asset('images/back_arrow.svg', height: 26),
                         onPressed: () => onBackPressed(context),
                     ),
@@ -40,16 +70,10 @@ class BoardingLogin extends StatelessWidget {
                                     title: "Login Now",
                                     subtitle: "Please login to continue using our app"
                                 ),
-                                SizedBox(
-                                    child: Image.network(
-                                        RemoteImage.boardingLogin,
-                                    ),
-                                    width: double.infinity,
-                                ),
+                                createImageWidget(context),
                                 Container(
                                     width: double.infinity,
                                     margin: EdgeInsets.only(
-                                        top: Dimen.x16,
                                         left: Dimen.x16,
                                         right: Dimen.x16
                                     ),
@@ -66,7 +90,7 @@ class BoardingLogin extends StatelessWidget {
                                         top: Dimen.x6,
                                         left: Dimen.x16,
                                         right: Dimen.x16,
-                                        bottom: Dimen.x6,
+                                        bottom: Dimen.x16,
                                     ),
                                     child: TextFormField(
                                         decoration: InputDecoration(
@@ -97,7 +121,7 @@ class BoardingLogin extends StatelessWidget {
                                 Container(
                                     width: double.infinity,
                                     margin: EdgeInsets.only(
-                                        top: Dimen.x6,
+                                        top: Dimen.x8,
                                         left: Dimen.x16,
                                         right: Dimen.x16
                                     ),
@@ -120,9 +144,7 @@ class BoardingLogin extends StatelessWidget {
                                             top: Dimen.x16,
                                             bottom: Dimen.x16,
                                         ),
-                                        onPressed: () {
-
-                                        },
+                                        onPressed: () => onLoginClick(context),
                                     ),
                                 ),
                                 Container(height: Dimen.x12),
@@ -154,7 +176,7 @@ class BoardingLogin extends StatelessWidget {
                                 ),
                             ],
                         ),
-                    ),                    
+                    ),
                 ],
             ),
         );

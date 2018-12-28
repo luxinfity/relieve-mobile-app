@@ -30,7 +30,7 @@ class BoadingHome extends StatelessWidget {
 	}
 
     @override
-    Widget build(BuildContext context) {        
+    Widget build(BuildContext context) {
         final EdgeInsets padding = MediaQuery.of(context).padding;
         return Scaffold(
 			backgroundColor: Colors.white,
