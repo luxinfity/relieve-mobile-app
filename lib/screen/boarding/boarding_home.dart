@@ -5,7 +5,7 @@ import '../../res/res.dart';
 import '../../widget/item/title.dart';
 import '../walkthrough/walkthrough.dart';
 import 'boarding_login.dart';
-import 'boarding_register_1.dart';
+import 'boarding_register.dart';
 
 class BoardingHome extends StatelessWidget {
 
@@ -25,7 +25,7 @@ class BoardingHome extends StatelessWidget {
 
 	void registerButtonClicked(BuildContext context) {
 		Navigator.push(context, MaterialPageRoute(
-			builder: (context) => BoardingRegister1()
+			builder: (context) => BoardingRegister()
 		));
 	}
 
@@ -33,7 +33,7 @@ class BoardingHome extends StatelessWidget {
     Widget build(BuildContext context) {
         final EdgeInsets padding = MediaQuery.of(context).padding;
         return Scaffold(
-			backgroundColor: Colors.white,
+            backgroundColor: Colors.white,
             body: Column(
                 children: <Widget>[
                     Container( // status bar color

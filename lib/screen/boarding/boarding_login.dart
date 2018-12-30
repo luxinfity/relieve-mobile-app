@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
 import '../walkthrough/walkthrough.dart';
+import '../boarding/boarding_register.dart';
 
 class BoardingLogin extends StatelessWidget {
     final String title;
@@ -18,6 +19,12 @@ class BoardingLogin extends StatelessWidget {
         Navigator.push(context, MaterialPageRoute(
 			builder: (context) => WalkthroughPage(title: 'Alif',)
 		));
+    }
+
+    void registerButtonClicked(BuildContext context) {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) => BoardingRegister()
+      ));
     }
 
     Widget createImageWidget(BuildContext context) {
@@ -167,9 +174,7 @@ class BoardingLogin extends StatelessWidget {
                                                     color: AppColor.colorPrimary
                                                 )
                                             ),
-                                            onPressed: () {
-
-                                            },
+                                            onPressed: () => registerButtonClicked(context),
                                         )
                                     ],
                                 ),

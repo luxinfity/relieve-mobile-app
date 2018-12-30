@@ -10,7 +10,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 
 import 'package:relieve_app/main.dart';
-import 'package:relieve_app/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/item/title.dart';
 
 void main() {
