@@ -7,10 +7,9 @@ import '../walkthrough/walkthrough.dart';
 import 'boarding_login.dart';
 import 'boarding_register_1.dart';
 
-class BoadingHome extends StatelessWidget {
-    final String title;
+class BoardingHome extends StatelessWidget {
 
-    BoadingHome({Key key, this.title}) : super(key: key);
+    BoardingHome({Key key}) : super(key: key);
 
 	void loginButtonClicked(BuildContext context) {
 		Navigator.push(context, MaterialPageRoute(
@@ -60,6 +59,7 @@ class BoadingHome extends StatelessWidget {
                             right: Dimen.x16
                         ),
                         child: RaisedButton(
+                            key: Key('home-login'),
                             child: Text('Login Now',
                                 style: CircularStdFont.getFont(
                                     size: Dimen.x14,

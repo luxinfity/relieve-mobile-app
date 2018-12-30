@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.white,
                 fontFamily: CircularStdFont.defaultName,
             ),
-            home: BoadingHome(title: 'Relieve ID Home Page')
+            home: BoardingHome()
         );
     }
 }
