@@ -10,20 +10,20 @@ description: Relieve Mobile App
 version: 1.0.0+1
 
 environment:
-    sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
-    flutter:
-        sdk: flutter
-    flutter_svg: ^0.8.2
-    # The following adds the Cupertino Icons font to your application.
-    # Use with the CupertinoIcons class for iOS style icons.
-    # cupertino_icons: ^0.1.2
+  flutter:
+    sdk: flutter
+  flutter_svg: ^0.8.2
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  # cupertino_icons: ^0.1.2
 
 dev_dependencies:
-    flutter_test:
-        sdk: flutter
-    image_test_utils: ^1.0.0
+  flutter_test:
+    sdk: flutter
+  image_test_utils: ^1.0.0
 
 
 # For information on the generic Dart part of this file, see the
@@ -32,41 +32,40 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
-    # The following line ensures that the Material Icons font is
-    # included with your application, so that you can use the icons in
-    # the material Icons class.
-    uses-material-design: true
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
 
-    # To add assets to your application, add an assets section, like this:
-    assets:
-        - images/google.svg
-        - images/back_arrow.svg
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - images/google.svg
+    - images/back_arrow.svg
 
-    # An image asset can refer to one or more resolution-specific "variants", see
-    # https://flutter.io/assets-and-images/#resolution-aware.
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.io/assets-and-images/#resolution-aware.
 
-    # For details regarding adding assets from package dependencies, see
-    # https://flutter.io/assets-and-images/#from-packages
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.io/assets-and-images/#from-packages
 
-    # To add custom fonts to your application, add a fonts section here,
-    # in this "flutter" section. Each entry in this list should have a
-    # "family" key with the font family name, and a "fonts" key with a
-    # list giving the asset and other descriptors for the font. For
-    # example:
-    fonts:
-      - family: CircularStdBook
-        fonts:
-            - asset: fonts/circular-std-book.otf        
-      - family: CircularStdMedium
-        fonts:
-            - asset: fonts/circular-std-medium.otf
-      - family: CircularStdBold
-        fonts:
-            - asset: fonts/circular-std-bold.otf
-      - family: CircularStdBlack
-        fonts:
-            - asset: fonts/circular-std-black.otf
-            
-    #
-    # For details regarding fonts from package dependencies,
-    # see https://flutter.io/custom-fonts/#from-packages
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: CircularStdBook
+      fonts:
+        - asset: fonts/circular-std-book.otf        
+    - family: CircularStdMedium
+      fonts:
+        - asset: fonts/circular-std-medium.otf
+    - family: CircularStdBold
+      fonts:
+        - asset: fonts/circular-std-bold.otf
+    - family: CircularStdBlack
+      fonts:
+        - asset: fonts/circular-std-black.otf
+    
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.io/custom-fonts/#from-packages
