@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
+import '../walkthrough/walkthrough.dart';
+import '../../widget/relieve_scaffold.dart';
 
 class BoardingRegister extends StatefulWidget {
   BoardingRegister({Key key}) : super(key: key);
@@ -16,14 +17,17 @@ class BoardingRegister extends StatefulWidget {
 class BoardingRegisterState extends State {
   var steps = 0;
 
-  void onBackPressed(BuildContext context) {
-    Navigator.pop(context);
-  }
-
   void onButtonClick(BuildContext context) {
-    setState(() {
-      steps = 1;
-    });
+    if (steps == 0) {
+      setState(() => steps = 1);
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => WalkthroughPage(
+                    title: 'Alif',
+                  )));
+    }
   }
 
   Widget createTitle() {
@@ -175,19 +179,7 @@ class BoardingRegisterState extends State {
 
   @override
   Widget build(BuildContext context) {
-    final EdgeInsets padding = MediaQuery.of(context).padding;
-
     List<Widget> children = <Widget>[
-      Container(
-        // status bar color
-        color: AppColor.colorPrimary,
-        height: padding.top,
-      ),
-      IconButton(
-        padding: EdgeInsets.only(left: Dimen.x8),
-        icon: SvgPicture.asset('images/back_arrow.svg', height: 26),
-        onPressed: () => onBackPressed(context),
-      ),
       createTitle(),
       Expanded(
         child: Container(),
@@ -215,25 +207,11 @@ class BoardingRegisterState extends State {
     ];
 
     // add forms
-    children.insertAll(3, createForm());
+    children.insertAll(1, createForm());
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
+    return RelieveScaffold(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            // status bar color
-            color: AppColor.colorPrimary,
-            height: padding.top,
-          ),
-          IconButton(
-            padding: EdgeInsets.only(left: Dimen.x8),
-            icon: SvgPicture.asset('images/back_arrow.svg', height: 26),
-            onPressed: () => onBackPressed(context),
-          ),
-        ],
-      ),
-    );
+        hasBackButton: true,
+        childs: children);
   }
 }
