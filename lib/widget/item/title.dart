@@ -24,7 +24,7 @@ class ThemedTitle extends StatelessWidget {
                             size: 22
                         )
                     ),
-                    SizedBox(height: 3,),
+                    SizedBox(height: 6,),
                     Text(
                         subtitle,
                         style: CircularStdFont.getFont(

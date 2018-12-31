@@ -1,21 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
+import '../walkthrough/walkthrough.dart';
 import 'boarding_login.dart';
+import 'boarding_register.dart';
 
-class BoadingHome extends StatelessWidget {
-    final String title;
+class BoardingHome extends StatelessWidget {
 
-    BoadingHome({Key key, this.title}) : super(key: key);
+    BoardingHome({Key key}) : super(key: key);
+
+	void loginButtonClicked(BuildContext context) {
+		Navigator.push(context, MaterialPageRoute(
+			builder: (context) => BoardingLogin()
+		));
+	}
+
+	void googleButtonClicked(BuildContext context) {
+		Navigator.push(context, MaterialPageRoute(
+			builder: (context) => WalkthroughPage(title: 'Alif',)
+		));
+	}
+
+	void registerButtonClicked(BuildContext context) {
+		Navigator.push(context, MaterialPageRoute(
+			builder: (context) => BoardingRegister()
+		));
+	}
 
     @override
     Widget build(BuildContext context) {
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
         final EdgeInsets padding = MediaQuery.of(context).padding;
         return Scaffold(
+            backgroundColor: Colors.white,
             body: Column(
                 children: <Widget>[
                     Container( // status bar color
@@ -41,6 +59,7 @@ class BoadingHome extends StatelessWidget {
                             right: Dimen.x16
                         ),
                         child: RaisedButton(
+                            key: Key('home-login'),
                             child: Text('Login Now',
                                 style: CircularStdFont.getFont(
                                     size: Dimen.x14,
@@ -59,11 +78,7 @@ class BoadingHome extends StatelessWidget {
                                 top: Dimen.x16,
                                 bottom: Dimen.x16,
                             ),
-                            onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(
-									builder: (context) => BoardingLogin()
-								));
-                            },
+                            onPressed: () => loginButtonClicked(context),
                         ),
                     ),
                     Container(height: Dimen.x8),
@@ -75,7 +90,6 @@ class BoadingHome extends StatelessWidget {
                         ),
                         child: RaisedButton(
                             child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                     Expanded(
                                         flex: 1,
@@ -104,9 +118,7 @@ class BoadingHome extends StatelessWidget {
                                 top: Dimen.x14,
                                 bottom: Dimen.x14,
                             ),
-                            onPressed: () {
-
-                            },
+                            onPressed: () => googleButtonClicked(context),
                         ),
                     ),
                     Container(height: Dimen.x16),
@@ -130,9 +142,7 @@ class BoadingHome extends StatelessWidget {
                                         color: AppColor.colorPrimary
                                     )
                                 ),
-                                onPressed: () {
-
-                                },
+                                onPressed: () => registerButtonClicked(context),
                             )
                         ],
                     ),

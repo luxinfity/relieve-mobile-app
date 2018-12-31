@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'screen/boarding/boarding_home.dart';
 import 'res/font.dart';
@@ -8,9 +9,11 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
 
-    // This widget is the root of your application.
+    // This widget is the root of my application.
     @override
     Widget build(BuildContext context) {
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+
         return MaterialApp(
             title: 'Relieve ID',
             theme: ThemeData(
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: Colors.white,
                 fontFamily: CircularStdFont.defaultName,
             ),
-            home: BoadingHome(title: 'Relieve ID Home Page')
+            home: BoardingHome()
         );
     }
 }
