@@ -70,4 +70,7 @@ build/
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
+android/key\.properties
 android/relieveid_keystore\.jks
+
+.gitsecret/keys/random_seed
