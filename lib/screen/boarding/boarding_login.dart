@@ -5,6 +5,7 @@ import '../../widget/item/title.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../walkthrough/walkthrough.dart';
 import '../boarding/boarding_register.dart';
+import '../dashboard/dashboard.dart';
 
 class BoardingLogin extends StatelessWidget {
   final String title;
@@ -13,11 +14,7 @@ class BoardingLogin extends StatelessWidget {
 
   void onLoginClick(BuildContext context) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WalkthroughPage(
-                  title: 'Alif',
-                )));
+        context, MaterialPageRoute(builder: (context) => DashboardScreen()));
   }
 
   void registerButtonClicked(BuildContext context) {
@@ -50,7 +47,7 @@ class BoardingLogin extends StatelessWidget {
     return RelieveScaffold(
       crossAxisAlignment: CrossAxisAlignment.start,
       hasBackButton: true,
-      childs: <Widget>[        
+      childs: <Widget>[
         Expanded(
           child: ListView(
             padding: EdgeInsets.only(left: padding.left, right: padding.right),
