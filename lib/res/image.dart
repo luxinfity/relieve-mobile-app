@@ -11,7 +11,7 @@ class RemoteImage {
 class LocalImage {
   final String imageName;
 
-  LocalImage(this.imageName) {}
+  LocalImage(this.imageName);
 
   SvgPicture toSvg({int width, int height, Color color}) {
     return SvgPicture.asset('images/' + imageName + '.svg',

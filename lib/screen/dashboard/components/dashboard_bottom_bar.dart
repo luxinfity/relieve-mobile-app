@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 
-class RelieveBottomNavigationBar extends StatefulWidget {
-  RelieveBottomNavigationBar({this.onPress}) {}
+typedef RelieveBottomAction = void Function(int index, bool isCall);
 
-  void Function(int) onPress;
+class RelieveBottomNavigationBar extends StatefulWidget {
+  RelieveBottomNavigationBar({this.onPress});
+
+  final RelieveBottomAction onPress;
 
   @override
   RelieveBottomNavigationBarState createState() {
@@ -38,7 +40,7 @@ class RelieveBottomNavigationBarState
               currentIndex = index;
             });
             if (widget.onPress != null) {
-              widget.onPress(index);
+              widget.onPress(index, false);
             }
           },
           child: buildIconItem(icon, isActive, text),
@@ -76,7 +78,7 @@ class RelieveBottomNavigationBarState
       child: IconButton(
         onPressed: () {
           if (widget.onPress != null) {
-            widget.onPress(CALL_INDEX);
+            widget.onPress(CALL_INDEX, true);
           }
         },
         iconSize: 10,

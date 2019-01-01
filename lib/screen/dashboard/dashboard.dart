@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'components/dashboard_bottom_bar.dart';
+import '../call/call.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key, this.title}) : super(key: key);
@@ -13,16 +14,25 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int currentIndex = 0;
 
+  void _goToCall(BuildContext context) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (builder) => CallScreen(title: 'Test')));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
-      bottomNavigationBar: RelieveBottomNavigationBar(onPress: (index) {
-        setState(() {
-          currentIndex = index;
-        });
+      bottomNavigationBar: RelieveBottomNavigationBar(onPress: (index, isCall) {
+        if (isCall) {
+          _goToCall(context);
+        } else {
+          setState(() {
+            currentIndex = index;
+          });
+        }
       }),
       body: buildBody(),
     );
@@ -39,7 +49,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case 4:
         return Text('This is profile');
       default:
-        Text('Dashboard');
+        return Text('Dashboard');
     }
   }
 
