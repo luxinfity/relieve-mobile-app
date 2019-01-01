@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
 import '../../widget/relieve_scaffold.dart';
-import '../walkthrough/walkthrough.dart';
 import '../boarding/boarding_register.dart';
 import '../dashboard/dashboard.dart';
 
@@ -26,17 +25,10 @@ class BoardingLogin extends StatelessWidget {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       // handle screen too big, in iphone x
       return SizedBox(
-        child: Image.network(
-          RemoteImage.boardingLogin,
-          height: 360,
-        ),
+        child: RemoteImage.boardingLogin.toImage(height: 360),
       );
     } else {
-      return SizedBox(
-        child: Image.network(
-          RemoteImage.boardingLogin,
-        ),
-      );
+      return SizedBox(child: RemoteImage.boardingLogin.toImage());
     }
   }
 
