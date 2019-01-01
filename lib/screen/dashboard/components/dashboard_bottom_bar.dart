@@ -4,7 +4,7 @@ import 'package:relieve_app/res/res.dart';
 class RelieveBottomNavigationBar extends StatefulWidget {
   RelieveBottomNavigationBar({this.onPress}) {}
 
-  Function(int) onPress;
+  void Function(int) onPress;
 
   @override
   RelieveBottomNavigationBarState createState() {
