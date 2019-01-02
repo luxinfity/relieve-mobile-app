@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
+import '../../widget/item/standard_button.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../boarding/boarding_register.dart';
+import '../boarding/components/boarding_register_here.dart';
 import '../dashboard/dashboard.dart';
 
 class BoardingLogin extends StatelessWidget {
@@ -35,91 +37,77 @@ class BoardingLogin extends StatelessWidget {
             children: <Widget>[
               buildTitle(),
               buildImage(context),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                  ),
-                  maxLines: 1,
-                ),
+              buildFormUsername(),
+              buildFormPassword(),
+              buildForgotPassword(),
+              StandardButton(
+                text: 'Login',
+                buttonClick: () => onLoginClick(context),
+                backgroundColor: AppColor.colorPrimary,
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(
-                  top: Dimen.x6,
-                  left: Dimen.x16,
-                  right: Dimen.x16,
-                  bottom: Dimen.x16,
-                ),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
-                  obscureText: true,
-                  maxLines: 1,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text('Forgot Password?',
-                        style: CircularStdFont.getFont(
-                                size: Dimen.x14,
-                                style: CircularStdFontStyle.Book)
-                            .apply(color: AppColor.colorPrimary)),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(
-                    top: Dimen.x8, left: Dimen.x16, right: Dimen.x16),
-                child: RaisedButton(
-                  child: Text(
-                    'Login',
-                    style: CircularStdFont.getFont(
-                            size: Dimen.x14, style: CircularStdFontStyle.Medium)
-                        .apply(color: Colors.white),
-                  ),
-                  color: AppColor.colorPrimary,
-                  elevation: 1,
-                  highlightElevation: 1,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4)),
-                  padding: EdgeInsets.only(
-                    top: Dimen.x16,
-                    bottom: Dimen.x16,
-                  ),
-                  onPressed: () => onLoginClick(context),
-                ),
-              ),
-              Container(height: Dimen.x12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Don’t have an account ?',
-                      style: CircularStdFont.getFont(
-                              size: Dimen.x14, style: CircularStdFontStyle.Book)
-                          .apply(color: AppColor.colorTextGrey)),
-                  FlatButton(
-                    child: Text('Register Here',
-                        style: CircularStdFont.getFont(
-                                size: Dimen.x14,
-                                style: CircularStdFontStyle.Book)
-                            .apply(color: AppColor.colorPrimary)),
-                    onPressed: () => registerButtonClicked(context),
-                  )
-                ],
-              ),
+              buildRegisterHere(context)
             ],
           ),
         ),
       ],
     );
+  }
+
+  Container buildFormPassword() {
+    return Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(
+                top: Dimen.x6,
+                left: Dimen.x16,
+                right: Dimen.x16,
+                bottom: Dimen.x16,
+              ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+                maxLines: 1,
+              ),
+            );
+  }
+
+  Container buildFormUsername() {
+    return Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                ),
+                maxLines: 1,
+              ),
+            );
+  }
+
+  Padding buildRegisterHere(BuildContext context) {
+    return Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: RegisterHere(
+                onClick: () => registerButtonClicked(context),
+              ),
+            );
+  }
+
+  Row buildForgotPassword() {
+    return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                FlatButton(
+                  child: Text('Forgot Password?',
+                      style: CircularStdFont.getFont(
+                              size: Dimen.x14,
+                              style: CircularStdFontStyle.Book)
+                          .apply(color: AppColor.colorPrimary)),
+                  onPressed: () {},
+                ),
+              ],
+            );
   }
 
   ThemedTitle buildTitle() {
