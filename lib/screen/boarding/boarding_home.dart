@@ -5,6 +5,7 @@ import '../../widget/item/title.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
+import 'components/boarding_register_here.dart';
 import 'boarding_login.dart';
 import 'boarding_register.dart';
 
@@ -56,24 +57,11 @@ class BoardingHome extends StatelessWidget {
 
   Padding buildRegister(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x24),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Don’t have an account ?',
-                style: CircularStdFont.getFont(
-                        size: Dimen.x14, style: CircularStdFontStyle.Book)
-                    .apply(color: AppColor.colorTextGrey)),
-            FlatButton(
-              child: Text('Register Here',
-                  style: CircularStdFont.getFont(
-                          size: Dimen.x14, style: CircularStdFontStyle.Book)
-                      .apply(color: AppColor.colorPrimary)),
-              onPressed: () => registerButtonClicked(context),
-            )
-          ],
-        ),
-      );
+      padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x24),
+      child: RegisterHere(
+        onClick: () => registerButtonClicked(context),
+      ),
+    );
   }
 
   Expanded buildImage() {

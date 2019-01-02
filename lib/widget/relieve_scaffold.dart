@@ -8,7 +8,7 @@ class RelieveScaffold extends StatelessWidget {
   final List<Widget> childs;
   final CrossAxisAlignment crossAxisAlignment;
   final bool hasBackButton;
-  final String backIcon;
+  final LocalImage backIcon;
   final VoidContextCallback onBackPressed;
 
   const RelieveScaffold(
@@ -16,7 +16,7 @@ class RelieveScaffold extends StatelessWidget {
       @required this.childs,
       this.hasBackButton = false,
       this.crossAxisAlignment = CrossAxisAlignment.center,
-      this.backIcon = 'images/back_arrow.svg',
+      this.backIcon,
       this.onBackPressed = defaultBackPressed});
 
   List<Widget> _createBody(BuildContext context) {
@@ -33,7 +33,7 @@ class RelieveScaffold extends StatelessWidget {
   Widget _createBackButton(BuildContext context) {
     return IconButton(
       padding: EdgeInsets.only(left: Dimen.x8, top: Dimen.x8),
-      icon: SvgPicture.asset(backIcon, height: 26),
+      icon: (backIcon ?? LocalImage.ic_back_arrow).toSvg(height: 26),
       onPressed: () => onBackPressed(context),
     );
   }

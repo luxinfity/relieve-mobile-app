@@ -21,17 +21,6 @@ class BoardingLogin extends StatelessWidget {
         context, MaterialPageRoute(builder: (context) => BoardingRegister()));
   }
 
-  Widget createImageWidget(BuildContext context) {
-    if (Theme.of(context).platform == TargetPlatform.iOS) {
-      // handle screen too big, in iphone x
-      return SizedBox(
-        child: RemoteImage.boardingLogin.toImage(height: 360),
-      );
-    } else {
-      return SizedBox(child: RemoteImage.boardingLogin.toImage());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final EdgeInsets padding = MediaQuery.of(context).padding;
@@ -44,10 +33,8 @@ class BoardingLogin extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.only(left: padding.left, right: padding.right),
             children: <Widget>[
-              ThemedTitle(
-                  title: "Login Now",
-                  subtitle: "Please login to continue using our app"),
-              createImageWidget(context),
+              buildTitle(),
+              buildImage(context),
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
@@ -133,5 +120,22 @@ class BoardingLogin extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  ThemedTitle buildTitle() {
+    return ThemedTitle(
+                title: "Login Now",
+                subtitle: "Please login to continue using our app");
+  }
+
+  Widget buildImage(BuildContext context) {
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      // handle screen too big, in iphone x
+      return SizedBox(
+        child: RemoteImage.boardingLogin.toImage(height: 360),
+      );
+    } else {
+      return SizedBox(child: RemoteImage.boardingLogin.toImage());
+    }
   }
 }
