@@ -55,65 +55,63 @@ class BoardingLogin extends StatelessWidget {
 
   Container buildFormPassword() {
     return Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(
-                top: Dimen.x6,
-                left: Dimen.x16,
-                right: Dimen.x16,
-                bottom: Dimen.x16,
-              ),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                ),
-                obscureText: true,
-                maxLines: 1,
-              ),
-            );
+      width: double.infinity,
+      margin: EdgeInsets.only(
+        top: Dimen.x6,
+        left: Dimen.x16,
+        right: Dimen.x16,
+        bottom: Dimen.x16,
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Password',
+        ),
+        obscureText: true,
+        maxLines: 1,
+      ),
+    );
   }
 
   Container buildFormUsername() {
     return Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                ),
-                maxLines: 1,
-              ),
-            );
+      width: double.infinity,
+      margin: EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
+      child: TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Username',
+        ),
+        maxLines: 1,
+      ),
+    );
   }
 
   Padding buildRegisterHere(BuildContext context) {
     return Padding(
-              padding: const EdgeInsets.only(top: 12),
-              child: RegisterHere(
-                onClick: () => registerButtonClicked(context),
-              ),
-            );
+      padding: const EdgeInsets.only(top: 12),
+      child: RegisterHere(
+        onClick: () => registerButtonClicked(context),
+      ),
+    );
   }
 
   Row buildForgotPassword() {
     return Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                FlatButton(
-                  child: Text('Forgot Password?',
-                      style: CircularStdFont.getFont(
-                              size: Dimen.x14,
-                              style: CircularStdFontStyle.Book)
-                          .apply(color: AppColor.colorPrimary)),
-                  onPressed: () {},
-                ),
-              ],
-            );
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        FlatButton(
+          child: Text('Forgot Password?',
+              style: CircularStdFont.getFont(
+                      size: Dimen.x14, style: CircularStdFontStyle.Book)
+                  .apply(color: AppColor.colorPrimary)),
+          onPressed: () {},
+        ),
+      ],
+    );
   }
 
   ThemedTitle buildTitle() {
     return ThemedTitle(
-                title: "Login Now",
-                subtitle: "Please login to continue using our app");
+        title: "Login Now", subtitle: "Please login to continue using our app");
   }
 
   Widget buildImage(BuildContext context) {
