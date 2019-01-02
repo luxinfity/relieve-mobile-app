@@ -38,9 +38,7 @@ class BoardingHome extends StatelessWidget {
         ThemedTitle(title: "Home sweet home", subtitle: ""),
         Container(height: Dimen.x18),
         Expanded(
-          child: Image.network(
-            RemoteImage.boardingHome,
-          ),
+          child: RemoteImage.boardingHome.toImage(),
         ),
         Container(
           width: double.infinity,
