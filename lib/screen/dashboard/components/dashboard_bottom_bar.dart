@@ -24,7 +24,7 @@ class RelieveBottomNavigationBarState
   Widget build(BuildContext context) {
     return Container(
       height: 56,
-      decoration: BoxDecoration(color: Colors.white),
+      color: Colors.white,
       child: buildRow(),
     );
   }
@@ -72,17 +72,21 @@ class RelieveBottomNavigationBarState
   }
 
   Widget buildCallWidget() {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.blue, borderRadius: BorderRadius.circular(8)),
-      child: IconButton(
-        onPressed: () {
-          if (widget.onPress != null) {
-            widget.onPress(CALL_INDEX, true);
-          }
-        },
-        iconSize: 10,
-        icon: LocalImage.ic_call.toSvg(width: 20, height: 20),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Material(
+        color: Colors.blue,
+        child: InkWell(
+          onTap: () {
+            if (widget.onPress != null) {
+              widget.onPress(CALL_INDEX, true);
+            }
+          },
+          child: Padding(
+            child: LocalImage.ic_call.toSvg(width: 20, height: 20),
+            padding: EdgeInsets.all(14),
+          )
+        ),
       ),
     );
   }
