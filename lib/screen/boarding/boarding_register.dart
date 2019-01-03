@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
+import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 
@@ -39,21 +42,11 @@ class BoardingRegisterState extends State {
   }
 
   Widget createButton() {
-    if (steps == 0) {
-      return Text(
-        'Lanjut',
-        style: CircularStdFont.getFont(
-                size: Dimen.x14, style: CircularStdFontStyle.Medium)
-            .apply(color: Colors.white),
-      );
-    } else {
-      return Text(
-        'Daftar',
-        style: CircularStdFont.getFont(
-                size: Dimen.x14, style: CircularStdFontStyle.Medium)
-            .apply(color: Colors.white),
-      );
-    }
+    return StandardButton(
+      text: steps == 0 ? 'Lanjut' : 'Daftar',
+      backgroundColor: AppColor.colorPrimary,
+      buttonClick: () => onButtonClick(context),
+    );
   }
 
   List<Widget> createForm() {
@@ -184,25 +177,32 @@ class BoardingRegisterState extends State {
       Expanded(
         child: Container(),
       ),
-      Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(
-            top: Dimen.x8,
-            left: Dimen.x21,
-            right: Dimen.x21,
-            bottom: Dimen.x28),
-        child: RaisedButton(
-          child: createButton(),
-          color: AppColor.colorPrimary,
-          elevation: 1,
-          highlightElevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          padding: EdgeInsets.only(
-            top: Dimen.x16,
-            bottom: Dimen.x16,
-          ),
-          onPressed: () => onButtonClick(context),
+      Padding(
+        padding: const EdgeInsets.only(left: Dimen.x32, right: Dimen.x32),
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              text: 'By registering you are accepting our ',
+              style: CircularStdFont.getFont(
+                      style: CircularStdFontStyle.Book, size: Dimen.x14)
+                  .apply(color: AppColor.colorTextBlack),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'terms and condition',
+                  style: CircularStdFont.getFont(
+                          style: CircularStdFontStyle.Book, size: Dimen.x14)
+                      .apply(color: AppColor.colorPrimary),
+                  recognizer: TapGestureRecognizer()..onTap = () {
+                    launch('https://github.com/RelieveID/terms-and-conditions/');
+                  },
+                ),
+                TextSpan(text: ' of use')
+              ]),
         ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: Dimen.x8, bottom: Dimen.x28),
+        child: createButton(),
       ),
     ];
 
