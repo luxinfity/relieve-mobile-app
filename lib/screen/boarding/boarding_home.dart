@@ -19,11 +19,7 @@ class BoardingHomeScreen extends StatelessWidget {
 
   void googleButtonClicked(BuildContext context) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => WalkthroughScreen(
-                  title: 'Alif',
-                )));
+        context, MaterialPageRoute(builder: (context) => WalkthroughScreen()));
   }
 
   void registerButtonClicked(BuildContext context) {
