@@ -6,7 +6,7 @@ import '../../widget/item/standard_button.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
-import '../dashboard/dashboard.dart';
+import '../walkthrough/walkthrough.dart';
 
 class BoardingLoginScreen extends StatelessWidget {
   final String title;
@@ -14,13 +14,13 @@ class BoardingLoginScreen extends StatelessWidget {
   BoardingLoginScreen({Key key, this.title}) : super(key: key);
 
   void onLoginClick(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (builder) => WalkthroughScreen()));
   }
 
   void registerButtonClicked(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
   }
 
   @override

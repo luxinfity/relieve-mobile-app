@@ -24,13 +24,29 @@ class BoardingRegisterState extends State {
     if (steps == 0) {
       setState(() => steps = 1);
     } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WalkthroughPage(
-                    title: 'Alif',
-                  )));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => WalkthroughScreen()));
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> children = <Widget>[
+      createTitle(),
+      Expanded(
+        child: Container(),
+      ),
+      buildTnCNotif(),
+      createButton(),
+    ].where((widget) => widget != null).toList();
+
+    // add forms
+    children.insertAll(1, createForm());
+
+    return RelieveScaffold(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        hasBackButton: true,
+        childs: children);
   }
 
   Widget createTitle() {
@@ -94,26 +110,6 @@ class BoardingRegisterState extends State {
         maxLines: 1,
       ),
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> children = <Widget>[
-      createTitle(),
-      Expanded(
-        child: Container(),
-      ),
-      buildTnCNotif(),
-      createButton(),
-    ].where((widget) => widget != null).toList();
-
-    // add forms
-    children.insertAll(1, createForm());
-
-    return RelieveScaffold(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        hasBackButton: true,
-        childs: children);
   }
 
   Padding buildTnCNotif() {

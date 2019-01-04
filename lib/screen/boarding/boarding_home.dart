@@ -13,22 +13,22 @@ class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);
 
   void loginButtonClicked(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
   }
 
   void googleButtonClicked(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => WalkthroughPage(
+            builder: (context) => WalkthroughScreen(
                   title: 'Alif',
                 )));
   }
 
   void registerButtonClicked(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
   }
 
   @override
