@@ -8,10 +8,10 @@ import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
 import '../dashboard/dashboard.dart';
 
-class BoardingLogin extends StatelessWidget {
+class BoardingLoginScreen extends StatelessWidget {
   final String title;
 
-  BoardingLogin({Key key, this.title}) : super(key: key);
+  BoardingLoginScreen({Key key, this.title}) : super(key: key);
 
   void onLoginClick(BuildContext context) {
     Navigator.push(
@@ -20,7 +20,7 @@ class BoardingLogin extends StatelessWidget {
 
   void registerButtonClicked(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BoardingRegister()));
+        context, MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
   }
 
   @override

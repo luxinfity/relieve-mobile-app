@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           fontFamily: CircularStdFont.defaultName,
         ),
-        home: BoardingHome());
+        home: BoardingHomeScreen());
   }
 }

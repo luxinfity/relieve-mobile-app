@@ -8,8 +8,8 @@ import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 
-class BoardingRegister extends StatefulWidget {
-  BoardingRegister({Key key}) : super(key: key);
+class BoardingRegisterScreen extends StatefulWidget {
+  BoardingRegisterScreen({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

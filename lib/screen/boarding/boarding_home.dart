@@ -9,12 +9,12 @@ import 'components/boarding_register_here.dart';
 import 'boarding_login.dart';
 import 'boarding_register.dart';
 
-class BoardingHome extends StatelessWidget {
-  BoardingHome({Key key}) : super(key: key);
+class BoardingHomeScreen extends StatelessWidget {
+  BoardingHomeScreen({Key key}) : super(key: key);
 
   void loginButtonClicked(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BoardingLogin()));
+        context, MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
   }
 
   void googleButtonClicked(BuildContext context) {
@@ -28,7 +28,7 @@ class BoardingHome extends StatelessWidget {
 
   void registerButtonClicked(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => BoardingRegister()));
+        context, MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
   }
 
   @override
