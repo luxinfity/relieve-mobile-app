@@ -9,12 +9,12 @@ class RemoteImage {
 
   Image toImage({int width, int height, Color color}) {
     return Image.network(base_url + this.imageName,
-        width: width?.toDouble(), height: height?.toDouble(), color: color);    
+        width: width?.toDouble(), height: height?.toDouble(), color: color);
   }
 
   static const base_url =
       'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/';
-      
+
   static RemoteImage get boardingHome => RemoteImage('sketch-01.png');
   static RemoteImage get boardingLogin => RemoteImage('sketchh-02.png');
 }
@@ -29,6 +29,10 @@ class LocalImage {
         width: width?.toDouble(), height: height?.toDouble(), color: color);
   }
 
+  static LocalImage get ic_google => LocalImage('ic_google');
+  static LocalImage get ic_back_arrow => LocalImage('ic_back_arrow');
+
+  // dasboard
   static LocalImage get ic_call => LocalImage('ic_call');
   static LocalImage get ic_chat => LocalImage('ic_chat');
   static LocalImage get ic_discover => LocalImage('ic_discover');

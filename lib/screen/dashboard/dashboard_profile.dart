@@ -30,13 +30,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(LocalImage.ic_home), title: Text('Home'))
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: 0,
+      //   items: [
+      //     BottomNavigationBarItem(
+      //         icon: Icon(LocalImage.ic_home), title: Text('Home'))
+      //   ],
+      // ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
+import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 
@@ -39,142 +42,58 @@ class BoardingRegisterState extends State {
   }
 
   Widget createButton() {
-    if (steps == 0) {
-      return Text(
-        'Lanjut',
-        style: CircularStdFont.getFont(
-                size: Dimen.x14, style: CircularStdFontStyle.Medium)
-            .apply(color: Colors.white),
-      );
-    } else {
-      return Text(
-        'Daftar',
-        style: CircularStdFont.getFont(
-                size: Dimen.x14, style: CircularStdFontStyle.Medium)
-            .apply(color: Colors.white),
-      );
-    }
+    return Padding(
+      padding: const EdgeInsets.only(top: Dimen.x8, bottom: Dimen.x28),
+      child: StandardButton(
+        text: steps == 0 ? 'Lanjut' : 'Daftar',
+        backgroundColor: AppColor.colorPrimary,
+        buttonClick: () => onButtonClick(context),
+      ),
+    );
   }
 
   List<Widget> createForm() {
     if (steps == 0) {
       return <Widget>[
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(left: Dimen.x24, right: Dimen.x24),
-          child: TextFormField(
-            key: Key('emailInput'),
-            decoration: InputDecoration(
-              labelText: 'Email',
-            ),
-            maxLines: 1,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          margin:
-              EdgeInsets.only(top: Dimen.x6, left: Dimen.x24, right: Dimen.x24),
-          child: TextFormField(
-            key: Key('usernameInput'),
-            decoration: InputDecoration(
-              labelText: 'Username',
-            ),
-            maxLines: 1,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(
-            top: Dimen.x6,
-            left: Dimen.x24,
-            right: Dimen.x24,
-          ),
-          child: TextFormField(
-            key: Key('passwordInput'),
-            decoration: InputDecoration(
-              labelText: 'Password',
-            ),
-            obscureText: true,
-            maxLines: 1,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(
-            top: Dimen.x6,
-            left: Dimen.x24,
-            right: Dimen.x24,
-            bottom: Dimen.x24,
-          ),
-          child: TextFormField(
-            key: Key('confirmPassInput'),
-            decoration: InputDecoration(
-              labelText: 'Ketik Ulang Password',
-            ),
-            obscureText: true,
-            maxLines: 1,
-          ),
-        ),
+        buildInputForm(key: 'emailInput', label: 'Email'),
+        buildInputForm(key: 'usernameInput', label: 'Username'),
+        buildInputForm(
+            key: 'passwordInput', label: 'Password', obscureText: true),
+        buildInputForm(
+            key: 'confirmPassInput',
+            label: 'PassKetik Ulang Passwordword',
+            obscureText: true),
       ];
     } else {
       return <Widget>[
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(left: Dimen.x24, right: Dimen.x24),
-          child: TextFormField(
-            key: Key('nameInput'),
-            decoration: InputDecoration(
-              labelText: 'Nama Lengkap',
-            ),
-            maxLines: 1,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          margin:
-              EdgeInsets.only(top: Dimen.x6, left: Dimen.x24, right: Dimen.x24),
-          child: TextFormField(
-            key: Key('phoneInput'),
-            decoration: InputDecoration(
-              prefixText: '+62 ',
-              labelText: 'Nomor Telpon',
-            ),
-            maxLines: 1,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(
-            top: Dimen.x6,
-            left: Dimen.x24,
-            right: Dimen.x24,
-          ),
-          child: TextFormField(
-            key: Key('dobInput'),
-            decoration: InputDecoration(
-              labelText: 'Tanggal Lahir',
-            ),
-            maxLines: 1,
-          ),
-        ),
-        Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(
-            top: Dimen.x6,
-            left: Dimen.x24,
-            right: Dimen.x24,
-            bottom: Dimen.x24,
-          ),
-          child: TextFormField(
-            key: Key('genderInput'),
-            decoration: InputDecoration(
-              labelText: 'Gender',
-            ),
-            maxLines: 1,
-          ),
-        ),
+        buildInputForm(key: 'nameInput', label: 'Nama Lengkap'),
+        buildInputForm(
+            key: 'phoneInput', prefix: '+62 ', label: 'Nomor Telpon'),
+        buildInputForm(key: 'dobInput', label: 'Tanggal Lahir'),
+        buildInputForm(key: 'genderInput', label: 'Gender'),
       ];
     }
+  }
+
+  Container buildInputForm(
+      {String key, String prefix, String label, bool obscureText = false}) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(
+        top: Dimen.x6,
+        left: Dimen.x24,
+        right: Dimen.x24,
+      ),
+      child: TextFormField(
+        key: Key(key),
+        obscureText: obscureText,
+        decoration: InputDecoration(
+          prefixText: prefix,
+          labelText: label,
+        ),
+        maxLines: 1,
+      ),
+    );
   }
 
   @override
@@ -184,27 +103,9 @@ class BoardingRegisterState extends State {
       Expanded(
         child: Container(),
       ),
-      Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(
-            top: Dimen.x8,
-            left: Dimen.x21,
-            right: Dimen.x21,
-            bottom: Dimen.x28),
-        child: RaisedButton(
-          child: createButton(),
-          color: AppColor.colorPrimary,
-          elevation: 1,
-          highlightElevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          padding: EdgeInsets.only(
-            top: Dimen.x16,
-            bottom: Dimen.x16,
-          ),
-          onPressed: () => onButtonClick(context),
-        ),
-      ),
-    ];
+      buildTnCNotif(),
+      createButton(),
+    ].where((widget) => widget != null).toList();
 
     // add forms
     children.insertAll(1, createForm());
@@ -213,5 +114,37 @@ class BoardingRegisterState extends State {
         crossAxisAlignment: CrossAxisAlignment.start,
         hasBackButton: true,
         childs: children);
+  }
+
+  Padding buildTnCNotif() {
+    if (steps == 0) {
+      return null;
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(left: Dimen.x32, right: Dimen.x32),
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+              text: 'By registering you are accepting our ',
+              style: CircularStdFont.getFont(
+                      style: CircularStdFontStyle.Book, size: Dimen.x14)
+                  .apply(color: AppColor.colorTextBlack),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'terms and condition',
+                  style: CircularStdFont.getFont(
+                          style: CircularStdFontStyle.Book, size: Dimen.x14)
+                      .apply(color: AppColor.colorPrimary),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      launch(
+                          'https://github.com/RelieveID/terms-and-conditions/');
+                    },
+                ),
+                TextSpan(text: ' of use')
+              ]),
+        ),
+      );
+    }
   }
 }
