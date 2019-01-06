@@ -22,10 +22,15 @@ class RelieveBottomNavigationBarState
 
   @override
   Widget build(BuildContext context) {
+    final EdgeInsets padding = MediaQuery.of(context).padding;
     return Container(
-      height: 56,
+      padding: EdgeInsets.only(bottom: padding.bottom),
       color: Colors.white,
-      child: buildRow(),
+      child: Container(
+        height: 56,
+        color: Colors.white,
+        child: buildRow(),
+      ),
     );
   }
 
@@ -77,16 +82,15 @@ class RelieveBottomNavigationBarState
       child: Material(
         color: Colors.blue,
         child: InkWell(
-          onTap: () {
-            if (widget.onPress != null) {
-              widget.onPress(CALL_INDEX, true);
-            }
-          },
-          child: Padding(
-            child: LocalImage.ic_call.toSvg(width: 20, height: 20),
-            padding: EdgeInsets.all(14),
-          )
-        ),
+            onTap: () {
+              if (widget.onPress != null) {
+                widget.onPress(CALL_INDEX, true);
+              }
+            },
+            child: Padding(
+              child: LocalImage.ic_call.toSvg(width: 20, height: 20),
+              padding: EdgeInsets.all(14),
+            )),
       ),
     );
   }

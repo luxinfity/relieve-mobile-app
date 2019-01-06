@@ -18,11 +18,10 @@ class RelieveScaffold extends StatelessWidget {
       this.backIcon,
       this.onBackPressed = defaultBackPressed});
 
-  List<Widget> _createBody(BuildContext context) {
-    final EdgeInsets padding = MediaQuery.of(context).padding;
+  List<Widget> _createBody(BuildContext context, EdgeInsets padding) {
     return <Widget>[
+      // status bar
       Container(
-        // status bar color
         color: AppColor.colorPrimary,
         height: padding.top,
       ),
@@ -39,17 +38,20 @@ class RelieveScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _body = _createBody(context);
+    final EdgeInsets padding = MediaQuery.of(context).padding;
+    final _body = _createBody(context, padding);
 
     if (hasBackButton) _body.add(_createBackButton(context));
-
     _body.addAll(childs);
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: crossAxisAlignment,
-        children: _body,
+      body: Container(
+        padding: EdgeInsets.only(left: padding.left, right: padding.right),
+        child: Column(
+          crossAxisAlignment: crossAxisAlignment,
+          children: _body,
+        ),
       ),
     );
   }
