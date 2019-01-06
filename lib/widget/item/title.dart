@@ -17,17 +17,14 @@ class ThemedTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(title,
-              style: CircularStdFont.getFont(
-                  style: CircularStdFontStyle.Bold, size: 22)),
+          Text(title, style: CircularStdFont.bold.getStyle(size: 22)),
           SizedBox(
             height: 6,
           ),
           Text(
             subtitle,
-            style: CircularStdFont.getFont(
-                    style: CircularStdFontStyle.Book, size: 14)
-                .apply(color: AppColor.colorTextGrey),
+            style: CircularStdFont.book
+                .getStyle(size: 14, color: AppColor.colorTextGrey),
           ),
         ],
       ),

@@ -19,12 +19,11 @@ class RelieveTitle extends StatelessWidget {
       width: double.infinity,
       child: Text(
         'Relieve',
-        style: CircularStdFont.getFont(
-                style: CircularStdFontStyle.Black, size: Dimen.x18)
-            .apply(
-                color: (style == RelieveTitleStyle.dark)
-                    ? AppColor.colorPrimary
-                    : Colors.white),
+        style: CircularStdFont.black.getStyle(
+            size: Dimen.x18,
+            color: (style == RelieveTitleStyle.dark)
+                ? AppColor.colorPrimary
+                : Colors.white),
       ),
     );
   }

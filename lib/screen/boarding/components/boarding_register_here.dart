@@ -13,14 +13,12 @@ class RegisterHere extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text('Don’t have an account ?',
-            style: CircularStdFont.getFont(
-                    size: Dimen.x14, style: CircularStdFontStyle.Book)
-                .apply(color: AppColor.colorTextGrey)),
+            style: CircularStdFont.book
+                .getStyle(size: Dimen.x14, color: AppColor.colorTextGrey)),
         FlatButton(
           child: Text('Register Here',
-              style: CircularStdFont.getFont(
-                      size: Dimen.x14, style: CircularStdFontStyle.Book)
-                  .apply(color: AppColor.colorPrimary)),
+              style: CircularStdFont.book
+                  .getStyle(size: Dimen.x14, color: AppColor.colorPrimary)),
           onPressed: onClick,
         )
       ],

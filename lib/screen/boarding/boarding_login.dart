@@ -99,10 +99,11 @@ class BoardingLoginScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         FlatButton(
-          child: Text('Forgot Password?',
-              style: CircularStdFont.getFont(
-                      size: Dimen.x14, style: CircularStdFontStyle.Book)
-                  .apply(color: AppColor.colorPrimary)),
+          child: Text(
+            'Forgot Password?',
+            style: CircularStdFont.book
+                .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
+          ),
           onPressed: () {},
         ),
       ],

@@ -101,19 +101,19 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       case 0:
         return Text(
           'Get more aware of a disaster',
-          style: CircularStdFont.getFont(style: CircularStdFontStyle.Bold, size: Dimen.x18),
+          style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 1:
         return Text('Make sure they are save',
-          style: CircularStdFont.getFont(style: CircularStdFontStyle.Bold, size: Dimen.x18),
+          style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 2:
         return Text('Help for each other',
-          style: CircularStdFont.getFont(style: CircularStdFontStyle.Bold, size: Dimen.x18),
+          style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       default:
         return Text('All in one Emergency toolkit',
-          style: CircularStdFont.getFont(style: CircularStdFontStyle.Bold, size: Dimen.x18),
+          style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
     }
   }

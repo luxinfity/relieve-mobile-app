@@ -49,18 +49,16 @@ class StandardButton extends StatelessWidget {
               flex: 2,
               child: Text(
                 text,
-                style: CircularStdFont.getFont(
-                        size: Dimen.x14, style: CircularStdFontStyle.Medium)
-                    .apply(color: textColor),
+                style: CircularStdFont.medium
+                    .getStyle(size: Dimen.x14, color: textColor),
               ))
         ],
       );
     } else {
       return Text(
         text,
-        style: CircularStdFont.getFont(
-                size: Dimen.x14, style: CircularStdFontStyle.Medium)
-            .apply(color: textColor),
+        style:
+            CircularStdFont.medium.getStyle(size: Dimen.x14, color: textColor),
       );
     }
   }

@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           primaryColorDark: AppColor.colorPrimaryDark,
           accentColor: AppColor.colorAccent,
           backgroundColor: Colors.white,
-          fontFamily: CircularStdFont.defaultName,
+          fontFamily: CircularStdFont.book.fontFamily,
         ),
         home: BoardingHomeScreen());
   }

@@ -122,15 +122,13 @@ class BoardingRegisterState extends State {
           textAlign: TextAlign.center,
           text: TextSpan(
               text: 'By registering you are accepting our ',
-              style: CircularStdFont.getFont(
-                      style: CircularStdFontStyle.Book, size: Dimen.x14)
-                  .apply(color: AppColor.colorTextBlack),
+              style: CircularStdFont.book
+                  .getStyle(size: Dimen.x14, color: AppColor.colorTextBlack),
               children: <TextSpan>[
                 TextSpan(
                   text: 'terms and condition',
-                  style: CircularStdFont.getFont(
-                          style: CircularStdFontStyle.Book, size: Dimen.x14)
-                      .apply(color: AppColor.colorPrimary),
+                  style: CircularStdFont.book
+                      .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       launch(
