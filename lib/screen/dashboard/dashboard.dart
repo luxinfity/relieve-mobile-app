@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'components/dashboard_bottom_bar.dart';
 
+import '../../widget/relieve_scaffold.dart';
 import '../call/call.dart';
+import './dashboard_home.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key, this.title}) : super(key: key);
@@ -22,10 +24,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Dashboard'),
-      ),
+    return RelieveScaffold(
       bottomNavigationBar: RelieveBottomNavigationBar(onPress: (index, isCall) {
         if (isCall) {
           _goToCall(context);
@@ -35,14 +34,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
           });
         }
       }),
-      body: buildBody(),
+      childs: <Widget>[
+        buildBody(),
+      ],
     );
   }
 
-  Widget buildContent() {
+  Widget buildBody() {
     switch (currentIndex) {
       case 0:
-        return Text('This is home');
+        return DashboardHomeScreen();
       case 1:
         return Text('This is discover');
       case 3:
@@ -52,9 +53,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
       default:
         return Text('Dashboard');
     }
-  }
-
-  Center buildBody() {
-    return Center(child: buildContent());
   }
 }

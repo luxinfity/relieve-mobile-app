@@ -8,6 +8,7 @@ class RelieveScaffold extends StatelessWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final bool hasBackButton;
   final LocalImage backIcon;
+  final Widget bottomNavigationBar;
   final VoidContextCallback onBackPressed;
 
   const RelieveScaffold(
@@ -16,6 +17,7 @@ class RelieveScaffold extends StatelessWidget {
       this.hasBackButton = false,
       this.crossAxisAlignment = CrossAxisAlignment.center,
       this.backIcon,
+      this.bottomNavigationBar,
       this.onBackPressed = defaultBackPressed});
 
   List<Widget> _createBody(BuildContext context, EdgeInsets padding) {
@@ -46,6 +48,7 @@ class RelieveScaffold extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: bottomNavigationBar,
       body: Container(
         padding: EdgeInsets.only(left: padding.left, right: padding.right),
         child: Column(
