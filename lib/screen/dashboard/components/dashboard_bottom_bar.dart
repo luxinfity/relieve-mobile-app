@@ -24,14 +24,18 @@ class RelieveBottomNavigationBarState
   Widget build(BuildContext context) {
     final EdgeInsets padding = MediaQuery.of(context).padding;
     return Container(
-      padding: EdgeInsets.only(bottom: padding.bottom),
-      color: Colors.white,
-      child: Container(
-        height: 56,
+        padding: EdgeInsets.only(bottom: padding.bottom),
         color: Colors.white,
-        child: buildRow(),
-      ),
-    );
+        child: Wrap(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Divider(height: 0.5),
+                Container(height: 56, color: Colors.white, child: buildRow()),
+              ],
+            ),
+          ],
+        ));
   }
 
   Widget buildItem(int index, LocalImage icon, String text) {
