@@ -73,9 +73,8 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
   PageIndicator buildPageIndicator(int count) {
     return PageIndicator(
       layout: PageIndicatorLayout.WARM,
-      size: Dimen.x12,
+      size: Dimen.x8,
       controller: _controller,
-      space: Dimen.x6,
       count: count,
       color: AppColor.colorEmptyRect,
       activeColor: AppColor.colorPrimary,
