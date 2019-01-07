@@ -2,15 +2,26 @@ import 'package:flutter/material.dart';
 
 /// Use to wrap color, so not need to add `A` value
 class HexColor extends Color {
-  static int _getColorFromHex(String hexColor) {
+  static int _getColorFromHex(
+    String hexColor,
+    double transparancy,
+  ) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    transparancy = transparancy <= 1 ? transparancy : 1;
+    transparancy = transparancy >= 0 ? transparancy : 0;
+    final hexTransparancy = (transparancy  * 255).toInt().toRadixString(16);
+
     if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
+      hexColor = hexTransparancy + hexColor;
     }
     return int.parse(hexColor, radix: 16);
   }
 
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+  final String hexColor;
+  HexColor(
+    this.hexColor, {
+    double transparancy = 1.0, // 100% or FF
+  }) : super(_getColorFromHex(hexColor, transparancy));
 }
 
 class AppColor {

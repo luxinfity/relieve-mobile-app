@@ -25,6 +25,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return RelieveScaffold(
+      hasAppBarScreen: currentIndex == 0, // only first screen has app bar
       bottomNavigationBar: RelieveBottomNavigationBar(onPress: (index, isCall) {
         if (isCall) {
           _goToCall(context);

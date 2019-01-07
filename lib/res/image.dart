@@ -7,9 +7,14 @@ class RemoteImage {
 
   RemoteImage(this.imageName);
 
-  Image toImage({int width, int height, Color color}) {
-    return Image.network(base_url + this.imageName,
-        width: width?.toDouble(), height: height?.toDouble(), color: color);
+  Image toImage({int width, int height, Color color, BoxFit fit}) {
+    return Image.network(
+      base_url + this.imageName,
+      width: width?.toDouble(),
+      height: height?.toDouble(),
+      color: color,
+      fit: fit,
+    );
   }
 
   static const base_url =
@@ -17,6 +22,7 @@ class RemoteImage {
 
   static RemoteImage get boardingHome => RemoteImage('sketch-01.png');
   static RemoteImage get boardingLogin => RemoteImage('sketchh-02.png');
+  static RemoteImage get bg_bali => RemoteImage('bg_bali.png');
 }
 
 class LocalImage {
@@ -38,4 +44,7 @@ class LocalImage {
   static LocalImage get ic_discover => LocalImage('ic_discover');
   static LocalImage get ic_home => LocalImage('ic_home');
   static LocalImage get ic_profile => LocalImage('ic_profile');
+
+  // items
+  static LocalImage get ic_live => LocalImage('ic_live');
 }

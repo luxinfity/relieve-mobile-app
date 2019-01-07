@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 
 import '../dashboard/dashboard.dart';
 import '../../res/res.dart';
-// import '../../res/image.dart';
 import '../../res/color.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../widget/item/standard_button.dart';
@@ -26,8 +26,10 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       _controller.nextPage(
           duration: Duration(milliseconds: 300), curve: Curves.easeIn);
     } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (buikder) => DashboardScreen()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (builder) => DashboardScreen()),
+      );
     }
   }
 
@@ -42,28 +44,42 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
   @override
   Widget build(BuildContext context) {
     final EdgeInsets padding = MediaQuery.of(context).padding;
+    final walkThroughItem = [
+      buildWalkthroughItem(0),
+      buildWalkthroughItem(1),
+      buildWalkthroughItem(2),
+      buildWalkthroughItem(3),
+    ];
     return RelieveScaffold(
       crossAxisAlignment: CrossAxisAlignment.start,
-      // hasBackButton: true,
       childs: <Widget>[
         Expanded(
           child: PageView(
             controller: _controller,
             scrollDirection: Axis.horizontal,
             onPageChanged: onPageChanged,
-            children: <Widget>[
-              buildWalkthroughItem(0),
-              buildWalkthroughItem(1),
-              buildWalkthroughItem(2),
-              buildWalkthroughItem(3),
-            ],
+            children: walkThroughItem,
           ),
+        ),
+        Center(
+          child: buildPageIndicator(walkThroughItem.length),
         ),
         Padding(
           padding: EdgeInsets.only(bottom: Dimen.x16 + padding.bottom),
           child: buildActionButton(context),
         )
       ],
+    );
+  }
+
+  PageIndicator buildPageIndicator(int count) {
+    return PageIndicator(
+      layout: PageIndicatorLayout.WARM,
+      size: Dimen.x8,
+      controller: _controller,
+      count: count,
+      color: AppColor.colorEmptyRect,
+      activeColor: AppColor.colorPrimary,
     );
   }
 
@@ -86,8 +102,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
             child: buildWalkthroughTitle(position),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                left: Dimen.x28, right: Dimen.x28),
+            padding: const EdgeInsets.only(left: Dimen.x28, right: Dimen.x28),
             child: buildWalkthroughText(position),
           ),
         ],
@@ -104,15 +119,18 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 1:
-        return Text('Make sure they are save',
+        return Text(
+          'Make sure they are save',
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 2:
-        return Text('Help for each other',
+        return Text(
+          'Help for each other',
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       default:
-        return Text('All in one Emergency toolkit',
+        return Text(
+          'All in one Emergency toolkit',
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
     }

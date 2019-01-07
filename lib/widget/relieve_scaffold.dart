@@ -7,6 +7,7 @@ class RelieveScaffold extends StatelessWidget {
   final List<Widget> childs;
   final CrossAxisAlignment crossAxisAlignment;
   final bool hasBackButton;
+  final bool hasAppBarScreen;
   final LocalImage backIcon;
   final Widget bottomNavigationBar;
   final VoidContextCallback onBackPressed;
@@ -15,6 +16,7 @@ class RelieveScaffold extends StatelessWidget {
       {Key key,
       @required this.childs,
       this.hasBackButton = false,
+      this.hasAppBarScreen = false,
       this.crossAxisAlignment = CrossAxisAlignment.center,
       this.backIcon,
       this.bottomNavigationBar,
@@ -23,11 +25,13 @@ class RelieveScaffold extends StatelessWidget {
   List<Widget> _createBody(BuildContext context, EdgeInsets padding) {
     return <Widget>[
       // status bar
-      Container(
-        color: AppColor.colorPrimary,
-        height: padding.top,
-      ),
-    ];
+      hasAppBarScreen
+          ? null
+          : Container(
+              color: AppColor.colorPrimary,
+              height: padding.top,
+            ),
+    ].where((widget) => widget != null).toList();
   }
 
   Widget _createBackButton(BuildContext context) {

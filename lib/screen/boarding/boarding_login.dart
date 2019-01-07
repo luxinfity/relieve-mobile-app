@@ -14,8 +14,11 @@ class BoardingLoginScreen extends StatelessWidget {
   BoardingLoginScreen({Key key, this.title}) : super(key: key);
 
   void onLoginClick(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => WalkthroughScreen()));
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+      (_) => false, // clean all back stack
+    );
   }
 
   void registerButtonClicked(BuildContext context) {
