@@ -26,8 +26,10 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
       _controller.nextPage(
           duration: Duration(milliseconds: 300), curve: Curves.easeIn);
     } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (buikder) => DashboardScreen()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (builder) => DashboardScreen()),
+      );
     }
   }
 

@@ -24,8 +24,11 @@ class BoardingRegisterState extends State {
     if (steps == 0) {
       setState(() => steps = 1);
     } else {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => WalkthroughScreen()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+        (_) => false, // clean all back stack
+      );
     }
   }
 
