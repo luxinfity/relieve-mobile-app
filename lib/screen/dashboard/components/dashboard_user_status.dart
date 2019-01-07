@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../res/font.dart';
-import '../../../res/color.dart';
-import '../../../res/image.dart';
-import '../../../res/numbers.dart';
+import '../../../res/res.dart';
 import '../../dashboard/components/dashboard_title.dart';
 
 class Greeting extends StatelessWidget {
@@ -129,7 +126,6 @@ class UserAppBar extends StatelessWidget {
   }
 
   Container buildBlueLayer() {
-    16.toRadixString(16);
     return Container(
       color: HexColor(
         AppColor.colorPrimary.hexColor,

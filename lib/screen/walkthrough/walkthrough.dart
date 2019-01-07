@@ -3,7 +3,6 @@ import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 
 import '../dashboard/dashboard.dart';
 import '../../res/res.dart';
-import '../../res/color.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../widget/item/standard_button.dart';
 

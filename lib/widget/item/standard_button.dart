@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
-import '../../res/image.dart';
 
 class StandardButton extends StatelessWidget {
   final String text;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../res/font.dart';
-import '../../res/color.dart';
+import '../../res/res.dart';
 
 class ThemedTitle extends StatelessWidget {
   final String title;
@@ -13,7 +12,12 @@ class ThemedTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(left: 26, right: 26, top: 8, bottom: 8),
+      padding: EdgeInsets.only(
+        left: Dimen.x16,
+        right: Dimen.x16,
+        top: Dimen.x8,
+        bottom: Dimen.x8,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
