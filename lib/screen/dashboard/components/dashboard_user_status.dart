@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../res/numbers.dart';
 import '../../../res/font.dart';
+import '../../../res/color.dart';
+import '../../../res/image.dart';
+import '../../../res/numbers.dart';
 import '../../dashboard/components/dashboard_title.dart';
 
 class Greeting extends StatelessWidget {
@@ -20,13 +22,60 @@ class Greeting extends StatelessWidget {
         children: <Widget>[
           Text(
             'Halo',
-            style: CircularStdFont.book.getStyle(size: Dimen.x21),
+            style: CircularStdFont.book
+                .getStyle(size: Dimen.x24)
+                .apply(color: Colors.white),
           ),
           Container(height: Dimen.x4),
           Text(
             name,
-            style: CircularStdFont.black.getStyle(size: Dimen.x21),
+            style: CircularStdFont.black
+                .getStyle(size: Dimen.x24)
+                .apply(color: Colors.white),
           )
+        ],
+      ),
+    );
+  }
+}
+
+class UserCurrentLocation extends StatelessWidget {
+  final String location;
+  final bool isPersonSafe;
+
+  const UserCurrentLocation({
+    Key key,
+    this.location,
+    this.isPersonSafe,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(
+        horizontal: Dimen.x16,
+        vertical: Dimen.x6,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(
+              top: Dimen.x18,
+              bottom: Dimen.x18,
+              left: Dimen.x21,
+              right: Dimen.x12,
+            ),
+            child: LocalImage.ic_live.toSvg(
+              height: Dimen.x16.toInt(),
+              width: Dimen.x21.toInt(),
+            ),
+          ),
+          Text(
+            location,
+            style: CircularStdFont.medium
+                .getStyle(size: Dimen.x16, color: AppColor.colorPrimary),
+          ),
         ],
       ),
     );
@@ -47,28 +96,54 @@ class UserAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return AppBar(
-    //   title: Text('Alof'),
-    // );
-    // return SliverAppBar();
+    FlexibleSpaceBar();
     return SliverAppBar(
-      expandedHeight: 200.0,
+      expandedHeight: 250,
       floating: false,
       pinned: true,
-      title: RelieveTitle(style: RelieveTitleStyle.light,),
-      
+      centerTitle: false,
+      title: RelieveTitle(
+        style: RelieveTitleStyle.light,
+      ),
       flexibleSpace: FlexibleSpaceBar(
-          // centerTitle: true,
-          // title: Text("Collapsing Toolbar",
-          //     style: TextStyle(
-          //       color: Colors.white,
-          //       fontSize: 16.0,
-          //     )),
-          // collapseMode: CollapseMode.parallax,
-          background: Image.network(
-        "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
+        background: Stack(
+          children: <Widget>[
+            buildBgImage(),
+            buildBlueLayer(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Greeting(name: name),
+                Padding(
+                  padding: EdgeInsets.only(top: Dimen.x36, bottom: Dimen.x18),
+                  child: UserCurrentLocation(
+                    location: location,
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildBlueLayer() {
+    16.toRadixString(16);
+    return Container(
+      color: HexColor(
+        AppColor.colorPrimary.hexColor,
+        transparancy: 0.65,
+      ),
+    );
+  }
+
+  Container buildBgImage() {
+    return Container(
+      width: double.infinity,
+      child: RemoteImage.bg_bali.toImage(
         fit: BoxFit.cover,
-      )),
+      ),
     );
   }
 }
