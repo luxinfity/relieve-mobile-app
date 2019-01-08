@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './components/dashboard_user_status.dart';
+import '../../widget/item/title.dart';
+import '../../res/numbers.dart';
 
 class DashboardHomeScreen extends StatefulWidget {
   DashboardHomeScreen({Key key}) : super(key: key);
@@ -23,23 +25,27 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
             )
           ];
         },
-        body: Text('alif'),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: Dimen.x16),
+              child: ThemedTitle(
+                title: 'Daftar Kerabat',
+                subtitle:
+                    'Pantau kondisi kerabat terdekat anda dimanapun berada',
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: Dimen.x16),
+              child: ThemedTitle(
+                title: 'Discover',
+                subtitle:
+                    'Update informasi terkini bencana di seluruh Indonesia',
+              ),
+            )
+          ],
+        ),
       ),
     );
-    // return NestedScrollView(
-    //   headerSliverBuilder: (context, innerBoxIsScrolled) {
-    //     return <Widget>[
-    //       // Text('akbar', key: Key('ee'),),
-    //     ];
-    //   },
-    //   body: Text('alif', key: Key('11'),),
-    // );
-    // return Column(
-    //   children: <Widget>[
-    //     // RelieveTitle(),
-    //     // Greeting(name: 'Muh. Alif Akbar'),
-    //     UserAppBar(name: 'Muh. Alif Akbar', location: 'Ubud, Bali', isSafe: true),
-    //   ],
-    // );
   }
 }

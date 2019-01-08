@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../res/font.dart';
-import '../../../res/color.dart';
-import '../../../res/numbers.dart';
+import '../../../res/res.dart';
 
 enum RelieveTitleStyle { light, dark }
 

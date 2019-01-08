@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'screen/boarding/boarding_home.dart';
-import 'res/font.dart';
-import 'res/color.dart';
+import 'res/res.dart';
 
 void main() => runApp(MyApp());
 
