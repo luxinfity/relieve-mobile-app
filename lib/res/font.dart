@@ -4,7 +4,7 @@ class CircularStdFont {
 
   final String fontFamily;
 
-  CircularStdFont({this.fontFamily = 'CircularStdBook'});
+  const CircularStdFont({this.fontFamily = 'CircularStdBook'});
 
   TextStyle getStyle({double size = 12.0, Color color = Colors.black}) {
       return TextStyle(fontFamily: fontFamily, fontSize: size, color: color);

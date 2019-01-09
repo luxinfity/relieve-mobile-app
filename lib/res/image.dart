@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class RemoteImage {
   final String imageName;
 
-  RemoteImage(this.imageName);
+  const RemoteImage(this.imageName);
 
   Image toImage({int width, int height, Color color, BoxFit fit}) {
     return Image.network(
