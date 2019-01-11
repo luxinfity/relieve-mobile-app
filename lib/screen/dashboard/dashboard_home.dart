@@ -39,46 +39,10 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
             ),
             Container(
               color: Colors.deepPurple,
-              height: 82,
+              height: 84,
+              width: double.infinity,
               padding: EdgeInsets.only(top: Dimen.x4, bottom: Dimen.x4),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    width: Dimen.x6,
-                  ),
-                  FamilyItem(
-                    name: 'Alif Akbar',
-                    // imageUrl: 'http://cdn2.tstatic.net/kaltim/foto/bank/images/lisa-blackpink_20180723_135959.jpg',
-                  ),
-                  FamilyItem(
-                    name: 'Esa Firman',
-                    isFine: false,
-                    imageUrl:
-                        'http://cdn2.tstatic.net/kaltim/foto/bank/images/lisa-blackpink_20180723_135959.jpg',
-                  ),
-                  FamilyItem(
-                    name: 'kerabat',
-                  ),
-                  Container(
-                    width: Dimen.x6,
-                  ),
-                  // DashedCircle(
-                  //   dashes: 1,
-                  //   color: AppColor.colorPrimary,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.all(Dimen.x4),
-                  //     child: CircleAvatar(
-                  //       // maxRadius: 28,
-                  //       radius: Dimen.x28,
-                  //       backgroundImage: NetworkImage(
-                  //           'http://cdn2.tstatic.net/kaltim/foto/bank/images/lisa-blackpink_20180723_135959.jpg'),
-                  //     ),
-                  //   ),
-                  //   // dashes: ,
-                  // ),
-                ],
-              ),
+              child: Text('Alif'),
             ),
             Padding(
               padding: const EdgeInsets.only(top: Dimen.x16),
@@ -87,7 +51,14 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                 subtitle:
                     'Update informasi terkini bencana di seluruh Indonesia',
               ),
-            )
+            ),
+            Container(
+              color: Colors.deepPurple,
+              height: 180,
+              width: double.infinity,
+              padding: EdgeInsets.only(top: Dimen.x12, bottom: Dimen.x4),
+              child: Text('Alif'),
+            ),
           ],
         ),
       ),

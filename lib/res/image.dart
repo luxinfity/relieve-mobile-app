@@ -23,6 +23,7 @@ class RemoteImage {
   static RemoteImage get boardingHome => RemoteImage('sketch-01.png');
   static RemoteImage get boardingLogin => RemoteImage('sketchh-02.png');
   static RemoteImage get bg_bali => RemoteImage('bg_bali.png');
+  static RemoteImage get img_dinda => RemoteImage('item_dinda.png');
 }
 
 class LocalImage {
@@ -47,4 +48,5 @@ class LocalImage {
 
   // items
   static LocalImage get ic_live => LocalImage('ic_live');
+  static LocalImage get ic_add_user => LocalImage('ic_add_user');
 }
