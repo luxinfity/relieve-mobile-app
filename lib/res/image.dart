@@ -49,4 +49,5 @@ class LocalImage {
   // items
   static LocalImage get ic_live => LocalImage('ic_live');
   static LocalImage get ic_add_user => LocalImage('ic_add_user');
+  static LocalImage get dashed_circle => LocalImage('dashed_circle');
 }

@@ -37,7 +37,7 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                     'Pantau kondisi kerabat terdekat anda dimanapun berada',
               ),
             ),
-            _createFamilyList(),
+            FamilyItemList(),
             Padding(
               padding: const EdgeInsets.only(top: Dimen.x16),
               child: ThemedTitle(
@@ -50,16 +50,6 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _createFamilyList() {
-    return Container(
-      color: Colors.deepPurple,
-      height: 84,
-      width: double.infinity,
-      padding: EdgeInsets.only(top: Dimen.x4, bottom: Dimen.x4),
-      child: Text('Alif'),
     );
   }
 
