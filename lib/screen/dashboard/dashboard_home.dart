@@ -37,13 +37,7 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                     'Pantau kondisi kerabat terdekat anda dimanapun berada',
               ),
             ),
-            Container(
-              color: Colors.deepPurple,
-              height: 84,
-              width: double.infinity,
-              padding: EdgeInsets.only(top: Dimen.x4, bottom: Dimen.x4),
-              child: Text('Alif'),
-            ),
+            _createFamilyList(),
             Padding(
               padding: const EdgeInsets.only(top: Dimen.x16),
               child: ThemedTitle(
@@ -52,16 +46,30 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                     'Update informasi terkini bencana di seluruh Indonesia',
               ),
             ),
-            Container(
-              color: Colors.deepPurple,
-              height: 180,
-              width: double.infinity,
-              padding: EdgeInsets.only(top: Dimen.x12, bottom: Dimen.x4),
-              child: Text('Alif'),
-            ),
+            _createDiscoverList()
           ],
         ),
       ),
+    );
+  }
+
+  Widget _createFamilyList() {
+    return Container(
+      color: Colors.deepPurple,
+      height: 84,
+      width: double.infinity,
+      padding: EdgeInsets.only(top: Dimen.x4, bottom: Dimen.x4),
+      child: Text('Alif'),
+    );
+  }
+
+  Widget _createDiscoverList() {
+    return Container(
+      color: Colors.deepPurple,
+      height: 180,
+      width: double.infinity,
+      padding: EdgeInsets.only(top: Dimen.x12, bottom: Dimen.x4),
+      child: Text('Alif'),
     );
   }
 }

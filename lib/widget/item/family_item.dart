@@ -18,11 +18,34 @@ class FamilyItem extends StatelessWidget {
     this.imageUrl,
   }) : super(key: key);
 
+  Widget _createNormalItem() {
+    return Center(
+      child: Text('Normal'),
+    );
+  }
+
+  Widget _createEmptyItem() {
+    return Center(
+      child: Text('Empty'),
+    );
+  }
+
+  Widget _createAddItem() {
+    return Center(
+      child: Text('Add'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Alif'),
-    );
+    switch (type) {
+      case FamilyItemType.Normal:
+        return _createNormalItem();
+      case FamilyItemType.Empty:
+        return _createEmptyItem();
+      case FamilyItemType.Add:
+        return _createAddItem();
+    }
   }
 
   static FamilyItem empty() {
