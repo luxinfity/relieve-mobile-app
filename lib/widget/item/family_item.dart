@@ -25,15 +25,23 @@ class FamilyItem extends StatelessWidget {
   Widget _createEmptyItem() {
     return Center(
       child: LocalImage.dashed_circle.toSvg(
-        height: 64,
-        width: 64,
+        height: Dimen.x64,
+        width: Dimen.x64,
       ),
     );
   }
 
   Widget _createAddItem() {
-    return Center(
-      child: Text('Add'),
+    return Container(
+      height: Dimen.x64,
+      width: Dimen.x64,
+      child: CircleAvatar(
+        backgroundColor: AppColor.colorPrimary,
+        child: LocalImage.ic_add_user.toSvg(
+          height: Dimen.x18,
+          width: Dimen.x18,
+        ),
+      ),
     );
   }
 
@@ -49,13 +57,16 @@ class FamilyItem extends StatelessWidget {
   }
 
   Widget _createText() {
-    return Text(
-      family.fullName,
-      style: CircularStdFont.medium.getStyle(
-        color: (type == FamilyItemType.Empty)
-            ? AppColor.colorTextGrey
-            : AppColor.colorTextBlack,
-        size: Dimen.x11,
+    return Padding(
+      padding: const EdgeInsets.only(top: Dimen.x4),
+      child: Text(
+        family.fullName,
+        style: CircularStdFont.medium.getStyle(
+          color: (type == FamilyItemType.Empty)
+              ? AppColor.colorTextGrey
+              : AppColor.colorTextBlack,
+          size: Dimen.x11,
+        ),
       ),
     );
   }

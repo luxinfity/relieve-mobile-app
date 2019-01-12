@@ -64,8 +64,8 @@ class UserCurrentLocation extends StatelessWidget {
               right: Dimen.x12,
             ),
             child: LocalImage.ic_live.toSvg(
-              height: Dimen.x16.toInt(),
-              width: Dimen.x21.toInt(),
+              height: Dimen.x16,
+              width: Dimen.x21,
             ),
           ),
           Text(

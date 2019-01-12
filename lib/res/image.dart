@@ -7,11 +7,11 @@ class RemoteImage {
 
   const RemoteImage(this.imageName);
 
-  Image toImage({int width, int height, Color color, BoxFit fit}) {
+  Image toImage({double width, double height, Color color, BoxFit fit}) {
     return Image.network(
       base_url + this.imageName,
-      width: width?.toDouble(),
-      height: height?.toDouble(),
+      width: width,
+      height: height,
       color: color,
       fit: fit,
     );
@@ -31,9 +31,9 @@ class LocalImage {
 
   LocalImage(this.imageName);
 
-  SvgPicture toSvg({int width, int height, Color color}) {
+  SvgPicture toSvg({double width, double height, Color color}) {
     return SvgPicture.asset('images/' + imageName + '.svg',
-        width: width?.toDouble(), height: height?.toDouble(), color: color);
+        width: width, height: height, color: color);
   }
 
   static LocalImage get ic_google => LocalImage('ic_google');
