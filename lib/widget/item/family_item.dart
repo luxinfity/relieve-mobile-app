@@ -21,8 +21,10 @@ class FamilyItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(width: 3),
-        color: Colors.blueAccent,
+        border: Border.all(
+          width: 3,
+          color: AppColor.colorPrimary,
+        ),
       ),
       padding: EdgeInsets.all(2),
       height: Dimen.x64,
@@ -32,8 +34,6 @@ class FamilyItem extends StatelessWidget {
           child: Ink.image(
             image: NetworkImage(family.imageUrl),
             fit: BoxFit.cover,
-            // height: 50,
-            // width: 50,
             child: InkWell(
               onTap: onClick,
             ),
@@ -102,9 +102,8 @@ class FamilyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.indigo,
       child: Padding(
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.all(Dimen.x6),
         child: Column(
           children: <Widget>[
             Center(child: _createCircle()),
@@ -145,31 +144,28 @@ class FamilyItemListState extends State {
   List<Family> familyList = [
     Family(
       fullName: 'Ayah',
+      personHealth: PersonHealth.Fine,
       imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
+          'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg',
     ),
     Family(
       fullName: 'Ibu',
+      personHealth: PersonHealth.Bad,
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
     ),
     Family(
       fullName: 'Kak dinda',
       imageUrl:
-          'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/item_dinda.png',
+          'https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg',
     )
   ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.orange,
-      height: 100,
+      height: 94,
       width: double.infinity,
-      padding: EdgeInsets.only(
-        top: Dimen.x4,
-        bottom: Dimen.x4,
-      ),
       child: familyList.isNotEmpty ? _createFilledList() : _createEmptyList(),
     );
 

@@ -6,7 +6,7 @@ class Family {
   final String fullName;
   final String phoneNumber;
   final String imageUrl;
-  final String personHealth;
+  final PersonHealth personHealth;
 
   const Family({
     @required this.fullName,

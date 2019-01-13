@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import './components/dashboard_user_status.dart';
-import '../../network/model/family.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/family_item.dart';
 import '../../res/res.dart';
@@ -29,13 +28,12 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
               _createTitle(
                 'Daftar Kerabat',
                 'Pantau kondisi kerabat terdekat anda dimanapun berada',
-                Dimen.x16,
+                paddingTop: Dimen.x16,
               ),
               FamilyItemList(),
               _createTitle(
                 'Discover',
                 'Update informasi terkini bencana di seluruh Indonesia',
-                0,
               ),
               _createDiscoverList()
             ]),
@@ -45,7 +43,11 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
     );
   }
 
-  Widget _createTitle(String title, String subtitle, double paddingTop) {
+  Widget _createTitle(
+    String title,
+    String subtitle, {
+    double paddingTop = 0.0,
+  }) {
     return Padding(
       padding: EdgeInsets.only(top: paddingTop),
       child: ThemedTitle(
