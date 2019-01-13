@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import './components/dashboard_user_status.dart';
 import '../../widget/item/title.dart';
-import '../../res/numbers.dart';
+import '../../widget/item/family_item.dart';
+import '../../widget/item/disaster_item.dart';
+import '../../res/res.dart';
 
 class DashboardHomeScreen extends StatefulWidget {
   DashboardHomeScreen({Key key}) : super(key: key);
@@ -15,36 +17,44 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: NestedScrollView(
-        headerSliverBuilder: (builder, isNestedScroll) {
-          return <Widget>[
-            UserAppBar(
-              name: 'Muh. Alif Akbar',
-              location: 'Ubud, Bali',
-              isSafe: true,
-            )
-          ];
-        },
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: Dimen.x16),
-              child: ThemedTitle(
-                title: 'Daftar Kerabat',
-                subtitle:
-                    'Pantau kondisi kerabat terdekat anda dimanapun berada',
+      child: CustomScrollView(
+        slivers: <Widget>[
+          UserAppBar(
+            name: 'Muh. Alif Akbar',
+            location: 'Ubud, Bali',
+            isSafe: true,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(<Widget>[
+              _createTitle(
+                'Daftar Kerabat',
+                'Pantau kondisi kerabat terdekat anda dimanapun berada',
+                Dimen.x16,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: Dimen.x16),
-              child: ThemedTitle(
-                title: 'Discover',
-                subtitle:
-                    'Update informasi terkini bencana di seluruh Indonesia',
+              FamilyItemList(),
+              _createTitle(
+                'Discover',
+                'Update informasi terkini bencana di seluruh Indonesia',
+                Dimen.x16,
               ),
-            )
-          ],
-        ),
+              DisasterItemList()
+            ]),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _createTitle(
+    String title,
+    String subtitle,
+    double paddingTop,
+  ) {
+    return Padding(
+      padding: EdgeInsets.only(top: paddingTop),
+      child: ThemedTitle(
+        title: title,
+        subtitle: subtitle,
       ),
     );
   }

@@ -58,14 +58,14 @@ class UserCurrentLocation extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(
-              top: Dimen.x18,
-              bottom: Dimen.x18,
+              top: Dimen.x24,
+              bottom: Dimen.x24,
               left: Dimen.x21,
               right: Dimen.x12,
             ),
             child: LocalImage.ic_live.toSvg(
-              height: Dimen.x16.toInt(),
-              width: Dimen.x21.toInt(),
+              height: Dimen.x16,
+              width: Dimen.x21,
             ),
           ),
           Text(
@@ -93,7 +93,6 @@ class UserAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlexibleSpaceBar();
     return SliverAppBar(
       expandedHeight: 250,
       floating: false,
@@ -112,7 +111,7 @@ class UserAppBar extends StatelessWidget {
               children: <Widget>[
                 Greeting(name: name),
                 Padding(
-                  padding: EdgeInsets.only(top: Dimen.x36, bottom: Dimen.x18),
+                  padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserCurrentLocation(
                     location: location,
                   ),

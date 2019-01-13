@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class RemoteImage {
   final String imageName;
 
-  RemoteImage(this.imageName);
+  const RemoteImage(this.imageName);
 
-  Image toImage({int width, int height, Color color, BoxFit fit}) {
+  Image toImage({double width, double height, Color color, BoxFit fit}) {
     return Image.network(
       base_url + this.imageName,
-      width: width?.toDouble(),
-      height: height?.toDouble(),
+      width: width,
+      height: height,
       color: color,
       fit: fit,
     );
@@ -23,6 +23,7 @@ class RemoteImage {
   static RemoteImage get boardingHome => RemoteImage('sketch-01.png');
   static RemoteImage get boardingLogin => RemoteImage('sketchh-02.png');
   static RemoteImage get bg_bali => RemoteImage('bg_bali.png');
+  static RemoteImage get bg_map => RemoteImage('bg_map.png');
 }
 
 class LocalImage {
@@ -30,9 +31,9 @@ class LocalImage {
 
   LocalImage(this.imageName);
 
-  SvgPicture toSvg({int width, int height, Color color}) {
+  SvgPicture toSvg({double width, double height, Color color}) {
     return SvgPicture.asset('images/' + imageName + '.svg',
-        width: width?.toDouble(), height: height?.toDouble(), color: color);
+        width: width, height: height, color: color);
   }
 
   static LocalImage get ic_google => LocalImage('ic_google');
@@ -47,4 +48,6 @@ class LocalImage {
 
   // items
   static LocalImage get ic_live => LocalImage('ic_live');
+  static LocalImage get ic_add_user => LocalImage('ic_add_user');
+  static LocalImage get dashed_circle => LocalImage('dashed_circle');
 }
