@@ -14,16 +14,6 @@ class DashboardHomeScreen extends StatefulWidget {
 }
 
 class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
-  List<Family> familyList = [
-    Family(fullName: 'Ayah'),
-    Family(fullName: 'Ibu'),
-    Family(
-      fullName: 'Kak dinda',
-      imageUrl:
-          'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/item_dinda.png',
-    )
-  ]; // empty list
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -47,7 +37,7 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                     'Pantau kondisi kerabat terdekat anda dimanapun berada',
               ),
             ),
-            FamilyItemList(familyList: familyList),
+            FamilyItemList(),
             Padding(
               padding: const EdgeInsets.only(top: Dimen.x16),
               child: ThemedTitle(

@@ -8,19 +8,37 @@ enum FamilyItemType { Normal, Empty, Add }
 class FamilyItem extends StatelessWidget {
   final FamilyItemType type;
   final Family family;
+  final VoidCallback onClick;
 
   const FamilyItem({
     Key key,
     this.type,
     this.family,
+    this.onClick,
   }) : super(key: key);
 
   Widget _createNormalItem() {
-    return Center(
-      child: CircleAvatar(
-        child: family.imageUrl == null ? Text(family.initials) : null,
-        backgroundImage: family.imageUrl == null ? null : NetworkImage(family.imageUrl),
-        radius: Dimen.x32,
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(width: 3),
+        color: Colors.blueAccent,
+      ),
+      padding: EdgeInsets.all(2),
+      height: Dimen.x64,
+      width: Dimen.x64,
+      child: ClipOval(
+        child: Material(
+          child: Ink.image(
+            image: NetworkImage(family.imageUrl),
+            fit: BoxFit.cover,
+            // height: 50,
+            // width: 50,
+            child: InkWell(
+              onTap: onClick,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -83,13 +101,16 @@ class FamilyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(Dimen.x6),
-      child: Column(
-        children: <Widget>[
-          Expanded(child: _createCircle()),
-          _createText(),
-        ],
+    return Container(
+      color: Colors.indigo,
+      child: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Column(
+          children: <Widget>[
+            Center(child: _createCircle()),
+            _createText(),
+          ],
+        ),
       ),
     );
   }
@@ -97,30 +118,52 @@ class FamilyItem extends StatelessWidget {
   FamilyItem.empty({
     this.family = const Family(fullName: 'Kerabat'),
     this.type = FamilyItemType.Empty,
+    this.onClick,
   });
 
   FamilyItem.add({
     this.family = const Family(fullName: 'Tambah'),
     this.type = FamilyItemType.Add,
+    this.onClick,
   });
 
   FamilyItem.normal({
     @required this.family,
     this.type = FamilyItemType.Normal,
+    this.onClick,
   });
 }
 
-class FamilyItemList extends StatelessWidget {
-  final List<Family> familyList;
+class FamilyItemList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return FamilyItemListState();
+  }
+}
 
-  const FamilyItemList({
-    Key key,
-    @required this.familyList, // default is empty
-  }) : super(key: key);
+class FamilyItemListState extends State {
+  List<Family> familyList = [
+    Family(
+      fullName: 'Ayah',
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
+    ),
+    Family(
+      fullName: 'Ibu',
+      imageUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
+    ),
+    Family(
+      fullName: 'Kak dinda',
+      imageUrl:
+          'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/item_dinda.png',
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.orange,
       height: 100,
       width: double.infinity,
       padding: EdgeInsets.only(
@@ -129,6 +172,8 @@ class FamilyItemList extends StatelessWidget {
       ),
       child: familyList.isNotEmpty ? _createFilledList() : _createEmptyList(),
     );
+
+    // return familyList.isNotEmpty ? _createFilledList() : _createEmptyList();
   }
 
   Widget _createEmptyList() {
@@ -145,13 +190,27 @@ class FamilyItemList extends StatelessWidget {
   }
 
   Widget _createFilledList() {
-    final content =
-        familyList.map((fam) => FamilyItem.normal(family: fam)).toList();
+    List<Widget> content = [
+      Container(
+        width: Dimen.x12,
+      ),
+    ];
+    familyList.asMap().forEach((index, fam) => content.add(
+          FamilyItem.normal(
+            family: fam,
+            onClick: () => personClick(index),
+          ),
+        ));
     content.add(FamilyItem.add());
 
     return ListView(
+      // shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       children: content,
     );
+  }
+
+  void personClick(int position) {
+    print(position);
   }
 }
