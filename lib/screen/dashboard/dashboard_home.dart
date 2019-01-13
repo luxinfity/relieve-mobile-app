@@ -17,38 +17,40 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: NestedScrollView(
-        headerSliverBuilder: (builder, isNestedScroll) {
-          return <Widget>[
-            UserAppBar(
-              name: 'Muh. Alif Akbar',
-              location: 'Ubud, Bali',
-              isSafe: true,
-            )
-          ];
-        },
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: Dimen.x16),
-              child: ThemedTitle(
-                title: 'Daftar Kerabat',
-                subtitle:
-                    'Pantau kondisi kerabat terdekat anda dimanapun berada',
+      child: CustomScrollView(
+        slivers: <Widget>[
+          UserAppBar(
+            name: 'Muh. Alif Akbar',
+            location: 'Ubud, Bali',
+            isSafe: true,
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(<Widget>[
+              _createTitle(
+                'Daftar Kerabat',
+                'Pantau kondisi kerabat terdekat anda dimanapun berada',
+                Dimen.x16,
               ),
-            ),
-            FamilyItemList(),
-            Padding(
-              padding: const EdgeInsets.only(top: Dimen.x16),
-              child: ThemedTitle(
-                title: 'Discover',
-                subtitle:
-                    'Update informasi terkini bencana di seluruh Indonesia',
+              FamilyItemList(),
+              _createTitle(
+                'Discover',
+                'Update informasi terkini bencana di seluruh Indonesia',
+                0,
               ),
-            ),
-            _createDiscoverList()
-          ],
-        ),
+              _createDiscoverList()
+            ]),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _createTitle(String title, String subtitle, double paddingTop) {
+    return Padding(
+      padding: EdgeInsets.only(top: paddingTop),
+      child: ThemedTitle(
+        title: title,
+        subtitle: subtitle,
       ),
     );
   }

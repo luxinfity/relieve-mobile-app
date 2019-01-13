@@ -93,7 +93,6 @@ class UserAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlexibleSpaceBar();
     return SliverAppBar(
       expandedHeight: 250,
       floating: false,
