@@ -2,6 +2,7 @@ class Dimen {
   static const x4 = 4.0;
   static const x6 = 6.0;
   static const x8 = 8.0;
+  static const x10 = 10.0;
   static const x11 = 11.0;
   static const x12 = 12.0;
   static const x14 = 14.0;

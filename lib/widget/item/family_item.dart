@@ -181,6 +181,9 @@ class FamilyItemListState extends State {
         FamilyItem.add(
           onClick: () => personClick(1),
         ),
+        Container(
+          width: Dimen.x12,
+        ),
       ],
     );
   }
@@ -197,7 +200,12 @@ class FamilyItemListState extends State {
             onClick: () => personClick(index),
           ),
         ));
-    content.add(FamilyItem.add());
+    content.addAll([
+      FamilyItem.add(),
+      Container(
+        width: Dimen.x12,
+      ),
+    ]);
 
     return ListView(
       scrollDirection: Axis.horizontal,
