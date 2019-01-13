@@ -58,8 +58,8 @@ class UserCurrentLocation extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(
-              top: Dimen.x18,
-              bottom: Dimen.x18,
+              top: Dimen.x24,
+              bottom: Dimen.x24,
               left: Dimen.x21,
               right: Dimen.x12,
             ),
@@ -111,7 +111,7 @@ class UserAppBar extends StatelessWidget {
               children: <Widget>[
                 Greeting(name: name),
                 Padding(
-                  padding: EdgeInsets.only(top: Dimen.x36, bottom: Dimen.x18),
+                  padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserCurrentLocation(
                     location: location,
                   ),
