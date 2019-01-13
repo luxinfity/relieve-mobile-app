@@ -57,7 +57,7 @@ class FamilyItem extends StatelessWidget {
       child: Material(
         color: AppColor.colorPrimary,
         child: InkWell(
-          onTap: () {},
+          onTap: onClick,
           child: Container(
             height: Dimen.x64,
             width: Dimen.x64,
@@ -101,15 +101,13 @@ class FamilyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(Dimen.x6),
-        child: Column(
-          children: <Widget>[
-            Center(child: _createCircle()),
-            _createText(),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(Dimen.x6),
+      child: Column(
+        children: <Widget>[
+          Center(child: _createCircle()),
+          _createText(),
+        ],
       ),
     );
   }
@@ -141,7 +139,7 @@ class FamilyItemList extends StatefulWidget {
 }
 
 class FamilyItemListState extends State {
-  List<Family> familyList = [
+  List<Family> _defaultFamilyList = [
     Family(
       fullName: 'Ayah',
       personHealth: PersonHealth.Fine,
@@ -161,6 +159,8 @@ class FamilyItemListState extends State {
     )
   ];
 
+  List<Family> familyList = [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -168,8 +168,6 @@ class FamilyItemListState extends State {
       width: double.infinity,
       child: familyList.isNotEmpty ? _createFilledList() : _createEmptyList(),
     );
-
-    // return familyList.isNotEmpty ? _createFilledList() : _createEmptyList();
   }
 
   Widget _createEmptyList() {
@@ -180,7 +178,9 @@ class FamilyItemListState extends State {
           width: Dimen.x12,
         ),
         FamilyItem.empty(),
-        FamilyItem.add(),
+        FamilyItem.add(
+          onClick: () => personClick(1),
+        ),
       ],
     );
   }
@@ -200,13 +200,18 @@ class FamilyItemListState extends State {
     content.add(FamilyItem.add());
 
     return ListView(
-      // shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       children: content,
     );
   }
 
   void personClick(int position) {
-    print(position);
+    setState(() {
+      if (position == 0) {
+        familyList.clear();
+      } else if (position == 1) {
+        familyList = _defaultFamilyList.toList();
+      }
+    });
   }
 }
