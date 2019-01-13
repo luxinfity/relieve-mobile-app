@@ -32,14 +32,21 @@ class FamilyItem extends StatelessWidget {
   }
 
   Widget _createAddItem() {
-    return Container(
-      height: Dimen.x64,
-      width: Dimen.x64,
-      child: CircleAvatar(
-        backgroundColor: AppColor.colorPrimary,
-        child: LocalImage.ic_add_user.toSvg(
-          height: Dimen.x18,
-          width: Dimen.x18,
+    return ClipOval(
+      child: Material(
+        color: AppColor.colorPrimary,
+        child: InkWell(
+          onTap: () {},
+          child: Container(
+            height: Dimen.x64,
+            width: Dimen.x64,
+            child: Center(
+              child: LocalImage.ic_add_user.toSvg(
+                height: Dimen.x18,
+                width: Dimen.x18,
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -111,10 +118,12 @@ class FamilyItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.cyanAccent,
       height: 100,
       width: double.infinity,
-      padding: EdgeInsets.only(top: Dimen.x4, bottom: Dimen.x4),
+      padding: EdgeInsets.only(
+        top: Dimen.x4,
+        bottom: Dimen.x4,
+      ),
       child: familyList.isNotEmpty ? _createFilledList() : _createEmptyList(),
     );
   }
@@ -123,6 +132,9 @@ class FamilyItemList extends StatelessWidget {
     return ListView(
       scrollDirection: Axis.horizontal,
       children: <Widget>[
+        Container(
+          width: Dimen.x12,
+        ),
         FamilyItem.empty(),
         FamilyItem.add(),
       ],
