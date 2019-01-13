@@ -17,9 +17,10 @@ class FamilyItem extends StatelessWidget {
 
   Widget _createNormalItem() {
     return Center(
-      child: LocalImage.dashed_circle.toSvg(
-        height: Dimen.x64,
-        width: Dimen.x64,
+      child: CircleAvatar(
+        child: family.imageUrl == null ? Text(family.initials) : null,
+        backgroundImage: family.imageUrl == null ? null : NetworkImage(family.imageUrl),
+        radius: Dimen.x32,
       ),
     );
   }
@@ -145,7 +146,6 @@ class FamilyItemList extends StatelessWidget {
 
   Widget _createFilledList() {
     final content =
-        // familyList.map((fam) => FamilyItem.normal(family: fam)).toList();
         familyList.map((fam) => FamilyItem.normal(family: fam)).toList();
     content.add(FamilyItem.add());
 

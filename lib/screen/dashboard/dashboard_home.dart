@@ -17,7 +17,11 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
   List<Family> familyList = [
     Family(fullName: 'Ayah'),
     Family(fullName: 'Ibu'),
-    Family(fullName: 'Kak dinda'),
+    Family(
+      fullName: 'Kak dinda',
+      imageUrl:
+          'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/item_dinda.png',
+    )
   ]; // empty list
 
   @override
