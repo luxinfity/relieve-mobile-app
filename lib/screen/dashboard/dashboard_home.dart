@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:dashed_circle/dashed_circle.dart';
 
 import './components/dashboard_user_status.dart';
+import '../../network/model/family.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/family_item.dart';
 import '../../res/res.dart';
@@ -14,6 +14,12 @@ class DashboardHomeScreen extends StatefulWidget {
 }
 
 class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
+  List<Family> familyList = [
+    Family(fullName: 'Ayah'),
+    Family(fullName: 'Ibu'),
+    Family(fullName: 'Kak dinda'),
+  ]; // empty list
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -37,7 +43,7 @@ class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
                     'Pantau kondisi kerabat terdekat anda dimanapun berada',
               ),
             ),
-            FamilyItemList(),
+            FamilyItemList(familyList: familyList),
             Padding(
               padding: const EdgeInsets.only(top: Dimen.x16),
               child: ThemedTitle(

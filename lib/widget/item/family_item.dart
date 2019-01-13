@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dashed_circle/dashed_circle.dart';
 
 import '../../network/model/family.dart';
 import '../../res/res.dart';
@@ -18,7 +17,10 @@ class FamilyItem extends StatelessWidget {
 
   Widget _createNormalItem() {
     return Center(
-      child: Text('Normal'),
+      child: LocalImage.dashed_circle.toSvg(
+        height: Dimen.x64,
+        width: Dimen.x64,
+      ),
     );
   }
 
@@ -112,7 +114,7 @@ class FamilyItemList extends StatelessWidget {
 
   const FamilyItemList({
     Key key,
-    this.familyList = const [], // default is empty
+    @required this.familyList, // default is empty
   }) : super(key: key);
 
   @override
@@ -142,10 +144,14 @@ class FamilyItemList extends StatelessWidget {
   }
 
   Widget _createFilledList() {
+    final content =
+        // familyList.map((fam) => FamilyItem.normal(family: fam)).toList();
+        familyList.map((fam) => FamilyItem.normal(family: fam)).toList();
+    content.add(FamilyItem.add());
+
     return ListView(
-      children: <Widget>[
-        FamilyItem.empty(),
-      ],
+      scrollDirection: Axis.horizontal,
+      children: content,
     );
   }
 }

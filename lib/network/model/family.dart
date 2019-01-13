@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 enum PersonHealth { Fine, Bad, None }
 
 class Family {
@@ -7,7 +9,7 @@ class Family {
   final String personHealth;
 
   const Family({
-    this.fullName,
+    @required this.fullName,
     this.phoneNumber,
     this.imageUrl,
     this.personHealth,
