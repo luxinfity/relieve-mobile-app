@@ -6,14 +6,7 @@ import '../../widget/item/family_item.dart';
 import '../../widget/item/disaster_item.dart';
 import '../../res/res.dart';
 
-class DashboardHomeScreen extends StatefulWidget {
-  DashboardHomeScreen({Key key}) : super(key: key);
-
-  @override
-  _DashboardHomeScreenState createState() => _DashboardHomeScreenState();
-}
-
-class _DashboardHomeScreenState extends State<DashboardHomeScreen> {
+class DashboardHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
