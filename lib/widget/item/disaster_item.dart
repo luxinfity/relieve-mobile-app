@@ -21,48 +21,95 @@ class DisasterItem extends StatelessWidget {
       child: Wrap(
         direction: Axis.vertical,
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.all(
-              Radius.circular(Dimen.x8),
-            ),
-            child: Container(
-              color: AppColor.colorDanger,
-              height: 144,
-              width: 170,
-              child: RemoteImage.bg_map
-                  .toImage(height: 144, width: 170, fit: BoxFit.cover),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(
-              top: Dimen.x6,
-            ),
-            child: Text(disaster.title,
-                style: CircularStdFont.bold.getStyle(
-                  color: AppColor.colorTextCharcoal,
-                  size: Dimen.x14,
-                )),
-          ),
-          RichText(
-            text: TextSpan(
-              text: disaster.location,
-              style: CircularStdFont.medium.getStyle(
-                color: AppColor.colorDanger,
-                size: Dimen.x10,
-              ),
-              children: [
-                TextSpan(
-                  text: ' -${disaster.time} ',
-                  style: CircularStdFont.medium.getStyle(
-                    color: AppColor.colorEmptyRect,
-                    size: Dimen.x10,
-                  ),
-                )
-              ],
-            ),
-            softWrap: true,
-          ),
+          _buildMap(),
+          _buildTitle(),
+          _buildSubtitle(),
         ],
+      ),
+    );
+  }
+
+  RichText _buildSubtitle() {
+    return RichText(
+      text: TextSpan(
+        text: disaster.location,
+        style: CircularStdFont.medium.getStyle(
+          color: AppColor.colorDanger,
+          size: Dimen.x10,
+        ),
+        children: [
+          TextSpan(
+            text: ' - ${disaster.time} ',
+            style: CircularStdFont.medium.getStyle(
+              color: AppColor.colorEmptyRect,
+              size: Dimen.x10,
+            ),
+          )
+        ],
+      ),
+      softWrap: true,
+    );
+  }
+
+  Padding _buildTitle() {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: Dimen.x6,
+      ),
+      child: Text(disaster.title,
+          style: CircularStdFont.bold.getStyle(
+            color: AppColor.colorTextCharcoal,
+            size: Dimen.x14,
+          )),
+    );
+  }
+
+  ClipRRect _buildMap() {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(
+        Radius.circular(Dimen.x8),
+      ),
+      child: Container(
+        color: AppColor.colorDanger,
+        height: 144,
+        width: 170,
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            RemoteImage.bg_map.toImage(fit: BoxFit.cover),
+            disaster.isLive ? _buildLiveTag() : null,
+          ].where((widget) => widget != null).toList(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLiveTag() {
+    return Positioned(
+      top: Dimen.x12,
+      left: Dimen.x12,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(Dimen.x6),
+          color: AppColor.colorDanger,
+        ),
+        padding: EdgeInsets.symmetric(horizontal: Dimen.x8, vertical: Dimen.x6),
+        child: Wrap(
+          spacing: Dimen.x6,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: <Widget>[
+            LocalImage.ic_live.toSvg(
+              height: Dimen.x10,
+              width: Dimen.x12,
+              color: Colors.white,
+            ),
+            Text(
+              'Live',
+              style: CircularStdFont.medium
+                  .getStyle(size: Dimen.x12, color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -91,7 +138,7 @@ class DisasterItemListState extends State {
           ),
           DisasterItem(
             disaster: Disaster(
-              isLive: false,
+              isLive: true,
               location: "Palembang",
               time: 20000,
               title: "Gempa 7.6 SR",
