@@ -54,15 +54,16 @@ class BoardingRegisterState extends State {
 
   Widget createTitle() {
     if (steps == 0) {
-      return ThemedTitle(title: "Cukup isi data dibawah", subtitle: "");
+      return ThemedTitle(title: 'Cukup isi data dibawah');
     } else {
-      return ThemedTitle(title: "Beritahu kami mengenai kamu", subtitle: "");
+      return ThemedTitle(title: 'Beritahu kami mengenai kamu');
     }
   }
 
   Widget createButton() {
+    final EdgeInsets padding = MediaQuery.of(context).padding;
     return Padding(
-      padding: const EdgeInsets.only(top: Dimen.x8, bottom: Dimen.x28),
+      padding: EdgeInsets.only(top: Dimen.x8, bottom: Dimen.x16 + padding.bottom),      
       child: StandardButton(
         text: steps == 0 ? 'Lanjut' : 'Daftar',
         backgroundColor: AppColor.colorPrimary,
@@ -80,7 +81,7 @@ class BoardingRegisterState extends State {
             key: 'passwordInput', label: 'Password', obscureText: true),
         buildInputForm(
             key: 'confirmPassInput',
-            label: 'PassKetik Ulang Passwordword',
+            label: 'Ketik Ulang Password',
             obscureText: true),
       ];
     } else {

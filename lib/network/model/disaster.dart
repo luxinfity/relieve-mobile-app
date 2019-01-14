@@ -8,8 +8,8 @@ class Disaster {
 
   const Disaster({
     @required this.isLive,
-    this.title,
-    this.location,
-    this.time,
+    @required this.title,
+    @required this.location,
+    @required this.time,
   });
 }

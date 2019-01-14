@@ -6,7 +6,10 @@ class ThemedTitle extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  ThemedTitle({this.title, this.subtitle});
+  ThemedTitle({
+    @required this.title,
+    this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +28,29 @@ class ThemedTitle extends StatelessWidget {
           SizedBox(
             height: 6,
           ),
-          Text(
-            subtitle,
-            style: CircularStdFont.book
-                .getStyle(size: 14, color: AppColor.colorTextGrey),
-          ),
-        ],
+          subtitle != null
+              ? Text(
+                  subtitle,
+                  style: CircularStdFont.book
+                      .getStyle(size: 14, color: AppColor.colorTextGrey),
+                )
+              : null,
+        ].where((widget) => widget != null).toList(),
       ),
     );
+  }
+}
+
+class ScreenTitle extends StatelessWidget {
+  final String title;
+
+  const ScreenTitle({
+    Key key,
+    this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(title, style: CircularStdFont.black.getStyle(size: Dimen.x24));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widget/item/screen_title.dart';
+import '../../widget/item/title.dart';
 
 class DashboardProfileScreen extends StatelessWidget {
   @override

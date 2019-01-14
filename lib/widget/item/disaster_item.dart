@@ -3,6 +3,76 @@ import 'package:flutter/material.dart';
 import '../../res/res.dart';
 import '../../network/model/disaster.dart';
 
+class DiscoverItem extends StatelessWidget {
+  final Disaster disaster;
+
+  const DiscoverItem({
+    Key key,
+    this.disaster,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _buildLiveTitle(),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: Dimen.x12),
+          child: _buildMap(),
+        ),
+        Text(
+          disaster.title,
+          style: CircularStdFont.black.getStyle(
+            color: AppColor.colorTextBlack,
+            size: Dimen.x21,
+          ),
+        ),
+        Text(
+          disaster.location,
+          style: CircularStdFont.book.getStyle(
+            color: AppColor.colorTextBlack,
+            size: Dimen.x12,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Wrap _buildLiveTitle() {
+    return Wrap(
+      direction: Axis.horizontal,
+      spacing: Dimen.x14,
+      crossAxisAlignment: WrapCrossAlignment.center,
+      children: <Widget>[
+        LocalImage.ic_live
+            .toSvg(height: Dimen.x16, color: AppColor.colorDanger),
+        Text(
+          'Sekarang!',
+          style: CircularStdFont.black.getStyle(
+            size: Dimen.x21,
+            color: AppColor.colorDanger,
+          ),
+        )
+      ],
+    );
+  }
+
+  ClipRRect _buildMap() {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(
+        Radius.circular(Dimen.x8),
+      ),
+      child: Container(
+        color: AppColor.colorDanger,
+        height: 220,
+        width: double.infinity,
+        child: RemoteImage.bg_map2.toImage(fit: BoxFit.cover),
+      ),
+    );
+  }
+}
+
 class DisasterItem extends StatelessWidget {
   final Disaster disaster;
 
@@ -126,7 +196,6 @@ class DisasterItemListState extends State {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.deepPurple,
       height: 205,
       width: double.infinity,
       padding: EdgeInsets.only(top: Dimen.x12, bottom: Dimen.x4),
@@ -139,6 +208,14 @@ class DisasterItemListState extends State {
           DisasterItem(
             disaster: Disaster(
               isLive: true,
+              location: "Palembang",
+              time: 20000,
+              title: "Gempa 7.6 SR",
+            ),
+          ),
+          DisasterItem(
+            disaster: Disaster(
+              isLive: false,
               location: "Palembang",
               time: 20000,
               title: "Gempa 7.6 SR",

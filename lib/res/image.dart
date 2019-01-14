@@ -24,6 +24,7 @@ class RemoteImage {
   static RemoteImage get boardingLogin => RemoteImage('sketchh-02.png');
   static RemoteImage get bg_bali => RemoteImage('bg_bali.png');
   static RemoteImage get bg_map => RemoteImage('bg_map.png');
+  static RemoteImage get bg_map2 => RemoteImage('bg_map2.png');
 }
 
 class LocalImage {
