@@ -21,10 +21,9 @@ class FamilyItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(
-          width: 3,
-          color: AppColor.colorPrimary,
-        ),
+        border: (family.personHealth != null)
+            ? Border.all(width: 3, color: _pickColorItem())
+            : null,
       ),
       padding: EdgeInsets.all(2),
       height: Dimen.x64,
@@ -41,6 +40,15 @@ class FamilyItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _pickColorItem() {
+    switch (family.personHealth) {
+      case PersonHealth.Bad:
+        return AppColor.colorDanger;
+      default:
+        return AppColor.colorPrimary;
+    }
   }
 
   Widget _createEmptyItem() {
