@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../res/res.dart';
+import '../../widget/item/screen_title.dart';
 
 class DashboardDiscoverScreen extends StatelessWidget {
   @override
@@ -10,11 +10,9 @@ class DashboardDiscoverScreen extends StatelessWidget {
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              Text('Discover',
-                  style: CircularStdFont.black.getStyle(size: Dimen.x21)),
+              ScreenTitle(title: 'Discover'),
             ]),
           )
-          // Text('This is discover'),
         ],
       ),
     );
