@@ -44,9 +44,12 @@ class DashboardDiscoverScreen extends StatelessWidget {
           ),
           SliverGrid.count(
             crossAxisCount: 2,
+            crossAxisSpacing: 8,
             children: <Widget>[
-              Center(
+              Container(
+                alignment: Alignment.topRight,
                 child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
@@ -55,8 +58,10 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.topLeft,
                 child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
@@ -65,8 +70,10 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.topRight,
                 child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
@@ -75,8 +82,10 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.topLeft,
                 child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
@@ -85,8 +94,10 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.topRight,
                 child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
@@ -95,8 +106,10 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.topLeft,
                 child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
@@ -105,8 +118,10 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.topRight,
                 child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
@@ -115,48 +130,10 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.topLeft,
                 child: DisasterItem(
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
-                    time: 400,
-                  ),
-                ),
-              ),
-              Center(
-                child: DisasterItem(
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
-                    time: 400,
-                  ),
-                ),
-              ),
-              Center(
-                child: DisasterItem(
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
-                    time: 400,
-                  ),
-                ),
-              ),
-              Center(
-                child: DisasterItem(
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
-                    time: 400,
-                  ),
-                ),
-              ),
-              Center(
-                child: DisasterItem(
+                  width: 185,
                   disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',

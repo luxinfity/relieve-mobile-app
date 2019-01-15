@@ -32,7 +32,7 @@ class DiscoverItem extends StatelessWidget {
           disaster.location,
           style: CircularStdFont.book.getStyle(
             color: AppColor.colorTextBlack,
-            size: Dimen.x11,
+            size: Dimen.x12,
           ),
         ),
       ],
@@ -75,10 +75,12 @@ class DiscoverItem extends StatelessWidget {
 
 class DisasterItem extends StatelessWidget {
   final Disaster disaster;
+  final double width;
 
   const DisasterItem({
     Key key,
-    @required this.disaster,
+    @required this.disaster, 
+    this.width = 180,
   }) : super(key: key);
 
   @override
@@ -142,7 +144,7 @@ class DisasterItem extends StatelessWidget {
       child: Container(
         color: AppColor.colorDanger,
         height: 144,
-        width: 180,
+        width: width,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
