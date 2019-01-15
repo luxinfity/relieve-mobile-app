@@ -25,7 +25,7 @@ class DashboardDiscoverScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(
                   left: Dimen.x16,
                   right: Dimen.x16,
-                  top: Dimen.x24,
+                  top: Dimen.x12,
                   bottom: Dimen.x24,
                 ),
                 child: DiscoverItem(

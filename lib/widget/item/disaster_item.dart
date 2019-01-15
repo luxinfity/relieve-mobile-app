@@ -18,21 +18,21 @@ class DiscoverItem extends StatelessWidget {
       children: <Widget>[
         _buildLiveTitle(),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: Dimen.x12),
+          padding: const EdgeInsets.symmetric(vertical: Dimen.x10),
           child: _buildMap(),
         ),
         Text(
           disaster.title,
           style: CircularStdFont.black.getStyle(
             color: AppColor.colorTextBlack,
-            size: Dimen.x21,
+            size: Dimen.x18,
           ),
         ),
         Text(
           disaster.location,
           style: CircularStdFont.book.getStyle(
             color: AppColor.colorTextBlack,
-            size: Dimen.x12,
+            size: Dimen.x11,
           ),
         ),
       ],
@@ -42,15 +42,15 @@ class DiscoverItem extends StatelessWidget {
   Wrap _buildLiveTitle() {
     return Wrap(
       direction: Axis.horizontal,
-      spacing: Dimen.x14,
+      spacing: Dimen.x8,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
         LocalImage.ic_live
-            .toSvg(height: Dimen.x16, color: AppColor.colorDanger),
+            .toSvg(height: Dimen.x14, color: AppColor.colorDanger),
         Text(
           'Sekarang!',
           style: CircularStdFont.black.getStyle(
-            size: Dimen.x21,
+            size: Dimen.x18,
             color: AppColor.colorDanger,
           ),
         )
@@ -142,7 +142,7 @@ class DisasterItem extends StatelessWidget {
       child: Container(
         color: AppColor.colorDanger,
         height: 144,
-        width: 170,
+        width: 180,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
