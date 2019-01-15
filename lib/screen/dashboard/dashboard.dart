@@ -4,6 +4,9 @@ import 'components/dashboard_bottom_bar.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../call/call.dart';
 import './dashboard_home.dart';
+import './dashboard_discover.dart';
+import './dashboard_chat.dart';
+import './dashboard_profile.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key, this.title}) : super(key: key);
@@ -46,11 +49,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case 0:
         return DashboardHomeScreen();
       case 1:
-        return Text('This is discover');
+        return DashboardDiscoverScreen();
       case 3:
-        return Text('This is chat');
+        return DashboardChatScreen();
       case 4:
-        return Text('This is profile');
+        return DashboardProfileScreen();
       default:
         return Text('Dashboard');
     }

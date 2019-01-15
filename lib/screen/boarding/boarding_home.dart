@@ -72,7 +72,7 @@ class BoardingHomeScreen extends StatelessWidget {
   Widget buildTitle() {
     return Padding(
       padding: EdgeInsets.only(top: 12, bottom: 18),
-      child: ThemedTitle(title: "Home sweet home", subtitle: ""),
+      child: ThemedTitle(title: 'Home sweet home'),
     );
   }
 }
