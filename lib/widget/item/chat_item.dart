@@ -31,7 +31,7 @@ class ChatItem extends StatelessWidget {
                       width: 2,
                     )),
                 child: CircleAvatar(
-                  minRadius: Dimen.x28,
+                  radius: Dimen.x28,
                   child: Text('JE'),
                 ),
               ),

@@ -33,8 +33,10 @@ class DashboardProfileScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: CircleAvatar(
-                        minRadius: Dimen.x36 + Dimen.x16,
+                        radius: Dimen.x36 + Dimen.x16,
                         backgroundColor: AppColor.colorAccent,
+                        backgroundImage: NetworkImage(
+                            'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg'),
                       ),
                     ),
                     Padding(
@@ -50,10 +52,13 @@ class DashboardProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    UserLocation(
-                      location: 'Dago Pakar, Bandung',
-                      icon: LocalImage.ic_location,
-                      personHealth: PersonHealth.None,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Dimen.x21),
+                      child: UserLocation(
+                        location: 'Dago Pakar, Bandung',
+                        icon: LocalImage.ic_location,
+                        personHealth: PersonHealth.None,
+                      ),
                     ),
                   ],
                 ),
