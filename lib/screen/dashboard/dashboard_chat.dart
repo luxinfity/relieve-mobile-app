@@ -101,7 +101,6 @@ class DashboardChatScreenState extends State {
         padding: EdgeInsets.symmetric(
           vertical: Dimen.x24,
         ),
-        shrinkWrap: true,
         itemBuilder: (context, position) {
           if (position == 0) {
             return Padding(
