@@ -39,7 +39,7 @@ class DashboardChatScreenState extends State {
     return chatList.isNotEmpty ? buildFilledChat() : buildEmptyChat();
   }
 
-  Widget buildEmptyChat() {
+  Expanded buildEmptyChat() {
     return Expanded(
       child: Column(
         children: <Widget>[
@@ -97,29 +97,25 @@ class DashboardChatScreenState extends State {
 
   Expanded buildFilledChat() {
     return Expanded(
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverList(
-            delegate: SliverChildListDelegate(<Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: Dimen.x16,
-                  top: Dimen.x24,
-                  bottom: Dimen.x12,
-                ),
-                child: ScreenTitle(title: 'Chat'),
+      child: ListView.builder(
+        padding: EdgeInsets.symmetric(
+          vertical: Dimen.x24,
+        ),
+        shrinkWrap: true,
+        itemBuilder: (context, position) {
+          if (position == 0) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                left: Dimen.x16,
+                bottom: Dimen.x12,
               ),
-            ]),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, position) {
-                return ChatItem(chat: chatList[position]);
-              },
-              childCount: chatList.length,
-            ),
-          )
-        ],
+              child: ScreenTitle(title: 'Chat'),
+            );
+          } else {
+            return ChatItem(chat: chatList[position - 1]);
+          }
+        },
+        itemCount: chatList.length + 1, // + 1 title
       ),
     );
   }
