@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../widget/item/title.dart';
+import '../../res/res.dart';
 
 class DashboardChatScreen extends StatelessWidget {
   @override
@@ -10,8 +11,21 @@ class DashboardChatScreen extends StatelessWidget {
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              ScreenTitle(title: 'Chat'),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: Dimen.x16,
+                  top: Dimen.x24,
+                  bottom: Dimen.x12,
+                ),
+                child: ScreenTitle(title: 'Chat'),
+              ),
             ]),
+          ),
+          SliverFillRemaining(
+            child: Container(
+              child: Text('Alif'),
+              color: AppColor.colorAccent,
+            ),
           )
         ],
       ),
