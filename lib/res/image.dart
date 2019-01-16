@@ -30,7 +30,7 @@ class RemoteImage {
 class LocalImage {
   final String imageName;
 
-  LocalImage(this.imageName);
+  const LocalImage(this.imageName);
 
   SvgPicture toSvg({double width, double height, Color color}) {
     return SvgPicture.asset('images/' + imageName + '.svg',
@@ -41,7 +41,7 @@ class LocalImage {
   static LocalImage get ic_back_arrow => LocalImage('ic_back_arrow');
 
   // dasboard
-  static LocalImage get ic_call => LocalImage('ic_call');
+  static LocalImage get ic_call => const LocalImage('ic_call');
   static LocalImage get ic_chat => LocalImage('ic_chat');
   static LocalImage get ic_discover => LocalImage('ic_discover');
   static LocalImage get ic_home => LocalImage('ic_home');
@@ -51,4 +51,14 @@ class LocalImage {
   static LocalImage get ic_live => LocalImage('ic_live');
   static LocalImage get ic_add_user => LocalImage('ic_add_user');
   static LocalImage get dashed_circle => LocalImage('dashed_circle');
+
+  // profile
+  static LocalImage get ic_location => LocalImage('ic_location');
+  static LocalImage get ic_exit => LocalImage('ic_exit');
+  static LocalImage get ic_faq => LocalImage('ic_faq');
+  static LocalImage get ic_info_contributor => LocalImage('ic_info_contributor');
+  static LocalImage get ic_notif => LocalImage('ic_notif');
+  static LocalImage get ic_privacy => LocalImage('ic_privacy');
+  static LocalImage get ic_syarat => LocalImage('ic_syarat');
+  static LocalImage get ic_user => LocalImage('ic_user');
 }

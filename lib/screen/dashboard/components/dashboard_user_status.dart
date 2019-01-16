@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../res/res.dart';
+import '../../../network/model/family.dart';
 import '../../dashboard/components/dashboard_title.dart';
+import '../../../widget/item/user_location.dart';
 
 class Greeting extends StatelessWidget {
   final String name;
@@ -30,49 +32,6 @@ class Greeting extends StatelessWidget {
                 .getStyle(size: Dimen.x24)
                 .apply(color: Colors.white),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class UserCurrentLocation extends StatelessWidget {
-  final String location;
-  final bool isPersonSafe;
-
-  const UserCurrentLocation({
-    Key key,
-    this.location,
-    this.isPersonSafe,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(
-        horizontal: Dimen.x16,
-        vertical: Dimen.x6,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(
-              top: Dimen.x18,
-              bottom: Dimen.x18,
-              left: Dimen.x21,
-              right: Dimen.x12,
-            ),
-            child: LocalImage.ic_live.toSvg(
-              height: Dimen.x16,
-              width: Dimen.x21,
-            ),
-          ),
-          Text(
-            location,
-            style: CircularStdFont.medium
-                .getStyle(size: Dimen.x16, color: AppColor.colorPrimary),
-          ),
         ],
       ),
     );
@@ -112,8 +71,10 @@ class UserAppBar extends StatelessWidget {
                 Greeting(name: name),
                 Padding(
                   padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
-                  child: UserCurrentLocation(
+                  child: UserLocation(
                     location: location,
+                    icon: LocalImage.ic_live,
+                    personHealth: PersonHealth.Fine,
                   ),
                 )
               ],
