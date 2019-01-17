@@ -22,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void _goToCall(BuildContext context) {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (builder) => CallScreen(title: 'Test')));
+        MaterialPageRoute(builder: (builder) => CallScreen()));
   }
 
   @override

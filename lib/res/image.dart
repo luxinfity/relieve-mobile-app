@@ -39,6 +39,8 @@ class LocalImage {
 
   static LocalImage get ic_google => LocalImage('ic_google');
   static LocalImage get ic_back_arrow => LocalImage('ic_back_arrow');
+  static LocalImage get ic_cross => LocalImage('ic_cross');
+  static LocalImage get ic_drop_down => LocalImage('ic_drop_down');
 
   // dasboard
   static LocalImage get ic_call => const LocalImage('ic_call');
