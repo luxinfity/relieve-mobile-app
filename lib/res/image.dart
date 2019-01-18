@@ -63,4 +63,16 @@ class LocalImage {
   static LocalImage get ic_privacy => LocalImage('ic_privacy');
   static LocalImage get ic_syarat => LocalImage('ic_syarat');
   static LocalImage get ic_user => LocalImage('ic_user');
+
+  // organization
+  static LocalImage get ic_add_other => LocalImage('ic_add_other');
+  static LocalImage get ic_ambulance => LocalImage('ic_ambulance');
+  static LocalImage get ic_bmkg => LocalImage('ic_bmkg');
+  static LocalImage get ic_fire_fighter => LocalImage('ic_fire_fighter');
+  static LocalImage get ic_medic => LocalImage('ic_medic');
+  static LocalImage get ic_others => LocalImage('ic_others');
+  static LocalImage get ic_pln => LocalImage('ic_pln');
+  static LocalImage get ic_police => LocalImage('ic_police');
+  static LocalImage get ic_red_cross => LocalImage('ic_red_cross');
+  static LocalImage get ic_sar => LocalImage('ic_sar');
 }

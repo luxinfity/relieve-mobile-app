@@ -55,7 +55,7 @@ class CallScreen extends StatelessWidget {
                 ]),
               ),
               SliverPadding(
-                padding: EdgeInsets.all(6),
+                padding: EdgeInsets.symmetric(horizontal: Dimen.x16),
                 sliver: SliverGrid.count(
                   crossAxisCount: 2,
                   childAspectRatio: 2,
@@ -63,15 +63,29 @@ class CallScreen extends StatelessWidget {
                   mainAxisSpacing: 6,
                   children: <Widget>[
                     _buildButton(
-                      LocalImage.ic_user,
-                      'Profil dan password',
-                      axis: Axis.vertical,
+                      LocalImage.ic_police,
+                      'Kantor Polisi',
                     ),
-                    Container(
-                      color: AppColor.colorDanger,
+                    _buildButton(
+                      LocalImage.ic_ambulance,
+                      'Ambulance',
                     ),
-                    Container(
-                      color: AppColor.colorEmptyChip,
+                    _buildButton(
+                      LocalImage.ic_red_cross,
+                      'Palang Merah',
+                    ),
+                    _buildButton(
+                      LocalImage.ic_fire_fighter,
+                      'Pemadam Kebakaran',
+                    ),
+                    _buildButton(
+                      LocalImage.ic_sar,
+                      'Badan SAR',
+                    ),
+                    _buildButton(
+                      LocalImage.ic_others,
+                      'Lainnya',
+                      isTintBlue: true,
                     ),
                   ],
                 ),
@@ -99,34 +113,32 @@ class CallScreen extends StatelessWidget {
   Widget _buildButton(
     LocalImage icon,
     String title, {
-    Axis axis = Axis.horizontal,
-    bool isExit = false,
+    bool isTintBlue = false,
   }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: Dimen.x12, vertical: Dimen.x18),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: isExit ? AppColor.colorDanger : AppColor.colorEmptyChip,
-        ),
-        color: Colors.green,
-        borderRadius: BorderRadius.circular(Dimen.x6),
-      ),
-      child: Wrap(
-        direction: axis,
-        spacing: (axis == Axis.horizontal) ? Dimen.x12 : Dimen.x6,
-        children: <Widget>[
-          icon.toSvg(
-            width: Dimen.x18,
-            color: isExit ? AppColor.colorDanger : null,
-          ),
-          Text(
-            title,
-            style: CircularStdFont.book.getStyle(
-              size: Dimen.x12,
-              color: isExit ? AppColor.colorDanger : AppColor.colorTextBlack,
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: Dimen.x14, vertical: Dimen.x18),
+        child: Wrap(
+          direction: Axis.vertical,
+          spacing: Dimen.x12,
+          children: <Widget>[
+            icon.toSvg(
+              width: Dimen.x18,
+              color:
+                  isTintBlue ? AppColor.colorPrimary : AppColor.colorTextBlack,
             ),
-          ),
-        ],
+            Text(
+              title,
+              style: CircularStdFont.medium.getStyle(
+                size: Dimen.x16,
+                color: isTintBlue
+                    ? AppColor.colorPrimary
+                    : AppColor.colorTextBlack,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
