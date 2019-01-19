@@ -22,7 +22,7 @@ void createRelieveBottomModal(BuildContext context, List<Widget> children) {
         padding: EdgeInsets.only(
           left: Dimen.x16,
           right: Dimen.x16,
-          top: Dimen.x28,
+          top: Dimen.x16,
           bottom: _calculatePaddingBottom(context),
         ),
         decoration: BoxDecoration(
