@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
 import '../../network/model/disaster.dart';
+import '../bottom_modal.dart';
 
 class DiscoverItem extends StatelessWidget {
   final Disaster disaster;
@@ -76,27 +77,30 @@ class DiscoverItem extends StatelessWidget {
 class DisasterItem extends StatelessWidget {
   final Disaster disaster;
   final double width;
+  final VoidCallback onClick;
 
-  const DisasterItem({
-    Key key,
-    @required this.disaster, 
-    this.width = 180,
-  }) : super(key: key);
+  const DisasterItem(
+      {Key key, @required this.disaster, this.width = 180, this.onClick})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: Dimen.x4,
-        right: Dimen.x4,
-      ),
-      child: Wrap(
-        direction: Axis.vertical,
-        children: <Widget>[
-          _buildMap(),
-          _buildTitle(),
-          _buildSubtitle(),
-        ],
+    return InkWell(
+      borderRadius: BorderRadius.circular(Dimen.x6),
+      onTap: onClick,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: Dimen.x4,
+          right: Dimen.x4,
+        ),
+        child: Wrap(
+          direction: Axis.vertical,
+          children: <Widget>[
+            _buildMap(),
+            _buildTitle(),
+            _buildSubtitle(),
+          ],
+        ),
       ),
     );
   }
@@ -195,6 +199,14 @@ class DisasterItemList extends StatefulWidget {
 }
 
 class DisasterItemListState extends State {
+  void testSheet(BuildContext context) {
+    createRelieveBottomModal(context, <Widget>[
+      Text('data'),
+      Text('Alif'),
+      Text('Akbar'),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -214,6 +226,9 @@ class DisasterItemListState extends State {
               time: 20000,
               title: "Gempa 7.6 SR",
             ),
+            onClick: () {
+              testSheet(context);
+            },
           ),
           DisasterItem(
             disaster: Disaster(

@@ -47,8 +47,13 @@ class StandardButton extends StatelessWidget {
             bottom: Dimen.x16,
           ),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dimen.x4),
-              border: Border.all(color: backgroundColor, width: 2)),
+            borderRadius: BorderRadius.circular(Dimen.x4),
+            color: Colors.white,
+            border: Border.all(
+              color: backgroundColor,
+              width: 2
+            ),
+          ),
         ),
       ),
     );
