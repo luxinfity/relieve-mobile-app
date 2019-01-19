@@ -2,15 +2,28 @@ import 'package:flutter/material.dart';
 
 import '../res/res.dart';
 
+double _calculatePaddingBottom(BuildContext context) {
+  final padding = MediaQuery.of(context).padding;
+  if (Theme.of(context).platform == TargetPlatform.iOS) {
+    return padding.bottom + Dimen.x16;
+  } else {
+    return padding.bottom + Dimen.x32;
+  }
+}
+
 void createRelieveBottomModal(BuildContext context, List<Widget> children) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
-      final padding = MediaQuery.of(context).padding;
+      Wrap(
+        
+      );
       return Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: Dimen.x16,
-          vertical: padding.bottom,
+        padding: EdgeInsets.only(
+          left: Dimen.x16,
+          right: Dimen.x16,
+          top: Dimen.x28,
+          bottom: _calculatePaddingBottom(context),
         ),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -19,8 +32,9 @@ void createRelieveBottomModal(BuildContext context, List<Widget> children) {
             topRight: Radius.circular(Dimen.x16),
           ),
         ),
-        child: Wrap(
-          direction: Axis.vertical,
+        child: ListView(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           children: children,
         ),
       );

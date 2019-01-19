@@ -49,10 +49,7 @@ class StandardButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimen.x4),
             color: Colors.white,
-            border: Border.all(
-              color: backgroundColor,
-              width: 2
-            ),
+            border: Border.all(color: backgroundColor, width: 2),
           ),
         ),
       ),
@@ -69,8 +66,9 @@ class StandardButton extends StatelessWidget {
         top: Dimen.x16,
         bottom: Dimen.x16,
       ),
-      shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimen.x4)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Dimen.x4),
+      ),
       onPressed: buttonClick,
     );
   }

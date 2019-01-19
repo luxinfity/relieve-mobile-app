@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
 import '../../network/model/disaster.dart';
+import '../../widget/item/standard_button.dart';
 import '../bottom_modal.dart';
 
 class DiscoverItem extends StatelessWidget {
@@ -79,9 +80,12 @@ class DisasterItem extends StatelessWidget {
   final double width;
   final VoidCallback onClick;
 
-  const DisasterItem(
-      {Key key, @required this.disaster, this.width = 180, this.onClick})
-      : super(key: key);
+  const DisasterItem({
+    Key key,
+    @required this.disaster,
+    this.width = 180,
+    this.onClick,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -199,11 +203,81 @@ class DisasterItemList extends StatefulWidget {
 }
 
 class DisasterItemListState extends State {
+  Widget _hollowButton() {
+    return Material(
+      elevation: 1,
+      borderRadius: BorderRadius.circular(Dimen.x4),
+      child: InkWell(
+        onTap: () {
+          print('rtess');
+        },
+        child: Container(
+          alignment: Alignment.center,
+          child: LocalImage.ic_warning.toSvg(height: 20),
+          padding: EdgeInsets.only(
+            top: Dimen.x16,
+            bottom: Dimen.x16,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimen.x4),
+            color: Colors.white,
+            border: Border.all(color: AppColor.colorDanger, width: 2),
+          ),
+        ),
+      ),
+    );
+  }
+
   void testSheet(BuildContext context) {
     createRelieveBottomModal(context, <Widget>[
-      Text('data'),
-      Text('Alif'),
-      Text('Akbar'),
+      Container(height: 150, color: AppColor.colorEmptyRect),
+      Container(height: Dimen.x32),
+      Text(
+        'Awas!! \nGempa terjadi didekatmu',
+        style: CircularStdFont.black.getStyle(size: Dimen.x21),
+      ),
+      Container(height: Dimen.x36),
+      Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: _hollowButton(),
+          ),
+          Container(width: Dimen.x12),
+          Expanded(
+            flex: 3,
+            child: RaisedButton(
+              elevation: 1,
+              highlightElevation: 1,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimen.x4),
+              ),
+              padding: EdgeInsets.symmetric(vertical: Dimen.x16),
+              color: AppColor.colorPrimary,
+              textColor: Colors.white,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: LocalImage.ic_guard.toSvg(height: 20),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      'Saya Aman',
+                      style: CircularStdFont.bold.getStyle(
+                        size: Dimen.x18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
     ]);
   }
 
