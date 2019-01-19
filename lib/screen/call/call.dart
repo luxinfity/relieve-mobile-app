@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
-import '../../network/model/family.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/family_item.dart';
+import '../call/call_list.dart';
+import './components/item_button.dart';
 
 class CallScreen extends StatelessWidget {
   @override
@@ -59,33 +60,39 @@ class CallScreen extends StatelessWidget {
                 sliver: SliverGrid.count(
                   crossAxisCount: 2,
                   childAspectRatio: 2,
-                  crossAxisSpacing: 6,
-                  mainAxisSpacing: 6,
+                  crossAxisSpacing: Dimen.x6,
+                  mainAxisSpacing: Dimen.x6,
                   children: <Widget>[
-                    _buildButton(
-                      LocalImage.ic_police,
-                      'Kantor Polisi',
+                    ItemButton(
+                      icon: LocalImage.ic_police,
+                      title: 'Kantor Polisi',
                     ),
-                    _buildButton(
-                      LocalImage.ic_ambulance,
-                      'Ambulance',
+                    ItemButton(
+                      icon: LocalImage.ic_ambulance,
+                      title: 'Ambulance',
                     ),
-                    _buildButton(
-                      LocalImage.ic_red_cross,
-                      'Palang Merah',
+                    ItemButton(
+                      icon: LocalImage.ic_red_cross,
+                      title: 'Palang Merah',
                     ),
-                    _buildButton(
-                      LocalImage.ic_fire_fighter,
-                      'Pemadam Kebakaran',
+                    ItemButton(
+                      icon: LocalImage.ic_fire_fighter,
+                      title: 'Pemadam Kebakaran',
                     ),
-                    _buildButton(
-                      LocalImage.ic_sar,
-                      'Badan SAR',
+                    ItemButton(
+                      icon: LocalImage.ic_sar,
+                      title: 'Badan SAR',
                     ),
-                    _buildButton(
-                      LocalImage.ic_others,
-                      'Lainnya',
+                    ItemButton(
+                      icon: LocalImage.ic_others,
+                      title: 'Lainnya',
                       isTintBlue: true,
+                      onClick: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CallListScreen()));
+                      },
                     ),
                   ],
                 ),
@@ -110,36 +117,41 @@ class CallScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(
-    LocalImage icon,
-    String title, {
-    bool isTintBlue = false,
-  }) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: Dimen.x14, vertical: Dimen.x18),
-        child: Wrap(
-          direction: Axis.vertical,
-          spacing: Dimen.x12,
-          children: <Widget>[
-            icon.toSvg(
-              width: Dimen.x18,
-              color:
-                  isTintBlue ? AppColor.colorPrimary : AppColor.colorTextBlack,
-            ),
-            Text(
-              title,
-              style: CircularStdFont.medium.getStyle(
-                size: Dimen.x16,
-                color: isTintBlue
-                    ? AppColor.colorPrimary
-                    : AppColor.colorTextBlack,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildButton(
+  //   LocalImage icon,
+  //   String title, {
+  //   VoidCallback onClick,
+  //   bool isTintBlue = false,
+  // }) {
+  //   return InkWell(
+  //     onTap: onClick,
+  //     child: Card(
+  //       child: Padding(
+  //         padding: const EdgeInsets.symmetric(
+  //             horizontal: Dimen.x14, vertical: Dimen.x18),
+  //         child: Wrap(
+  //           direction: Axis.vertical,
+  //           spacing: Dimen.x10,
+  //           children: <Widget>[
+  //             icon.toSvg(
+  //               width: Dimen.x18,
+  //               color: isTintBlue
+  //                   ? AppColor.colorPrimary
+  //                   : AppColor.colorTextBlack,
+  //             ),
+  //             Text(
+  //               title,
+  //               style: CircularStdFont.medium.getStyle(
+  //                 size: Dimen.x14,
+  //                 color: isTintBlue
+  //                     ? AppColor.colorPrimary
+  //                     : AppColor.colorTextBlack,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
