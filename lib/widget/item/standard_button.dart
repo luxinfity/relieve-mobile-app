@@ -36,6 +36,7 @@ class StandardButton extends StatelessWidget {
   Widget _hollowButton() {
     return Material(
       elevation: 1,
+      color: Colors.white,
       borderRadius: BorderRadius.circular(Dimen.x4),
       child: InkWell(
         onTap: buttonClick,
@@ -48,7 +49,6 @@ class StandardButton extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimen.x4),
-            color: Colors.white,
             border: Border.all(color: backgroundColor, width: 2),
           ),
         ),

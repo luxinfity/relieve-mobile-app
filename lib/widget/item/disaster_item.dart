@@ -206,6 +206,7 @@ class DisasterItemListState extends State {
   Widget _hollowButton() {
     return Material(
       elevation: 1,
+      color: Colors.white,
       borderRadius: BorderRadius.circular(Dimen.x4),
       child: InkWell(
         onTap: () {
@@ -220,7 +221,6 @@ class DisasterItemListState extends State {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimen.x4),
-            color: Colors.white,
             border: Border.all(color: AppColor.colorDanger, width: 2),
           ),
         ),
