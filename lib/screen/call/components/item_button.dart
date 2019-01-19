@@ -6,6 +6,8 @@ class ItemButton extends StatelessWidget {
   final LocalImage icon;
   final String title;
   final bool isTintBlue;
+  final bool isEditMode;
+  final bool isSelected;
   final VoidCallback onClick;
 
   const ItemButton({
@@ -13,6 +15,8 @@ class ItemButton extends StatelessWidget {
     this.icon,
     this.title,
     this.isTintBlue = false,
+    this.isEditMode = false,
+    this.isSelected = false,
     this.onClick,
   }) : super(key: key);
 
@@ -25,24 +29,39 @@ class ItemButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: Dimen.x14, vertical: Dimen.x18),
-          child: Wrap(
-            direction: Axis.vertical,
-            spacing: Dimen.x10,
+          child: Stack(
             children: <Widget>[
-              icon.toSvg(
-                width: Dimen.x18,
-                color: isTintBlue
-                    ? AppColor.colorPrimary
-                    : AppColor.colorTextBlack,
+              Wrap(
+                direction: Axis.vertical,
+                spacing: Dimen.x10,
+                children: <Widget>[
+                  icon.toSvg(
+                    width: Dimen.x18,
+                    color: isTintBlue
+                        ? AppColor.colorPrimary
+                        : AppColor.colorTextBlack,
+                  ),
+                  Text(
+                    title,
+                    style: CircularStdFont.medium.getStyle(
+                      size: Dimen.x14,
+                      color: isTintBlue
+                          ? AppColor.colorPrimary
+                          : AppColor.colorTextBlack,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                title,
-                style: CircularStdFont.medium.getStyle(
-                  size: Dimen.x14,
-                  color: isTintBlue
-                      ? AppColor.colorPrimary
-                      : AppColor.colorTextBlack,
-                ),
+              Container(
+                alignment: Alignment.topRight,
+                child: isEditMode
+                    ? LocalImage.ic_check.toSvg(
+                        width: Dimen.x16,
+                        color: isSelected
+                            ? AppColor.colorPrimary
+                            : AppColor.colorEmptyChip,
+                      )
+                    : null,
               ),
             ],
           ),

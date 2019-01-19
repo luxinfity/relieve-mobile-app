@@ -15,6 +15,16 @@ class CallListScreen extends StatefulWidget {
 
 class CallListScreenState extends State {
   bool isEditMode = false;
+  List<bool> isSelectedList = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,34 +52,58 @@ class CallListScreenState extends State {
               ItemButton(
                 icon: LocalImage.ic_ambulance,
                 title: 'Ambulance',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[0],
+                onClick: () => _onClickSelect(0),
               ),
               ItemButton(
                 icon: LocalImage.ic_police,
                 title: 'Kantor Polisi',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[1],
+                onClick: () => _onClickSelect(1),
               ),
               ItemButton(
                 icon: LocalImage.ic_fire_fighter,
                 title: 'Pemadam Kebakaran',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[2],
+                onClick: () => _onClickSelect(2),
               ),
               ItemButton(
                 icon: LocalImage.ic_red_cross,
                 title: 'Palang Merah',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[3],
+                onClick: () => _onClickSelect(3),
               ),
               ItemButton(
                 icon: LocalImage.ic_bmkg,
                 title: 'BMKG',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[4],
+                onClick: () => _onClickSelect(4),
               ),
               ItemButton(
                 icon: LocalImage.ic_sar,
                 title: 'Badan SAR',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[5],
+                onClick: () => _onClickSelect(5),
               ),
               ItemButton(
                 icon: LocalImage.ic_medic,
                 title: 'BPJS',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[6],
+                onClick: () => _onClickSelect(6),
               ),
               ItemButton(
                 icon: LocalImage.ic_pln,
                 title: 'PLN',
+                isEditMode: isEditMode,
+                isSelected: isSelectedList[7],
+                onClick: () => _onClickSelect(7),
               ),
             ],
           ),
@@ -103,5 +137,11 @@ class CallListScreenState extends State {
               ),
       ],
     );
+  }
+
+  void _onClickSelect(int index) {
+    setState(() {
+      isSelectedList[index] = !isSelectedList[index];
+    });
   }
 }

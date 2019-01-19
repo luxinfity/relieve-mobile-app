@@ -75,4 +75,5 @@ class LocalImage {
   static LocalImage get ic_police => LocalImage('ic_police');
   static LocalImage get ic_red_cross => LocalImage('ic_red_cross');
   static LocalImage get ic_sar => LocalImage('ic_sar');
+  static LocalImage get ic_check => LocalImage('ic_check');
 }
