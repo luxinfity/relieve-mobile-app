@@ -1,86 +1,157 @@
 import 'package:flutter/material.dart';
 
-class CallScreen extends StatefulWidget {
-  CallScreen({Key key, this.title}) : super(key: key);
+import '../../res/res.dart';
+import '../../widget/relieve_scaffold.dart';
+import '../../widget/item/title.dart';
+import '../../widget/item/family_item.dart';
+import '../call/call_list.dart';
+import './components/item_button.dart';
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _CallScreenState createState() => _CallScreenState();
-}
-
-class _CallScreenState extends State<CallScreen> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter += 1;
-    });
-  }
-
+class CallScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+    return RelieveScaffold(
+      hasBackButton: true,
+      backIcon: LocalImage.ic_cross,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      childs: <Widget>[
+        Expanded(
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildListDelegate(<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: Dimen.x16,
+                      top: Dimen.x16,
+                      bottom: Dimen.x12,
+                    ),
+                    child: ScreenTitle(title: 'Panggilan Darurat'),
+                  ),
+                  Card(
+                    margin: EdgeInsets.symmetric(horizontal: Dimen.x16),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Dimen.x21,
+                        vertical: Dimen.x18,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Dago Pakar, Bandung',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          LocalImage.ic_drop_down.toSvg(width: Dimen.x12),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: Dimen.x32),
+                    child: ThemedTitle(title: 'Lembaga Penanganan Darurat'),
+                  )
+                ]),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(horizontal: Dimen.x16),
+                sliver: SliverGrid.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2,
+                  crossAxisSpacing: Dimen.x6,
+                  mainAxisSpacing: Dimen.x6,
+                  children: <Widget>[
+                    ItemButton(
+                      icon: LocalImage.ic_police,
+                      title: 'Kantor Polisi',
+                    ),
+                    ItemButton(
+                      icon: LocalImage.ic_ambulance,
+                      title: 'Ambulance',
+                    ),
+                    ItemButton(
+                      icon: LocalImage.ic_red_cross,
+                      title: 'Palang Merah',
+                    ),
+                    ItemButton(
+                      icon: LocalImage.ic_fire_fighter,
+                      title: 'Pemadam Kebakaran',
+                    ),
+                    ItemButton(
+                      icon: LocalImage.ic_sar,
+                      title: 'Badan SAR',
+                    ),
+                    ItemButton(
+                      icon: LocalImage.ic_others,
+                      title: 'Lainnya',
+                      isTintBlue: true,
+                      onClick: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CallListScreen()));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(<Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: Dimen.x32),
+                    child: ThemedTitle(title: 'Panggilan Cepat'),
+                  )
+                ]),
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(<Widget>[
+                  FamilyItemList(),
+                ]),
+              )
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ],
     );
   }
+
+  // Widget _buildButton(
+  //   LocalImage icon,
+  //   String title, {
+  //   VoidCallback onClick,
+  //   bool isTintBlue = false,
+  // }) {
+  //   return InkWell(
+  //     onTap: onClick,
+  //     child: Card(
+  //       child: Padding(
+  //         padding: const EdgeInsets.symmetric(
+  //             horizontal: Dimen.x14, vertical: Dimen.x18),
+  //         child: Wrap(
+  //           direction: Axis.vertical,
+  //           spacing: Dimen.x10,
+  //           children: <Widget>[
+  //             icon.toSvg(
+  //               width: Dimen.x18,
+  //               color: isTintBlue
+  //                   ? AppColor.colorPrimary
+  //                   : AppColor.colorTextBlack,
+  //             ),
+  //             Text(
+  //               title,
+  //               style: CircularStdFont.medium.getStyle(
+  //                 size: Dimen.x14,
+  //                 color: isTintBlue
+  //                     ? AppColor.colorPrimary
+  //                     : AppColor.colorTextBlack,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
