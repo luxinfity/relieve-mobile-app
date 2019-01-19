@@ -76,4 +76,9 @@ class LocalImage {
   static LocalImage get ic_red_cross => LocalImage('ic_red_cross');
   static LocalImage get ic_sar => LocalImage('ic_sar');
   static LocalImage get ic_check => LocalImage('ic_check');
+
+  // modal
+  static LocalImage get ic_guard => LocalImage('ic_guard');
+  static LocalImage get ic_warning => LocalImage('ic_warning');
+
 }
