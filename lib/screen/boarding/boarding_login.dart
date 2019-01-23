@@ -8,17 +8,37 @@ import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
 import '../walkthrough/walkthrough.dart';
 
-class BoardingLoginScreen extends StatelessWidget {
-  final String title;
+class BoardingLoginScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return BoardingLoginScreenState();
+  }
+}
 
-  BoardingLoginScreen({Key key, this.title}) : super(key: key);
+class BoardingLoginScreenState extends State {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  void onLoginClick(BuildContext context) {
+  var formIsEmpty = false;
+
+  void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
       (_) => false, // clean all back stack
     );
+  }
+
+  void onLoginClick(BuildContext context) {
+    if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+      setState(() {
+        formIsEmpty = true;
+      });
+    } else {
+      setState(() {
+        formIsEmpty = false;
+      });
+    }
   }
 
   void registerButtonClicked(BuildContext context) {
@@ -68,7 +88,11 @@ class BoardingLoginScreen extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
+          errorText: formIsEmpty && passwordController.text.isEmpty
+              ? 'Silahkan di isi dulu'
+              : null,
         ),
+        controller: passwordController,
         obscureText: true,
         maxLines: 1,
       ),
@@ -82,7 +106,11 @@ class BoardingLoginScreen extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Username',
+          errorText: formIsEmpty && usernameController.text.isEmpty
+              ? 'Silahkan di isi dulu'
+              : null,
         ),
+        controller: usernameController,
         maxLines: 1,
       ),
     );
