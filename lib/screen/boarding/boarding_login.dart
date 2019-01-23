@@ -21,7 +21,8 @@ class BoardingLoginScreenState extends State {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
-  var formIsEmpty = false;
+  var isFormEmpty = false;
+  var isWrongCredential = false;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -34,11 +35,12 @@ class BoardingLoginScreenState extends State {
   void onLoginClick(BuildContext context) async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
       setState(() {
-        formIsEmpty = true;
+        isFormEmpty = true;
       });
     } else {
       setState(() {
-        formIsEmpty = false;
+        isFormEmpty = false;
+        isWrongCredential = false;
       });
 
       final tokenResponse = await BakauApi.login(
@@ -46,7 +48,12 @@ class BoardingLoginScreenState extends State {
         passwordController.text,
       );
 
-      if (tokenResponse.status == REQUEST_SUCCESS) onLoginSuccess();
+      if (tokenResponse.status == REQUEST_SUCCESS)
+        onLoginSuccess();
+      else
+        setState(() {
+          isWrongCredential = true;
+        });
     }
   }
 
@@ -85,6 +92,18 @@ class BoardingLoginScreenState extends State {
     );
   }
 
+  String getErrorUsername() {
+    if (isFormEmpty && passwordController.text.isEmpty) return 'Silahkan di isi dulu';
+    else if (isWrongCredential) return 'Username atau Password salah';
+    else return null;
+  }
+
+  String getErrorPassword() {
+    if (isFormEmpty && usernameController.text.isEmpty) return 'Silahkan di isi dulu';
+    else if (isWrongCredential) return 'Username atau Password salah';
+    else return null;
+  }
+
   Container buildFormPassword() {
     return Container(
       width: double.infinity,
@@ -97,9 +116,7 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
-          errorText: formIsEmpty && passwordController.text.isEmpty
-              ? 'Silahkan di isi dulu'
-              : null,
+          errorText: getErrorUsername(),
         ),
         controller: passwordController,
         obscureText: true,
@@ -115,9 +132,7 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Username',
-          errorText: formIsEmpty && usernameController.text.isEmpty
-              ? 'Silahkan di isi dulu'
-              : null,
+          errorText: getErrorPassword(),
         ),
         controller: usernameController,
         maxLines: 1,
