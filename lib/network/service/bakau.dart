@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import './base.dart';
 import '../model/token.dart';
+import '../model/user.dart';
 
 class BakauApi {
   static const String serverName = "bakau";
@@ -22,6 +23,20 @@ class BakauApi {
         'username': username,
         'password': password,
       }),
+    );
+
+    return TokenResponse.fromJson(jsonDecode(response.body));
+  }
+
+  static Future<TokenResponse> register(User user) async{    
+    var url = "$completeName/register";
+    final response = await http.post(
+      url,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'secret': secret
+      },
+      body: user.toJson(),
     );
 
     return TokenResponse.fromJson(jsonDecode(response.body));

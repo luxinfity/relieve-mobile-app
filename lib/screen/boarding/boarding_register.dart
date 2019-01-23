@@ -6,12 +6,15 @@ import 'package:validators/validators.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import '../../res/res.dart';
+import '../../network/network.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../utils/common_utils.dart';
 import '../../widget/bottom_modal.dart';
+import '../../network/service/base.dart';
+import '../../network/model/user.dart';
 
 class BoardingRegisterScreen extends StatefulWidget {
   BoardingRegisterScreen({Key key}) : super(key: key);
@@ -45,7 +48,7 @@ class BoardingRegisterState extends State {
   final dobController = TextEditingController();
   final genderController = TextEditingController();
 
-  void onButtonClick() {
+  void onButtonClick() async {
     if (steps == 0) {
       setState(() {
         isFirstFormEmpty = [
@@ -77,17 +80,43 @@ class BoardingRegisterState extends State {
           genderController
         ].any((controller) => controller.text.isEmpty);
 
-        isPhoneValid = isNumeric(phoneController.text);
-
-        if (!isSecondFormEmpty && isPhoneValid) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
-            (_) => false, // clean all back stack
-          );
-        }
+        isPhoneValid = isNumeric(phoneController.text) &&
+            phoneController.text.replaceFirst('0', '').length >= 7;
       });
+
+      if (!isSecondFormEmpty && isPhoneValid) {
+        final user = User(
+          username: usernameController.text,
+          email: emailController.text,
+          password: passwordController.text,
+          fullname: fullnameController.text,
+          phone: '+62${phoneController.text.replaceFirst('0', '')}',
+          birthdate: dobController.text,
+          gender: genderController.text == 'Perempuan' ? 'f' : 'm',
+        );
+
+        final tokenResponse = await BakauApi.register(user);
+
+        if (tokenResponse.status == REQUEST_SUCCESS)
+          onRegisterSuccess();
+        else
+          createRelieveBottomModal(context, <Widget>[
+            Container(height: Dimen.x21),
+            Text(
+              'Username atau Email telah terdaftar',
+              style: CircularStdFont.book.getStyle(size: Dimen.x21),
+            ),
+          ]);
+      }
     }
+  }
+
+  void onRegisterSuccess() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+      (_) => false, // clean all back stack
+    );
   }
 
   @override
@@ -228,7 +257,7 @@ class BoardingRegisterState extends State {
             if (isFirstFormEmpty && phoneController.text.isEmpty) {
               return 'Silahkan diisi dulu';
             } else if (!isPhoneValid) {
-              return 'Masukkan hanya angka';
+              return 'Masukkan hanya angka dan lebih dari 7';
             } else {
               return null;
             }
