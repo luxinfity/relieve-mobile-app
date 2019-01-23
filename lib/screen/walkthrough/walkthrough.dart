@@ -88,20 +88,13 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          ClipOval(
-            clipBehavior: Clip.antiAlias,
-            child: Container(
-              height: 250,
-              width: 250,
-              color: AppColor.colorEmptyChip,
-            ),
-          ),
+          fetchImage(position),
           Padding(
-            padding: const EdgeInsets.all(Dimen.x16),
+            padding: const EdgeInsets.symmetric(horizontal: Dimen.x28),
             child: buildWalkthroughTitle(position),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: Dimen.x28, right: Dimen.x28),
+            padding: const EdgeInsets.only(left: Dimen.x28, right: Dimen.x28, top: Dimen.x16),
             child: buildWalkthroughText(position),
           ),
         ],
@@ -110,26 +103,55 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
     );
   }
 
+  Widget fetchImage(int position) {
+    switch (position) {
+      case 0:
+        return RemoteImage.walkthrough1.toImage(
+          height: 350,
+          width: 350,
+        );
+      case 1:
+        return RemoteImage.walkthrough2.toImage(
+          height: 350,
+          width: 350,
+        );
+      case 2:
+        return RemoteImage.walkthrough3.toImage(
+          height: 350,
+          width: 350,
+        );
+      default:
+        return RemoteImage.walkthrough4.toImage(
+          height: 350,
+          width: 350,
+        );
+    }
+  }
+
   Text buildWalkthroughTitle(int position) {
     switch (position) {
       case 0:
         return Text(
-          'Get more aware of a disaster',
+          'Pastikan data yang kamu input\nsudah benar',
+          textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 1:
         return Text(
-          'Make sure they are save',
+          'Tambakan keluarga mu ke dalam\ndaftar kerabat',
+          textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 2:
         return Text(
-          'Help for each other',
+          'Laporkan kondisi mu setiap hari!',
+          textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       default:
         return Text(
-          'All in one Emergency toolkit',
+          'Tetap tenang, dalam keadaan darurat',
+          textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
     }
@@ -139,18 +161,18 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
     switch (position) {
       case 0:
         return Text(
-            'lorem ipsum sit dolor amet lorem ipsum sit dolor ametlorem ipsum sit dolor ametlorem ipsum sit dolor amet',
+            'Data yang benar dan lengkap dapat mempermudah keluarga mu untuk menghubungi dan mengidetifikasi dirimu',
             textAlign: TextAlign.center);
       case 1:
         return Text(
-            'lorem ipsum sit dolor amet lorem ipsum sit dolor ametlorem ipsum sit dolor ametlorem ipsum sit dolor amet',
+            'Jangan sampai kamu ketinggalan berita terkini dari keluarga mu, Ayo tambahkan semua dan pantau \nsetiap hari',
             textAlign: TextAlign.center);
       case 2:
         return Text(
-            'lorem ipsum sit dolor amet lorem ipsum sit dolor ametlorem ipsum sit dolor ametlorem ipsum sit dolor amet',
+            'Selalu berikan berita terkini mengenai dirimu, cukup 3 kali klik dan hilangkan kecemasan keluarga mu',
             textAlign: TextAlign.center);
       default:
-        return Text('Oke Paham Gan', textAlign: TextAlign.center);
+        return Text('Semua nomor emergency dapat kamu temukan dalam aplikasi, tetap tenang, tetap semangat! ', textAlign: TextAlign.center);
     }
   }
 

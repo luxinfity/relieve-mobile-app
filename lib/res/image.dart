@@ -21,7 +21,11 @@ class RemoteImage {
       'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/';
 
   static RemoteImage get boardingHome => RemoteImage('sketch-01.png');
-  static RemoteImage get boardingLogin => RemoteImage('sketchh-02.png');
+  static RemoteImage get boardingLogin => RemoteImage('sketch-02.png');
+  static RemoteImage get walkthrough1 => RemoteImage('sketch-03.png');
+  static RemoteImage get walkthrough2 => RemoteImage('sketch-04.png');
+  static RemoteImage get walkthrough3 => RemoteImage('sketch-05.png');
+  static RemoteImage get walkthrough4 => RemoteImage('sketch-06.png');
   static RemoteImage get bg_bali => RemoteImage('bg_bali.png');
   static RemoteImage get bg_map => RemoteImage('bg_map.png');
   static RemoteImage get bg_map2 => RemoteImage('bg_map2.png');
