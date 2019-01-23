@@ -25,6 +25,10 @@ class BoardingRegisterState extends State {
   var isSecondFormEmpty = false;
 
   // first step
+  var isUsernameValid = true;
+  var isEmailValid = true;
+  var isPasswordValid = true;
+  var isPasswordMatch = true;
   final emailController = TextEditingController();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -46,7 +50,16 @@ class BoardingRegisterState extends State {
           confirmPasswordController
         ].any((controller) => controller.text.isEmpty);
 
-        if (!isFirstFormEmpty) {
+        isUsernameValid = usernameController.text.length >= 4;
+        isEmailValid = emailController.text.contains('@');
+        isPasswordValid = passwordController.text.length >= 5;
+        isPasswordMatch =
+            passwordController.text == confirmPasswordController.text;
+
+        if (!isFirstFormEmpty &&
+            isEmailValid &&
+            isPasswordValid &&
+            isPasswordMatch) {
           steps = 1;
         }
       });
@@ -127,9 +140,13 @@ class BoardingRegisterState extends State {
           inputType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           errorTextGenerator: () {
-            return isFirstFormEmpty && emailController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
+            if (isFirstFormEmpty && emailController.text.isEmpty) {
+              return 'Silahkan diisi dulu';
+            } else if (!isEmailValid) {
+              return 'Format email tidak valid';
+            } else {
+              return null;
+            }
           },
         ),
         buildInputForm(
@@ -138,9 +155,13 @@ class BoardingRegisterState extends State {
           controller: usernameController,
           textInputAction: TextInputAction.next,
           errorTextGenerator: () {
-            return isFirstFormEmpty && usernameController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
+            if (isFirstFormEmpty && usernameController.text.isEmpty) {
+              return 'Silahkan diisi dulu';
+            } else if (!isUsernameValid) {
+              return 'Panjang username minimal 4 huruf';
+            } else {
+              return null;
+            }
           },
         ),
         buildInputForm(
@@ -150,9 +171,13 @@ class BoardingRegisterState extends State {
           controller: passwordController,
           textInputAction: TextInputAction.next,
           errorTextGenerator: () {
-            return isFirstFormEmpty && passwordController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
+            if (isFirstFormEmpty && passwordController.text.isEmpty) {
+              return 'Silahkan diisi dulu';
+            } else if (!isPasswordValid) {
+              return 'Panjang password minimal 5 huruf';
+            } else {
+              return null;
+            }
           },
         ),
         buildInputForm(
@@ -162,9 +187,13 @@ class BoardingRegisterState extends State {
           controller: confirmPasswordController,
           textInputAction: TextInputAction.done,
           errorTextGenerator: () {
-            return isFirstFormEmpty && confirmPasswordController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
+            if (isFirstFormEmpty && confirmPasswordController.text.isEmpty) {
+              return 'Silahkan diisi dulu';
+            } else if (!isPasswordMatch) {
+              return 'Masukkan password yang sama';
+            } else {
+              return null;
+            }
           },
         ),
       ];
