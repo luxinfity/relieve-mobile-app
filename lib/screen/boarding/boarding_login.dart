@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
@@ -8,6 +7,8 @@ import '../../widget/relieve_scaffold.dart';
 import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
 import '../walkthrough/walkthrough.dart';
+import '../../network/network.dart';
+import '../../network/service/base.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class BoardingLoginScreenState extends State {
     );
   }
 
-  void onLoginClick(BuildContext context) {
+  void onLoginClick(BuildContext context) async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
       setState(() {
         formIsEmpty = true;
@@ -39,6 +40,13 @@ class BoardingLoginScreenState extends State {
       setState(() {
         formIsEmpty = false;
       });
+
+      final tokenResponse = await BakauApi.login(
+        usernameController.text,
+        passwordController.text,
+      );
+
+      if (tokenResponse.status == REQUEST_SUCCESS) onLoginSuccess();
     }
   }
 
