@@ -19,11 +19,11 @@ class WeatherItem extends StatelessWidget {
   Widget createImage() {
     switch (weatherType) {
       case WeatherType.Wind:
-        return LocalImage.ic_wind.toSvg(width: 48);
+        return LocalImage.ic_wind.toSvg(width: 38);
       case WeatherType.UV:
-        return LocalImage.ic_uv.toSvg(width: 48);
+        return LocalImage.ic_uv.toSvg(width: 40);
       default:
-        return LocalImage.ic_rain.toSvg(width: 48);
+        return LocalImage.ic_rain.toSvg(width: 42);
     }
   }
 
@@ -64,11 +64,11 @@ class WeatherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: 110,        
+        height: 110,
+        padding: const EdgeInsets.all(Dimen.x10),
         child: Stack(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.all(Dimen.x10),
               height: double.infinity,
               width: double.infinity,
               child: Text(
@@ -80,15 +80,9 @@ class WeatherItem extends StatelessWidget {
               ),
               alignment: Alignment.bottomCenter,
             ),
-            Container(
-              child: createImage(),
-              padding: const EdgeInsets.only(left: Dimen.x6, top: Dimen.x10),
-            ),
+            createImage(),
             Positioned(
-              child: Padding(
-                padding: const EdgeInsets.all(Dimen.x8),
-                child: createValueView(),
-              ),
+              child: createValueView(),
               top: 1,
               right: 1,
             ),
