@@ -7,18 +7,54 @@ import '../../widget/relieve_scaffold.dart';
 import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
 import '../walkthrough/walkthrough.dart';
+import '../../network/network.dart';
+import '../../network/service/base.dart';
 
-class BoardingLoginScreen extends StatelessWidget {
-  final String title;
+class BoardingLoginScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return BoardingLoginScreenState();
+  }
+}
 
-  BoardingLoginScreen({Key key, this.title}) : super(key: key);
+class BoardingLoginScreenState extends State {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  void onLoginClick(BuildContext context) {
+  var isFormEmpty = false;
+  var isWrongCredential = false;
+
+  void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
       (_) => false, // clean all back stack
     );
+  }
+
+  void onLoginClick(BuildContext context) async {
+    if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+      setState(() {
+        isFormEmpty = true;
+      });
+    } else {
+      setState(() {
+        isFormEmpty = false;
+        isWrongCredential = false;
+      });
+
+      final tokenResponse = await BakauApi.login(
+        usernameController.text,
+        passwordController.text,
+      );
+
+      if (tokenResponse.status == REQUEST_SUCCESS)
+        onLoginSuccess();
+      else
+        setState(() {
+          isWrongCredential = true;
+        });
+    }
   }
 
   void registerButtonClicked(BuildContext context) {
@@ -56,6 +92,18 @@ class BoardingLoginScreen extends StatelessWidget {
     );
   }
 
+  String getErrorUsername() {
+    if (isFormEmpty && passwordController.text.isEmpty) return 'Silahkan di isi dulu';
+    else if (isWrongCredential) return 'Username atau Password salah';
+    else return null;
+  }
+
+  String getErrorPassword() {
+    if (isFormEmpty && usernameController.text.isEmpty) return 'Silahkan di isi dulu';
+    else if (isWrongCredential) return 'Username atau Password salah';
+    else return null;
+  }
+
   Container buildFormPassword() {
     return Container(
       width: double.infinity,
@@ -68,7 +116,9 @@ class BoardingLoginScreen extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
+          errorText: getErrorUsername(),
         ),
+        controller: passwordController,
         obscureText: true,
         maxLines: 1,
       ),
@@ -82,7 +132,9 @@ class BoardingLoginScreen extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Username',
+          errorText: getErrorPassword(),
         ),
+        controller: usernameController,
         maxLines: 1,
       ),
     );
