@@ -62,7 +62,8 @@ class LocalImage {
   static LocalImage get ic_location => LocalImage('ic_location');
   static LocalImage get ic_exit => LocalImage('ic_exit');
   static LocalImage get ic_faq => LocalImage('ic_faq');
-  static LocalImage get ic_info_contributor => LocalImage('ic_info_contributor');
+  static LocalImage get ic_info_contributor =>
+      LocalImage('ic_info_contributor');
   static LocalImage get ic_notif => LocalImage('ic_notif');
   static LocalImage get ic_privacy => LocalImage('ic_privacy');
   static LocalImage get ic_syarat => LocalImage('ic_syarat');
@@ -85,4 +86,8 @@ class LocalImage {
   static LocalImage get ic_guard => LocalImage('ic_guard');
   static LocalImage get ic_warning => LocalImage('ic_warning');
 
+  // Weather
+  static LocalImage get ic_wind => LocalImage('ic_wind');
+  static LocalImage get ic_uv => LocalImage('ic_uv');
+  static LocalImage get ic_rain => LocalImage('ic_rain');
 }
