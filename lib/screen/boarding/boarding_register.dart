@@ -72,8 +72,7 @@ class BoardingRegisterState extends State {
 
   @override
   Widget build(BuildContext context) {
-    final form = createForm();
-    form.add(buildTnCNotif());
+    final form = createForm()..add(buildTnCNotif() ?? Container());
 
     return RelieveScaffold(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,6 +124,7 @@ class BoardingRegisterState extends State {
           key: 'emailInput',
           label: 'Email',
           controller: emailController,
+          inputType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           errorTextGenerator: () {
             return isFirstFormEmpty && emailController.text.isEmpty
@@ -198,6 +198,7 @@ class BoardingRegisterState extends State {
           key: 'dobInput',
           label: 'Tanggal Lahir',
           controller: dobController,
+          inputType: TextInputType.datetime,
           errorTextGenerator: () {
             return isSecondFormEmpty && dobController.text.isEmpty
                 ? 'Silahkan diisi dulu'
