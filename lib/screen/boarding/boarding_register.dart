@@ -290,7 +290,53 @@ class BoardingRegisterState extends State {
   }
 
   void onGenderClick() {
-    // createRelieveBottomModal(context, children);
+    createRelieveBottomModal(context, <Widget>[
+      Row(
+        children: <Widget>[
+          Expanded(
+            child: FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimen.x4),
+              ),
+              padding: EdgeInsets.symmetric(vertical: Dimen.x16),
+              textColor: Colors.white,
+              child: Text(
+                'Perempuan',
+                style: CircularStdFont.medium.getStyle(
+                  size: Dimen.x18,
+                  color: AppColor.colorPrimary,
+                ),
+              ),
+              onPressed: () {
+                genderController.text = 'Perempuan';
+                Navigator.pop(context);
+              },
+            ),
+          ),
+          Container(width: Dimen.x12),
+          Expanded(
+            child: FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimen.x4),
+              ),
+              padding: EdgeInsets.symmetric(vertical: Dimen.x16),
+              textColor: Colors.white,
+              child: Text(
+                'Laki - Laki',
+                style: CircularStdFont.medium.getStyle(
+                  size: Dimen.x18,
+                  color: AppColor.colorPrimary,
+                ),
+              ),
+              onPressed: () {
+                genderController.text = 'Laki - Laki';
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
+      ),
+    ]);
   }
 
   Widget buildInputForm({
