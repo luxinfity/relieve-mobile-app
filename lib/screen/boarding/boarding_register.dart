@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:validators/validators.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
@@ -8,6 +11,7 @@ import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../utils/common_utils.dart';
+import '../../widget/bottom_modal.dart';
 
 class BoardingRegisterScreen extends StatefulWidget {
   BoardingRegisterScreen({Key key}) : super(key: key);
@@ -35,12 +39,13 @@ class BoardingRegisterState extends State {
   final confirmPasswordController = TextEditingController();
 
   // second step
+  var isPhoneValid = true;
   final fullnameController = TextEditingController();
   final phoneController = TextEditingController();
   final dobController = TextEditingController();
   final genderController = TextEditingController();
 
-  void onButtonClick(BuildContext context) {
+  void onButtonClick() {
     if (steps == 0) {
       setState(() {
         isFirstFormEmpty = [
@@ -51,7 +56,7 @@ class BoardingRegisterState extends State {
         ].any((controller) => controller.text.isEmpty);
 
         isUsernameValid = usernameController.text.length >= 4;
-        isEmailValid = emailController.text.contains('@');
+        isEmailValid = EmailValidator.validate(emailController.text);
         isPasswordValid = passwordController.text.length >= 5;
         isPasswordMatch =
             passwordController.text == confirmPasswordController.text;
@@ -72,7 +77,9 @@ class BoardingRegisterState extends State {
           genderController
         ].any((controller) => controller.text.isEmpty);
 
-        if (!isSecondFormEmpty) {
+        isPhoneValid = isNumeric(phoneController.text);
+
+        if (!isSecondFormEmpty && isPhoneValid) {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -125,7 +132,7 @@ class BoardingRegisterState extends State {
       child: StandardButton(
         text: steps == 0 ? 'Lanjut' : 'Daftar',
         backgroundColor: AppColor.colorPrimary,
-        buttonClick: () => onButtonClick(context),
+        buttonClick: () => onButtonClick(),
       ),
     );
   }
@@ -218,9 +225,13 @@ class BoardingRegisterState extends State {
           inputType: TextInputType.phone,
           textInputAction: TextInputAction.done,
           errorTextGenerator: () {
-            return isSecondFormEmpty && phoneController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
+            if (isFirstFormEmpty && phoneController.text.isEmpty) {
+              return 'Silahkan diisi dulu';
+            } else if (!isPhoneValid) {
+              return 'Masukkan hanya angka';
+            } else {
+              return null;
+            }
           },
         ),
         buildInputForm(
@@ -228,6 +239,7 @@ class BoardingRegisterState extends State {
           label: 'Tanggal Lahir',
           controller: dobController,
           inputType: TextInputType.datetime,
+          onTap: () => onDoBClick(),
           errorTextGenerator: () {
             return isSecondFormEmpty && dobController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -238,6 +250,7 @@ class BoardingRegisterState extends State {
           key: 'genderInput',
           label: 'Gender',
           controller: genderController,
+          onTap: () => onGenderClick(),
           errorTextGenerator: () {
             return isSecondFormEmpty && genderController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -248,7 +261,39 @@ class BoardingRegisterState extends State {
     }
   }
 
-  Container buildInputForm({
+  void onDoBClick() {
+    DatePicker.showDatePicker(
+      context,
+      showTitleActions: true,
+      locale: 'i18n',
+      cancel: Text(
+        'Batal',
+        style: CircularStdFont.book.getStyle(
+          size: Dimen.x12,
+          color: AppColor.colorDanger,
+        ),
+      ),
+      confirm: Text(
+        'Pilih',
+        style: CircularStdFont.book.getStyle(
+          size: Dimen.x12,
+          color: AppColor.colorPrimary,
+        ),
+      ),
+      dateFormat: 'yyyy-mm-dd',
+      onConfirm: (year, month, date) {
+        final monthStr = month.toString().padLeft(2, '0');
+        final dateStr = date.toString().padLeft(2, '0');
+        dobController.text = "$year-$monthStr-$dateStr";
+      },
+    );
+  }
+
+  void onGenderClick() {
+    // createRelieveBottomModal(context, children);
+  }
+
+  Widget buildInputForm({
     String key,
     String prefix,
     String label,
@@ -257,36 +302,42 @@ class BoardingRegisterState extends State {
     TextEditingController controller,
     TextInputType inputType,
     StringCallback errorTextGenerator,
+    VoidCallback onTap,
   }) {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.only(
-        top: Dimen.x6,
-        left: Dimen.x24,
-        right: Dimen.x24,
-      ),
-      child: TextFormField(
-        key: Key(key),
-        obscureText: obscureText && !passwordVisible,
-        textInputAction: textInputAction,
-        keyboardType: inputType,
-        decoration: InputDecoration(
-          prefixText: prefix,
-          labelText: label,
-          suffixIcon: obscureText
-              ? IconButton(
-                  icon: Icon(
-                    passwordVisible ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() => passwordVisible = !passwordVisible);
-                  },
-                )
-              : null,
-          errorText: (errorTextGenerator != null) ? errorTextGenerator() : null,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(
+          top: Dimen.x6,
+          left: Dimen.x24,
+          right: Dimen.x24,
         ),
-        controller: controller,
-        maxLines: 1,
+        child: TextFormField(
+          key: Key(key),
+          enabled: onTap == null,
+          obscureText: obscureText && !passwordVisible,
+          textInputAction: textInputAction,
+          keyboardType: inputType,
+          decoration: InputDecoration(
+            prefixText: prefix,
+            labelText: label,
+            suffixIcon: obscureText
+                ? IconButton(
+                    icon: Icon(
+                      passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() => passwordVisible = !passwordVisible);
+                    },
+                  )
+                : null,
+            errorText:
+                (errorTextGenerator != null) ? errorTextGenerator() : null,
+          ),
+          controller: controller,
+          maxLines: 1,
+        ),
       ),
     );
   }
