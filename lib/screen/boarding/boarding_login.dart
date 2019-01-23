@@ -23,6 +23,7 @@ class BoardingLoginScreenState extends State {
 
   var isFormEmpty = false;
   var isWrongCredential = false;
+  var passwordVisible = false;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -93,15 +94,21 @@ class BoardingLoginScreenState extends State {
   }
 
   String getErrorUsername() {
-    if (isFormEmpty && passwordController.text.isEmpty) return 'Silahkan di isi dulu';
-    else if (isWrongCredential) return 'Username atau Password salah';
-    else return null;
+    if (isFormEmpty && passwordController.text.isEmpty)
+      return 'Silahkan diisi dulu';
+    else if (isWrongCredential)
+      return 'Username atau Password salah';
+    else
+      return null;
   }
 
   String getErrorPassword() {
-    if (isFormEmpty && usernameController.text.isEmpty) return 'Silahkan di isi dulu';
-    else if (isWrongCredential) return 'Username atau Password salah';
-    else return null;
+    if (isFormEmpty && usernameController.text.isEmpty)
+      return 'Silahkan diisi dulu';
+    else if (isWrongCredential)
+      return 'Username atau Password salah';
+    else
+      return null;
   }
 
   Container buildFormPassword() {
@@ -116,10 +123,18 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
+          suffixIcon: IconButton(
+            icon: Icon(
+              passwordVisible ? Icons.visibility : Icons.visibility_off,
+            ),
+            onPressed: () {
+              setState(() => passwordVisible = !passwordVisible);
+            },
+          ),
           errorText: getErrorUsername(),
         ),
         controller: passwordController,
-        obscureText: true,
+        obscureText: passwordVisible,
         maxLines: 1,
       ),
     );
