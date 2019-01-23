@@ -14,7 +14,7 @@ ext.builds = [
 ext.gradlePlugins = [
     kotlin   : '1.3.10',
     firebase : '1.1.1',
-    gradle   : '3.2.1'
+    gradle   : '3.3.0'
 ]
 
 enum Kind {
