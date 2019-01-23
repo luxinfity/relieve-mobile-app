@@ -72,22 +72,29 @@ class BoardingRegisterState extends State {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = <Widget>[
-      createTitle(),
-      Expanded(
-        child: Container(),
-      ),
-      buildTnCNotif(),
-      createButton(),
-    ].where((widget) => widget != null).toList();
-
-    // add forms
-    children.insertAll(1, createForm());
+    final form = createForm();
+    form.add(buildTnCNotif());
 
     return RelieveScaffold(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        hasBackButton: true,
-        childs: children);
+      crossAxisAlignment: CrossAxisAlignment.start,
+      hasBackButton: true,
+      childs: <Widget>[
+        Expanded(
+          child: Column(
+            children: <Widget>[
+              createTitle(),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.all(0),
+                  children: form,
+                ),
+              ),
+              createButton(),
+            ].where((widget) => widget != null).toList(),
+          ),
+        )
+      ],
+    );
   }
 
   Widget createTitle() {
@@ -118,6 +125,7 @@ class BoardingRegisterState extends State {
           key: 'emailInput',
           label: 'Email',
           controller: emailController,
+          textInputAction: TextInputAction.next,
           errorTextGenerator: () {
             return isFirstFormEmpty && emailController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -128,6 +136,7 @@ class BoardingRegisterState extends State {
           key: 'usernameInput',
           label: 'Username',
           controller: usernameController,
+          textInputAction: TextInputAction.next,
           errorTextGenerator: () {
             return isFirstFormEmpty && usernameController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -139,6 +148,7 @@ class BoardingRegisterState extends State {
           label: 'Password',
           obscureText: true,
           controller: passwordController,
+          textInputAction: TextInputAction.next,
           errorTextGenerator: () {
             return isFirstFormEmpty && passwordController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -150,6 +160,7 @@ class BoardingRegisterState extends State {
           label: 'Ketik Ulang Password',
           obscureText: true,
           controller: confirmPasswordController,
+          textInputAction: TextInputAction.done,
           errorTextGenerator: () {
             return isFirstFormEmpty && confirmPasswordController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -163,6 +174,7 @@ class BoardingRegisterState extends State {
           key: 'nameInput',
           label: 'Nama Lengkap',
           controller: fullnameController,
+          textInputAction: TextInputAction.next,
           errorTextGenerator: () {
             return isSecondFormEmpty && fullnameController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -174,6 +186,8 @@ class BoardingRegisterState extends State {
           prefix: '+62 ',
           label: 'Nomor Telpon',
           controller: phoneController,
+          inputType: TextInputType.phone,
+          textInputAction: TextInputAction.done,
           errorTextGenerator: () {
             return isSecondFormEmpty && phoneController.text.isEmpty
                 ? 'Silahkan diisi dulu'
@@ -209,7 +223,9 @@ class BoardingRegisterState extends State {
     String prefix,
     String label,
     bool obscureText = false,
+    TextInputAction textInputAction,
     TextEditingController controller,
+    TextInputType inputType,
     StringCallback errorTextGenerator,
   }) {
     return Container(
@@ -221,7 +237,9 @@ class BoardingRegisterState extends State {
       ),
       child: TextFormField(
         key: Key(key),
-        obscureText: obscureText,
+        obscureText: obscureText && !passwordVisible,
+        textInputAction: textInputAction,
+        keyboardType: inputType,
         decoration: InputDecoration(
           prefixText: prefix,
           labelText: label,
@@ -248,7 +266,11 @@ class BoardingRegisterState extends State {
       return null;
     } else {
       return Padding(
-        padding: const EdgeInsets.only(left: Dimen.x32, right: Dimen.x32),
+        padding: const EdgeInsets.only(
+          left: Dimen.x32,
+          right: Dimen.x32,
+          top: Dimen.x64,
+        ),
         child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
