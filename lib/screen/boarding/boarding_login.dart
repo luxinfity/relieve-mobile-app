@@ -23,6 +23,7 @@ class BoardingLoginScreenState extends State {
 
   var isFormEmpty = false;
   var isWrongCredential = false;
+  var passwordVisible = false;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -32,7 +33,7 @@ class BoardingLoginScreenState extends State {
     );
   }
 
-  void onLoginClick(BuildContext context) async {
+  void onLoginClick() async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
       setState(() {
         isFormEmpty = true;
@@ -57,7 +58,7 @@ class BoardingLoginScreenState extends State {
     }
   }
 
-  void registerButtonClicked(BuildContext context) {
+  void registerButtonClicked() {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
   }
@@ -75,16 +76,16 @@ class BoardingLoginScreenState extends State {
             padding: EdgeInsets.only(left: padding.left, right: padding.right),
             children: <Widget>[
               buildTitle(),
-              buildImage(context),
+              buildImage(),
               buildFormUsername(),
               buildFormPassword(),
               buildForgotPassword(),
               StandardButton(
                 text: 'Login',
-                buttonClick: () => onLoginClick(context),
+                buttonClick: () => onLoginClick(),
                 backgroundColor: AppColor.colorPrimary,
               ),
-              buildRegisterHere(context)
+              buildRegisterHere()
             ],
           ),
         ),
@@ -93,15 +94,21 @@ class BoardingLoginScreenState extends State {
   }
 
   String getErrorUsername() {
-    if (isFormEmpty && passwordController.text.isEmpty) return 'Silahkan di isi dulu';
-    else if (isWrongCredential) return 'Username atau Password salah';
-    else return null;
+    if (isFormEmpty && passwordController.text.isEmpty)
+      return 'Silahkan diisi dulu';
+    else if (isWrongCredential)
+      return 'Username atau Password salah';
+    else
+      return null;
   }
 
   String getErrorPassword() {
-    if (isFormEmpty && usernameController.text.isEmpty) return 'Silahkan di isi dulu';
-    else if (isWrongCredential) return 'Username atau Password salah';
-    else return null;
+    if (isFormEmpty && usernameController.text.isEmpty)
+      return 'Silahkan diisi dulu';
+    else if (isWrongCredential)
+      return 'Username atau Password salah';
+    else
+      return null;
   }
 
   Container buildFormPassword() {
@@ -116,10 +123,19 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
+          suffixIcon: IconButton(
+            icon: Icon(
+              passwordVisible ? Icons.visibility : Icons.visibility_off,
+            ),
+            onPressed: () {
+              setState(() => passwordVisible = !passwordVisible);
+            },
+          ),
           errorText: getErrorUsername(),
         ),
+        textInputAction: TextInputAction.done,
         controller: passwordController,
-        obscureText: true,
+        obscureText: !passwordVisible,
         maxLines: 1,
       ),
     );
@@ -134,17 +150,18 @@ class BoardingLoginScreenState extends State {
           labelText: 'Username',
           errorText: getErrorPassword(),
         ),
+        textInputAction: TextInputAction.next,
         controller: usernameController,
         maxLines: 1,
       ),
     );
   }
 
-  Padding buildRegisterHere(BuildContext context) {
+  Padding buildRegisterHere() {
     return Padding(
       padding: const EdgeInsets.only(top: 12),
       child: RegisterHere(
-        onClick: () => registerButtonClicked(context),
+        onClick: () => registerButtonClicked(),
       ),
     );
   }
@@ -170,7 +187,7 @@ class BoardingLoginScreenState extends State {
         title: "Login Now", subtitle: "Please login to continue using our app");
   }
 
-  Widget buildImage(BuildContext context) {
+  Widget buildImage() {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       // handle screen too big, in iphone x
       return SizedBox(
