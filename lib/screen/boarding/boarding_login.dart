@@ -135,7 +135,7 @@ class BoardingLoginScreenState extends State {
         ),
         textInputAction: TextInputAction.done,
         controller: passwordController,
-        obscureText: passwordVisible,
+        obscureText: !passwordVisible,
         maxLines: 1,
       ),
     );
