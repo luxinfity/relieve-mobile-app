@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
+import '../../network/network.dart';
 
 enum WeatherType { Rain, Wind, UV }
 
@@ -88,6 +89,58 @@ class WeatherItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class WeatherItemList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return WeatherItemListState();
+  }
+}
+
+class WeatherItemListState extends State {
+  // dummy
+  final lat = -6.892534;
+  final long = 107.613463;
+
+  void fetchData() async {
+    await KalomangApi.weatherCheck(lat, long);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    fetchData();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: WeatherItem(
+              weatherType: WeatherType.Rain,
+              classification: 'Hujan Lebat',
+              value: 2.0,
+            ),
+          ),
+          Container(width: Dimen.x4),
+          Expanded(
+            child: WeatherItem(
+              weatherType: WeatherType.Wind,
+              classification: 'Berangin',
+              value: 73,
+            ),
+          ),
+          Container(width: Dimen.x4),
+          Expanded(
+            child: WeatherItem(
+              weatherType: WeatherType.UV,
+              classification: 'Sedang',
+              value: 11,
+            ),
+          ),
+        ],
       ),
     );
   }
