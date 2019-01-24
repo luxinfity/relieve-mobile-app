@@ -4,7 +4,7 @@ class WeatherDescription {
   final String id;
   final String en;
 
-  WeatherDescription({this.id, this.en});
+  const WeatherDescription({this.id, this.en});
 
   factory WeatherDescription.fromJson(Map<String, dynamic> parsedJson) {
     try {
@@ -22,7 +22,8 @@ class Weather {
   final WeatherDescription desc;
   final double value;
 
-  Weather({this.desc, this.value});
+  const Weather(
+      {this.desc = const WeatherDescription(en: '', id: ''), this.value = 0});
 
   factory Weather.fromJson(Map<String, dynamic> parsedJson) {
     try {
@@ -42,7 +43,12 @@ class WeatherItem {
   final Weather uv;
   final Weather rain;
 
-  WeatherItem({this.temparature, this.wind, this.uv, this.rain});
+  const WeatherItem({
+    this.temparature = const Weather(),
+    this.wind = const Weather(),
+    this.uv = const Weather(),
+    this.rain = const Weather(),
+  });
 
   factory WeatherItem.fromJson(Map<String, dynamic> parsedJson) {
     try {
@@ -65,7 +71,7 @@ class WeatherResponse extends BaseResponse {
   WeatherResponse({
     String message,
     int status,
-    this.content,
+    this.content = const WeatherItem(),
   }) : super(message, status, content);
 
   factory WeatherResponse.fromJson(Map<String, dynamic> parsedJson) {
