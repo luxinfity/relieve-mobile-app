@@ -102,6 +102,7 @@ class BoardingRegisterState extends State {
           await pref.setToken(tokenResponse.content.token);
           await pref.setRefreshToken(tokenResponse.content.refreshToken);
           await pref.setExpireIn(tokenResponse.content.expiresIn);
+          await pref.setUsername(usernameController.text);
           onRegisterSuccess();
         } else {
           createRelieveBottomModal(context, <Widget>[

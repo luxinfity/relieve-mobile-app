@@ -12,7 +12,7 @@ class BakauApi {
   static const String secret = "BdQv7AHrFsAb5JMwYN6OZvCMSn7lU5nB";
 
   static Future<TokenResponse> login(String username, String password) async{    
-    var url = "$completeName/login";
+    var url = "$completeName/auth/login";
     final response = await http.post(
       url,
       headers: {
@@ -29,7 +29,7 @@ class BakauApi {
   }
 
   static Future<TokenResponse> register(User user) async{    
-    var url = "$completeName/register";
+    var url = "$completeName/auth/register";
     final response = await http.post(
       url,
       headers: {
