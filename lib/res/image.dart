@@ -26,7 +26,7 @@ class RemoteImage {
   static RemoteImage get walkthrough2 => RemoteImage('sketch-04.png');
   static RemoteImage get walkthrough3 => RemoteImage('sketch-05.png');
   static RemoteImage get walkthrough4 => RemoteImage('sketch-06.png');
-  static RemoteImage get bg_bali => RemoteImage('bg_bali.png');
+  static RemoteImage get bg_jawa_barat => RemoteImage('home-bg/jawa-barat.png');
   static RemoteImage get bg_map => RemoteImage('bg_map.png');
   static RemoteImage get bg_map2 => RemoteImage('bg_map2.png');
 }

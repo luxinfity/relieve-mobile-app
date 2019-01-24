@@ -97,7 +97,7 @@ class UserAppBar extends StatelessWidget {
   Container buildBgImage() {
     return Container(
       width: double.infinity,
-      child: RemoteImage.bg_bali.toImage(
+      child: RemoteImage.bg_jawa_barat.toImage(
         fit: BoxFit.cover,
       ),
     );

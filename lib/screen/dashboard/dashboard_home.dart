@@ -15,7 +15,7 @@ class DashboardHomeScreen extends StatelessWidget {
         slivers: <Widget>[
           UserAppBar(
             name: 'Muh. Alif Akbar',
-            location: 'Ubud, Bali',
+            location: 'Dago, Bandung',
             isSafe: true,
           ),
           SliverList(

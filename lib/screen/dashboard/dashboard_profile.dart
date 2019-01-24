@@ -57,7 +57,7 @@ class DashboardProfileScreen extends StatelessWidget {
                         horizontal: Dimen.x21,
                       ),
                       child: UserLocation(
-                        location: 'Dago Pakar, Bandung',
+                        location: 'Sukajadi, Bandung',
                         icon: LocalImage.ic_location,
                         personHealth: PersonHealth.None,
                       ),
