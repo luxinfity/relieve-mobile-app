@@ -32,8 +32,6 @@ class ItemButton extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Column(
-                // direction: Axis.vertical,
-                // spacing: Dimen.x10,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   icon.toSvg(
