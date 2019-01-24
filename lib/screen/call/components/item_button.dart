@@ -31,9 +31,10 @@ class ItemButton extends StatelessWidget {
               horizontal: Dimen.x14, vertical: Dimen.x18),
           child: Stack(
             children: <Widget>[
-              Wrap(
-                direction: Axis.vertical,
-                spacing: Dimen.x10,
+              Column(
+                // direction: Axis.vertical,
+                // spacing: Dimen.x10,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   icon.toSvg(
                     width: Dimen.x18,
@@ -41,6 +42,7 @@ class ItemButton extends StatelessWidget {
                         ? AppColor.colorPrimary
                         : AppColor.colorTextBlack,
                   ),
+                  Container(height: Dimen.x10),
                   Text(
                     title,
                     style: CircularStdFont.medium.getStyle(

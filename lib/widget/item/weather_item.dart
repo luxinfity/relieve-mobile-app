@@ -124,7 +124,7 @@ class WeatherItemListState extends State {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+      padding: const EdgeInsets.only(left: Dimen.x16, right: Dimen.x16, bottom: Dimen.x16),
       child: Row(
         children: <Widget>[
           Expanded(
