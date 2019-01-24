@@ -6,15 +6,16 @@ import 'package:validators/validators.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import '../../res/res.dart';
-import '../../network/network.dart';
+import '../../service/config.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../utils/common_utils.dart';
 import '../../widget/bottom_modal.dart';
-import '../../network/service/base.dart';
-import '../../network/model/user.dart';
+import '../../service/source/base.dart';
+import '../../service/model/user.dart';
+import '../../utils/preference_utils.dart' as pref;
 
 class BoardingRegisterScreen extends StatefulWidget {
   BoardingRegisterScreen({Key key}) : super(key: key);
@@ -97,9 +98,13 @@ class BoardingRegisterState extends State {
 
         final tokenResponse = await BakauApi.register(user);
 
-        if (tokenResponse.status == REQUEST_SUCCESS)
+        if (tokenResponse.status == REQUEST_SUCCESS) {
+          await pref.setToken(tokenResponse.content.token);
+          await pref.setRefreshToken(tokenResponse.content.refreshToken);
+          await pref.setExpireIn(tokenResponse.content.expiresIn);
+          await pref.setUsername(usernameController.text);
           onRegisterSuccess();
-        else
+        } else {
           createRelieveBottomModal(context, <Widget>[
             Container(height: Dimen.x21),
             Text(
@@ -107,6 +112,7 @@ class BoardingRegisterState extends State {
               style: CircularStdFont.book.getStyle(size: Dimen.x21),
             ),
           ]);
+        }
       }
     }
   }

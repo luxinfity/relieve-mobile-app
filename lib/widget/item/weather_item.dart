@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
+import '../../service/config.dart';
+import '../../service/model/weather.dart';
 
 enum WeatherType { Rain, Wind, UV }
 
@@ -88,6 +90,67 @@ class WeatherItem extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class WeatherItemList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return WeatherItemListState();
+  }
+}
+
+class WeatherItemListState extends State {
+  // dummy
+  final lat = -6.892534;
+  final long = 107.613463;
+  WeatherResponse _weatherResponse = WeatherResponse();
+
+  void fetchData() async {
+    final response = await KalomangApi.weatherCheck(lat, long);
+    setState(() {
+      _weatherResponse = response;
+    });
+  }
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: Dimen.x16, right: Dimen.x16, bottom: Dimen.x16),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: WeatherItem(
+              weatherType: WeatherType.Rain,
+              classification: _weatherResponse.content.rain.desc.id,
+              value: _weatherResponse.content.rain.value,
+            ),
+          ),
+          Container(width: Dimen.x4),
+          Expanded(
+            child: WeatherItem(
+              weatherType: WeatherType.Wind,
+              classification: _weatherResponse.content.wind.desc.id,
+              value: _weatherResponse.content.wind.value,
+            ),
+          ),
+          Container(width: Dimen.x4),
+          Expanded(
+            child: WeatherItem(
+              weatherType: WeatherType.UV,
+              classification: _weatherResponse.content.uv.desc.id,
+              value: _weatherResponse.content.uv.value,
+            ),
+          ),
+        ],
       ),
     );
   }

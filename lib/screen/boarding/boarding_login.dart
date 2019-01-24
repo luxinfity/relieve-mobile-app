@@ -7,8 +7,9 @@ import '../../widget/relieve_scaffold.dart';
 import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
 import '../walkthrough/walkthrough.dart';
-import '../../network/network.dart';
-import '../../network/service/base.dart';
+import '../../service/config.dart';
+import '../../service/source/base.dart';
+import '../../utils/preference_utils.dart' as pref;
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -49,9 +50,13 @@ class BoardingLoginScreenState extends State {
         passwordController.text,
       );
 
-      if (tokenResponse.status == REQUEST_SUCCESS)
+      if (tokenResponse.status == REQUEST_SUCCESS) {
+        await pref.setToken(tokenResponse.content.token);
+        await pref.setRefreshToken(tokenResponse.content.refreshToken);
+        await pref.setExpireIn(tokenResponse.content.expiresIn);
+        await pref.setUsername(usernameController.text);
         onLoginSuccess();
-      else
+      } else
         setState(() {
           isWrongCredential = true;
         });
