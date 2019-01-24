@@ -29,7 +29,7 @@ Future<int> getExpireIn() async {
   return prefs.getInt('expireIn');
 }
 
-Future<bool> setExpireIn(String refreshToken) async {
+Future<bool> setExpireIn(int expireIn) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return await prefs.setString('expireIn', refreshToken);
+  return await prefs.setInt('expireIn', expireIn);
 }

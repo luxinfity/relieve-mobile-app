@@ -15,6 +15,7 @@ import '../../utils/common_utils.dart';
 import '../../widget/bottom_modal.dart';
 import '../../network/service/base.dart';
 import '../../network/model/user.dart';
+import '../../utils/preference_utils.dart' as pref;
 
 class BoardingRegisterScreen extends StatefulWidget {
   BoardingRegisterScreen({Key key}) : super(key: key);
@@ -97,9 +98,12 @@ class BoardingRegisterState extends State {
 
         final tokenResponse = await BakauApi.register(user);
 
-        if (tokenResponse.status == REQUEST_SUCCESS)
+        if (tokenResponse.status == REQUEST_SUCCESS) {
+          await pref.setToken(tokenResponse.content.token);
+          await pref.setRefreshToken(tokenResponse.content.refreshToken);
+          await pref.setExpireIn(tokenResponse.content.expiresIn);
           onRegisterSuccess();
-        else
+        } else {
           createRelieveBottomModal(context, <Widget>[
             Container(height: Dimen.x21),
             Text(
@@ -107,6 +111,7 @@ class BoardingRegisterState extends State {
               style: CircularStdFont.book.getStyle(size: Dimen.x21),
             ),
           ]);
+        }
       }
     }
   }
