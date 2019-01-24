@@ -6,15 +6,15 @@ import 'package:validators/validators.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import '../../res/res.dart';
-import '../../network/network.dart';
+import '../../service/config.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../utils/common_utils.dart';
 import '../../widget/bottom_modal.dart';
-import '../../network/service/base.dart';
-import '../../network/model/user.dart';
+import '../../service/source/base.dart';
+import '../../service/model/user.dart';
 import '../../utils/preference_utils.dart' as pref;
 
 class BoardingRegisterScreen extends StatefulWidget {

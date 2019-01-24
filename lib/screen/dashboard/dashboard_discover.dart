@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/disaster_item.dart';
-import '../../network/model/disaster.dart';
+import '../../service/model/disaster.dart';
 
 class DashboardDiscoverScreen extends StatelessWidget {
   @override

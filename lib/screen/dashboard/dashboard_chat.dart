@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/chat_item.dart';
 import '../../res/res.dart';
-import '../../network/model/chat.dart';
+import '../../service/model/chat.dart';
 
 class DashboardChatScreen extends StatefulWidget {
   @override

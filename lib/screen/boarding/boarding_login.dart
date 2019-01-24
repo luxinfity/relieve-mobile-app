@@ -7,8 +7,8 @@ import '../../widget/relieve_scaffold.dart';
 import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
 import '../walkthrough/walkthrough.dart';
-import '../../network/network.dart';
-import '../../network/service/base.dart';
+import '../../service/config.dart';
+import '../../service/source/base.dart';
 import '../../utils/preference_utils.dart' as pref;
 
 class BoardingLoginScreen extends StatefulWidget {

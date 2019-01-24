@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
-import '../../network/network.dart';
+import '../../service/config.dart';
 
 enum WeatherType { Rain, Wind, UV }
 

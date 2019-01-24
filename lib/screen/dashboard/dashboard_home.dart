@@ -25,36 +25,7 @@ class DashboardHomeScreen extends StatelessWidget {
                 'Selalu siap apapun cuaca nya',
                 Dimen.x16,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: WeatherItem(
-                        weatherType: WeatherType.Rain,
-                        classification: 'Hujan Lebat',
-                        value: 2.0,
-                      ),
-                    ),
-                    Container(width: Dimen.x4),
-                    Expanded(
-                      child: WeatherItem(
-                        weatherType: WeatherType.Wind,
-                        classification: 'Berangin',
-                        value: 73,
-                      ),
-                    ),
-                    Container(width: Dimen.x4),
-                    Expanded(
-                      child: WeatherItem(
-                        weatherType: WeatherType.UV,
-                        classification: 'Sedang',
-                        value: 11,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              WeatherItemList(),
               _createTitle(
                 'Daftar Kerabat',
                 'Pantau kondisi kerabat terdekat anda dimanapun berada',

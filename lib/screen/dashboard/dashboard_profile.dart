@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../res/res.dart';
-import '../../network/model/family.dart';
+import '../../service/model/family.dart';
 import '../../widget/item/user_location.dart';
 
 class DashboardProfileScreen extends StatelessWidget {
