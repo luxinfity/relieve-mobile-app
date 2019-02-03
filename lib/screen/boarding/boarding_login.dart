@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/app_config.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
@@ -7,8 +8,8 @@ import '../../widget/relieve_scaffold.dart';
 import '../boarding/boarding_register.dart';
 import '../boarding/components/boarding_register_here.dart';
 import '../walkthrough/walkthrough.dart';
-import '../../service/config.dart';
-import '../../service/source/base.dart';
+import '../../service/service.dart';
+import '../../service/source/api/config.dart';
 import '../../utils/preference_utils.dart' as pref;
 
 class BoardingLoginScreen extends StatefulWidget {
@@ -45,7 +46,7 @@ class BoardingLoginScreenState extends State {
         isWrongCredential = false;
       });
 
-      final tokenResponse = await BakauApi.login(
+      final tokenResponse = await BakauApi(AppConfig.of(context)).login(
         usernameController.text,
         passwordController.text,
       );

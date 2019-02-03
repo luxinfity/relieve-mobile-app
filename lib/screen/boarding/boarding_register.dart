@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:relieve_app/app_config.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:validators/validators.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 import '../../res/res.dart';
-import '../../service/config.dart';
+import '../../service/service.dart';
 import '../../widget/item/title.dart';
 import '../../widget/item/standard_button.dart';
 import '../walkthrough/walkthrough.dart';
 import '../../widget/relieve_scaffold.dart';
 import '../../utils/common_utils.dart';
 import '../../widget/bottom_modal.dart';
-import '../../service/source/base.dart';
+import '../../service/source/api/config.dart';
 import '../../service/model/user.dart';
 import '../../utils/preference_utils.dart' as pref;
 
@@ -96,7 +97,7 @@ class BoardingRegisterState extends State {
           gender: genderController.text == 'Perempuan' ? 'f' : 'm',
         );
 
-        final tokenResponse = await BakauApi.register(user);
+        final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
 
         if (tokenResponse.status == REQUEST_SUCCESS) {
           await pref.setToken(tokenResponse.content.token);
