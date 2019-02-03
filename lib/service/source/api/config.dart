@@ -11,6 +11,9 @@ abstract class BaseApi {
   final AppConfig appConfig;
 
   String get completeName =>
+      "${appConfig.apiUrlPrefix}$serverName.$DOMAIN";
+
+  String get completeUri =>
       "${appConfig.apiProtocol}://${appConfig.apiUrlPrefix}$serverName.$DOMAIN";
 
   BaseApi(this.appConfig);

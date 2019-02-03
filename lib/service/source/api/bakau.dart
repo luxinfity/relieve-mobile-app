@@ -14,7 +14,7 @@ class BakauApi extends BaseApi {
   BakauApi(AppConfig appConfig) : super(appConfig);
 
   Future<TokenResponse> login(String username, String password) async {
-    var url = "$completeName/auth/login";
+    var url = "$completeUri/auth/login";
     final response = await http.post(
       url,
       headers: {
@@ -31,7 +31,7 @@ class BakauApi extends BaseApi {
   }
 
   Future<TokenResponse> register(User user) async {
-    var url = "$completeName/auth/register";
+    var url = "$completeUri/auth/register";
     final response = await http.post(
       url,
       headers: {

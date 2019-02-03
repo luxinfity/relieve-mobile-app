@@ -118,9 +118,9 @@ class WeatherItemListState extends State {
   }
 
   @override
-  void initState() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     fetchData();
-    super.initState();
   }
 
   @override

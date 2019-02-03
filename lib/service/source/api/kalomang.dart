@@ -3,8 +3,6 @@ import 'dart:convert';
 
 import '../api/config.dart';
 import '../../../app_config.dart';
-import '../../model/token.dart';
-import '../../model/user.dart';
 import '../../model/weather.dart';
 import '../../../utils/preference_utils.dart' as pref;
 
@@ -14,18 +12,32 @@ class KalomangApi extends BaseApi {
 
   KalomangApi(AppConfig appConfig) : super(appConfig);
 
-  Future<WeatherResponse> weatherCheck(double lat, double lang) async {
+  Uri createUri(double lat, double lang) {
     var queryParameters = {'coordinates': '$lat,$lang'};
-    final uri = Uri.https(
-      '$serverName.$DOMAIN',
-      '/weather/check',
-      queryParameters,
-    );
+    if (appConfig.apiProtocol == "https") {
+      return Uri.https(
+        completeName,
+        '/weather/check',
+        queryParameters,
+      );
+    } else {
+      return Uri.http(
+        completeName,
+        '/weather/check',
+        queryParameters,
+      );
+    }
+  }
+
+  Future<WeatherResponse> weatherCheck(double lat, double lang) async {
+    final uri = createUri(lat, lang);
 
     final headers = {
       'authorization': await pref.getToken(),
       'secret': secret,
     };
+
+    print(headers);
 
     final response = await http.get(uri, headers: headers);
 
