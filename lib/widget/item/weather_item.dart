@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/app_config.dart';
 
 import '../../res/res.dart';
-import '../../service/config.dart';
+import '../../service/service.dart';
 import '../../service/model/weather.dart';
 
 enum WeatherType { Rain, Wind, UV }
@@ -109,7 +110,8 @@ class WeatherItemListState extends State {
   WeatherResponse _weatherResponse = WeatherResponse();
 
   void fetchData() async {
-    final response = await KalomangApi.weatherCheck(lat, long);
+    final response =
+        await KalomangApi(AppConfig.of(context)).weatherCheck(lat, long);
     setState(() {
       _weatherResponse = response;
     });
@@ -124,7 +126,8 @@ class WeatherItemListState extends State {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: Dimen.x16, right: Dimen.x16, bottom: Dimen.x16),
+      padding: const EdgeInsets.only(
+          left: Dimen.x16, right: Dimen.x16, bottom: Dimen.x16),
       child: Row(
         children: <Widget>[
           Expanded(

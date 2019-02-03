@@ -8,8 +8,8 @@ import 'res/res.dart';
 void main() {
   var configuredApp = new AppConfig(
     flavorName: 'production',
-    apiProtocol: 'https',
-    apiUrlPrefix: '',
+    apiProtocol: 'http',
+    apiUrlPrefix: 'staging-',
     child: new MyApp(),
   );
 

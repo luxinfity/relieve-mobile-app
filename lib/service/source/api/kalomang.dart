@@ -1,16 +1,20 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import './base.dart';
-import '../model/weather.dart';
-import '../../utils/preference_utils.dart' as pref;
+import '../api/config.dart';
+import '../../../app_config.dart';
+import '../../model/token.dart';
+import '../../model/user.dart';
+import '../../model/weather.dart';
+import '../../../utils/preference_utils.dart' as pref;
 
-class KalomangApi {
-  static const String serverName = "kalomang";
-  static const String completeName = "$PROTOCOL$serverName.$DOMAIN";
-  static const String secret = "BdQv7AHrFsAb5JMwYN6OZvCMSn7lU5nB";
+class KalomangApi extends BaseApi {
+  @override
+  final String serverName = "kalomang";
 
-  static Future<WeatherResponse> weatherCheck(double lat, double lang) async {
+  KalomangApi(AppConfig appConfig) : super(appConfig);
+
+  Future<WeatherResponse> weatherCheck(double lat, double lang) async {
     var queryParameters = {'coordinates': '$lat,$lang'};
     final uri = Uri.https(
       '$serverName.$DOMAIN',
