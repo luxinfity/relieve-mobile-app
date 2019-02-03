@@ -7,7 +7,7 @@ import 'res/res.dart';
 
 void main() {
   var configuredApp = new AppConfig(
-    flavorName: 'production',
+    flavorName: 'staging',
     apiProtocol: 'http',
     apiUrlPrefix: 'staging-',
     child: new MyApp(),
