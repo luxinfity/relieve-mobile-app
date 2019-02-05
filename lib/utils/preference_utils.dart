@@ -10,7 +10,7 @@ void clearData() {
 
 Future<bool> isLogin() async {
   final username = await getUsername();
-  return username.isNotEmpty;
+  return username != null && username.isNotEmpty;
 }
 
 // Username
