@@ -8,29 +8,12 @@ import '../../../utils/preference_utils.dart' as pref;
 
 class KalomangApi extends BaseApi {
   @override
-  final String serverName = "kalomang";
+  final String serverName = 'kalomang';
 
   KalomangApi(AppConfig appConfig) : super(appConfig);
 
-  Uri createUri(double lat, double lang) {
-    var queryParameters = {'coordinates': '$lat,$lang'};
-    if (appConfig.apiProtocol == "https") {
-      return Uri.https(
-        completeName,
-        '/weather/check',
-        queryParameters,
-      );
-    } else {
-      return Uri.http(
-        completeName,
-        '/weather/check',
-        queryParameters,
-      );
-    }
-  }
-
   Future<WeatherResponse> weatherCheck(double lat, double lang) async {
-    final uri = createUri(lat, lang);
+    var uri = '$completeUri/weather/$lat,$lang';
 
     final headers = {
       'authorization': await pref.getToken(),
