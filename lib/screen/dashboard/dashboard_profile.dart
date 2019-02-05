@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/res.dart';
 import '../../service/model/family.dart';
 import '../../widget/item/user_location.dart';
+import 'package:relieve_app/screen/boarding/boarding_home.dart';
+import '../../utils/preference_utils.dart' as pref;
 
 class DashboardProfileScreen extends StatelessWidget {
+  void onLogout(BuildContext context) {
+    pref.clearData();
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => BoardingHomeScreen()),
+      (_) => false, // clean all back stack
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -86,7 +98,8 @@ class DashboardProfileScreen extends StatelessWidget {
                     right: Dimen.x16,
                     left: Dimen.x8,
                   ),
-                  child: _buildButton(LocalImage.ic_notif, 'Notifkasi dan getar',
+                  child: _buildButton(
+                      LocalImage.ic_notif, 'Notifkasi dan getar',
                       axis: Axis.vertical),
                 ),
               ),
@@ -100,7 +113,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child: _buildButton(LocalImage.ic_faq, 'Bantuan dan FAQ'),
+            child: _buildButton(
+              LocalImage.ic_faq,
+              'Bantuan dan FAQ',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -108,7 +127,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child: _buildButton(LocalImage.ic_syarat, 'Syarat-syarat dan kondisi'),
+            child: _buildButton(
+              LocalImage.ic_syarat,
+              'Syarat-syarat dan kondisi',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -116,7 +141,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child: _buildButton(LocalImage.ic_privacy, 'Privasi dan kebijakan'),
+            child: _buildButton(
+              LocalImage.ic_privacy,
+              'Privasi dan kebijakan',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -124,7 +155,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child: _buildButton(LocalImage.ic_info_contributor, 'Tentang relieve dan kontributor'),
+            child: _buildButton(
+              LocalImage.ic_info_contributor,
+              'Tentang relieve dan kontributor',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -133,8 +170,12 @@ class DashboardProfileScreen extends StatelessWidget {
               top: Dimen.x24,
               bottom: Dimen.x32,
             ),
-            child: _buildButton(LocalImage.ic_exit, 'Keluar',
-                isExit: true),
+            child: _buildButton(
+              LocalImage.ic_exit,
+              'Keluar',
+              isExit: true,
+              onClick: () => onLogout(context),
+            ),
           ),
         ],
       ),
@@ -171,31 +212,37 @@ class DashboardProfileScreen extends StatelessWidget {
     String title, {
     Axis axis = Axis.horizontal,
     bool isExit = false,
+    VoidCallback onClick,
   }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: Dimen.x12, vertical: Dimen.x18),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: isExit ? AppColor.colorDanger : AppColor.colorEmptyChip,
+    return InkWell(
+      borderRadius: BorderRadius.circular(Dimen.x6),
+      onTap: onClick,
+      child: Container(
+        padding:
+            EdgeInsets.symmetric(horizontal: Dimen.x12, vertical: Dimen.x18),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: isExit ? AppColor.colorDanger : AppColor.colorEmptyChip,
+          ),
+          borderRadius: BorderRadius.circular(Dimen.x6),
         ),
-        borderRadius: BorderRadius.circular(Dimen.x6),
-      ),
-      child: Wrap(
-        direction: axis,
-        spacing: (axis == Axis.horizontal) ? Dimen.x12 : Dimen.x6,
-        children: <Widget>[
-          icon.toSvg(
-            width: Dimen.x18,
-            color: isExit ? AppColor.colorDanger : null,
-          ),
-          Text(
-            title,
-            style: CircularStdFont.book.getStyle(
-              size: Dimen.x12,
-              color: isExit ? AppColor.colorDanger : AppColor.colorTextBlack,
+        child: Wrap(
+          direction: axis,
+          spacing: (axis == Axis.horizontal) ? Dimen.x12 : Dimen.x6,
+          children: <Widget>[
+            icon.toSvg(
+              width: Dimen.x18,
+              color: isExit ? AppColor.colorDanger : null,
             ),
-          ),
-        ],
+            Text(
+              title,
+              style: CircularStdFont.book.getStyle(
+                size: Dimen.x12,
+                color: isExit ? AppColor.colorDanger : AppColor.colorTextBlack,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

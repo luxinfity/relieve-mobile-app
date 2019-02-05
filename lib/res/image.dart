@@ -37,7 +37,7 @@ class LocalImage {
   const LocalImage(this.imageName);
 
   SvgPicture toSvg({double width, double height, Color color}) {
-    return SvgPicture.asset('images/' + imageName + '.svg',
+    return SvgPicture.asset('images/$imageName.svg',
         width: width, height: height, color: color);
   }
 

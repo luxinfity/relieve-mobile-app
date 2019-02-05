@@ -20,8 +20,6 @@ class KalomangApi extends BaseApi {
       'secret': secret,
     };
 
-    print(headers);
-
     final response = await http.get(uri, headers: headers);
 
     return WeatherResponse.fromJson(jsonDecode(response.body));

@@ -1,5 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+// logout
+void clearData() {
+  setUsername('');
+  setToken('');
+  setRefreshToken('');
+  setExpireIn(0);
+}
+
+Future<bool> isLogin() async {
+  final username = await getUsername();
+  return username != null && username.isNotEmpty;
+}
+
 // Username
 Future<String> getUsername() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
