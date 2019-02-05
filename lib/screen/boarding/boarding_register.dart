@@ -92,12 +92,15 @@ class BoardingRegisterState extends State {
           email: emailController.text,
           password: passwordController.text,
           fullname: fullnameController.text,
-          phone: '+62${phoneController.text.replaceFirst('0', '')}',
+          phones: [
+            Phone('+62${phoneController.text.replaceFirst('0', '')}', 1),
+          ],
           birthdate: dobController.text,
           gender: genderController.text == 'Perempuan' ? 'f' : 'm',
         );
 
-        final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
+        final tokenResponse =
+            await BakauApi(AppConfig.of(context)).register(user);
 
         if (tokenResponse.status == REQUEST_SUCCESS) {
           await pref.setToken(tokenResponse.content.token);

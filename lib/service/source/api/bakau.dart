@@ -6,6 +6,7 @@ import '../api/config.dart';
 import '../../../app_config.dart';
 import '../../model/token.dart';
 import '../../model/user.dart';
+import '../../../utils/preference_utils.dart' as pref;
 
 class BakauApi extends BaseApi {
   @override
@@ -42,5 +43,19 @@ class BakauApi extends BaseApi {
     );
 
     return TokenResponse.fromJson(jsonDecode(response.body));
+  }
+
+  Future<UserResponse> getUser() async {
+    var url = "$completeUri/user/profile";
+    final response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'authorization': await pref.getToken(),
+        'secret': secret,
+      }
+    );
+
+    return UserResponse.fromJson(jsonDecode(response.body));
   }
 }
