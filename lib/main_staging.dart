@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'screen/boarding/boarding_home.dart';
+import 'landing_screen.dart';
 import './app_config.dart';
 import 'res/res.dart';
 
@@ -32,6 +32,6 @@ class MyApp extends StatelessWidget {
           canvasColor: Colors.transparent,
           fontFamily: CircularStdFont.book.fontFamily,
         ),
-        home: BoardingHomeScreen());
+        home: LandingScreen());
   }
 }
