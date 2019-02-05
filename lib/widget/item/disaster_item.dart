@@ -209,7 +209,6 @@ class DisasterItemListState extends State {
       borderRadius: BorderRadius.circular(Dimen.x4),
       child: InkWell(
         onTap: () {
-          print('rtess');
         },
         child: Container(
           alignment: Alignment.center,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/res.dart';
 import '../../service/model/family.dart';
@@ -112,7 +113,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child: _buildButton(LocalImage.ic_faq, 'Bantuan dan FAQ'),
+            child: _buildButton(
+              LocalImage.ic_faq,
+              'Bantuan dan FAQ',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -120,8 +127,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child:
-                _buildButton(LocalImage.ic_syarat, 'Syarat-syarat dan kondisi'),
+            child: _buildButton(
+              LocalImage.ic_syarat,
+              'Syarat-syarat dan kondisi',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -129,7 +141,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child: _buildButton(LocalImage.ic_privacy, 'Privasi dan kebijakan'),
+            child: _buildButton(
+              LocalImage.ic_privacy,
+              'Privasi dan kebijakan',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
@@ -137,8 +155,13 @@ class DashboardProfileScreen extends StatelessWidget {
               right: Dimen.x16,
               bottom: Dimen.x8,
             ),
-            child: _buildButton(LocalImage.ic_info_contributor,
-                'Tentang relieve dan kontributor'),
+            child: _buildButton(
+              LocalImage.ic_info_contributor,
+              'Tentang relieve dan kontributor',
+              onClick: () {
+                launch('https://github.com/RelieveID/terms-and-conditions/');
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
