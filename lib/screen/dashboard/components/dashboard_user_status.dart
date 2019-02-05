@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
+import 'package:relieve_app/app_config.dart';
+import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/service/source/api/api.dart';
 
 import '../../../res/res.dart';
 import '../../../service/model/family.dart';
@@ -38,17 +42,31 @@ class Greeting extends StatelessWidget {
   }
 }
 
-class UserAppBar extends StatelessWidget {
-  final String name;
-  final String location;
-  final bool isSafe;
+class UserAppBar extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => UserAppBarState();
+}
 
-  const UserAppBar({
-    Key key,
-    this.name,
-    this.location,
-    this.isSafe,
-  }) : super(key: key);
+class UserAppBarState extends State {
+  String location = 'Dago, Bandung';
+  bool isSafe = false;
+
+  User user = User(fullname: '');
+
+  void loadUser() async {
+    final userResponse = await BakauApi(AppConfig.of(context)).getUser();
+    if (userResponse.status == REQUEST_SUCCESS) {
+      setState(() {
+        user = userResponse.content;
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +86,7 @@ class UserAppBar extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Greeting(name: name),
+                Greeting(name: ReCase(user.fullname).titleCase),
                 Padding(
                   padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserLocation(

@@ -294,9 +294,9 @@ class DisasterItemListState extends State {
           DisasterItem(
             disaster: Disaster(
               isLive: true,
-              location: "Palembang",
+              location: 'Palembang',
               time: 20000,
-              title: "Gempa 7.6 SR",
+              title: 'Gempa 7.6 SR',
             ),
             onClick: () {
               testSheet(context);
@@ -305,25 +305,25 @@ class DisasterItemListState extends State {
           DisasterItem(
             disaster: Disaster(
               isLive: false,
-              location: "Palembang",
+              location: 'Palembang',
               time: 20000,
-              title: "Gempa 7.6 SR",
+              title: 'Gempa 7.6 SR',
             ),
           ),
           DisasterItem(
             disaster: Disaster(
               isLive: false,
-              location: "Palembang",
+              location: 'Palembang',
               time: 20000,
-              title: "Gempa 7.6 SR",
+              title: 'Gempa 7.6 SR',
             ),
           ),
           DisasterItem(
             disaster: Disaster(
               isLive: false,
-              location: "Palembang",
+              location: 'Palembang',
               time: 20000,
-              title: "Gempa 7.6 SR",
+              title: 'Gempa 7.6 SR',
             ),
           ),
           Container(

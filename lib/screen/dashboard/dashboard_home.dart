@@ -13,11 +13,7 @@ class DashboardHomeScreen extends StatelessWidget {
     return Expanded(
       child: CustomScrollView(
         slivers: <Widget>[
-          UserAppBar(
-            name: 'Muh. Alif Akbar',
-            location: 'Dago, Bandung',
-            isSafe: true,
-          ),
+          UserAppBar(),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               _createTitle(

@@ -14,9 +14,7 @@ class ProfileBoard extends StatefulWidget {
 }
 
 class ProfileBoardState extends State {
-  User user = User(
-    fullname: "",
-  );
+  User user = User(fullname: '');
 
   void loadUser() async {
     final userResponse = await BakauApi(AppConfig.of(context)).getUser();

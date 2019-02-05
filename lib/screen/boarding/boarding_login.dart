@@ -190,7 +190,7 @@ class BoardingLoginScreenState extends State {
 
   ThemedTitle buildTitle() {
     return ThemedTitle(
-        title: "Login Now", subtitle: "Please login to continue using our app");
+        title: 'Login Now', subtitle: 'Please login to continue using our app');
   }
 
   Widget buildImage() {

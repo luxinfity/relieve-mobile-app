@@ -323,7 +323,7 @@ class BoardingRegisterState extends State {
       onConfirm: (year, month, date) {
         final monthStr = month.toString().padLeft(2, '0');
         final dateStr = date.toString().padLeft(2, '0');
-        dobController.text = "$year-$monthStr-$dateStr";
+        dobController.text = '$year-$monthStr-$dateStr';
       },
     );
   }

@@ -10,12 +10,12 @@ import '../../../utils/preference_utils.dart' as pref;
 
 class BakauApi extends BaseApi {
   @override
-  final String serverName = "bakau";
+  final String serverName = 'bakau';
 
   BakauApi(AppConfig appConfig) : super(appConfig);
 
   Future<TokenResponse> login(String username, String password) async {
-    var url = "$completeUri/auth/login";
+    var url = '$completeUri/auth/login';
     final response = await http.post(
       url,
       headers: {
@@ -32,7 +32,7 @@ class BakauApi extends BaseApi {
   }
 
   Future<TokenResponse> register(User user) async {
-    var url = "$completeUri/auth/register";
+    var url = '$completeUri/auth/register';
     final response = await http.post(
       url,
       headers: {
@@ -46,7 +46,7 @@ class BakauApi extends BaseApi {
   }
 
   Future<UserResponse> getUser() async {
-    var url = "$completeUri/user/profile";
+    var url = '$completeUri/user/profile';
     final response = await http.get(
       url,
       headers: {
