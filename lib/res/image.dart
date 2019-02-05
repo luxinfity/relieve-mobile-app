@@ -20,6 +20,7 @@ class RemoteImage {
   static const base_url =
       'https://raw.githubusercontent.com/RelieveID/mobile-apps-assets/master/images/';
 
+  static RemoteImage get ic_app => RemoteImage('ic_app.png');
   static RemoteImage get boardingHome => RemoteImage('sketch-01.png');
   static RemoteImage get boardingLogin => RemoteImage('sketch-02.png');
   static RemoteImage get walkthrough1 => RemoteImage('sketch-03.png');

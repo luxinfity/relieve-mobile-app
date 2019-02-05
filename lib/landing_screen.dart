@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/res/image.dart';
 
 import 'screen/boarding/boarding_home.dart';
 import 'screen/dashboard/dashboard.dart';
@@ -28,6 +29,13 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     checkLogin(context);
 
-    return Container();
+    return Container(
+      alignment: Alignment.center,
+      color: Colors.white,
+      child: RemoteImage.ic_app.toImage(
+        height: 180,
+        width: 180,
+      ),
+    );
   }
 }
