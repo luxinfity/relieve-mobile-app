@@ -8,10 +8,17 @@ class TopSnackbar {
     return Flushbar(
       flushbarPosition: FlushbarPosition.TOP,
       message: message,
-      duration: Duration(milliseconds: 1000),
-      animationDuration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 1200),
+      animationDuration: Duration(milliseconds: 200),
       forwardAnimationCurve: Curves.decelerate,
       reverseAnimationCurve: Curves.decelerate,
     );
+  }
+
+  static Flushbar createAction(
+      {@required String message, @required FlatButton button}) {
+    return create(message: message)
+      ..duration = null
+      ..mainButton = button;
   }
 }
