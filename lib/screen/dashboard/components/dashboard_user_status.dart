@@ -81,7 +81,9 @@ class UserAppBarState extends State {
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           children: <Widget>[
-            buildBgImage(),
+            Positioned.fill(
+              child: buildBgImage(),
+            ),
             buildBlueLayer(),
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -115,9 +117,7 @@ class UserAppBarState extends State {
   Container buildBgImage() {
     return Container(
       width: double.infinity,
-      child: RemoteImage.bg_jawa_barat.toImage(
-        fit: BoxFit.cover,
-      ),
+      child: RemoteImage.bg_jawa_barat.toImage(fit: BoxFit.fitHeight),
     );
   }
 }
