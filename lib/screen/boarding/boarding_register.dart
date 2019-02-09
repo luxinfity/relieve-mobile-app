@@ -331,22 +331,12 @@ class BoardingRegisterState extends State {
         controller: dobController,
         inputType: TextInputType.datetime,
         onTap: () => onDoBClick(),
-        errorTextGenerator: () {
-          return isSecondFormEmpty && dobController.text.isEmpty
-              ? 'Silahkan diisi dulu'
-              : null;
-        },
       ),
       buildInputForm(
         key: 'genderInput',
         label: 'Gender',
         controller: genderController,
         onTap: () => onGenderClick(),
-        errorTextGenerator: () {
-          return isSecondFormEmpty && genderController.text.isEmpty
-              ? 'Silahkan diisi dulu'
-              : null;
-        },
       ),
     ];
   }
@@ -393,11 +383,6 @@ class BoardingRegisterState extends State {
         controller: coordinateController,
         onTap: () => onMapClick(),
         rightIcon: LocalImage.ic_map.toSvg(height: Dimen.x18),
-        errorTextGenerator: () {
-          return isThirdFormEmpty && coordinateController.text.isEmpty
-              ? 'Silahkan diisi dulu'
-              : null;
-        },
       ),
     ];
   }
@@ -510,7 +495,7 @@ class BoardingRegisterState extends State {
       child: Container(
         width: double.infinity,
         margin: EdgeInsets.only(
-          top: Dimen.x6,
+          top: Dimen.x8,
           bottom: Dimen.x6,
           left: Dimen.x16,
           right: Dimen.x16,
