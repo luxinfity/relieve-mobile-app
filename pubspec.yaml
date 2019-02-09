@@ -23,6 +23,7 @@ dependencies:
   email_validator: ^1.0.0
   flutter_cupertino_date_picker: ^0.3.0
   shared_preferences: ^0.4.3
+  recase: ^2.0.1
 
 dev_dependencies:
   flutter_test:

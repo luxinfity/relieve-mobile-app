@@ -59,6 +59,7 @@ class LocalImage {
   static LocalImage get dashed_circle => LocalImage('dashed_circle');
 
   // profile
+  static LocalImage get ic_map => LocalImage('ic_map');
   static LocalImage get ic_location => LocalImage('ic_location');
   static LocalImage get ic_exit => LocalImage('ic_exit');
   static LocalImage get ic_faq => LocalImage('ic_faq');
