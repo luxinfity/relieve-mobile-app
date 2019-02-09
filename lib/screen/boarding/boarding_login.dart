@@ -91,7 +91,7 @@ class BoardingLoginScreenState extends State {
                 buttonClick: () => onLoginClick(),
                 backgroundColor: AppColor.colorPrimary,
               ),
-              buildRegisterHere()
+              // buildRegisterHere()
             ],
           ),
         ),
@@ -121,7 +121,7 @@ class BoardingLoginScreenState extends State {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(
-        top: Dimen.x6,
+        top: Dimen.x16,
         left: Dimen.x16,
         right: Dimen.x16,
         bottom: Dimen.x16,
@@ -129,6 +129,9 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Dimen.x6),
+          ),
           suffixIcon: IconButton(
             icon: Icon(
               passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -154,6 +157,9 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Username',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(Dimen.x6),
+          ),
           errorText: getErrorPassword(),
         ),
         textInputAction: TextInputAction.next,
@@ -190,14 +196,14 @@ class BoardingLoginScreenState extends State {
 
   ThemedTitle buildTitle() {
     return ThemedTitle(
-        title: 'Login Now', subtitle: 'Please login to continue using our app');
+        title: 'Masuk', subtitle: 'Bersiap untuk jelajahi aplikasi');
   }
 
   Widget buildImage() {
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       // handle screen too big, in iphone x
       return SizedBox(
-        child: RemoteImage.boardingLogin.toImage(height: 360),
+        child: RemoteImage.boardingLogin.toImage(height: 336),
       );
     } else {
       return SizedBox(child: RemoteImage.boardingLogin.toImage());

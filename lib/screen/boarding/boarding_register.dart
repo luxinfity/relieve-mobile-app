@@ -32,6 +32,7 @@ class BoardingRegisterState extends State {
   var passwordVisible = false;
   var isFirstFormEmpty = false;
   var isSecondFormEmpty = false;
+  var isThirdFormEmpty = false;
 
   // first step
   var isUsernameValid = true;
@@ -50,74 +51,112 @@ class BoardingRegisterState extends State {
   final dobController = TextEditingController();
   final genderController = TextEditingController();
 
-  void onButtonClick() async {
-    if (steps == 0) {
-      setState(() {
-        isFirstFormEmpty = [
-          emailController,
-          usernameController,
-          passwordController,
-          confirmPasswordController
-        ].any((controller) => controller.text.isEmpty);
+  // third step
+  final lurahController = TextEditingController();
+  final districtController = TextEditingController();
+  final cityController = TextEditingController();
+  final coordinateController = TextEditingController();
 
-        isUsernameValid = usernameController.text.length >= 4;
-        isEmailValid = EmailValidator.validate(emailController.text);
-        isPasswordValid = passwordController.text.length >= 5;
-        isPasswordMatch =
-            passwordController.text == confirmPasswordController.text;
+  void checkStep1() {
+    setState(() {
+      isFirstFormEmpty = [
+        emailController,
+        usernameController,
+        passwordController,
+        confirmPasswordController
+      ].any((controller) => controller.text.isEmpty);
 
-        if (!isFirstFormEmpty &&
-            isEmailValid &&
-            isPasswordValid &&
-            isPasswordMatch) {
-          steps = 1;
-        }
-      });
-    } else {
-      setState(() {
-        isSecondFormEmpty = [
-          fullnameController,
-          phoneController,
-          dobController,
-          genderController
-        ].any((controller) => controller.text.isEmpty);
+      isUsernameValid = usernameController.text.length >= 4;
+      isEmailValid = EmailValidator.validate(emailController.text);
+      isPasswordValid = passwordController.text.length >= 5;
+      isPasswordMatch =
+          passwordController.text == confirmPasswordController.text;
 
-        isPhoneValid = isNumeric(phoneController.text) &&
-            phoneController.text.replaceFirst('0', '').length >= 7;
-      });
+      if (!isFirstFormEmpty &&
+          isEmailValid &&
+          isPasswordValid &&
+          isPasswordMatch) {
+        steps = 1;
+      }
+    });
+  }
+
+  void checkStep2() {
+    setState(() {
+      isSecondFormEmpty = [
+        fullnameController,
+        phoneController,
+        dobController,
+        genderController
+      ].any((controller) => controller.text.isEmpty);
+
+      isPhoneValid = isNumeric(phoneController.text) &&
+          phoneController.text.replaceFirst('0', '').length >= 7;
 
       if (!isSecondFormEmpty && isPhoneValid) {
-        final user = User(
-          username: usernameController.text,
-          email: emailController.text,
-          password: passwordController.text,
-          fullname: fullnameController.text,
-          phones: [
-            Phone('+62${phoneController.text.replaceFirst('0', '')}', 1),
-          ],
-          birthdate: dobController.text,
-          gender: genderController.text == 'Perempuan' ? 'f' : 'm',
-        );
-
-        final tokenResponse =
-            await BakauApi(AppConfig.of(context)).register(user);
-
-        if (tokenResponse.status == REQUEST_SUCCESS) {
-          await pref.setToken(tokenResponse.content.token);
-          await pref.setRefreshToken(tokenResponse.content.refreshToken);
-          await pref.setExpireIn(tokenResponse.content.expiresIn);
-          await pref.setUsername(usernameController.text);
-          onRegisterSuccess();
-        } else {
-          createRelieveBottomModal(context, <Widget>[
-            Container(height: Dimen.x21),
-            Text(
-              'Username atau Email telah terdaftar',
-              style: CircularStdFont.book.getStyle(size: Dimen.x21),
-            ),
-          ]);
-        }
+        steps = 2;
       }
+    });
+  }
+
+  void checkStep3() {
+    setState(() {
+      isThirdFormEmpty = [
+        lurahController,
+        districtController,
+        cityController,
+        coordinateController
+      ].any((controller) => controller.text.isEmpty);
+
+      if (!isThirdFormEmpty) {
+        doRegister();
+      }
+    });
+  }
+
+  void doRegister() async {
+    final user = User(
+      username: usernameController.text,
+      email: emailController.text,
+      password: passwordController.text,
+      fullname: fullnameController.text,
+      phones: [
+        Phone('+62${phoneController.text.replaceFirst('0', '')}', 1),
+      ],
+      birthdate: dobController.text,
+      gender: genderController.text == 'Perempuan' ? 'f' : 'm',
+    );
+
+    final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
+
+    if (tokenResponse.status == REQUEST_SUCCESS) {
+      await pref.setToken(tokenResponse.content.token);
+      await pref.setRefreshToken(tokenResponse.content.refreshToken);
+      await pref.setExpireIn(tokenResponse.content.expiresIn);
+      await pref.setUsername(usernameController.text);
+      onRegisterSuccess();
+    } else {
+      createRelieveBottomModal(context, <Widget>[
+        Container(height: Dimen.x21),
+        Text(
+          'Username atau Email telah terdaftar',
+          style: CircularStdFont.book.getStyle(size: Dimen.x21),
+        ),
+      ]);
+    }
+  }
+
+  void onButtonClick() {
+    switch (steps) {
+      case 0:
+        checkStep1();
+        break;
+      case 1:
+        checkStep2();
+        break;
+      default:
+        checkStep3();
+        break;
     }
   }
 
@@ -156,10 +195,22 @@ class BoardingRegisterState extends State {
   }
 
   Widget createTitle() {
-    if (steps == 0) {
-      return ThemedTitle(title: 'Cukup isi data dibawah');
-    } else {
-      return ThemedTitle(title: 'Beritahu kami mengenai kamu');
+    switch (steps) {
+      case 0:
+        return ThemedTitle(
+          title: 'Akun',
+          subtitle: 'Gunakan username kesukaan mu',
+        );
+      case 1:
+        return ThemedTitle(
+          title: 'Data Diri',
+          subtitle: 'Beritahu kami mengenai diri kamu',
+        );
+      default:
+        return ThemedTitle(
+          title: 'Alamat Tinggal',
+          subtitle: 'Selangkah lagi! Beritahu kami alamat mu',
+        );
     }
   }
 
@@ -169,134 +220,196 @@ class BoardingRegisterState extends State {
       padding:
           EdgeInsets.only(top: Dimen.x8, bottom: Dimen.x16 + padding.bottom),
       child: StandardButton(
-        text: steps == 0 ? 'Lanjut' : 'Daftar',
+        text: steps == 0 || steps == 1 ? 'Lanjut' : 'Daftar',
         backgroundColor: AppColor.colorPrimary,
         buttonClick: () => onButtonClick(),
       ),
     );
   }
 
+  List<Widget> createForm1() {
+    return <Widget>[
+      buildInputForm(
+        key: 'emailInput',
+        label: 'Email',
+        controller: emailController,
+        inputType: TextInputType.emailAddress,
+        textInputAction: TextInputAction.next,
+        errorTextGenerator: () {
+          if (isFirstFormEmpty && emailController.text.isEmpty) {
+            return 'Silahkan diisi dulu';
+          } else if (!isEmailValid) {
+            return 'Format email tidak valid';
+          } else {
+            return null;
+          }
+        },
+      ),
+      buildInputForm(
+        key: 'usernameInput',
+        label: 'Username',
+        controller: usernameController,
+        textInputAction: TextInputAction.next,
+        errorTextGenerator: () {
+          if (isFirstFormEmpty && usernameController.text.isEmpty) {
+            return 'Silahkan diisi dulu';
+          } else if (!isUsernameValid) {
+            return 'Panjang username minimal 4 huruf';
+          } else {
+            return null;
+          }
+        },
+      ),
+      buildInputForm(
+        key: 'passwordInput',
+        label: 'Password',
+        obscureText: true,
+        controller: passwordController,
+        textInputAction: TextInputAction.next,
+        errorTextGenerator: () {
+          if (isFirstFormEmpty && passwordController.text.isEmpty) {
+            return 'Silahkan diisi dulu';
+          } else if (!isPasswordValid) {
+            return 'Panjang password minimal 5 huruf';
+          } else {
+            return null;
+          }
+        },
+      ),
+      buildInputForm(
+        key: 'confirmPassInput',
+        label: 'Ketik Ulang Password',
+        obscureText: true,
+        controller: confirmPasswordController,
+        textInputAction: TextInputAction.done,
+        errorTextGenerator: () {
+          if (isFirstFormEmpty && confirmPasswordController.text.isEmpty) {
+            return 'Silahkan diisi dulu';
+          } else if (!isPasswordMatch) {
+            return 'Masukkan password yang sama';
+          } else {
+            return null;
+          }
+        },
+      ),
+    ];
+  }
+
+  List<Widget> createForm2() {
+    return <Widget>[
+      buildInputForm(
+        key: 'nameInput',
+        label: 'Nama Lengkap',
+        controller: fullnameController,
+        textInputAction: TextInputAction.next,
+        errorTextGenerator: () {
+          return isSecondFormEmpty && fullnameController.text.isEmpty
+              ? 'Silahkan diisi dulu'
+              : null;
+        },
+      ),
+      buildInputForm(
+        key: 'phoneInput',
+        prefix: '+62 ',
+        label: 'Nomor Telpon',
+        controller: phoneController,
+        inputType: TextInputType.phone,
+        textInputAction: TextInputAction.done,
+        errorTextGenerator: () {
+          if (isSecondFormEmpty && phoneController.text.isEmpty) {
+            return 'Silahkan diisi dulu';
+          } else if (!isPhoneValid) {
+            return 'Masukkan hanya angka dan lebih dari 7';
+          } else {
+            return null;
+          }
+        },
+      ),
+      buildInputForm(
+        key: 'dobInput',
+        label: 'Tanggal Lahir',
+        controller: dobController,
+        inputType: TextInputType.datetime,
+        onTap: () => onDoBClick(),
+        errorTextGenerator: () {
+          return isSecondFormEmpty && dobController.text.isEmpty
+              ? 'Silahkan diisi dulu'
+              : null;
+        },
+      ),
+      buildInputForm(
+        key: 'genderInput',
+        label: 'Gender',
+        controller: genderController,
+        onTap: () => onGenderClick(),
+        errorTextGenerator: () {
+          return isSecondFormEmpty && genderController.text.isEmpty
+              ? 'Silahkan diisi dulu'
+              : null;
+        },
+      ),
+    ];
+  }
+
+  List<Widget> createForm3() {
+    return <Widget>[
+      buildInputForm(
+        key: 'lurahInput',
+        label: 'Kelurahan',
+        controller: lurahController,
+        textInputAction: TextInputAction.next,
+        errorTextGenerator: () {
+          return isThirdFormEmpty && lurahController.text.isEmpty
+              ? 'Silahkan diisi dulu'
+              : null;
+        },
+      ),
+      buildInputForm(
+        key: 'districtInput',
+        label: 'Kecamatan',
+        controller: districtController,
+        inputType: TextInputType.text,
+        textInputAction: TextInputAction.next,
+        errorTextGenerator: () {
+          return isThirdFormEmpty && districtController.text.isEmpty
+              ? 'Silahkan diisi dulu'
+              : null;
+        },
+      ),
+      buildInputForm(
+        key: 'cityInput',
+        label: 'Kabupaten / Kota',
+        controller: cityController,
+        textInputAction: TextInputAction.done,
+        errorTextGenerator: () {
+          return isThirdFormEmpty && cityController.text.isEmpty
+              ? 'Silahkan diisi dulu'
+              : null;
+        },
+      ),
+      buildInputForm(
+        key: 'coordinateInput',
+        label: 'Temukan dengan peta',
+        controller: coordinateController,
+        onTap: () => onMapClick(),
+        rightIcon: LocalImage.ic_map.toSvg(height: Dimen.x18),
+        errorTextGenerator: () {
+          return isThirdFormEmpty && coordinateController.text.isEmpty
+              ? 'Silahkan diisi dulu'
+              : null;
+        },
+      ),
+    ];
+  }
+
   List<Widget> createForm() {
-    if (steps == 0) {
-      return <Widget>[
-        buildInputForm(
-          key: 'emailInput',
-          label: 'Email',
-          controller: emailController,
-          inputType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          errorTextGenerator: () {
-            if (isFirstFormEmpty && emailController.text.isEmpty) {
-              return 'Silahkan diisi dulu';
-            } else if (!isEmailValid) {
-              return 'Format email tidak valid';
-            } else {
-              return null;
-            }
-          },
-        ),
-        buildInputForm(
-          key: 'usernameInput',
-          label: 'Username',
-          controller: usernameController,
-          textInputAction: TextInputAction.next,
-          errorTextGenerator: () {
-            if (isFirstFormEmpty && usernameController.text.isEmpty) {
-              return 'Silahkan diisi dulu';
-            } else if (!isUsernameValid) {
-              return 'Panjang username minimal 4 huruf';
-            } else {
-              return null;
-            }
-          },
-        ),
-        buildInputForm(
-          key: 'passwordInput',
-          label: 'Password',
-          obscureText: true,
-          controller: passwordController,
-          textInputAction: TextInputAction.next,
-          errorTextGenerator: () {
-            if (isFirstFormEmpty && passwordController.text.isEmpty) {
-              return 'Silahkan diisi dulu';
-            } else if (!isPasswordValid) {
-              return 'Panjang password minimal 5 huruf';
-            } else {
-              return null;
-            }
-          },
-        ),
-        buildInputForm(
-          key: 'confirmPassInput',
-          label: 'Ketik Ulang Password',
-          obscureText: true,
-          controller: confirmPasswordController,
-          textInputAction: TextInputAction.done,
-          errorTextGenerator: () {
-            if (isFirstFormEmpty && confirmPasswordController.text.isEmpty) {
-              return 'Silahkan diisi dulu';
-            } else if (!isPasswordMatch) {
-              return 'Masukkan password yang sama';
-            } else {
-              return null;
-            }
-          },
-        ),
-      ];
-    } else {
-      return <Widget>[
-        buildInputForm(
-          key: 'nameInput',
-          label: 'Nama Lengkap',
-          controller: fullnameController,
-          textInputAction: TextInputAction.next,
-          errorTextGenerator: () {
-            return isSecondFormEmpty && fullnameController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
-          },
-        ),
-        buildInputForm(
-          key: 'phoneInput',
-          prefix: '+62 ',
-          label: 'Nomor Telpon',
-          controller: phoneController,
-          inputType: TextInputType.phone,
-          textInputAction: TextInputAction.done,
-          errorTextGenerator: () {
-            if (isFirstFormEmpty && phoneController.text.isEmpty) {
-              return 'Silahkan diisi dulu';
-            } else if (!isPhoneValid) {
-              return 'Masukkan hanya angka dan lebih dari 7';
-            } else {
-              return null;
-            }
-          },
-        ),
-        buildInputForm(
-          key: 'dobInput',
-          label: 'Tanggal Lahir',
-          controller: dobController,
-          inputType: TextInputType.datetime,
-          onTap: () => onDoBClick(),
-          errorTextGenerator: () {
-            return isSecondFormEmpty && dobController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
-          },
-        ),
-        buildInputForm(
-          key: 'genderInput',
-          label: 'Gender',
-          controller: genderController,
-          onTap: () => onGenderClick(),
-          errorTextGenerator: () {
-            return isSecondFormEmpty && genderController.text.isEmpty
-                ? 'Silahkan diisi dulu'
-                : null;
-          },
-        ),
-      ];
+    switch (steps) {
+      case 0:
+        return createForm1();
+      case 1:
+        return createForm2();
+      default:
+        return createForm3();
     }
   }
 
@@ -378,6 +491,8 @@ class BoardingRegisterState extends State {
     ]);
   }
 
+  void onMapClick() {}
+
   Widget buildInputForm({
     String key,
     String prefix,
@@ -388,6 +503,7 @@ class BoardingRegisterState extends State {
     TextInputType inputType,
     StringCallback errorTextGenerator,
     VoidCallback onTap,
+    Widget rightIcon,
   }) {
     return InkWell(
       onTap: onTap,
@@ -395,8 +511,9 @@ class BoardingRegisterState extends State {
         width: double.infinity,
         margin: EdgeInsets.only(
           top: Dimen.x6,
-          left: Dimen.x24,
-          right: Dimen.x24,
+          bottom: Dimen.x6,
+          left: Dimen.x16,
+          right: Dimen.x16,
         ),
         child: TextFormField(
           key: Key(key),
@@ -405,6 +522,10 @@ class BoardingRegisterState extends State {
           textInputAction: textInputAction,
           keyboardType: inputType,
           decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Dimen.x6),
+              borderSide: BorderSide(color: Colors.blue),
+            ),
             prefixText: prefix,
             labelText: label,
             suffixIcon: obscureText
@@ -416,7 +537,14 @@ class BoardingRegisterState extends State {
                       setState(() => passwordVisible = !passwordVisible);
                     },
                   )
-                : null,
+                : rightIcon != null
+                    ? IconButton(
+                        icon: rightIcon,
+                        onPressed: () {
+                          // setState(() => passwordVisible = !passwordVisible);
+                        },
+                      )
+                    : null,
             errorText:
                 (errorTextGenerator != null) ? errorTextGenerator() : null,
           ),
@@ -428,7 +556,7 @@ class BoardingRegisterState extends State {
   }
 
   Padding buildTnCNotif() {
-    if (steps == 0) {
+    if (steps == 0 || steps == 1) {
       return null;
     } else {
       return Padding(

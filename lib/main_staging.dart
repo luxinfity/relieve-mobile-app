@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           canvasColor: Colors.transparent,
           fontFamily: CircularStdFont.book.fontFamily,
+          hintColor: AppColor.colorEmptyRect,
         ),
         home: LandingScreen());
   }
