@@ -24,6 +24,7 @@ dependencies:
   flutter_cupertino_date_picker: ^0.3.0
   shared_preferences: ^0.4.3
   recase: ^2.0.1
+  flushbar: ^1.2.1
 
 dev_dependencies:
   flutter_test:
