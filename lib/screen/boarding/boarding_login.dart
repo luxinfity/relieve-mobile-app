@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/app_config.dart';
+import 'package:relieve_app/utils/top_snackbar.dart';
 
 import '../../res/res.dart';
 import '../../widget/item/title.dart';
@@ -26,6 +27,8 @@ class BoardingLoginScreenState extends State {
   var isFormEmpty = false;
   var isWrongCredential = false;
   var passwordVisible = false;
+
+  var snackbar = null;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -57,11 +60,29 @@ class BoardingLoginScreenState extends State {
         await pref.setExpireIn(tokenResponse.content.expiresIn);
         await pref.setUsername(usernameController.text);
         onLoginSuccess();
-      } else
+      } else {
+        _showErrorSnackBar();
         setState(() {
           isWrongCredential = true;
         });
+      }
     }
+  }
+
+  void _showErrorSnackBar() {
+    if (snackbar != null) {
+      snackbar.dismiss(true);
+    }
+    snackbar = TopSnackbar.createAction(
+        message: "Ups! Username dan password salah",
+        button: FlatButton(
+          onPressed: () => snackbar.dismiss(true),
+          child: Text(
+            "Mengerti",
+            style: TextStyle(color: Colors.red),
+          ),
+        ));
+    snackbar.show(context);
   }
 
   void registerButtonClicked() {
