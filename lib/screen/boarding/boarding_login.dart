@@ -28,7 +28,7 @@ class BoardingLoginScreenState extends State {
   var isWrongCredential = false;
   var passwordVisible = false;
 
-  var snackbar = null;
+  var snackbar;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
