@@ -121,14 +121,15 @@ class WeatherItemList extends StatefulWidget {
 }
 
 class WeatherItemListState extends State {
-  // dummy
-  final lat = -6.892534;
-  final long = 107.613463;
   WeatherResponse _weatherResponse = WeatherResponse();
 
   void fetchData() async {
-    final response =
-        await KalomangApi(AppConfig.of(context)).weatherCheck(lat, long);
+    final userLocation = LocationService.gerCurrentLocation();
+
+    final response = await KalomangApi(AppConfig.of(context)).weatherCheck(
+      userLocation.latitude,
+      userLocation.longitude,
+    );
     setState(() {
       _weatherResponse = response;
     });
