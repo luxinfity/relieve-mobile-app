@@ -5,7 +5,7 @@ import '../../res/res.dart';
 import '../../service/service.dart';
 import '../../service/model/weather.dart';
 
-enum WeatherType { Rain, Wind, UV }
+enum WeatherType { Temparature, Rain, Wind, UV }
 
 class WeatherItem extends StatelessWidget {
   final WeatherType weatherType;
@@ -21,32 +21,50 @@ class WeatherItem extends StatelessWidget {
 
   Widget createImage() {
     switch (weatherType) {
+      case WeatherType.Temparature:
+        return LocalImage.ic_temperature.toSvg(width: 24);
       case WeatherType.Wind:
-        return LocalImage.ic_wind.toSvg(width: 38);
+        return LocalImage.ic_wind.toSvg(width: 24);
       case WeatherType.UV:
-        return LocalImage.ic_uv.toSvg(width: 40);
+        return LocalImage.ic_sun.toSvg(width: 24);
       default:
-        return LocalImage.ic_rain.toSvg(width: 42);
+        return LocalImage.ic_rain.toSvg(width: 24);
     }
   }
 
   String getMetric() {
     switch (weatherType) {
+      case WeatherType.Temparature:
+        return 'c';
       case WeatherType.Wind:
         return 'kph';
       case WeatherType.UV:
         return 'uv';
       default:
-        return 'in';
+        return '%';
     }
   }
 
   Widget createValueView() {
-    return Column(
+    var strVal = '';
+
+    switch (weatherType) {
+      case WeatherType.Temparature:
+        strVal += '${value.toInt()}°';
+        break;
+      case WeatherType.Rain:
+        strVal += '${(value * 100).toInt()}';
+        break;
+      default:
+        strVal += value.toInt().toString();
+        break;
+    }
+
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Text(
-          value.toString(),
+          strVal,
           style: CircularStdFont.bold.getStyle(
             size: Dimen.x21,
             color: AppColor.colorTextBlack,
@@ -67,27 +85,26 @@ class WeatherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: 110,
+        height: 120,
         padding: const EdgeInsets.all(Dimen.x10),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              height: double.infinity,
-              width: double.infinity,
-              child: Text(
-                classification,
-                style: CircularStdFont.medium.getStyle(
-                  size: Dimen.x14,
-                  color: AppColor.colorPrimary,
+            createImage(),
+            Container(height: Dimen.x4),
+            createValueView(),
+            Expanded(
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  classification,
+                  softWrap: true,
+                  style: CircularStdFont.medium.getStyle(
+                    size: Dimen.x14,
+                    color: AppColor.colorPrimary,
+                  ),
                 ),
               ),
-              alignment: Alignment.bottomCenter,
-            ),
-            createImage(),
-            Positioned(
-              child: createValueView(),
-              top: 1,
-              right: 1,
             ),
           ],
         ),
@@ -129,7 +146,17 @@ class WeatherItemListState extends State {
       padding: const EdgeInsets.only(
           left: Dimen.x16, right: Dimen.x16, bottom: Dimen.x16),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Expanded(
+            child: WeatherItem(
+              weatherType: WeatherType.Temparature,
+              classification:
+                  _weatherResponse.content.temparature.desc?.id ?? "Normal",
+              value: _weatherResponse.content.temparature.value,
+            ),
+          ),
+          Container(width: Dimen.x4),
           Expanded(
             child: WeatherItem(
               weatherType: WeatherType.Rain,

@@ -88,7 +88,8 @@ class LocalImage {
   static LocalImage get ic_warning => LocalImage('ic_warning');
 
   // Weather
+  static LocalImage get ic_temperature => LocalImage('ic_temperature');
   static LocalImage get ic_wind => LocalImage('ic_wind');
-  static LocalImage get ic_uv => LocalImage('ic_uv');
+  static LocalImage get ic_sun => LocalImage('ic_sun');
   static LocalImage get ic_rain => LocalImage('ic_rain');
 }
