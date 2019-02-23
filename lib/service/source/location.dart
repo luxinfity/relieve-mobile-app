@@ -12,6 +12,11 @@ class Location {
   String toString() {
     return "$latitude, $longitude";
   }
+
+  factory Location.parseString(String coordinate) {
+    final splited = coordinate.split(", ").map((s) => double.parse(s)).toList();
+    return Location(splited[0], splited[1]);
+  }
 }
 
 class LocationService {

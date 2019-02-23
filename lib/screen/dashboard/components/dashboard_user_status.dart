@@ -55,7 +55,7 @@ class UserAppBarState extends State {
 
   void loadUser() async {
     final userResponse = await BakauApi(AppConfig.of(context)).getUser();
-    if (userResponse.status == REQUEST_SUCCESS) {
+    if (userResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         user = userResponse.content;
       });

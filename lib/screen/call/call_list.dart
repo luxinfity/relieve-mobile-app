@@ -29,7 +29,7 @@ class CallListScreenState extends State {
     final contactResponse = await BakauApi(AppConfig.of(context))
         .getNearbyEmergencyContact(location);
 
-    if (contactResponse.status == REQUEST_SUCCESS) {
+    if (contactResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         contactList = contactResponse.content;
         contactList.forEach((contact) {

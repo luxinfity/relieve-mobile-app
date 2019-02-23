@@ -129,7 +129,7 @@ class BoardingRegisterState extends State {
 
     final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
 
-    if (tokenResponse.status == REQUEST_SUCCESS) {
+    if (tokenResponse?.status == REQUEST_SUCCESS) {
       await pref.setToken(tokenResponse.content.token);
       await pref.setRefreshToken(tokenResponse.content.refreshToken);
       await pref.setExpireIn(tokenResponse.content.expiresIn);

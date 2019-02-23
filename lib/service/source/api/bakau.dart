@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:relieve_app/service/model/address.dart';
 import 'dart:io';
 import 'dart:convert';
 
@@ -74,5 +75,19 @@ class BakauApi extends BaseApi {
     );
 
     return ContactResponse.fromJson(jsonDecode(response.body));
+  }
+  
+  Future<AddressResponse> getUserAddress() async {
+    var url = '$completeUri/address';
+    final response = await http.get(
+      url,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'authorization': await pref.getToken(),
+        'secret': secret,
+      }
+    );
+
+    return AddressResponse.fromJson(jsonDecode(response.body));
   }
 }
