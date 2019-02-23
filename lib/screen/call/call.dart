@@ -1,13 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
+import 'package:relieve_app/app_config.dart';
+import 'package:relieve_app/screen/call/components/address_bar.dart';
+import 'package:relieve_app/service/model/address.dart';
 
-import '../../res/res.dart';
-import '../../widget/relieve_scaffold.dart';
-import '../../widget/item/title.dart';
-import '../../widget/item/family_item.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/source/api/bakau.dart';
+import 'package:relieve_app/service/source/api/config.dart';
+import 'package:relieve_app/widget/relieve_scaffold.dart';
+import 'package:relieve_app/widget/item/title.dart';
+import 'package:relieve_app/widget/item/family_item.dart';
 import '../call/call_list.dart';
 import './components/item_button.dart';
 
-class CallScreen extends StatelessWidget {
+class CallScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => CallScreenState();
+}
+
+class CallScreenState extends State {
+  List<Address> addressList = List();
+
+  void getUserAddress() async {
+    final addressResponse =
+        await BakauApi(AppConfig.of(context)).getUserAddress();
+
+    if (addressResponse?.status == REQUEST_SUCCESS) {
+      setState(() {
+        addressList = addressResponse.content;
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getUserAddress();
+  }
+
   @override
   Widget build(BuildContext context) {
     return RelieveScaffold(
@@ -28,27 +58,7 @@ class CallScreen extends StatelessWidget {
                     ),
                     child: ScreenTitle(title: 'Panggilan Darurat'),
                   ),
-                  Card(
-                    margin: EdgeInsets.symmetric(horizontal: Dimen.x16),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Dimen.x21,
-                        vertical: Dimen.x18,
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(
-                              'Dago Pakar, Bandung',
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          LocalImage.ic_drop_down.toSvg(width: Dimen.x12),
-                        ],
-                      ),
-                    ),
-                  ),
+                  AddressBar(addressList: addressList),
                   Padding(
                     padding: const EdgeInsets.only(top: Dimen.x32),
                     child: ThemedTitle(title: 'Lembaga Penanganan Darurat'),
@@ -116,42 +126,4 @@ class CallScreen extends StatelessWidget {
       ],
     );
   }
-
-  // Widget _buildButton(
-  //   LocalImage icon,
-  //   String title, {
-  //   VoidCallback onClick,
-  //   bool isTintBlue = false,
-  // }) {
-  //   return InkWell(
-  //     onTap: onClick,
-  //     child: Card(
-  //       child: Padding(
-  //         padding: const EdgeInsets.symmetric(
-  //             horizontal: Dimen.x14, vertical: Dimen.x18),
-  //         child: Wrap(
-  //           direction: Axis.vertical,
-  //           spacing: Dimen.x10,
-  //           children: <Widget>[
-  //             icon.toSvg(
-  //               width: Dimen.x18,
-  //               color: isTintBlue
-  //                   ? AppColor.colorPrimary
-  //                   : AppColor.colorTextBlack,
-  //             ),
-  //             Text(
-  //               title,
-  //               style: CircularStdFont.medium.getStyle(
-  //                 size: Dimen.x14,
-  //                 color: isTintBlue
-  //                     ? AppColor.colorPrimary
-  //                     : AppColor.colorTextBlack,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }

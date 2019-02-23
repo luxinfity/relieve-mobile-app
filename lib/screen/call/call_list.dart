@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 
-import '../../res/res.dart';
-import '../../widget/relieve_scaffold.dart';
-import '../../widget/item/title.dart';
-import '../../widget/item/standard_button.dart';
 import './components/item_button.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/app_config.dart';
+import 'package:relieve_app/widget/item/title.dart';
+import 'package:relieve_app/service/model/contact.dart';
+import 'package:relieve_app/service/source/api/api.dart';
+import 'package:relieve_app/widget/relieve_scaffold.dart';
+import 'package:relieve_app/service/source/location.dart';
+import 'package:relieve_app/widget/item/standard_button.dart';
 
 class CallListScreen extends StatefulWidget {
   @override
@@ -15,16 +20,80 @@ class CallListScreen extends StatefulWidget {
 
 class CallListScreenState extends State {
   bool isEditMode = false;
-  List<bool> isSelectedList = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    true,
-    false,
-  ];
+  List<Contact> contactList = List<Contact>();
+  final uniqueTypes = List<String>();
+  List<bool> isSelectedList = List<bool>();
+
+  void getAllContact() async {
+    final location = LocationService.gerCurrentLocation();
+    final contactResponse = await BakauApi(AppConfig.of(context))
+        .getNearbyEmergencyContact(location);
+
+    if (contactResponse?.status == REQUEST_SUCCESS) {
+      setState(() {
+        contactList = contactResponse.content;
+        contactList.forEach((contact) {
+          if (!uniqueTypes.contains(contact.type)) {
+            uniqueTypes.add(contact.type);
+          }
+        });
+        isSelectedList = List.generate(uniqueTypes.length, (index) => false);
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getAllContact();
+  }
+
+  LocalImage getIcon(String type) {
+    switch (type) {
+      case 'hospital':
+        return LocalImage.ic_ambulance;
+      case 'police':
+        return LocalImage.ic_police;
+      case 'fire_station':
+        return LocalImage.ic_fire_fighter;
+      case 'red_cross':
+        return LocalImage.ic_red_cross;
+      case 'bmkg':
+        return LocalImage.ic_bmkg;
+      case 'sar':
+        return LocalImage.ic_sar;
+      case 'bpjs':
+        return LocalImage.ic_medic;
+      case 'pln':
+        return LocalImage.ic_pln;
+      default:
+        return LocalImage.ic_ambulance;
+    }
+  }
+
+  List<Widget> createContacts() {
+    var buttons = List.generate(
+      uniqueTypes.length,
+      (index) => ItemButton(
+            icon: getIcon(uniqueTypes[index]),
+            title: ReCase(uniqueTypes[index]).titleCase,
+            isEditMode: isEditMode,
+            isSelected: isSelectedList[index],
+            onClick: () => _onClickSelect(index),
+          ),
+    );
+
+    buttons.insert(
+      0,
+      ItemButton(
+        icon: LocalImage.ic_add_other,
+        title: 'Tambah Lainnya',
+        isTintBlue: true,
+        onClick: () {},
+      ),
+    );
+    return buttons;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,70 +111,7 @@ class CallListScreenState extends State {
             childAspectRatio: 2,
             crossAxisSpacing: Dimen.x6,
             mainAxisSpacing: Dimen.x6,
-            children: <Widget>[
-              ItemButton(
-                icon: LocalImage.ic_add_other,
-                title: 'Tambah Lainnya',
-                isTintBlue: true,
-                onClick: () {},
-              ),
-              ItemButton(
-                icon: LocalImage.ic_ambulance,
-                title: 'Ambulance',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[0],
-                onClick: () => _onClickSelect(0),
-              ),
-              ItemButton(
-                icon: LocalImage.ic_police,
-                title: 'Kantor Polisi',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[1],
-                onClick: () => _onClickSelect(1),
-              ),
-              ItemButton(
-                icon: LocalImage.ic_fire_fighter,
-                title: 'Pemadam Kebakaran',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[2],
-                onClick: () => _onClickSelect(2),
-              ),
-              ItemButton(
-                icon: LocalImage.ic_red_cross,
-                title: 'Palang Merah',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[3],
-                onClick: () => _onClickSelect(3),
-              ),
-              ItemButton(
-                icon: LocalImage.ic_bmkg,
-                title: 'BMKG',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[4],
-                onClick: () => _onClickSelect(4),
-              ),
-              ItemButton(
-                icon: LocalImage.ic_sar,
-                title: 'Badan SAR',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[5],
-                onClick: () => _onClickSelect(5),
-              ),
-              ItemButton(
-                icon: LocalImage.ic_medic,
-                title: 'BPJS',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[6],
-                onClick: () => _onClickSelect(6),
-              ),
-              ItemButton(
-                icon: LocalImage.ic_pln,
-                title: 'PLN',
-                isEditMode: isEditMode,
-                isSelected: isSelectedList[7],
-                onClick: () => _onClickSelect(7),
-              ),
-            ],
+            children: createContacts(),
           ),
         ),
         isEditMode
@@ -140,8 +146,10 @@ class CallListScreenState extends State {
   }
 
   void _onClickSelect(int index) {
-    setState(() {
-      isSelectedList[index] = !isSelectedList[index];
-    });
+    if (isEditMode) {
+      setState(() {
+        isSelectedList[index] = !isSelectedList[index];
+      });
+    }
   }
 }

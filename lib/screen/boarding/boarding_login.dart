@@ -28,7 +28,7 @@ class BoardingLoginScreenState extends State {
   var isWrongCredential = false;
   var passwordVisible = false;
 
-  var snackbar = null;
+  var snackbar;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -54,7 +54,7 @@ class BoardingLoginScreenState extends State {
         passwordController.text,
       );
 
-      if (tokenResponse.status == REQUEST_SUCCESS) {
+      if (tokenResponse?.status == REQUEST_SUCCESS) {
         await pref.setToken(tokenResponse.content.token);
         await pref.setRefreshToken(tokenResponse.content.refreshToken);
         await pref.setExpireIn(tokenResponse.content.expiresIn);
