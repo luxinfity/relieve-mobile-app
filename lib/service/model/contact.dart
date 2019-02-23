@@ -37,7 +37,7 @@ class Contact {
 
 class ContactResponse extends BaseResponse {
   @override
-  final Contact content;
+  final List<Contact> content;
 
   ContactResponse({
     String message,
@@ -50,7 +50,9 @@ class ContactResponse extends BaseResponse {
       return ContactResponse(
         message: parsedJson['message'],
         status: parsedJson['status'],
-        content: Contact.fromJson(parsedJson['content']),
+        content: (parsedJson['content'] as List)
+            .map((content) => Contact.fromJson(content))
+            .toList(),
       );
     } catch (e) {
       return null;

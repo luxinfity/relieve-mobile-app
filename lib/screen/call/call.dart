@@ -116,42 +116,4 @@ class CallScreen extends StatelessWidget {
       ],
     );
   }
-
-  // Widget _buildButton(
-  //   LocalImage icon,
-  //   String title, {
-  //   VoidCallback onClick,
-  //   bool isTintBlue = false,
-  // }) {
-  //   return InkWell(
-  //     onTap: onClick,
-  //     child: Card(
-  //       child: Padding(
-  //         padding: const EdgeInsets.symmetric(
-  //             horizontal: Dimen.x14, vertical: Dimen.x18),
-  //         child: Wrap(
-  //           direction: Axis.vertical,
-  //           spacing: Dimen.x10,
-  //           children: <Widget>[
-  //             icon.toSvg(
-  //               width: Dimen.x18,
-  //               color: isTintBlue
-  //                   ? AppColor.colorPrimary
-  //                   : AppColor.colorTextBlack,
-  //             ),
-  //             Text(
-  //               title,
-  //               style: CircularStdFont.medium.getStyle(
-  //                 size: Dimen.x14,
-  //                 color: isTintBlue
-  //                     ? AppColor.colorPrimary
-  //                     : AppColor.colorTextBlack,
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
