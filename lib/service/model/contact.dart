@@ -1,0 +1,59 @@
+import 'package:flutter/foundation.dart';
+import 'dart:convert';
+
+import './base.dart';
+
+class Contact {
+  final String name;
+  final String type;
+  final String phone;
+
+  const Contact({
+    @required this.name,
+    @required this.type,
+    @required this.phone,
+  });
+
+  String toJson() {
+    return jsonEncode({
+      'name': name,
+      'type': type,
+      'phone': phone,
+    });
+  }
+
+  factory Contact.fromJson(Map<String, dynamic> parsedJson) {
+    try {
+      return Contact(
+        name: parsedJson['name'],
+        type: parsedJson['type'],
+        phone: parsedJson['phone'],
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+class ContactResponse extends BaseResponse {
+  @override
+  final Contact content;
+
+  ContactResponse({
+    String message,
+    int status,
+    this.content,
+  }) : super(message, status, content);
+
+  factory ContactResponse.fromJson(Map<String, dynamic> parsedJson) {
+    try {
+      return ContactResponse(
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: Contact.fromJson(parsedJson['content']),
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+}
