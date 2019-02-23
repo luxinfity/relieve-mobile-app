@@ -7,6 +7,11 @@ class Location {
   final double longitude;
 
   const Location(this.latitude, this.longitude);
+
+  @override
+  String toString() {
+    return "$latitude, $longitude";
+  }
 }
 
 class LocationService {

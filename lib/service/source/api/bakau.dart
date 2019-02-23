@@ -6,6 +6,8 @@ import '../api/config.dart';
 import '../../../app_config.dart';
 import '../../model/token.dart';
 import '../../model/user.dart';
+import '../../model/contact.dart';
+import '../location.dart';
 import '../../../utils/preference_utils.dart' as pref;
 
 class BakauApi extends BaseApi {
@@ -47,15 +49,30 @@ class BakauApi extends BaseApi {
 
   Future<UserResponse> getUser() async {
     var url = '$completeUri/user/profile';
-    final response = await http.get(
+    final response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      'authorization': await pref.getToken(),
+      'secret': secret,
+    });
+
+    return UserResponse.fromJson(jsonDecode(response.body));
+  }
+
+  Future<ContactResponse> getNearbyEmergencyContact(Location location) async {
+    var url = '$completeUri/emergency-contact/nearby';
+    final response = await http.post(
       url,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
         'authorization': await pref.getToken(),
         'secret': secret,
-      }
+      },
+      body: jsonEncode({
+        'coordinates': location.toString(),
+        'radius': 2000,
+      }),
     );
 
-    return UserResponse.fromJson(jsonDecode(response.body));
+    return ContactResponse.fromJson(jsonDecode(response.body));
   }
 }
