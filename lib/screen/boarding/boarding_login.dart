@@ -150,6 +150,7 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
+          alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
           ),
@@ -178,6 +179,7 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Username',
+          alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
           ),

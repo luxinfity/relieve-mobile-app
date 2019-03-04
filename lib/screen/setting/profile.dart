@@ -39,12 +39,12 @@ class ProfileScreenState extends State {
                   style: CircularStdFont.bold.getStyle(size: Dimen.x14),
                 ),
                 Container(height: Dimen.x12),
-                Row(                   
+                Row(
                   children: <Widget>[
                     Expanded(
                       child: OutlineButton(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             LocalImage.ic_gallery.toSvg(width: Dimen.x16),
                             Container(width: Dimen.x16),
@@ -66,7 +66,7 @@ class ProfileScreenState extends State {
                     Expanded(
                       child: OutlineButton(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             LocalImage.ic_camera.toSvg(width: Dimen.x16),
                             Container(width: Dimen.x16),
@@ -86,32 +86,90 @@ class ProfileScreenState extends State {
                     ),
                   ],
                 ),
-                // Expanded(
-                //   child: Container(height: 20, color: Colors.green,),
-                // ),
-
-                // Row(
-                //   children: <Widget>[
-
-                //     OutlineButton(
-                //       child: Row(
-                //         children: <Widget>[
-                //           LocalImage.ic_camera.toSvg(width: Dimen.x16),
-                //           Text(
-                //             'Kamera',
-                //             style: CircularStdFont.book.getStyle(size: Dimen.x12),
-                //           ),
-                //         ],
-                //       ),
-                //       highlightedBorderColor: AppColor.colorEmptyChip,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(Dimen.x6),
-                //       ),
-                //       onPressed: () {},
-                //     ),
-                //   ],
-                // )
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container createSpace() =>
+      Container(height: Dimen.x12, color: AppColor.colorStandardBackgroud);
+
+  Padding buildNameCard() {
+    return Padding(
+      padding: const EdgeInsets.all(Dimen.x16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Ubah nama dan nomor handphone',
+            style: CircularStdFont.bold.getStyle(size: Dimen.x14),
+          ),
+          Container(height: Dimen.x21),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Nama Baru',
+              alignLabelWithHint: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Dimen.x6),
+              ),
+            ),
+          ),
+          Container(height: Dimen.x16),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Nomor Handphone',
+              alignLabelWithHint: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Dimen.x6),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding buildPasswordCard() {
+    return Padding(
+      padding: const EdgeInsets.all(Dimen.x16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Ubah password',
+            style: CircularStdFont.bold.getStyle(size: Dimen.x14),
+          ),
+          Container(height: Dimen.x21),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Password lama',
+              alignLabelWithHint: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Dimen.x6),
+              ),
+            ),
+          ),
+          Container(height: Dimen.x16),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Password baru',
+              alignLabelWithHint: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Dimen.x6),
+              ),
+            ),
+          ),
+          Container(height: Dimen.x16),
+          TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Masukkan Kembali Password baru',
+              alignLabelWithHint: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Dimen.x6),
+              ),
             ),
           ),
         ],
@@ -126,21 +184,23 @@ class ProfileScreenState extends State {
       hasBackButton: true,
       crossAxisAlignment: CrossAxisAlignment.start,
       childs: <Widget>[
-        ThemedTitle(
-          title: 'Profil dan password',
-          subtitle: 'Ubah peraturan pada profil dan password',
-        ),
-        Container(height: Dimen.x12, color: AppColor.colorStandardBackgroud),
-        createPictureCard(),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(height: 20, color: Colors.brown),
-            ),
-            Expanded(
-              child: Container(height: 20, color: Colors.cyan),
-            ),
-          ],
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.all(0),
+            children: <Widget>[
+              ThemedTitle(
+                title: 'Profil dan password',
+                subtitle: 'Ubah peraturan pada profil dan password',
+              ),
+              createSpace(),
+              createPictureCard(),
+              createSpace(),
+              buildNameCard(),
+              createSpace(),
+              buildPasswordCard(),
+              createSpace(),
+            ],
+          ),
         ),
       ],
       bottomNavigationBar: Container(

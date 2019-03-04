@@ -509,10 +509,10 @@ class BoardingRegisterState extends State {
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimen.x6),
-              borderSide: BorderSide(color: Colors.blue),
             ),
             prefixText: prefix,
             labelText: label,
+            alignLabelWithHint: true,
             suffixIcon: obscureText
                 ? IconButton(
                     icon: Icon(
