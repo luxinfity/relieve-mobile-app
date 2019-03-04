@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/screen/setting/notification.dart';
+import 'package:relieve_app/screen/setting/profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/res.dart';
@@ -32,8 +34,19 @@ class DashboardProfileScreen extends StatelessWidget {
                     left: Dimen.x16,
                     right: Dimen.x8,
                   ),
-                  child: _buildButton(LocalImage.ic_user, 'Profil dan password',
-                      axis: Axis.vertical),
+                  child: _buildButton(
+                    LocalImage.ic_user,
+                    'Profil dan password',
+                    axis: Axis.vertical,
+                    onClick: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => ProfileScreen(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Expanded(
@@ -43,8 +56,19 @@ class DashboardProfileScreen extends StatelessWidget {
                     left: Dimen.x8,
                   ),
                   child: _buildButton(
-                      LocalImage.ic_notif, 'Notifkasi dan getar',
-                      axis: Axis.vertical),
+                    LocalImage.ic_notif,
+                    'Notifkasi dan getar',
+                    axis: Axis.vertical,
+                    onClick: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              NotificationScreen(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
