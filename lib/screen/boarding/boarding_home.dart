@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/screen/boarding/components/boarding_register_here.dart';
+import 'package:relieve_app/screen/register/boarding_register.dart';
 
 import 'package:relieve_app/screen/register/register.dart';
 import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
@@ -29,7 +30,7 @@ class BoardingHomeScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => RegisterScreen(),
+        builder: (context) => BoardingRegisterScreen(),
       ),
     );
   }
