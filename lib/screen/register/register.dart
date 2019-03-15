@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/screen/register/register_form.dart';
+import 'package:relieve_app/screen/register/register_form_account.dart';
+import 'package:relieve_app/screen/register/register_form_profile.dart';
 import 'package:relieve_app/screen/register/register_map.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,9 +18,15 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   Widget createPage() {
     switch (progressCount) {
-      case 0:
-        return RegisterFormAccount();
       case 1:
+        return RegisterFormAccount(
+          onNextClick: () {
+            setState(() {
+              progressCount += 1;
+            });
+          },
+        );
+      case 2:
         return RegisterFormProfile();
       default:
         return RegisterFormAddress();
@@ -32,6 +40,12 @@ class RegisterScreenState extends State<RegisterScreen> {
       progressCount: progressCount,
       progressTotal: progressTotal,
       crossAxisAlignment: CrossAxisAlignment.start,
+      onBackPressed: (context) {
+        setState(() {
+          if (progressCount > 1) progressCount -= 1;
+          else defaultBackPressed(context);
+        });
+      },
       childs: <Widget>[
         Expanded(child: createPage()),
       ],
