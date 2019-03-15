@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../res/res.dart';
-import '../../service/model/chat.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/chat.dart';
 
 class ChatItem extends StatelessWidget {
   final Chat chat;

@@ -92,4 +92,8 @@ class LocalImage {
   static LocalImage get ic_wind => LocalImage('ic_wind');
   static LocalImage get ic_sun => LocalImage('ic_sun');
   static LocalImage get ic_rain => LocalImage('ic_rain');
+
+  // setting
+  static LocalImage get ic_gallery => LocalImage('ic_gallery');
+  static LocalImage get ic_camera => LocalImage('ic_camera');
 }

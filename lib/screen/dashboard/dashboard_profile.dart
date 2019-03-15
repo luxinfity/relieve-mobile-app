@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/screen/dashboard/components/profile_board.dart';
+import 'package:relieve_app/screen/setting/notification.dart';
+import 'package:relieve_app/screen/setting/profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../res/res.dart';
-import './components/profile_board.dart';
 import 'package:relieve_app/screen/boarding/boarding_home.dart';
-import '../../utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class DashboardProfileScreen extends StatelessWidget {
   void onLogout(BuildContext context) {
@@ -32,8 +34,19 @@ class DashboardProfileScreen extends StatelessWidget {
                     left: Dimen.x16,
                     right: Dimen.x8,
                   ),
-                  child: _buildButton(LocalImage.ic_user, 'Profil dan password',
-                      axis: Axis.vertical),
+                  child: _buildButton(
+                    LocalImage.ic_user,
+                    'Profil dan password',
+                    axis: Axis.vertical,
+                    onClick: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => ProfileScreen(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               Expanded(
@@ -43,8 +56,19 @@ class DashboardProfileScreen extends StatelessWidget {
                     left: Dimen.x8,
                   ),
                   child: _buildButton(
-                      LocalImage.ic_notif, 'Notifkasi dan getar',
-                      axis: Axis.vertical),
+                    LocalImage.ic_notif,
+                    'Notifkasi dan getar',
+                    axis: Axis.vertical,
+                    onClick: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              NotificationScreen(),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

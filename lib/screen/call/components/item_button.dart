@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../res/res.dart';
+import 'package:relieve_app/res/res.dart';
 
 class ItemButton extends StatelessWidget {
   final LocalImage icon;

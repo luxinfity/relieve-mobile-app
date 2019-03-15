@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../res/res.dart';
-import '../../service/model/disaster.dart';
-import '../bottom_modal.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/disaster.dart';
+import 'package:relieve_app/widget/bottom_modal.dart';
 
 class DiscoverItem extends StatelessWidget {
   final Disaster disaster;
@@ -208,8 +207,7 @@ class DisasterItemListState extends State {
       color: Colors.white,
       borderRadius: BorderRadius.circular(Dimen.x4),
       child: InkWell(
-        onTap: () {
-        },
+        onTap: () {},
         child: Container(
           alignment: Alignment.center,
           child: LocalImage.ic_warning.toSvg(height: 20),

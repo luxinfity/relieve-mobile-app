@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../res/res.dart';
-import '../../service/model/family.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/family.dart';
 
 class UserLocation extends StatelessWidget {
   final String location;
