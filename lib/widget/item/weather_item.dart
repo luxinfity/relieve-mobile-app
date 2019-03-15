@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/app_config.dart';
-
-import '../../res/res.dart';
-import '../../service/service.dart';
-import '../../service/model/weather.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/weather.dart';
+import 'package:relieve_app/service/service.dart';
 
 enum WeatherType { Temparature, Rain, Wind, UV }
 

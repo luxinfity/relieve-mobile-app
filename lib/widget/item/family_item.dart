@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../service/model/family.dart';
-import '../../res/res.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/family.dart';
 
 enum FamilyItemType { Normal, Empty, Add }
 

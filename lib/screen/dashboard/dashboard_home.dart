@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/screen/dashboard/components/dashboard_user_status.dart';
+import 'package:relieve_app/widget/item/disaster_item.dart';
+import 'package:relieve_app/widget/item/family_item.dart';
+import 'package:relieve_app/widget/item/title.dart';
+import 'package:relieve_app/widget/item/weather_item.dart';
 
-import './components/dashboard_user_status.dart';
-import '../../widget/item/title.dart';
-import '../../widget/item/family_item.dart';
-import '../../widget/item/disaster_item.dart';
-import '../../widget/item/weather_item.dart';
-import '../../res/res.dart';
+
 
 class DashboardHomeScreen extends StatelessWidget {
   @override

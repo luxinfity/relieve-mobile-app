@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../res/res.dart';
-import '../utils/common_utils.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 
 class RelieveScaffold extends StatelessWidget {
   final List<Widget> childs;
@@ -11,6 +10,8 @@ class RelieveScaffold extends StatelessWidget {
   final LocalImage backIcon;
   final Widget bottomNavigationBar;
   final VoidContextCallback onBackPressed;
+  final int progressCount;
+  final int progressTotal;
 
   const RelieveScaffold(
       {Key key,
@@ -20,7 +21,9 @@ class RelieveScaffold extends StatelessWidget {
       this.crossAxisAlignment = CrossAxisAlignment.center,
       this.backIcon,
       this.bottomNavigationBar,
-      this.onBackPressed = defaultBackPressed});
+      this.onBackPressed = defaultBackPressed,
+      this.progressCount = 0,
+      this.progressTotal = 100});
 
   List<Widget> _createBody(BuildContext context, EdgeInsets padding) {
     return <Widget>[
@@ -31,6 +34,13 @@ class RelieveScaffold extends StatelessWidget {
               color: AppColor.colorPrimary,
               height: padding.top,
             ),
+      Container(
+        height: Dimen.x4,
+        child: LinearProgressIndicator(
+          value: progressCount / progressTotal,
+          valueColor: AlwaysStoppedAnimation<Color>(AppColor.colorPrimary),
+        ),
+      ),
     ].where((widget) => widget != null).toList();
   }
 
