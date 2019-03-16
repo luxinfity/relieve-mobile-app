@@ -129,7 +129,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           backgroundColor: AppColor.colorPrimary,
         ),
         Container(
-          height: safePadding.bottom,
+          height: Dimen.x16 + safePadding.bottom,
         )
       ],
     );
