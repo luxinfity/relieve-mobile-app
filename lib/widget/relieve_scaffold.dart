@@ -22,7 +22,7 @@ class RelieveScaffold extends StatelessWidget {
       this.backIcon,
       this.bottomNavigationBar,
       this.onBackPressed = defaultBackPressed,
-      this.progressCount = 0,
+      this.progressCount = -1,
       this.progressTotal = 100});
 
   List<Widget> _createBody(BuildContext context, EdgeInsets padding) {
@@ -34,19 +34,22 @@ class RelieveScaffold extends StatelessWidget {
               color: AppColor.colorPrimary,
               height: padding.top,
             ),
-      AnimatedContainer(
-        duration: Duration(seconds: 1),
-        height: Dimen.x4,
-        width:
-            MediaQuery.of(context).size.width / progressTotal * progressCount,
-        color: AppColor.colorPrimary,
-      ),
+      (progressCount > -1)
+          ? AnimatedContainer(
+              duration: Duration(seconds: 1),
+              height: Dimen.x4,
+              width: MediaQuery.of(context).size.width /
+                  progressTotal *
+                  progressCount,
+              color: AppColor.colorPrimary,
+            )
+          : null,
     ].where((widget) => widget != null).toList();
   }
 
   Widget _createBackButton(BuildContext context) {
     return IconButton(
-      padding: EdgeInsets.only(left: Dimen.x8, top: Dimen.x8),
+      padding: EdgeInsets.all(Dimen.x8),
       icon: (backIcon ?? LocalImage.ic_back_arrow).toSvg(height: 26),
       onPressed: () => onBackPressed(context),
     );
