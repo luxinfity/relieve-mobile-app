@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../res/res.dart';
-import '../../widget/item/title.dart';
-import '../../widget/item/disaster_item.dart';
-import '../../service/model/disaster.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/disaster.dart';
+import 'package:relieve_app/widget/item/disaster_item.dart';
+import 'package:relieve_app/widget/item/title.dart';
 
 class DashboardDiscoverScreen extends StatelessWidget {
   @override

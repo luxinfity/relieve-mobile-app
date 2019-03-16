@@ -1,15 +1,15 @@
 import 'package:http/http.dart' as http;
+import 'package:relieve_app/app_config.dart';
 import 'package:relieve_app/service/model/address.dart';
+import 'package:relieve_app/service/model/contact.dart';
+import 'package:relieve_app/service/model/token.dart';
+import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/api.dart';
 import 'dart:io';
 import 'dart:convert';
 
-import '../api/config.dart';
-import '../../../app_config.dart';
-import '../../model/token.dart';
-import '../../model/user.dart';
-import '../../model/contact.dart';
-import '../location.dart';
-import '../../../utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class BakauApi extends BaseApi {
   @override
@@ -76,17 +76,14 @@ class BakauApi extends BaseApi {
 
     return ContactResponse.fromJson(jsonDecode(response.body));
   }
-  
+
   Future<AddressResponse> getUserAddress() async {
     var url = '$completeUri/address';
-    final response = await http.get(
-      url,
-      headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-        'authorization': await pref.getToken(),
-        'secret': secret,
-      }
-    );
+    final response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      'authorization': await pref.getToken(),
+      'secret': secret,
+    });
 
     return AddressResponse.fromJson(jsonDecode(response.body));
   }

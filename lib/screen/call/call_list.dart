@@ -89,7 +89,9 @@ class CallListScreenState extends State {
         icon: LocalImage.ic_add_other,
         title: 'Tambah Lainnya',
         isTintBlue: true,
-        onClick: () {},
+        onClick: () {
+          print('click');
+        },
       ),
     );
     return buttons;

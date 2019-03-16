@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'components/dashboard_bottom_bar.dart';
-
-import '../../widget/relieve_scaffold.dart';
-import '../call/call.dart';
-import './dashboard_home.dart';
-import './dashboard_discover.dart';
-import './dashboard_chat.dart';
-import './dashboard_profile.dart';
+import 'package:relieve_app/screen/call/call.dart';
+import 'package:relieve_app/screen/dashboard/components/dashboard_bottom_bar.dart';
+import 'package:relieve_app/screen/dashboard/dashboard_chat.dart';
+import 'package:relieve_app/screen/dashboard/dashboard_discover.dart';
+import 'package:relieve_app/screen/dashboard/dashboard_home.dart';
+import 'package:relieve_app/screen/dashboard/dashboard_profile.dart';
+import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key, this.title}) : super(key: key);

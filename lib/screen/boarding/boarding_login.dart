@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/app_config.dart';
-import 'package:relieve_app/utils/top_snackbar.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/screen/boarding/components/boarding_register_here.dart';
+import 'package:relieve_app/screen/register/boarding_register.dart';
+import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/service/service.dart';
 
-import '../../res/res.dart';
-import '../../widget/item/title.dart';
-import '../../widget/item/standard_button.dart';
-import '../../widget/relieve_scaffold.dart';
-import '../boarding/boarding_register.dart';
-import '../boarding/components/boarding_register_here.dart';
-import '../walkthrough/walkthrough.dart';
-import '../../service/service.dart';
-import '../../service/source/api/config.dart';
-import '../../utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import 'package:relieve_app/widget/item/standard_button.dart';
+import 'package:relieve_app/widget/item/title.dart';
+import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -23,7 +21,7 @@ class BoardingLoginScreen extends StatefulWidget {
 class BoardingLoginScreenState extends State {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-
+  
   var isFormEmpty = false;
   var isWrongCredential = false;
   var passwordVisible = false;
@@ -70,19 +68,7 @@ class BoardingLoginScreenState extends State {
   }
 
   void _showErrorSnackBar() {
-    if (snackbar != null) {
-      snackbar.dismiss(true);
-    }
-    snackbar = TopSnackbar.createAction(
-        message: "Ups! Username dan password salah",
-        button: FlatButton(
-          onPressed: () => snackbar.dismiss(true),
-          child: Text(
-            "Mengerti",
-            style: TextStyle(color: Colors.red),
-          ),
-        ));
-    snackbar.show(context);
+    // TODO: show error snack bar
   }
 
   void registerButtonClicked() {
@@ -150,6 +136,7 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Password',
+          alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
           ),
@@ -178,6 +165,7 @@ class BoardingLoginScreenState extends State {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: 'Username',
+          alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
           ),

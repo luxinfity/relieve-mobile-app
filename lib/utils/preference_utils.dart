@@ -13,6 +13,22 @@ Future<bool> isLogin() async {
   return username != null && username.isNotEmpty;
 }
 
+Future<bool> isGoogleLogin() async {
+  final googleId = await getGoogleId();
+  return googleId != null && googleId.isNotEmpty;
+}
+
+// Google Sign In
+Future<String> getGoogleId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('googleId');
+}
+
+Future<bool> setGoogleId(String id) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return await prefs.setString('googleId', id);
+}
+
 // Username
 Future<String> getUsername() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -1,10 +1,10 @@
 import 'package:http/http.dart' as http;
+import 'package:relieve_app/app_config.dart';
+import 'package:relieve_app/service/model/weather.dart';
+import 'package:relieve_app/service/service.dart';
 import 'dart:convert';
 
-import '../api/config.dart';
-import '../../../app_config.dart';
-import '../../model/weather.dart';
-import '../../../utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class KalomangApi extends BaseApi {
   @override

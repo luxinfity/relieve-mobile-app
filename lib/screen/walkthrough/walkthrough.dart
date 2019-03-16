@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
-
-import '../dashboard/dashboard.dart';
-import '../../res/res.dart';
-import '../../widget/relieve_scaffold.dart';
-import '../../widget/item/standard_button.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/screen/dashboard/dashboard.dart';
+import 'package:relieve_app/widget/item/standard_button.dart';
+import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   WalkthroughScreen({Key key}) : super(key: key);
@@ -94,7 +93,8 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
             child: buildWalkthroughTitle(position),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: Dimen.x28, right: Dimen.x28, top: Dimen.x16),
+            padding: const EdgeInsets.only(
+                left: Dimen.x28, right: Dimen.x28, top: Dimen.x16),
             child: buildWalkthroughText(position),
           ),
         ],
@@ -132,13 +132,13 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
     switch (position) {
       case 0:
         return Text(
-          'Pastikan data yang kamu input\nsudah benar',
+          'Pastikan data yang kamu input sudah benar',
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 1:
         return Text(
-          'Tambakan keluarga mu ke dalam\ndaftar kerabat',
+          'Tambakan keluarga mu ke dalam daftar kerabat',
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
@@ -165,14 +165,16 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
             textAlign: TextAlign.center);
       case 1:
         return Text(
-            'Jangan sampai kamu ketinggalan berita terkini dari keluarga mu, Ayo tambahkan semua dan pantau \nsetiap hari',
+            'Jangan sampai kamu ketinggalan berita terkini dari keluarga mu, Ayo tambahkan semua dan pantau setiap hari',
             textAlign: TextAlign.center);
       case 2:
         return Text(
             'Selalu berikan berita terkini mengenai dirimu, cukup 3 kali klik dan hilangkan kecemasan keluarga mu',
             textAlign: TextAlign.center);
       default:
-        return Text('Semua nomor emergency dapat kamu temukan dalam aplikasi, tetap tenang, tetap semangat! ', textAlign: TextAlign.center);
+        return Text(
+            'Semua nomor emergency dapat kamu temukan dalam aplikasi, tetap tenang, tetap semangat! ',
+            textAlign: TextAlign.center);
     }
   }
 
