@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/item/standard_button.dart';
 import 'package:relieve_app/widget/item/title.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RegisterFormProfile extends StatefulWidget {
   final VoidCallback onNextClick;
@@ -27,8 +29,8 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
             padding: safePadding.copyWith(top: 0),
             children: <Widget>[
               ThemedTitle(
-                title: 'Akun',
-                subtitle: 'Gunakan username kesukaan mu',
+                title: 'Data Diri',
+                subtitle: 'Beritahu kami mengenai diri kamu',
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -39,7 +41,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                 ),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: 'Nama Lengkap',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -55,7 +57,8 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                 ),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Username',
+                    prefixText: '+62 ',
+                    labelText: 'Nomor Handphone',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -70,21 +73,10 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
-                  obscureText: passwordVisible,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: 'Tanggal Lahir',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() => passwordVisible = !passwordVisible);
-                      },
                     ),
                   ),
                 ),
@@ -97,26 +89,38 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
-                  obscureText: passwordVisible,
                   decoration: InputDecoration(
-                    labelText: 'Ketikkan Kembali Password',
+                    labelText: 'Jenis Kelamin',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() => passwordVisible = !passwordVisible);
-                      },
                     ),
                   ),
                 ),
               ),
             ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: Dimen.x32, right: Dimen.x32),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+                text: 'Dengan mendaftar, kamu menyetujui ',
+                style: CircularStdFont.book
+                    .getStyle(size: Dimen.x12, color: AppColor.colorTextBlack),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'ketentuan layanan dan kebijakan perivasi',
+                    style: CircularStdFont.book.getStyle(
+                        size: Dimen.x12, color: AppColor.colorPrimary),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch(
+                            'https://github.com/RelieveID/terms-and-conditions/');
+                      },
+                  ),
+                  TextSpan(text: ' dalam penggunaan Relieve.ID')
+                ]),
           ),
         ),
         StandardButton(

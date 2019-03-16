@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stetho/flutter_stetho.dart';
 
 import 'landing_screen.dart';
 import './app_config.dart';
@@ -12,6 +13,7 @@ void main() {
     apiUrlPrefix: 'staging-',
     child: new MyApp(),
   );
+  Stetho.initialize();
 
   runApp(configuredApp);
 }

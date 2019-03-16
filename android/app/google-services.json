@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "33900633596",
+    "firebase_url": "https://relieve-staging.firebaseio.com",
+    "project_id": "relieve-staging",
+    "storage_bucket": "relieve-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33900633596:android:4c6d51ea89ece218",
+        "android_client_info": {
+          "package_name": "com.relieve.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33900633596-k71merlobs9v2op27nc58q36mjkgq1v3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.relieve.android",
+            "certificate_hash": "ed6631f610f29f93a1e9d29615a6107844638abd"
+          }
+        },
+        {
+          "client_id": "33900633596-jka0gbhtbrgalc7sve6d60gqp91poccq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "ANDROID_API_KEY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33900633596-jka0gbhtbrgalc7sve6d60gqp91poccq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "33900633596-ud2anb219vb4tsjv3866eafibil08suk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.relieve.ios"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

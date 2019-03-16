@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/screen/boarding/components/boarding_register_here.dart';
-import 'package:relieve_app/screen/register/boarding_register.dart';
-
 import 'package:relieve_app/screen/register/register.dart';
 import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
 import 'package:relieve_app/widget/item/standard_button.dart';
 import 'package:relieve_app/widget/item/title.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 
 class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);
@@ -18,12 +15,22 @@ class BoardingHomeScreen extends StatelessWidget {
         MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
   }
 
-  void googleButtonClicked(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
-      (_) => false, // clean all back stack
-    );
+  void googleButtonClicked(BuildContext context) async {
+    try {
+      final account = await googleSignInScope.signIn();
+      if (account.email.isNotEmpty) {
+        await setGoogleId(account.id);
+        await setUsername(account.email);
+        
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+          (_) => false, // clean all back stack
+        );
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 
   void registerButtonClicked(BuildContext context) {

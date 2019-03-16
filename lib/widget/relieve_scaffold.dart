@@ -34,12 +34,12 @@ class RelieveScaffold extends StatelessWidget {
               color: AppColor.colorPrimary,
               height: padding.top,
             ),
-      Container(
+      AnimatedContainer(
+        duration: Duration(seconds: 1),
         height: Dimen.x4,
-        child: LinearProgressIndicator(
-          value: progressCount / progressTotal,
-          valueColor: AlwaysStoppedAnimation<Color>(AppColor.colorPrimary),
-        ),
+        width:
+            MediaQuery.of(context).size.width / progressTotal * progressCount,
+        color: AppColor.colorPrimary,
       ),
     ].where((widget) => widget != null).toList();
   }

@@ -132,13 +132,13 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
     switch (position) {
       case 0:
         return Text(
-          'Pastikan data yang kamu input\nsudah benar',
+          'Pastikan data yang kamu input sudah benar',
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 1:
         return Text(
-          'Tambakan keluarga mu ke dalam\ndaftar kerabat',
+          'Tambakan keluarga mu ke dalam daftar kerabat',
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
@@ -165,7 +165,7 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
             textAlign: TextAlign.center);
       case 1:
         return Text(
-            'Jangan sampai kamu ketinggalan berita terkini dari keluarga mu, Ayo tambahkan semua dan pantau \nsetiap hari',
+            'Jangan sampai kamu ketinggalan berita terkini dari keluarga mu, Ayo tambahkan semua dan pantau setiap hari',
             textAlign: TextAlign.center);
       case 2:
         return Text(

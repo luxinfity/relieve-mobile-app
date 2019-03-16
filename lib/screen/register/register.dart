@@ -27,7 +27,13 @@ class RegisterScreenState extends State<RegisterScreen> {
           },
         );
       case 2:
-        return RegisterFormProfile();
+        return RegisterFormProfile(
+          onNextClick: () {
+            setState(() {
+              progressCount += 1;
+            });
+          },
+        );
       default:
         return RegisterFormAddress();
     }
@@ -42,8 +48,10 @@ class RegisterScreenState extends State<RegisterScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       onBackPressed: (context) {
         setState(() {
-          if (progressCount > 1) progressCount -= 1;
-          else defaultBackPressed(context);
+          if (progressCount > 1)
+            progressCount -= 1;
+          else
+            defaultBackPressed(context);
         });
       },
       childs: <Widget>[

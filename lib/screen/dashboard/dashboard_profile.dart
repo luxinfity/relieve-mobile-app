@@ -7,9 +7,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:relieve_app/screen/boarding/boarding_home.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/common_utils.dart';
 
 class DashboardProfileScreen extends StatelessWidget {
-  void onLogout(BuildContext context) {
+  void onLogout(BuildContext context) async {
+    if (await pref.isGoogleLogin()) {
+      await googleSignInScope.signOut();
+    }
+
     pref.clearData();
     Navigator.pushAndRemoveUntil(
       context,
