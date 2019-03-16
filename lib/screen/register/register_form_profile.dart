@@ -124,7 +124,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           ),
         ),
         StandardButton(
-          text: 'Lanjut',
+          text: 'Simpan',
           buttonClick: widget.onNextClick,
           backgroundColor: AppColor.colorPrimary,
         ),

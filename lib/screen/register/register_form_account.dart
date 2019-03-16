@@ -120,7 +120,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
           ),
         ),
         StandardButton(
-          text: 'Lanjut',
+          text: 'Simpan',
           buttonClick: widget.onNextClick,
           backgroundColor: AppColor.colorPrimary,
         ),
