@@ -28,6 +28,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       children: <Widget>[
         GoogleMap(
           initialCameraPosition: _kGooglePlex,
+          myLocationEnabled: true,
         ),
         Padding(
           padding: const EdgeInsets.all(Dimen.x8),
