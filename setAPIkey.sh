@@ -4,14 +4,11 @@
 # https://drive.google.com/drive/folders/1FN2ojK1K2lT6PTim3QDCLn187oRwFRgP
 # run that script will also invoke this script
 
-echo $ANDROID_API_KEY
-echo $IOS_API_KEY
-
 # Make sure you has the key before run this script
-if [ ! -z "$ANDROID_API_KEY" ]; then
+if [ -z "$ANDROID_API_KEY" ]; then
     echo "ANDROID_API_KEY is empty"
     exit 1
-elif [ ! -z "$IOS_API_KEY" ]; then
+elif [ -z "$IOS_API_KEY" ]; then
     echo "IOS_API_KEY is empty"
     exit 2
 fi
