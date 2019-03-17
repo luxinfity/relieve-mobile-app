@@ -4,9 +4,9 @@ import 'package:relieve_app/res/res.dart';
 double _calculatePaddingBottom(BuildContext context) {
   final padding = MediaQuery.of(context).padding;
   if (Theme.of(context).platform == TargetPlatform.iOS) {
-    return padding.bottom + Dimen.x16;
+    return padding.bottom;
   } else {
-    return padding.bottom + Dimen.x32;
+    return padding.bottom + Dimen.x16;
   }
 }
 
