@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/utils/common_utils.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:relieve_app/widget/item/standard_button.dart';
 import 'package:relieve_app/widget/item/title.dart';
 
@@ -24,13 +23,6 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
-
-  @override
-  void initState() {
-    super.initState();
-    PermissionHandler()
-        .shouldShowRequestPermissionRationale(PermissionGroup.location);
-  }
 
   Widget createAddressBar() {
     return Row(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/disaster.dart';
 import 'package:relieve_app/widget/bottom_modal.dart';
@@ -19,7 +20,7 @@ class DiscoverItem extends StatelessWidget {
         _buildLiveTitle(),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: Dimen.x10),
-          child: _buildMap(),
+          child: _buildItem(),
         ),
         Text(
           disaster.title,
@@ -58,17 +59,44 @@ class DiscoverItem extends StatelessWidget {
     );
   }
 
-  ClipRRect _buildMap() {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(
-        Radius.circular(Dimen.x8),
+  Container _buildItem() {
+    return Container(
+      color: AppColor.colorDanger,
+      height: 220,
+      width: double.infinity,
+      child: Stack(
+        children: <Widget>[
+          _buildMap(),
+          _buildRedDot(),
+          Container(color: Colors.transparent)
+        ],
       ),
+    );
+  }
+
+  Widget _buildRedDot() {
+    return Align(
+      alignment: Alignment.center,
       child: Container(
-        color: AppColor.colorDanger,
-        height: 220,
-        width: double.infinity,
-        child: RemoteImage.bg_map2.toImage(fit: BoxFit.cover),
+        decoration: BoxDecoration(
+          color: AppColor.colorDanger,
+          shape: BoxShape.circle,
+        ),
+        width: Dimen.x8,
       ),
+    );
+  }
+
+  Widget _buildMap() {
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: LatLng(37.42796133580664, -122.085749655962),
+        zoom: 14.4746,
+      ),
+      zoomGesturesEnabled: false,
+      rotateGesturesEnabled: false,
+      scrollGesturesEnabled: false,
+      tiltGesturesEnabled: false,
     );
   }
 }
@@ -98,7 +126,7 @@ class DisasterItem extends StatelessWidget {
         child: Wrap(
           direction: Axis.vertical,
           children: <Widget>[
-            _buildMap(),
+            _buildItem(),
             _buildTitle(),
             _buildSubtitle(),
           ],
@@ -142,22 +170,47 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
-  ClipRRect _buildMap() {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(
-        Radius.circular(Dimen.x8),
+  Container _buildItem() {
+    return Container(
+      color: AppColor.colorDanger,
+      height: 144,
+      width: width,
+      child: Stack(
+        overflow: Overflow.clip,
+        children: <Widget>[
+          _buildMap(),
+          _buildRedDot(),
+          disaster.isLive ? _buildLiveTag() : null,
+          Container(color: Colors.transparent)
+        ].where((widget) => widget != null).toList(),
       ),
+    );
+  }
+
+  Widget _buildRedDot() {
+    return Align(
+      alignment: Alignment.center,
       child: Container(
-        color: AppColor.colorDanger,
-        height: 144,
-        width: width,
-        child: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            RemoteImage.bg_map.toImage(fit: BoxFit.cover),
-            disaster.isLive ? _buildLiveTag() : null,
-          ].where((widget) => widget != null).toList(),
+        decoration: BoxDecoration(
+          color: AppColor.colorDanger,
+          shape: BoxShape.circle,
         ),
+        width: Dimen.x8,
+      ),
+    );
+  }
+
+  Widget _buildMap() {
+    return InkWell(
+      child: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: LatLng(37.42796133580664, -122.085749655962),
+          zoom: 14.4746,
+        ),
+        zoomGesturesEnabled: false,
+        rotateGesturesEnabled: false,
+        scrollGesturesEnabled: false,
+        tiltGesturesEnabled: false,
       ),
     );
   }
