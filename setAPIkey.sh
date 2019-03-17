@@ -15,8 +15,10 @@ fi
 
 sed -i '' "s/ANDROID_API_KEY/$ANDROID_API_KEY/g" android/app/google-services.json
 sed -i '' "s/ANDROID_API_KEY/$ANDROID_API_KEY/g" android/app/src/main/AndroidManifest.xml
+sed -i '' "s/ANDROID_API_KEY/$ANDROID_API_KEY/g" lib/utils/common_utils.dart
 sed -i '' "s/IOS_API_KEY/$IOS_API_KEY/g" ios/Runner/GoogleService-Info.plist
 sed -i '' "s/IOS_API_KEY/$IOS_API_KEY/g" ios/Runner/AppDelegate.swift
+sed -i '' "s/IOS_API_KEY/$IOS_API_KEY/g" lib/utils/common_utils.dart
 
 echo "API Key Set"
 exit 0
