@@ -1,12 +1,12 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 // dummy
 final lat = -6.892534;
 final long = 107.613463;
 
-class Location {
-  final double latitude;
-  final double longitude;
-
-  const Location(this.latitude, this.longitude);
+class Location extends LatLng {
+  const Location(double latitude, double longitude)
+      : super(latitude, longitude);
 
   @override
   String toString() {

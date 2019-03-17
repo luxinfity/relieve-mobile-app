@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/disaster.dart';
+import 'package:relieve_app/service/source/location.dart';
 import 'package:relieve_app/widget/bottom_modal.dart';
+import 'package:relieve_app/widget/static_map.dart';
 
 class DiscoverItem extends StatelessWidget {
   final Disaster disaster;
@@ -19,7 +21,7 @@ class DiscoverItem extends StatelessWidget {
         _buildLiveTitle(),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: Dimen.x10),
-          child: _buildMap(),
+          child: _buildItem(context),
         ),
         Text(
           disaster.title,
@@ -58,18 +60,45 @@ class DiscoverItem extends StatelessWidget {
     );
   }
 
-  ClipRRect _buildMap() {
+  Widget _buildItem(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(
-        Radius.circular(Dimen.x8),
-      ),
+      borderRadius: BorderRadius.all(Radius.circular(Dimen.x8)),
       child: Container(
-        color: AppColor.colorDanger,
+        color: AppColor.colorEmptyRect,
         height: 220,
         width: double.infinity,
-        child: RemoteImage.bg_map2.toImage(fit: BoxFit.cover),
+        child: Stack(
+          fit: StackFit.expand,
+          overflow: Overflow.clip,
+          children: <Widget>[
+            _buildMap(context),
+            _buildRedDot(),
+            Container(color: Colors.transparent)
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _buildRedDot() {
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColor.colorDanger,
+          shape: BoxShape.circle,
+        ),
+        width: Dimen.x8,
+      ),
+    );
+  }
+
+  Widget _buildMap(BuildContext context) {
+    return StaticMap(
+      Location(37.42796133580664, -122.085749655962),
+      300,
+      220,
+    ).toMapWidget(context);
   }
 }
 
@@ -98,7 +127,7 @@ class DisasterItem extends StatelessWidget {
         child: Wrap(
           direction: Axis.vertical,
           children: <Widget>[
-            _buildMap(),
+            _buildItem(context),
             _buildTitle(),
             _buildSubtitle(),
           ],
@@ -142,24 +171,45 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
-  ClipRRect _buildMap() {
+  Widget _buildItem(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.all(
-        Radius.circular(Dimen.x8),
-      ),
+      borderRadius: BorderRadius.all(Radius.circular(Dimen.x8)),
       child: Container(
-        color: AppColor.colorDanger,
+        color: AppColor.colorEmptyRect,
         height: 144,
         width: width,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            RemoteImage.bg_map.toImage(fit: BoxFit.cover),
+            _buildMap(context),
+            _buildRedDot(),
             disaster.isLive ? _buildLiveTag() : null,
+            Container(color: Colors.transparent)
           ].where((widget) => widget != null).toList(),
         ),
       ),
     );
+  }
+
+  Widget _buildRedDot() {
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColor.colorDanger,
+          shape: BoxShape.circle,
+        ),
+        width: Dimen.x8,
+      ),
+    );
+  }
+
+  Widget _buildMap(BuildContext context) {
+    return StaticMap(
+      Location(37.42796133580664, -122.085749655962),
+      width.toInt() + 1,
+      144,
+    ).toMapWidget(context);
   }
 
   Widget _buildLiveTag() {
