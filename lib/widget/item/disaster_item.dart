@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/disaster.dart';
+import 'package:relieve_app/service/source/location.dart';
 import 'package:relieve_app/widget/bottom_modal.dart';
+import 'package:relieve_app/widget/static_map.dart';
 
 class DiscoverItem extends StatelessWidget {
   final Disaster disaster;
@@ -20,7 +21,7 @@ class DiscoverItem extends StatelessWidget {
         _buildLiveTitle(),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: Dimen.x10),
-          child: _buildItem(),
+          child: _buildItem(context),
         ),
         Text(
           disaster.title,
@@ -59,17 +60,22 @@ class DiscoverItem extends StatelessWidget {
     );
   }
 
-  Container _buildItem() {
-    return Container(
-      color: AppColor.colorDanger,
-      height: 220,
-      width: double.infinity,
-      child: Stack(
-        children: <Widget>[
-          _buildMap(),
-          _buildRedDot(),
-          Container(color: Colors.transparent)
-        ],
+  Widget _buildItem(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(Dimen.x8)),
+      child: Container(
+        color: AppColor.colorEmptyRect,
+        height: 220,
+        width: double.infinity,
+        child: Stack(
+          fit: StackFit.expand,
+          overflow: Overflow.clip,
+          children: <Widget>[
+            _buildMap(context),
+            _buildRedDot(),
+            Container(color: Colors.transparent)
+          ],
+        ),
       ),
     );
   }
@@ -87,17 +93,12 @@ class DiscoverItem extends StatelessWidget {
     );
   }
 
-  Widget _buildMap() {
-    return GoogleMap(
-      initialCameraPosition: CameraPosition(
-        target: LatLng(37.42796133580664, -122.085749655962),
-        zoom: 14.4746,
-      ),
-      zoomGesturesEnabled: false,
-      rotateGesturesEnabled: false,
-      scrollGesturesEnabled: false,
-      tiltGesturesEnabled: false,
-    );
+  Widget _buildMap(BuildContext context) {
+    return StaticMap(
+      Location(37.42796133580664, -122.085749655962),
+      300,
+      220,
+    ).toMapWidget(context);
   }
 }
 
@@ -126,7 +127,7 @@ class DisasterItem extends StatelessWidget {
         child: Wrap(
           direction: Axis.vertical,
           children: <Widget>[
-            _buildItem(),
+            _buildItem(context),
             _buildTitle(),
             _buildSubtitle(),
           ],
@@ -170,19 +171,22 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
-  Container _buildItem() {
-    return Container(
-      color: AppColor.colorDanger,
-      height: 144,
-      width: width,
-      child: Stack(
-        overflow: Overflow.clip,
-        children: <Widget>[
-          _buildMap(),
-          _buildRedDot(),
-          disaster.isLive ? _buildLiveTag() : null,
-          Container(color: Colors.transparent)
-        ].where((widget) => widget != null).toList(),
+  Widget _buildItem(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(Dimen.x8)),
+      child: Container(
+        color: AppColor.colorEmptyRect,
+        height: 144,
+        width: width,
+        child: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            _buildMap(context),
+            _buildRedDot(),
+            disaster.isLive ? _buildLiveTag() : null,
+            Container(color: Colors.transparent)
+          ].where((widget) => widget != null).toList(),
+        ),
       ),
     );
   }
@@ -200,19 +204,12 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
-  Widget _buildMap() {
-    return InkWell(
-      child: GoogleMap(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(37.42796133580664, -122.085749655962),
-          zoom: 14.4746,
-        ),
-        zoomGesturesEnabled: false,
-        rotateGesturesEnabled: false,
-        scrollGesturesEnabled: false,
-        tiltGesturesEnabled: false,
-      ),
-    );
+  Widget _buildMap(BuildContext context) {
+    return StaticMap(
+      Location(37.42796133580664, -122.085749655962),
+      width.toInt() + 1,
+      144,
+    ).toMapWidget(context);
   }
 
   Widget _buildLiveTag() {

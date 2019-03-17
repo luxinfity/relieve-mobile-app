@@ -22,7 +22,7 @@ class StaticMap {
   final MapType mapType;
 
   StaticMap(this.center, this.width, this.height,
-      {this.zoom = 18,
+      {this.zoom = 15,
       this.imageFormat = ImageFormat.JPEG,
       this.mapType = MapType.normal});
 
@@ -47,7 +47,6 @@ class StaticMap {
 
   Widget toMapWidget(BuildContext context, {Map<String, String> queries}) {
     String imageUrl = generateGoogleStaticUrl(context, queries: queries);
-    print("static map loaded: $imageUrl");
-    return Image.network(imageUrl);
+    return Image.network(imageUrl, fit: BoxFit.fitWidth);
   }
 }
