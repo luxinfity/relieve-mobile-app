@@ -227,6 +227,95 @@ class FamilyItemListState extends State {
     );
   }
 
+  void testSheet3(BuildContext context) {
+    createRelieveBottomModal(context, <Widget>[
+      Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          SpinKitPulse(
+            color: HexColor(AppColor.colorPrimary.hexColor, transparency: 0.35),
+            size: 300,
+            duration: Duration(seconds: 2),
+          ),
+          SpinKitPulse(
+            color: HexColor(AppColor.colorPrimary.hexColor, transparency: 0.65),
+            size: 200,
+            duration: Duration(seconds: 2),
+          ),
+          SpinKitPulse(
+            size: 110,
+            duration: Duration(seconds: 2),
+            color: HexColor(AppColor.colorPrimary.hexColor, transparency: 0.9),
+          ),
+          FamilyItem.normal(
+            hideName: true,
+            family: Family(
+              fullName: "Ibu",
+              personHealth: PersonHealth.Fine,
+              imageUrl:
+                  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg",
+            ),
+          ),
+        ],
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: Dimen.x16, vertical: Dimen.x18),
+        child: Text(
+          'Ibu ingin mengetahui keadaan kamu, Bagaimana kabar mu?',
+          style: CircularStdFont.black.getStyle(size: Dimen.x18),
+        ),
+      ),
+      Row(
+        children: <Widget>[
+          Container(width: Dimen.x16),
+          Expanded(
+            child: RaisedButton(
+              onPressed: () {},
+              padding: EdgeInsets.only(
+                top: Dimen.x12,
+                bottom: Dimen.x12,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimen.x4),
+              ),
+              child: Text(
+                'Sakit',
+                style: CircularStdFont.medium
+                    .getStyle(size: Dimen.x14, color: Colors.white),
+              ),
+              elevation: 0,
+              highlightElevation: 0,
+              color: AppColor.colorDanger,
+            ),
+          ),
+          Container(width: Dimen.x10),
+          Expanded(
+            child: RaisedButton(
+              onPressed: () {},
+              padding: EdgeInsets.only(
+                top: Dimen.x12,
+                bottom: Dimen.x12,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimen.x4),
+              ),
+              child: Text(
+                'Sehat',
+                style: CircularStdFont.medium
+                    .getStyle(size: Dimen.x14, color: Colors.white),
+              ),
+              elevation: 0,
+              highlightElevation: 0,
+              color: AppColor.colorPrimary,
+            ),
+          ),
+          Container(width: Dimen.x16),
+        ],
+      )
+    ]);
+  }
+
   void testSheet2(BuildContext context) {
     createRelieveBottomModal(context, <Widget>[
       Stack(
@@ -385,7 +474,7 @@ class FamilyItemListState extends State {
       if (position == 0) {
         familyList.clear();
       } else if (position == 1) {
-        familyList = _defaultFamilyList.toList();
+        testSheet3(context);
       } else if (position == 2) {
         testSheet(context);
       }
