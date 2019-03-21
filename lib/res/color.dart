@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 class HexColor extends Color {
   static int _getColorFromHex(
     String hexColor,
-    double transparancy,
+    double transparency,
   ) {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
-    transparancy = transparancy <= 1 ? transparancy : 1;
-    transparancy = transparancy >= 0 ? transparancy : 0;
-    final hexTransparancy = (transparancy  * 255).toInt().toRadixString(16);
+    transparency = transparency <= 1 ? transparency : 1;
+    transparency = transparency >= 0 ? transparency : 0;
+    final hexTransparency = (transparency  * 255).toInt().toRadixString(16);
 
     if (hexColor.length == 6) {
-      hexColor = hexTransparancy + hexColor;
+      hexColor = hexTransparency + hexColor;
     }
     return int.parse(hexColor, radix: 16);
   }
@@ -20,8 +20,8 @@ class HexColor extends Color {
   final String hexColor;
   HexColor(
     this.hexColor, {
-    double transparancy = 1.0, // 100% or FF
-  }) : super(_getColorFromHex(hexColor, transparancy));
+    double transparency = 1.0, // 100% or FF
+  }) : super(_getColorFromHex(hexColor, transparency));
 }
 
 class AppColor {

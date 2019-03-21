@@ -108,7 +108,7 @@ class UserAppBarState extends State {
     return Container(
       color: HexColor(
         AppColor.colorPrimary.hexColor,
-        transparancy: 0.65,
+        transparency: 0.65,
       ),
     );
   }

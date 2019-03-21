@@ -45,7 +45,7 @@ class FamilyItem extends StatelessWidget {
 
   Color _pickColorItem() {
     if (family.personHealth == null) {
-      return AppColor.colorEmptyRect;
+      return HexColor(AppColor.colorEmptyRect.hexColor, transparency: 0.50);
     } else if (family.personHealth == PersonHealth.Bad) {
       return AppColor.colorDanger;
     } else {
@@ -226,33 +226,11 @@ class FamilyItemListState extends State {
     );
   }
 
-  Widget _hollowButton() {
-    return Material(
-      elevation: 1,
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(Dimen.x4),
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          alignment: Alignment.center,
-          child: LocalImage.ic_warning.toSvg(height: 20),
-          padding: EdgeInsets.only(
-            top: Dimen.x16,
-            bottom: Dimen.x16,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimen.x4),
-            border: Border.all(color: AppColor.colorDanger, width: 2),
-          ),
-        ),
-      ),
-    );
-  }
-
   void testSheet(BuildContext context) {
     createRelieveBottomModal(context, <Widget>[
       Row(
         children: <Widget>[
+          Container(width: Dimen.x12),
           FamilyItem.normal(
             hideName: true,
             family: Family(
@@ -266,13 +244,96 @@ class FamilyItemListState extends State {
             "Mama",
             style: CircularStdFont.black.getStyle(size: Dimen.x24),
           ),
+          Container(width: Dimen.x12),
         ],
       ),
+      Container(height: Dimen.x16),
+      Row(
+        children: <Widget>[
+          Container(width: Dimen.x16),
+          Expanded(
+            flex: 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    LocalImage.ic_address_sign.toSvg(width: Dimen.x12),
+                    Container(width: Dimen.x4),
+                    Text(
+                      'Tempat terakhir',
+                      style: CircularStdFont.book.getStyle(
+                          size: Dimen.x12, color: AppColor.colorTextGrey),
+                    )
+                  ],
+                ),
+                Container(height: Dimen.x8),
+                Text('Dayeuhkolot, Bandung'),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    LocalImage.ic_clock.toSvg(width: Dimen.x12),
+                    Container(width: Dimen.x4),
+                    Text(
+                      'Kondisi terakhir',
+                      style: CircularStdFont.book.getStyle(
+                          size: Dimen.x12, color: AppColor.colorTextGrey),
+                    )
+                  ],
+                ),
+                Container(height: Dimen.x8),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimen.x16, vertical: Dimen.x6),
+                      decoration: BoxDecoration(
+                          color: HexColor(AppColor.colorPrimary.hexColor,
+                              transparency: 0.15),
+                          borderRadius: BorderRadius.circular(Dimen.x16)),
+                      child: Text(
+                        'Aman',
+                        style: CircularStdFont.bold.getStyle(
+                            size: Dimen.x12, color: AppColor.colorPrimary),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: Dimen.x6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: Dimen.x8, vertical: Dimen.x6),
+                      decoration: BoxDecoration(
+                          color: HexColor(AppColor.colorEmptyRect.hexColor,
+                              transparency: 0.50),
+                          borderRadius: BorderRadius.circular(Dimen.x16)),
+                      child: Text(
+                        '24h',
+                        style: CircularStdFont.bold.getStyle(
+                            size: Dimen.x12, color: AppColor.colorTextBlack),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(width: Dimen.x16),
+        ],
+      ),
+      Container(height: Dimen.x16),
       StandardButton(
-        text: "Ping",
+        text: "PING",
+        svgIcon: LocalImage.ic_ping,
         backgroundColor: AppColor.colorPrimary,
         buttonClick: () {},
-      )
+        isCenteredIcon: true,
+      ),
     ]);
   }
 

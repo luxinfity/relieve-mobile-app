@@ -90,6 +90,11 @@ class LocalImage {
   static LocalImage get ic_guard => LocalImage('ic_guard');
   static LocalImage get ic_warning => LocalImage('ic_warning');
 
+  // user ping
+  static LocalImage get ic_address_sign => LocalImage('ic_address_sign');
+  static LocalImage get ic_clock => LocalImage('ic_clock');
+  static LocalImage get ic_ping => LocalImage('ic_ping');
+
   // Weather
   static LocalImage get ic_temperature => LocalImage('ic_temperature');
   static LocalImage get ic_wind => LocalImage('ic_wind');

@@ -8,6 +8,7 @@ class StandardButton extends StatelessWidget {
   final LocalImage svgIcon;
   final Color textColor;
   final bool isHollow;
+  final bool isCenteredIcon;
 
   const StandardButton({
     Key key,
@@ -15,6 +16,7 @@ class StandardButton extends StatelessWidget {
     @required this.buttonClick,
     @required this.backgroundColor,
     this.svgIcon,
+    this.isCenteredIcon = false,
     this.textColor = Colors.white,
     this.isHollow = false,
   }) : super(key: key);
@@ -73,7 +75,20 @@ class StandardButton extends StatelessWidget {
   }
 
   Widget getButtonContent() {
-    if (svgIcon != null) {
+    if (svgIcon != null && isCenteredIcon) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          svgIcon.toSvg(height: 20),
+          Container(width: Dimen.x16),
+          Text(
+            text,
+            style: CircularStdFont.medium
+                .getStyle(size: Dimen.x14, color: textColor),
+          ),
+        ],
+      );
+    } else if (svgIcon != null) {
       return Row(
         children: <Widget>[
           Expanded(flex: 1, child: svgIcon.toSvg(height: 20)),
