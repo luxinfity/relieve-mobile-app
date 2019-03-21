@@ -3,6 +3,7 @@ import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/family.dart';
 import 'package:relieve_app/widget/bottom_modal.dart';
 import 'package:relieve_app/widget/item/standard_button.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 enum FamilyItemType { Normal, Empty, Add }
 
@@ -226,6 +227,48 @@ class FamilyItemListState extends State {
     );
   }
 
+  void testSheet2(BuildContext context) {
+    createRelieveBottomModal(context, <Widget>[
+      Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          SpinKitPulse(
+            color: HexColor(AppColor.colorPrimary.hexColor, transparency: 0.35),
+            size: 300,
+            duration: Duration(seconds: 2),
+          ),
+          SpinKitPulse(
+            color: HexColor(AppColor.colorPrimary.hexColor, transparency: 0.65),
+            size: 200,
+            duration: Duration(seconds: 2),
+          ),
+          SpinKitPulse(
+            size: 110,
+            duration: Duration(seconds: 2),
+            color: HexColor(AppColor.colorPrimary.hexColor, transparency: 0.9),
+          ),
+          FamilyItem.normal(
+            hideName: true,
+            family: Family(
+              fullName: "Alif",
+              imageUrl:
+                  "https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg",
+            ),
+          ),
+        ],
+      ),
+      Container(height: Dimen.x10),
+      StandardButton(
+        isHollow: true,
+        text: "Menunggu Respons...",
+        textColor: AppColor.colorPrimary,
+        backgroundColor: AppColor.colorPrimary,
+        buttonClick: () => testSheet2(context),
+        isCenteredIcon: true,
+      ),
+    ]);
+  }
+
   void testSheet(BuildContext context) {
     createRelieveBottomModal(context, <Widget>[
       Row(
@@ -331,7 +374,7 @@ class FamilyItemListState extends State {
         text: "PING",
         svgIcon: LocalImage.ic_ping,
         backgroundColor: AppColor.colorPrimary,
-        buttonClick: () {},
+        buttonClick: () => testSheet2(context),
         isCenteredIcon: true,
       ),
     ]);
