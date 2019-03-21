@@ -16,8 +16,6 @@ void createRelieveBottomModal(BuildContext context, List<Widget> children) {
     builder: (BuildContext context) {
       return Container(
         padding: EdgeInsets.only(
-          left: Dimen.x16,
-          right: Dimen.x16,
           top: Dimen.x16,
           bottom: _calculatePaddingBottom(context),
         ),
