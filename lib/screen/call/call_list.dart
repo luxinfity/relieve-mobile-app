@@ -131,16 +131,54 @@ class CallListScreenState extends State {
               )
             : Padding(
                 padding: EdgeInsets.only(bottom: Dimen.x16 + padding.bottom),
-                child: StandardButton(
-                  text: 'Edit Layanan Pilihan',
-                  isHollow: true,
-                  backgroundColor: AppColor.colorPrimary,
-                  textColor: AppColor.colorPrimary,
-                  buttonClick: () {
-                    setState(() {
-                      isEditMode = true;
-                    });
-                  },
+                child: Row(
+                  children: <Widget>[
+                    Container(width: Dimen.x16),
+                    Expanded(
+                      child: RaisedButton(
+                        padding: EdgeInsets.only(
+                          top: Dimen.x16,
+                          bottom: Dimen.x16,
+                        ),
+                        elevation: 0,
+                        highlightElevation: 0,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Dimen.x4),
+                            side: BorderSide(color: AppColor.colorPrimary)),
+                        child: Text('Ubah Nomor Layanan'),
+                        textColor: AppColor.colorPrimary,
+                        onPressed: () {
+                          setState(() {
+                            isEditMode = true;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(width: Dimen.x12),
+                    Expanded(
+                      child: RaisedButton(
+                        padding: EdgeInsets.only(
+                          top: Dimen.x16,
+                          bottom: Dimen.x16,
+                        ),
+                        elevation: 0,
+                        highlightElevation: 0,
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Dimen.x4),
+                            side: BorderSide(color: AppColor.colorPrimary)),
+                        child: Text('Pilih Layanan Favorit'),
+                        textColor: AppColor.colorPrimary,
+                        onPressed: () {
+                          setState(() {
+                            isEditMode = true;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(width: Dimen.x16),
+                  ],
                 ),
               ),
       ],
