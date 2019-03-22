@@ -1,15 +1,16 @@
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class RemoteImage {
   final String imageName;
 
   const RemoteImage(this.imageName);
 
-  Image toImage({double width, double height, Color color, BoxFit fit}) {
-    return Image.network(
-      base_url + this.imageName,
+  CachedNetworkImage toImage({double width, double height, Color color, BoxFit fit}) {
+    return CachedNetworkImage(
+      imageUrl: base_url + this.imageName,
       width: width,
       height: height,
       color: color,

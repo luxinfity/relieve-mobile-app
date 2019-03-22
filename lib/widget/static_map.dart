@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/service/source/location.dart';
@@ -35,7 +36,8 @@ class StaticMap {
       size=${width}x$height&
       format=${imageFormat.toString().split('.')[1]}&
       maptype=${mapType.toString().split('.')[1]}
-    """.replaceAll(RegExp(r'[ \n]'), ""); // replace space and newline
+    """
+        .replaceAll(RegExp(r'[ \n]'), ""); // replace space and newline
 
     queries?.forEach((key, value) {
       queryString += "&$key=$value";
@@ -47,6 +49,6 @@ class StaticMap {
 
   Widget toMapWidget(BuildContext context, {Map<String, String> queries}) {
     String imageUrl = generateGoogleStaticUrl(context, queries: queries);
-    return Image.network(imageUrl, fit: BoxFit.fitWidth);
+    return CachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.fitWidth);
   }
 }

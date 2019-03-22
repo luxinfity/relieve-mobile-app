@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:relieve_app/app_config.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:recase/recase.dart';
@@ -57,7 +57,7 @@ class ProfileBoardState extends State {
                 child: CircleAvatar(
                   radius: Dimen.x36 + Dimen.x16,
                   backgroundColor: AppColor.colorAccent,
-                  backgroundImage: NetworkImage(
+                  backgroundImage: CachedNetworkImageProvider(
                       'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg'),
                 ),
               ),

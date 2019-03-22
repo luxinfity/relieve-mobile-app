@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/item/standard_button.dart';
@@ -79,7 +80,7 @@ class FindUsernameState extends State<FindUsername> {
                     child: ClipOval(
                       child: Material(
                         child: Ink.image(
-                          image: NetworkImage(
+                          image: CachedNetworkImageProvider(
                               "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg"),
                           fit: BoxFit.cover,
                           child: InkWell(
@@ -218,7 +219,7 @@ class FindUsernameState extends State<FindUsername> {
               child: ClipOval(
                 child: Material(
                   child: Ink.image(
-                    image: NetworkImage(
+                    image: CachedNetworkImageProvider(
                         "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg"),
                     fit: BoxFit.cover,
                     child: InkWell(

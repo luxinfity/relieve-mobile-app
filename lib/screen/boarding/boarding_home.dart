@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/screen/boarding/components/boarding_register_here.dart';
-import 'package:relieve_app/screen/register/boarding_register.dart';
 import 'package:relieve_app/screen/register/register.dart';
 import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
 import 'package:relieve_app/utils/common_utils.dart';
@@ -23,8 +22,8 @@ class BoardingHomeScreen extends StatelessWidget {
     try {
       final account = await googleSignInScope.signIn();
       if (account.email.isNotEmpty) {
-        await setGoogleId(account.id);
-        await setUsername(account.email);
+        setGoogleId(account.id);
+        setUsername(account.email);
         
         Navigator.pushAndRemoveUntil(
           context,
