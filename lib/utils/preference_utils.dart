@@ -1,4 +1,4 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_keychain/flutter_keychain.dart';
 
 // logout
 void clearData() {
@@ -20,55 +20,45 @@ Future<bool> isGoogleLogin() async {
 
 // Google Sign In
 Future<String> getGoogleId() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('googleId');
+  return await FlutterKeychain.get(key: "googleId");
 }
 
-Future<bool> setGoogleId(String id) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return await prefs.setString('googleId', id);
+void setGoogleId(String id) async {
+  return await FlutterKeychain.put(key: "googleId", value: id);
 }
 
 // Username
 Future<String> getUsername() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('username');
+  return await FlutterKeychain.get(key: "username");
 }
 
-Future<bool> setUsername(String username) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return await prefs.setString('username', username);
+void setUsername(String username) async {
+  return await FlutterKeychain.put(key: "username", value: username);
 }
 
 // TOKEN
 Future<String> getToken() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('token');
+  return await FlutterKeychain.get(key: "token");
 }
 
-Future<bool> setToken(String token) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return await prefs.setString('token', token);
+void setToken(String token) async {
+  return await FlutterKeychain.put(key: "token", value: token);
 }
 
 // refresh token
 Future<String> getRefreshToken() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString('refreshToken');
+  return await FlutterKeychain.get(key: "refreshToken");
 }
 
-Future<bool> setRefreshToken(String refreshToken) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return await prefs.setString('refreshToken', refreshToken);
+void setRefreshToken(String refreshToken) async {
+  return await FlutterKeychain.put(key: "refreshToken", value: refreshToken);
 }
 
 // expire in
 Future<int> getExpireIn() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getInt('expireIn');
+  return int.parse(await FlutterKeychain.get(key: "expireIn"));
 }
 
-Future<bool> setExpireIn(int expireIn) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  return await prefs.setInt('expireIn', expireIn);
+void setExpireIn(int expireIn) async {
+  return await FlutterKeychain.put(key: "expireIn", value: expireIn.toString());
 }
