@@ -10,7 +10,7 @@ description: Relieve Mobile App
 version: 1.2.1+1002001
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -22,7 +22,7 @@ dependencies:
   validators: ^1.0.0+1
   email_validator: ^1.0.0
   flutter_cupertino_date_picker: ^0.3.0
-  shared_preferences: ^0.4.3
+  flutter_keychain: ^1.0.0
   recase: ^2.0.1
   google_maps_flutter: ^0.4.0
   flutter_stetho: ^0.2.2
