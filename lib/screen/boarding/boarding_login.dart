@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import "package:flushbar/flushbar.dart";
 import 'package:relieve_app/app_config.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/screen/boarding/components/boarding_register_here.dart';
 import 'package:relieve_app/screen/register/boarding_register.dart';
 import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
 import 'package:relieve_app/service/service.dart';
-
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 import 'package:relieve_app/widget/item/standard_button.dart';
 import 'package:relieve_app/widget/item/title.dart';
@@ -21,7 +21,7 @@ class BoardingLoginScreen extends StatefulWidget {
 class BoardingLoginScreenState extends State {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  
+
   var isFormEmpty = false;
   var isWrongCredential = false;
   var passwordVisible = false;
@@ -68,7 +68,22 @@ class BoardingLoginScreenState extends State {
   }
 
   void _showErrorSnackBar() {
-    // TODO: show error snack bar
+    Flushbar(
+      flushbarStyle: FlushbarStyle.FLOATING,
+      aroundPadding: EdgeInsets.symmetric(horizontal: Dimen.x16),
+      backgroundColor: AppColor.colorTextBlack,
+      message: "Ups! Username atau password salah",
+      mainButton: FlatButton(
+        child: Text(
+          "Mengerti",
+          style: CircularStdFont.medium
+              .getStyle(size: Dimen.x14, color: AppColor.colorAccent),
+        ),
+        onPressed: () {},
+      ),
+      duration: Duration(seconds: 4),
+      borderRadius: Dimen.x8,
+    )..show(context);
   }
 
   void registerButtonClicked() {
