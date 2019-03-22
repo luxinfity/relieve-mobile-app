@@ -104,4 +104,5 @@ class LocalImage {
   // setting
   static LocalImage get ic_gallery => LocalImage('ic_gallery');
   static LocalImage get ic_camera => LocalImage('ic_camera');
+  static LocalImage get ic_search => LocalImage('ic_search');
 }

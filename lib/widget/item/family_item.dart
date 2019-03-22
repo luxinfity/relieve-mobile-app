@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/family.dart';
-import 'package:relieve_app/widget/bottom_modal.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/service/model/family.dart";
+import "package:relieve_app/widget/bottom_modal.dart";
+import "package:relieve_app/widget/item/find_username.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:flutter_spinkit/flutter_spinkit.dart";
 
 enum FamilyItemType { Normal, Empty, Add }
 
@@ -193,7 +194,7 @@ class FamilyItemListState extends State {
         ),
         FamilyItem.empty(),
         FamilyItem.add(
-          onClick: () => personClick(1),
+          onClick: () => testSheet4(context),
         ),
         Container(
           width: Dimen.x12,
@@ -225,6 +226,19 @@ class FamilyItemListState extends State {
       scrollDirection: Axis.horizontal,
       children: content,
     );
+  }
+
+  void testSheet4(BuildContext context) {
+    createRelieveBottomModal(context, <Widget>[
+      FindUsername(
+        onFinishClick: () {
+          Navigator.pop(context);
+          setState(() {
+            familyList = _defaultFamilyList;
+          });
+        },
+      )
+    ]);
   }
 
   void testSheet3(BuildContext context) {
@@ -262,7 +276,7 @@ class FamilyItemListState extends State {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x18),
         child: Text(
-          'Ibu ingin mengetahui keadaan kamu, Bagaimana kabar mu?',
+          "Ibu ingin mengetahui keadaan kamu, Bagaimana kabar mu?",
           style: CircularStdFont.black.getStyle(size: Dimen.x18),
         ),
       ),
@@ -280,7 +294,7 @@ class FamilyItemListState extends State {
                 borderRadius: BorderRadius.circular(Dimen.x4),
               ),
               child: Text(
-                'Sakit',
+                "Sakit",
                 style: CircularStdFont.medium
                     .getStyle(size: Dimen.x14, color: Colors.white),
               ),
@@ -301,7 +315,7 @@ class FamilyItemListState extends State {
                 borderRadius: BorderRadius.circular(Dimen.x4),
               ),
               child: Text(
-                'Sehat',
+                "Sehat",
                 style: CircularStdFont.medium
                     .getStyle(size: Dimen.x14, color: Colors.white),
               ),
@@ -393,14 +407,14 @@ class FamilyItemListState extends State {
                     LocalImage.ic_address_sign.toSvg(width: Dimen.x12),
                     Container(width: Dimen.x4),
                     Text(
-                      'Tempat terakhir',
+                      "Tempat terakhir",
                       style: CircularStdFont.book.getStyle(
                           size: Dimen.x12, color: AppColor.colorTextGrey),
                     )
                   ],
                 ),
                 Container(height: Dimen.x8),
-                Text('Dayeuhkolot, Bandung'),
+                Text("Dayeuhkolot, Bandung"),
               ],
             ),
           ),
@@ -414,7 +428,7 @@ class FamilyItemListState extends State {
                     LocalImage.ic_clock.toSvg(width: Dimen.x12),
                     Container(width: Dimen.x4),
                     Text(
-                      'Kondisi terakhir',
+                      "Kondisi terakhir",
                       style: CircularStdFont.book.getStyle(
                           size: Dimen.x12, color: AppColor.colorTextGrey),
                     )
@@ -431,7 +445,7 @@ class FamilyItemListState extends State {
                               transparency: 0.15),
                           borderRadius: BorderRadius.circular(Dimen.x16)),
                       child: Text(
-                        'Aman',
+                        "Aman",
                         style: CircularStdFont.bold.getStyle(
                             size: Dimen.x12, color: AppColor.colorPrimary),
                       ),
@@ -445,7 +459,7 @@ class FamilyItemListState extends State {
                               transparency: 0.50),
                           borderRadius: BorderRadius.circular(Dimen.x16)),
                       child: Text(
-                        '24h',
+                        "24h",
                         style: CircularStdFont.bold.getStyle(
                             size: Dimen.x12, color: AppColor.colorTextBlack),
                       ),
@@ -472,7 +486,7 @@ class FamilyItemListState extends State {
   void personClick(int position) {
     setState(() {
       if (position == 0) {
-        familyList.clear();
+        familyList = [];
       } else if (position == 1) {
         testSheet3(context);
       } else if (position == 2) {
