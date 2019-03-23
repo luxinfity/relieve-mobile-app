@@ -1,5 +1,8 @@
 import "package:flutter/material.dart";
+import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
+import "package:relieve_app/service/model/user_check.dart";
+import "package:relieve_app/service/service.dart";
 import "package:relieve_app/widget/item/title.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/utils/preference_utils.dart";
@@ -23,6 +26,9 @@ class BoardingHomeScreen extends StatelessWidget {
       if (account.email.isNotEmpty) {
         setGoogleId(account.id);
         setUsername(account.email);
+
+        await BakauApi(AppConfig.of(context))
+            .checkUser(UserCheckIdentifier.email, account.email);
 
         Navigator.push(
           context,

@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/item/standard_button.dart';
 import 'package:relieve_app/widget/item/title.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
@@ -23,6 +24,16 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
+
+  void checkPermission() async {
+    await PermissionHandler().requestPermissions([PermissionGroup.location]);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkPermission();
+  }
 
   Widget createAddressBar() {
     return Row(

@@ -4,6 +4,7 @@ import 'package:relieve_app/service/model/address.dart';
 import 'package:relieve_app/service/model/contact.dart';
 import 'package:relieve_app/service/model/token.dart';
 import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/service/source/api/api.dart';
 import 'dart:io';
@@ -16,6 +17,25 @@ class BakauApi extends BaseApi {
   final String serverName = 'bakau';
 
   BakauApi(AppConfig appConfig) : super(appConfig);
+
+  // Auth
+  Future<UserCheckResponse> checkUser(
+      UserCheckIdentifier checkIdentifier, String value) async {
+    var url = '$completeUri/user/profile';
+    final response = await http.post(
+      url,
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        'secret': secret
+      },
+      body: jsonEncode({
+        'param': checkIdentifier.toString(),
+        'value': value,
+      }),
+    );
+
+    return UserCheckResponse.fromJson(jsonDecode(response.body));
+  }
 
   Future<TokenResponse> login(String username, String password) async {
     var url = '$completeUri/auth/login';
@@ -48,6 +68,7 @@ class BakauApi extends BaseApi {
     return TokenResponse.fromJson(jsonDecode(response.body));
   }
 
+  // profile
   Future<UserResponse> getUser() async {
     var url = '$completeUri/user/profile';
     final response = await http.get(url, headers: {
