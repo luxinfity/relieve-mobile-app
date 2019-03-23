@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import "package:flushbar/flushbar.dart";
 import 'package:relieve_app/app_config.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/screen/boarding/components/boarding_register_here.dart';
-import 'package:relieve_app/screen/register/boarding_register.dart';
 import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
@@ -53,10 +51,10 @@ class BoardingLoginScreenState extends State {
       );
 
       if (tokenResponse?.status == REQUEST_SUCCESS) {
-        await pref.setToken(tokenResponse.content.token);
-        await pref.setRefreshToken(tokenResponse.content.refreshToken);
-        await pref.setExpireIn(tokenResponse.content.expiresIn);
-        await pref.setUsername(usernameController.text);
+        pref.setToken(tokenResponse.content.token);
+        pref.setRefreshToken(tokenResponse.content.refreshToken);
+        pref.setExpireIn(tokenResponse.content.expiresIn);
+        pref.setUsername(usernameController.text);
         onLoginSuccess();
       } else {
         _showErrorSnackBar();
@@ -67,10 +65,12 @@ class BoardingLoginScreenState extends State {
     }
   }
 
+  Flushbar flush;
   void _showErrorSnackBar() {
-    Flushbar(
+    flush = Flushbar(
       flushbarStyle: FlushbarStyle.FLOATING,
-      aroundPadding: EdgeInsets.symmetric(horizontal: Dimen.x16),
+      aroundPadding:
+          EdgeInsets.symmetric(horizontal: Dimen.x16, vertical: Dimen.x16),
       backgroundColor: AppColor.colorTextBlack,
       message: "Ups! Username atau password salah",
       mainButton: FlatButton(
@@ -79,16 +79,13 @@ class BoardingLoginScreenState extends State {
           style: CircularStdFont.medium
               .getStyle(size: Dimen.x14, color: AppColor.colorAccent),
         ),
-        onPressed: () {},
+        onPressed: () {
+          flush?.dismiss(true);
+        },
       ),
       duration: Duration(seconds: 4),
       borderRadius: Dimen.x8,
     )..show(context);
-  }
-
-  void registerButtonClicked() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
   }
 
   @override
@@ -113,7 +110,7 @@ class BoardingLoginScreenState extends State {
                 buttonClick: () => onLoginClick(),
                 backgroundColor: AppColor.colorPrimary,
               ),
-              // buildRegisterHere()
+              Container(height: Dimen.x16),
             ],
           ),
         ),
@@ -189,15 +186,6 @@ class BoardingLoginScreenState extends State {
         textInputAction: TextInputAction.next,
         controller: usernameController,
         maxLines: 1,
-      ),
-    );
-  }
-
-  Padding buildRegisterHere() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: RegisterHere(
-        onClick: () => registerButtonClicked(),
       ),
     );
   }
