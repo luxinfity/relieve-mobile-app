@@ -8,13 +8,20 @@ class RemoteImage {
 
   const RemoteImage(this.imageName);
 
-  CachedNetworkImage toImage({double width, double height, Color color, BoxFit fit}) {
+  CachedNetworkImage toImage({
+    double width,
+    double height,
+    Color color,
+    BoxFit fit,
+    Duration fadeInDuration = const Duration(milliseconds: 700),
+  }) {
     return CachedNetworkImage(
       imageUrl: base_url + this.imageName,
       width: width,
       height: height,
       color: color,
       fit: fit,
+      fadeInDuration: fadeInDuration,
     );
   }
 
@@ -30,6 +37,7 @@ class RemoteImage {
   static RemoteImage get bg_jawa_barat => RemoteImage('home-bg/jawa-barat.png');
   static RemoteImage get bg_map => RemoteImage('bg_map.png');
   static RemoteImage get bg_map2 => RemoteImage('bg_map2.png');
+  static RemoteImage get ic_app_circle => RemoteImage('ic_app_circle.png');
 }
 
 class LocalImage {
@@ -48,7 +56,7 @@ class LocalImage {
   static LocalImage get ic_drop_down => LocalImage('ic_drop_down');
 
   // dasboard
-  static LocalImage get ic_call => const LocalImage('ic_call');
+  static LocalImage get ic_call => LocalImage('ic_call');
   static LocalImage get ic_chat => LocalImage('ic_chat');
   static LocalImage get ic_discover => LocalImage('ic_discover');
   static LocalImage get ic_home => LocalImage('ic_home');

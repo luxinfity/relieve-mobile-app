@@ -56,7 +56,7 @@ class FindUsernameState extends State<FindUsername> {
             horizontal: Dimen.x16, vertical: Dimen.x8),
         child: TextFormField(
           decoration: InputDecoration(
-            labelText: 'Tulis username',
+            labelText: 'Tulis username / email',
             prefixIcon: Padding(
               padding: const EdgeInsets.all(Dimen.x14),
               child: LocalImage.ic_search

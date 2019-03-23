@@ -3,9 +3,14 @@ import 'package:relieve_app/screen/register/register_form_account.dart';
 import 'package:relieve_app/screen/register/register_form_profile.dart';
 import 'package:relieve_app/screen/register/register_form_address.dart';
 import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class RegisterScreen extends StatefulWidget {
+  final int progressCount;
+
+  RegisterScreen({this.progressCount = 0});
+
   @override
   State<StatefulWidget> createState() {
     return RegisterScreenState();
@@ -13,12 +18,18 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class RegisterScreenState extends State<RegisterScreen> {
-  int progressCount = 1;
+  int progressCount = 0;
   int progressTotal = 3;
+
+  @override
+  void initState() {
+    super.initState();
+    progressCount = widget.progressCount;
+  }
 
   Widget createPage() {
     switch (progressCount) {
-      case 1:
+      case 0:
         return RegisterFormAccount(
           onNextClick: () {
             setState(() {
@@ -26,7 +37,7 @@ class RegisterScreenState extends State<RegisterScreen> {
             });
           },
         );
-      case 2:
+      case 1:
         return RegisterFormProfile(
           onNextClick: () {
             setState(() {
@@ -48,20 +59,30 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   bool showDefaultBackButton() {
     switch (progressCount) {
-      case 3:
+      case 2:
         return false;
       default:
         return true;
     }
   }
 
-  void onBackButtonClick(context) {
-    setState(() {
-      if (progressCount > 1)
+  void onBackButtonClick(context) async {
+    String googleId = await getGoogleId();
+    int limit = googleId.isEmpty ? 0 : 1;
+
+    if (progressCount > limit) {
+      setState(() {
         progressCount -= 1;
-      else
-        defaultBackPressed(context);
-    });
+      });
+    } else {
+      defaultBackPressed(context);
+
+      // remove google data
+      if (googleId.isNotEmpty) {
+        googleSignInScope.signOut();
+        clearData();
+      }
+    }
   }
 
   @override
