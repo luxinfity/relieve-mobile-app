@@ -25,30 +25,17 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     zoom: 14.4746,
   );
 
-  bool hasPermission = false;
-
   void checkPermission() async {
     PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.location);
 
-    print(permission == PermissionStatus.granted);
-    print(permission == PermissionStatus.restricted);
-    print(permission == PermissionStatus.denied);
-    print(permission == PermissionStatus.disabled);
-    print(permission == PermissionStatus.unknown);
-
-    hasPermission = permission == PermissionStatus.granted ||
+    bool hasPermission = permission == PermissionStatus.granted ||
         permission == PermissionStatus.restricted;
 
-    // await PermissionHandler().requestPermissions([PermissionGroup.location]);
-    // if (!permissionAllowed && 
-    // Theme
-    //     .of(context)
-    //     .platform == TargetPlatform.android) {
-    //   await PermissionHandler().shouldShowRequestPermissionRationale(
-    //       PermissionGroup.location);
-    //   // await PermissionHandler().openAppSettings();
-    // }
+    if (!hasPermission &&
+        Theme.of(context).platform == TargetPlatform.android) {
+      await PermissionHandler().requestPermissions([PermissionGroup.location]);
+    }
   }
 
   @override
