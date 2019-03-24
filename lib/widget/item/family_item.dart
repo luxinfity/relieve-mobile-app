@@ -299,8 +299,8 @@ class FamilyItemListState extends State {
                 style: CircularStdFont.medium
                     .getStyle(size: Dimen.x14, color: Colors.white),
               ),
-              elevation: 0,
-              highlightElevation: 0,
+              elevation: 1,
+              highlightElevation: 1,
               color: AppColor.colorDanger,
             ),
           ),
@@ -320,8 +320,8 @@ class FamilyItemListState extends State {
                 style: CircularStdFont.medium
                     .getStyle(size: Dimen.x14, color: Colors.white),
               ),
-              elevation: 0,
-              highlightElevation: 0,
+              elevation: 1,
+              highlightElevation: 1,
               color: AppColor.colorPrimary,
             ),
           ),
