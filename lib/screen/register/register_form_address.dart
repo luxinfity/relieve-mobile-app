@@ -26,7 +26,31 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   );
 
   void checkPermission() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
+
+    print(permission == PermissionStatus.granted);
+    print(permission == PermissionStatus.restricted);
+    print(permission == PermissionStatus.denied);
+    print(permission == PermissionStatus.disabled);
+    print(permission == PermissionStatus.unknown);
+
+    bool permissionAllowed = permission == PermissionStatus.granted ||
+        permission == PermissionStatus.restricted;
+
     await PermissionHandler().requestPermissions([PermissionGroup.location]);
+    // if (!permissionAllowed && Theme
+    //     .of(context)
+    //     .platform == TargetPlatform.iOS) {
+    //   await PermissionHandler().openAppSettings();
+    // } else {
+    //   await PermissionHandler().shouldShowRequestPermissionRationale(
+    //       PermissionGroup.location);
+    // }
+
+//    if (permissionAllowed && ){
+//
+//    }
   }
 
   @override
@@ -45,7 +69,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
           width: Dimen.x42,
           alignment: Alignment.center,
           child:
-              LocalImage.ic_map.toSvg(color: Colors.white, height: Dimen.x21),
+          LocalImage.ic_map.toSvg(color: Colors.white, height: Dimen.x21),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: AppColor.colorPrimary,
@@ -73,7 +97,9 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
 
   @override
   Widget build(BuildContext context) {
-    final EdgeInsets safePadding = MediaQuery.of(context).padding;
+    final EdgeInsets safePadding = MediaQuery
+        .of(context)
+        .padding;
     return Column(
       children: <Widget>[
         Expanded(
