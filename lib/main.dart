@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_stetho/flutter_stetho.dart';
-
-import 'landing_screen.dart';
-import './app_config.dart';
-import 'res/res.dart';
+import 'package:relieve_app/app_config.dart';
+import 'package:relieve_app/landing_screen.dart';
+import 'package:relieve_app/res/res.dart';
 
 void main() {
   var configuredApp = new AppConfig(
@@ -13,7 +11,6 @@ void main() {
     apiUrlPrefix: '',
     child: new MyApp(),
   );
-  Stetho.initialize();
 
   runApp(configuredApp);
 }

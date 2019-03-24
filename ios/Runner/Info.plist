@@ -45,9 +45,9 @@
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>Informasi lokasi mu dibutuhkan untuk memberikan mu kabar sesuai lokasi mu</string>
+    <string>Informasi lokasi dibutuhkan untuk memberikan kabar terkini sesuai lokasi mu</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Informasi lokasi mu dibutuhkan untuk memberikan mu kabar sesuai lokasi mu</string>
+    <string>Informasi lokasi dibutuhkan untuk memberikan kabar terkini sesuai lokasi mu</string>
 	<!-- End of the Google Map Section -->
 	<!-- Google Sign-in Section -->
 	<key>CFBundleURLTypes</key>
