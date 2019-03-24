@@ -28,8 +28,6 @@ class LocationPermissionScreenState extends State<LocationPermissionScreen>
 
   @override
   Future<Null> didChangeAppLifecycleState(AppLifecycleState state) async {
-    print(state);
-    print(state == AppLifecycleState.resumed);
     if (state == AppLifecycleState.resumed) {
       PermissionStatus permission = await PermissionHandler()
           .checkPermissionStatus(PermissionGroup.location);
