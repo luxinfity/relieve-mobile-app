@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:relieve_app/screen/no_permission_location.dart';
 import 'package:relieve_app/screen/register/register_form_account.dart';
 import 'package:relieve_app/screen/register/register_form_profile.dart';
 import 'package:relieve_app/screen/register/register_form_address.dart';
@@ -18,8 +20,31 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class RegisterScreenState extends State<RegisterScreen> {
+  bool isPermissionDenied = false;
   int progressCount = 0;
   int progressTotal = 3;
+
+  Future<bool> checkPermissionDenied() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
+
+    print(permission == PermissionStatus.granted);
+    print(permission == PermissionStatus.restricted);
+    print(permission == PermissionStatus.denied);
+    print(permission == PermissionStatus.disabled);
+    print(permission == PermissionStatus.unknown);
+
+    bool hasNoPermission = permission == PermissionStatus.denied ||
+        permission == PermissionStatus.unknown;
+
+    if (Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission) {
+      isPermissionDenied = true;
+    } else {
+      isPermissionDenied = false;
+    }
+
+    return isPermissionDenied;
+  }
 
   @override
   void initState() {
@@ -39,13 +64,18 @@ class RegisterScreenState extends State<RegisterScreen> {
         );
       case 1:
         return RegisterFormProfile(
-          onNextClick: () {
+          onNextClick: () async {
+            bool isPermissionDenied = await checkPermissionDenied();
             setState(() {
-              progressCount += 1;
+              if (isPermissionDenied) {
+                progressCount = 3;
+              } else {
+                progressCount += 1;
+              }
             });
           },
         );
-      default:
+      case 2:
         return RegisterFormAddress(
           onBackClick: onBackButtonClick,
           onNextClick: () {
@@ -54,10 +84,18 @@ class RegisterScreenState extends State<RegisterScreen> {
             });
           },
         );
+      default:
+        return LocationPermissionScreen(
+          onPermissionGranted: () {
+            setState(() {
+              progressCount = 2;
+            });
+          },
+        );
     }
   }
 
-  bool showDefaultBackButton() {
+  bool isHasBackButton(int progressCount) {
     switch (progressCount) {
       case 2:
         return false;
@@ -70,7 +108,11 @@ class RegisterScreenState extends State<RegisterScreen> {
     String googleId = await getGoogleId();
     int limit = googleId.isEmpty ? 0 : 1;
 
-    if (progressCount > limit) {
+    if (progressCount == 3) {
+      setState(() {
+        progressCount = 1;
+      });
+    } else if (progressCount > limit) {
       setState(() {
         progressCount -= 1;
       });
@@ -88,8 +130,8 @@ class RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return RelieveScaffold(
-      hasBackButton: showDefaultBackButton(),
-      progressCount: progressCount,
+      hasBackButton: isHasBackButton(progressCount),
+      progressCount: progressCount == 3 ? 2 : progressCount,
       progressTotal: progressTotal,
       crossAxisAlignment: CrossAxisAlignment.start,
       onBackPressed: onBackButtonClick,
