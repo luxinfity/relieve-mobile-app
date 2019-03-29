@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
 
 typedef RelieveBottomAction = void Function(int index, bool isCall);
 
@@ -103,11 +103,11 @@ class RelieveBottomNavigationBarState
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        buildItem(0, LocalImage.ic_home, 'Home'),
-        buildItem(1, LocalImage.ic_discover, 'Discover'),
+        buildItem(0, LocalImage.ic_home, "Home"),
+        buildItem(1, LocalImage.ic_discover, "Discover"),
         buildCallWidget(),
-        buildItem(3, LocalImage.ic_chat, 'Chat'),
-        buildItem(4, LocalImage.ic_profile, 'Profile')
+        buildItem(3, LocalImage.ic_chat, "Chat"),
+        buildItem(4, LocalImage.ic_profile, "Profile")
       ],
     );
   }

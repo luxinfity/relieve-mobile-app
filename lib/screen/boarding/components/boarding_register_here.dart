@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
 
 class RegisterHere extends StatelessWidget {
   final VoidCallback onClick;
@@ -11,11 +11,11 @@ class RegisterHere extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text('Don’t have an account ?',
+        Text("Don’t have an account ?",
             style: CircularStdFont.book
                 .getStyle(size: Dimen.x14, color: AppColor.colorTextGrey)),
         FlatButton(
-          child: Text('Register Here',
+          child: Text("Register Here",
               style: CircularStdFont.book
                   .getStyle(size: Dimen.x14, color: AppColor.colorPrimary)),
           onPressed: onClick,

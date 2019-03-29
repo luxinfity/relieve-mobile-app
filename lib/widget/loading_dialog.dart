@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:relieve_app/res/res.dart';
+import "package:flutter_spinkit/flutter_spinkit.dart";
+import "package:relieve_app/res/res.dart";
 
 void showLoadingDialog(BuildContext context) {
   showDialog(
@@ -25,14 +25,14 @@ void showLoadingDialog(BuildContext context) {
 
 void dismissLoadingDialog(BuildContext context) {
   Navigator.pop(context);
-  print('dismissd');
+  print("dismissd");
 }
 
 class DialogTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Text('asa'),
+      child: Text("asa"),
     );
   }
 }

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -17,8 +17,8 @@ class NotificationScreenState extends State {
     return RelieveScaffold(
       childs: <Widget>[
         StandardButton(
-          key: Key('home-login'),
-          text: 'Login Now',
+          key: Key("home-login"),
+          text: "Login Now",
           backgroundColor: AppColor.colorPrimary,
           buttonClick: () {},
         )

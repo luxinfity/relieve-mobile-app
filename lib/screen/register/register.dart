@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:relieve_app/screen/no_permission_location.dart';
-import 'package:relieve_app/screen/register/register_form_account.dart';
-import 'package:relieve_app/screen/register/register_form_profile.dart';
-import 'package:relieve_app/screen/register/register_form_address.dart';
-import 'package:relieve_app/utils/common_utils.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import "package:flutter/material.dart";
+import "package:permission_handler/permission_handler.dart";
+import "package:relieve_app/screen/no_permission_location.dart";
+import "package:relieve_app/screen/register/register_form_account.dart";
+import "package:relieve_app/screen/register/register_form_profile.dart";
+import "package:relieve_app/screen/register/register_form_address.dart";
+import "package:relieve_app/utils/common_utils.dart";
+import "package:relieve_app/utils/preference_utils.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;

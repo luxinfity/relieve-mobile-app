@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/disaster.dart';
-import 'package:relieve_app/service/source/location.dart';
-import 'package:relieve_app/widget/bottom_modal.dart';
-import 'package:relieve_app/widget/static_map.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/service/model/disaster.dart";
+import "package:relieve_app/service/source/location.dart";
+import "package:relieve_app/widget/bottom_modal.dart";
+import "package:relieve_app/widget/static_map.dart";
 
 class DiscoverItem extends StatelessWidget {
   final Disaster disaster;
@@ -50,7 +50,7 @@ class DiscoverItem extends StatelessWidget {
         LocalImage.ic_live
             .toSvg(height: Dimen.x14, color: AppColor.colorDanger),
         Text(
-          'Sekarang!',
+          "Sekarang!",
           style: CircularStdFont.black.getStyle(
             size: Dimen.x18,
             color: AppColor.colorDanger,
@@ -146,7 +146,7 @@ class DisasterItem extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: ' - ${disaster.time} ',
+            text: " - ${disaster.time} ",
             style: CircularStdFont.medium.getStyle(
               color: AppColor.colorEmptyRect,
               size: Dimen.x10,
@@ -232,7 +232,7 @@ class DisasterItem extends StatelessWidget {
               color: Colors.white,
             ),
             Text(
-              'Live',
+              "Live",
               style: CircularStdFont.medium
                   .getStyle(size: Dimen.x12, color: Colors.white),
             ),
@@ -279,7 +279,7 @@ class DisasterItemListState extends State {
       Container(height: 150, color: AppColor.colorEmptyRect),
       Container(height: Dimen.x24),
       Text(
-        'Awas!! \nGempa terjadi didekatmu',
+        "Awas!! \nGempa terjadi didekatmu",
         style: CircularStdFont.black.getStyle(size: Dimen.x21),
       ),
       Container(height: Dimen.x36),
@@ -310,7 +310,7 @@ class DisasterItemListState extends State {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Saya Aman',
+                      "Saya Aman",
                       style: CircularStdFont.bold.getStyle(
                         size: Dimen.x18,
                         color: Colors.white,
@@ -342,9 +342,9 @@ class DisasterItemListState extends State {
           DisasterItem(
             disaster: Disaster(
               isLive: true,
-              location: 'Palembang',
+              location: "Palembang",
               time: 20000,
-              title: 'Gempa 7.6 SR',
+              title: "Gempa 7.6 SR",
             ),
             onClick: () {
               testSheet(context);
@@ -353,25 +353,25 @@ class DisasterItemListState extends State {
           DisasterItem(
             disaster: Disaster(
               isLive: false,
-              location: 'Palembang',
+              location: "Palembang",
               time: 20000,
-              title: 'Gempa 7.6 SR',
+              title: "Gempa 7.6 SR",
             ),
           ),
           DisasterItem(
             disaster: Disaster(
               isLive: false,
-              location: 'Palembang',
+              location: "Palembang",
               time: 20000,
-              title: 'Gempa 7.6 SR',
+              title: "Gempa 7.6 SR",
             ),
           ),
           DisasterItem(
             disaster: Disaster(
               isLive: false,
-              location: 'Palembang',
+              location: "Palembang",
               time: 20000,
-              title: 'Gempa 7.6 SR',
+              title: "Gempa 7.6 SR",
             ),
           ),
           Container(

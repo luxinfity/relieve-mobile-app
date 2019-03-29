@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/screen/dashboard/components/profile_board.dart';
-import 'package:relieve_app/screen/setting/notification.dart';
-import 'package:relieve_app/screen/setting/profile.dart';
-import 'package:url_launcher/url_launcher.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/screen/dashboard/components/profile_board.dart";
+import "package:relieve_app/screen/setting/notification.dart";
+import "package:relieve_app/screen/setting/profile.dart";
+import "package:url_launcher/url_launcher.dart";
 
-import 'package:relieve_app/screen/boarding/boarding_home.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
-import 'package:relieve_app/utils/common_utils.dart';
+import "package:relieve_app/screen/boarding/boarding_home.dart";
+import "package:relieve_app/utils/preference_utils.dart" as pref;
+import "package:relieve_app/utils/common_utils.dart";
 
 class DashboardProfileScreen extends StatelessWidget {
   void onLogout(BuildContext context) async {
@@ -30,7 +30,7 @@ class DashboardProfileScreen extends StatelessWidget {
         padding: EdgeInsets.all(0),
         children: <Widget>[
           ProfileBoard(),
-          _buildTitle('Pengaturan', 'Ubah pengaturan pada aplikasi relieve'),
+          _buildTitle("Pengaturan", "Ubah pengaturan pada aplikasi relieve"),
           Row(
             children: <Widget>[
               Expanded(
@@ -41,7 +41,7 @@ class DashboardProfileScreen extends StatelessWidget {
                   ),
                   child: _buildButton(
                     LocalImage.ic_user,
-                    'Profil dan password',
+                    "Profil dan password",
                     axis: Axis.vertical,
                     onClick: () {
                       Navigator.push(
@@ -62,7 +62,7 @@ class DashboardProfileScreen extends StatelessWidget {
                   ),
                   child: _buildButton(
                     LocalImage.ic_notif,
-                    'Notifkasi dan getar',
+                    "Notifkasi dan getar",
                     axis: Axis.vertical,
                     onClick: () {
                       Navigator.push(
@@ -79,7 +79,7 @@ class DashboardProfileScreen extends StatelessWidget {
             ],
           ),
           Container(height: Dimen.x14),
-          _buildTitle('Lainnya', 'Temukan informasi lainnya tentang relieve'),
+          _buildTitle("Lainnya", "Temukan informasi lainnya tentang relieve"),
           Padding(
             padding: const EdgeInsets.only(
               left: Dimen.x16,
@@ -88,9 +88,9 @@ class DashboardProfileScreen extends StatelessWidget {
             ),
             child: _buildButton(
               LocalImage.ic_faq,
-              'Bantuan dan FAQ',
+              "Bantuan dan FAQ",
               onClick: () {
-                launch('https://github.com/RelieveID/terms-and-conditions/');
+                launch("https://github.com/RelieveID/terms-and-conditions/");
               },
             ),
           ),
@@ -102,9 +102,9 @@ class DashboardProfileScreen extends StatelessWidget {
             ),
             child: _buildButton(
               LocalImage.ic_syarat,
-              'Syarat-syarat dan kondisi',
+              "Syarat-syarat dan kondisi",
               onClick: () {
-                launch('https://github.com/RelieveID/terms-and-conditions/');
+                launch("https://github.com/RelieveID/terms-and-conditions/");
               },
             ),
           ),
@@ -116,9 +116,9 @@ class DashboardProfileScreen extends StatelessWidget {
             ),
             child: _buildButton(
               LocalImage.ic_privacy,
-              'Privasi dan kebijakan',
+              "Privasi dan kebijakan",
               onClick: () {
-                launch('https://github.com/RelieveID/terms-and-conditions/');
+                launch("https://github.com/RelieveID/terms-and-conditions/");
               },
             ),
           ),
@@ -130,9 +130,9 @@ class DashboardProfileScreen extends StatelessWidget {
             ),
             child: _buildButton(
               LocalImage.ic_info_contributor,
-              'Tentang relieve dan kontributor',
+              "Tentang relieve dan kontributor",
               onClick: () {
-                launch('https://github.com/RelieveID/terms-and-conditions/');
+                launch("https://github.com/RelieveID/terms-and-conditions/");
               },
             ),
           ),
@@ -145,7 +145,7 @@ class DashboardProfileScreen extends StatelessWidget {
             ),
             child: _buildButton(
               LocalImage.ic_exit,
-              'Keluar',
+              "Keluar",
               isExit: true,
               onClick: () => onLogout(context),
             ),

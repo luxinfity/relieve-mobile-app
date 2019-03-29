@@ -1,21 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'package:relieve_app/app_config.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
-import 'package:relieve_app/service/model/user.dart';
-import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/common_utils.dart';
-import 'package:relieve_app/widget/bottom_modal.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:relieve_app/widget/item/title.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:validators/validators.dart';
-import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import "package:flutter/material.dart";
+import "package:flutter/gestures.dart";
+import "package:relieve_app/app_config.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/screen/walkthrough/walkthrough.dart";
+import "package:relieve_app/service/model/user.dart";
+import "package:relieve_app/service/service.dart";
+import "package:relieve_app/utils/common_utils.dart";
+import "package:relieve_app/widget/bottom_modal.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:relieve_app/widget/item/title.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
+import "package:url_launcher/url_launcher.dart";
+import "package:email_validator/email_validator.dart";
+import "package:validators/validators.dart";
+import "package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart";
 
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import "package:relieve_app/utils/preference_utils.dart" as pref;
 
 class BoardingRegisterScreen extends StatefulWidget {
   BoardingRegisterScreen({Key key}) : super(key: key);
@@ -90,7 +90,7 @@ class BoardingRegisterState extends State {
       ].any((controller) => controller.text.isEmpty);
 
       isPhoneValid = isNumeric(phoneController.text) &&
-          phoneController.text.replaceFirst('0', '').length >= 7;
+          phoneController.text.replaceFirst("0", "").length >= 7;
 
       if (!isSecondFormEmpty && isPhoneValid) {
         steps = 2;
@@ -120,10 +120,10 @@ class BoardingRegisterState extends State {
       password: passwordController.text,
       fullname: fullnameController.text,
       phones: [
-        Phone('+62${phoneController.text.replaceFirst('0', '')}', 1),
+        Phone("+62${phoneController.text.replaceFirst("0", "")}", 1),
       ],
       birthdate: dobController.text,
-      gender: genderController.text == 'Perempuan' ? 'f' : 'm',
+      gender: genderController.text == "Perempuan" ? "f" : "m",
     );
 
     final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
@@ -138,7 +138,7 @@ class BoardingRegisterState extends State {
       createRelieveBottomModal(context, <Widget>[
         Container(height: Dimen.x21),
         Text(
-          'Username atau Email telah terdaftar',
+          "Username atau Email telah terdaftar",
           style: CircularStdFont.book.getStyle(size: Dimen.x21),
         ),
       ]);
@@ -197,18 +197,18 @@ class BoardingRegisterState extends State {
     switch (steps) {
       case 0:
         return ThemedTitle(
-          title: 'Akun',
-          subtitle: 'Gunakan username kesukaan mu',
+          title: "Akun",
+          subtitle: "Gunakan username kesukaan mu",
         );
       case 1:
         return ThemedTitle(
-          title: 'Data Diri',
-          subtitle: 'Beritahu kami mengenai diri kamu',
+          title: "Data Diri",
+          subtitle: "Beritahu kami mengenai diri kamu",
         );
       default:
         return ThemedTitle(
-          title: 'Alamat Tinggal',
-          subtitle: 'Selangkah lagi! Beritahu kami alamat mu',
+          title: "Alamat Tinggal",
+          subtitle: "Selangkah lagi! Beritahu kami alamat mu",
         );
     }
   }
@@ -219,7 +219,7 @@ class BoardingRegisterState extends State {
       padding:
           EdgeInsets.only(top: Dimen.x8, bottom: Dimen.x16 + padding.bottom),
       child: StandardButton(
-        text: steps == 0 || steps == 1 ? 'Lanjut' : 'Daftar',
+        text: steps == 0 || steps == 1 ? "Lanjut" : "Daftar",
         backgroundColor: AppColor.colorPrimary,
         buttonClick: () => onButtonClick(),
       ),
@@ -229,63 +229,63 @@ class BoardingRegisterState extends State {
   List<Widget> createForm1() {
     return <Widget>[
       buildInputForm(
-        key: 'emailInput',
-        label: 'Email',
+        key: "emailInput",
+        label: "Email",
         controller: emailController,
         inputType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
         errorTextGenerator: () {
           if (isFirstFormEmpty && emailController.text.isEmpty) {
-            return 'Silahkan diisi dulu';
+            return "Silahkan diisi dulu";
           } else if (!isEmailValid) {
-            return 'Format email tidak valid';
+            return "Format email tidak valid";
           } else {
             return null;
           }
         },
       ),
       buildInputForm(
-        key: 'usernameInput',
-        label: 'Username',
+        key: "usernameInput",
+        label: "Username",
         controller: usernameController,
         textInputAction: TextInputAction.next,
         errorTextGenerator: () {
           if (isFirstFormEmpty && usernameController.text.isEmpty) {
-            return 'Silahkan diisi dulu';
+            return "Silahkan diisi dulu";
           } else if (!isUsernameValid) {
-            return 'Panjang username minimal 4 huruf';
+            return "Panjang username minimal 4 huruf";
           } else {
             return null;
           }
         },
       ),
       buildInputForm(
-        key: 'passwordInput',
-        label: 'Password',
+        key: "passwordInput",
+        label: "Password",
         obscureText: true,
         controller: passwordController,
         textInputAction: TextInputAction.next,
         errorTextGenerator: () {
           if (isFirstFormEmpty && passwordController.text.isEmpty) {
-            return 'Silahkan diisi dulu';
+            return "Silahkan diisi dulu";
           } else if (!isPasswordValid) {
-            return 'Panjang password minimal 5 huruf';
+            return "Panjang password minimal 5 huruf";
           } else {
             return null;
           }
         },
       ),
       buildInputForm(
-        key: 'confirmPassInput',
-        label: 'Ketik Ulang Password',
+        key: "confirmPassInput",
+        label: "Ketik Ulang Password",
         obscureText: true,
         controller: confirmPasswordController,
         textInputAction: TextInputAction.done,
         errorTextGenerator: () {
           if (isFirstFormEmpty && confirmPasswordController.text.isEmpty) {
-            return 'Silahkan diisi dulu';
+            return "Silahkan diisi dulu";
           } else if (!isPasswordMatch) {
-            return 'Masukkan password yang sama';
+            return "Masukkan password yang sama";
           } else {
             return null;
           }
@@ -297,43 +297,43 @@ class BoardingRegisterState extends State {
   List<Widget> createForm2() {
     return <Widget>[
       buildInputForm(
-        key: 'nameInput',
-        label: 'Nama Lengkap',
+        key: "nameInput",
+        label: "Nama Lengkap",
         controller: fullnameController,
         textInputAction: TextInputAction.next,
         errorTextGenerator: () {
           return isSecondFormEmpty && fullnameController.text.isEmpty
-              ? 'Silahkan diisi dulu'
+              ? "Silahkan diisi dulu"
               : null;
         },
       ),
       buildInputForm(
-        key: 'phoneInput',
-        prefix: '+62 ',
-        label: 'Nomor Telpon',
+        key: "phoneInput",
+        prefix: "+62 ",
+        label: "Nomor Telpon",
         controller: phoneController,
         inputType: TextInputType.phone,
         textInputAction: TextInputAction.done,
         errorTextGenerator: () {
           if (isSecondFormEmpty && phoneController.text.isEmpty) {
-            return 'Silahkan diisi dulu';
+            return "Silahkan diisi dulu";
           } else if (!isPhoneValid) {
-            return 'Masukkan hanya angka dan lebih dari 7';
+            return "Masukkan hanya angka dan lebih dari 7";
           } else {
             return null;
           }
         },
       ),
       buildInputForm(
-        key: 'dobInput',
-        label: 'Tanggal Lahir',
+        key: "dobInput",
+        label: "Tanggal Lahir",
         controller: dobController,
         inputType: TextInputType.datetime,
         onTap: () => onDoBClick(),
       ),
       buildInputForm(
-        key: 'genderInput',
-        label: 'Gender',
+        key: "genderInput",
+        label: "Gender",
         controller: genderController,
         onTap: () => onGenderClick(),
       ),
@@ -343,42 +343,42 @@ class BoardingRegisterState extends State {
   List<Widget> createForm3() {
     return <Widget>[
       buildInputForm(
-        key: 'lurahInput',
-        label: 'Kelurahan',
+        key: "lurahInput",
+        label: "Kelurahan",
         controller: lurahController,
         textInputAction: TextInputAction.next,
         errorTextGenerator: () {
           return isThirdFormEmpty && lurahController.text.isEmpty
-              ? 'Silahkan diisi dulu'
+              ? "Silahkan diisi dulu"
               : null;
         },
       ),
       buildInputForm(
-        key: 'districtInput',
-        label: 'Kecamatan',
+        key: "districtInput",
+        label: "Kecamatan",
         controller: districtController,
         inputType: TextInputType.text,
         textInputAction: TextInputAction.next,
         errorTextGenerator: () {
           return isThirdFormEmpty && districtController.text.isEmpty
-              ? 'Silahkan diisi dulu'
+              ? "Silahkan diisi dulu"
               : null;
         },
       ),
       buildInputForm(
-        key: 'cityInput',
-        label: 'Kabupaten / Kota',
+        key: "cityInput",
+        label: "Kabupaten / Kota",
         controller: cityController,
         textInputAction: TextInputAction.done,
         errorTextGenerator: () {
           return isThirdFormEmpty && cityController.text.isEmpty
-              ? 'Silahkan diisi dulu'
+              ? "Silahkan diisi dulu"
               : null;
         },
       ),
       buildInputForm(
-        key: 'coordinateInput',
-        label: 'Temukan dengan peta',
+        key: "coordinateInput",
+        label: "Temukan dengan peta",
         controller: coordinateController,
         onTap: () => onMapClick(),
         rightIcon: LocalImage.ic_map.toSvg(height: Dimen.x18),
@@ -401,26 +401,26 @@ class BoardingRegisterState extends State {
     DatePicker.showDatePicker(
       context,
       showTitleActions: true,
-      locale: 'i18n',
+      locale: "i18n",
       cancel: Text(
-        'Batal',
+        "Batal",
         style: CircularStdFont.book.getStyle(
           size: Dimen.x12,
           color: AppColor.colorDanger,
         ),
       ),
       confirm: Text(
-        'Pilih',
+        "Pilih",
         style: CircularStdFont.book.getStyle(
           size: Dimen.x12,
           color: AppColor.colorPrimary,
         ),
       ),
-      dateFormat: 'yyyy-mm-dd',
+      dateFormat: "yyyy-mm-dd",
       onConfirm: (year, month, date) {
-        final monthStr = month.toString().padLeft(2, '0');
-        final dateStr = date.toString().padLeft(2, '0');
-        dobController.text = '$year-$monthStr-$dateStr';
+        final monthStr = month.toString().padLeft(2, "0");
+        final dateStr = date.toString().padLeft(2, "0");
+        dobController.text = "$year-$monthStr-$dateStr";
       },
     );
   }
@@ -437,14 +437,14 @@ class BoardingRegisterState extends State {
               padding: EdgeInsets.symmetric(vertical: Dimen.x16),
               textColor: Colors.white,
               child: Text(
-                'Perempuan',
+                "Perempuan",
                 style: CircularStdFont.medium.getStyle(
                   size: Dimen.x18,
                   color: AppColor.colorPrimary,
                 ),
               ),
               onPressed: () {
-                genderController.text = 'Perempuan';
+                genderController.text = "Perempuan";
                 Navigator.pop(context);
               },
             ),
@@ -458,14 +458,14 @@ class BoardingRegisterState extends State {
               padding: EdgeInsets.symmetric(vertical: Dimen.x16),
               textColor: Colors.white,
               child: Text(
-                'Laki - Laki',
+                "Laki - Laki",
                 style: CircularStdFont.medium.getStyle(
                   size: Dimen.x18,
                   color: AppColor.colorPrimary,
                 ),
               ),
               onPressed: () {
-                genderController.text = 'Laki - Laki';
+                genderController.text = "Laki - Laki";
                 Navigator.pop(context);
               },
             ),
@@ -552,21 +552,21 @@ class BoardingRegisterState extends State {
         child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-              text: 'By registering you are accepting our ',
+              text: "By registering you are accepting our ",
               style: CircularStdFont.book
                   .getStyle(size: Dimen.x14, color: AppColor.colorTextBlack),
               children: <TextSpan>[
                 TextSpan(
-                  text: 'terms and condition',
+                  text: "terms and condition",
                   style: CircularStdFont.book
                       .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       launch(
-                          'https://github.com/RelieveID/terms-and-conditions/');
+                          "https://github.com/RelieveID/terms-and-conditions/");
                     },
                 ),
-                TextSpan(text: ' of use')
+                TextSpan(text: " of use")
               ]),
         ),
       );

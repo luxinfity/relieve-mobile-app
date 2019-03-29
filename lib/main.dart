@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:relieve_app/app_config.dart';
-import 'package:relieve_app/landing_screen.dart';
-import 'package:relieve_app/res/res.dart';
+import "package:flutter/material.dart";
+import "package:flutter/services.dart";
+import "package:relieve_app/app_config.dart";
+import "package:relieve_app/landing_screen.dart";
+import "package:relieve_app/res/res.dart";
 
 void main() {
   var configuredApp = new AppConfig(
-    flavorName: 'production',
-    apiProtocol: 'https',
-    apiUrlPrefix: '',
+    flavorName: "production",
+    apiProtocol: "https",
+    apiUrlPrefix: "",
     child: new MyApp(),
   );
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     return MaterialApp(
-        title: 'Relieve ID',
+        title: "Relieve ID",
         theme: ThemeData(
           primaryColor: AppColor.colorPrimary,
           primaryColorDark: AppColor.colorPrimaryDark,

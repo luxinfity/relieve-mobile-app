@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/disaster.dart';
-import 'package:relieve_app/widget/item/disaster_item.dart';
-import 'package:relieve_app/widget/item/title.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/service/model/disaster.dart";
+import "package:relieve_app/widget/item/disaster_item.dart";
+import "package:relieve_app/widget/item/title.dart";
 
 class DashboardDiscoverScreen extends StatelessWidget {
   @override
@@ -18,7 +18,7 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   top: Dimen.x24,
                   bottom: Dimen.x12,
                 ),
-                child: ScreenTitle(title: 'Discover'),
+                child: ScreenTitle(title: "Discover"),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -30,14 +30,14 @@ class DashboardDiscoverScreen extends StatelessWidget {
                 child: DiscoverItem(
                   disaster: Disaster(
                     isLive: true,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
               ),
               ThemedTitle(
-                title: 'Highlight Bencana',
+                title: "Highlight Bencana",
               )
             ]),
           ),
@@ -51,8 +51,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
@@ -63,8 +63,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
@@ -75,8 +75,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
@@ -87,8 +87,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
@@ -99,8 +99,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
@@ -111,8 +111,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
@@ -123,8 +123,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),
@@ -135,8 +135,8 @@ class DashboardDiscoverScreen extends StatelessWidget {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Probolinggo, Jawa Timur',
+                    title: "Gunung Semeru Meletus",
+                    location: "Probolinggo, Jawa Timur",
                     time: 400,
                   ),
                 ),

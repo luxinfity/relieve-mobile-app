@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:relieve_app/screen/boarding/boarding_home.dart';
-import 'package:relieve_app/screen/dashboard/dashboard.dart';
-import 'utils/preference_utils.dart' as pref;
+import "package:flutter/material.dart";
+import "package:firebase_messaging/firebase_messaging.dart";
+import "package:relieve_app/screen/boarding/boarding_home.dart";
+import "package:relieve_app/screen/dashboard/dashboard.dart";
+import "utils/preference_utils.dart" as pref;
 
 class LandingScreen extends StatelessWidget {
   void getFcmToken() async {
@@ -14,13 +14,13 @@ class LandingScreen extends StatelessWidget {
 
 //    _firebaseMessaging.configure(
 //      onMessage: (Map<String, dynamic> message) async {
-//        print('on message $message');
+//        print("on message $message");
 //      },
 //      onResume: (Map<String, dynamic> message) async {
-//        print('on resume $message');
+//        print("on resume $message");
 //      },
 //      onLaunch: (Map<String, dynamic> message) async {
-//        print('on launch $message');
+//        print("on launch $message");
 //      },
 //    );
   }

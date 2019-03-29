@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:cached_network_image/cached_network_image.dart';
+import "package:cached_network_image/cached_network_image.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/family.dart";
 import "package:relieve_app/widget/bottom_modal.dart";

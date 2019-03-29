@@ -1,4 +1,4 @@
-import './base.dart';
+import "./base.dart";
 
 class WeatherDescription {
   final String id;
@@ -9,8 +9,8 @@ class WeatherDescription {
   factory WeatherDescription.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return WeatherDescription(
-        en: parsedJson['en'],
-        id: parsedJson['id'],
+        en: parsedJson["en"],
+        id: parsedJson["id"],
       );
     } catch (e) {
       return null;
@@ -23,13 +23,13 @@ class Weather {
   final double value;
 
   const Weather(
-      {this.desc = const WeatherDescription(en: '', id: ''), this.value = 0});
+      {this.desc = const WeatherDescription(en: "", id: ""), this.value = 0});
 
   factory Weather.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return Weather(
-        desc: WeatherDescription.fromJson(parsedJson['desc']),
-        value: double.parse(parsedJson['value'].toString()),
+        desc: WeatherDescription.fromJson(parsedJson["desc"]),
+        value: double.parse(parsedJson["value"].toString()),
       );
     } catch (e) {
       return null;
@@ -53,10 +53,10 @@ class WeatherItem {
   factory WeatherItem.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return WeatherItem(
-        temparature: Weather.fromJson(parsedJson['temperature']),
-        wind: Weather.fromJson(parsedJson['wind_speed']),
-        uv: Weather.fromJson(parsedJson['uv_index']),
-        rain: Weather.fromJson(parsedJson['rain_intensity']),
+        temparature: Weather.fromJson(parsedJson["temperature"]),
+        wind: Weather.fromJson(parsedJson["wind_speed"]),
+        uv: Weather.fromJson(parsedJson["uv_index"]),
+        rain: Weather.fromJson(parsedJson["rain_intensity"]),
       );
     } catch (e) {
       return null;
@@ -77,9 +77,9 @@ class WeatherResponse extends BaseResponse {
   factory WeatherResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return WeatherResponse(
-        message: parsedJson['message'],
-        content: WeatherItem.fromJson(parsedJson['content']),
-        status: parsedJson['status'],
+        message: parsedJson["message"],
+        content: WeatherItem.fromJson(parsedJson["content"]),
+        status: parsedJson["status"],
       );
     } catch (e) {
       return null;

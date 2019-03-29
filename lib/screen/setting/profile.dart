@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:relieve_app/widget/item/title.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import "package:flutter/material.dart";
+import "package:cached_network_image/cached_network_image.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:relieve_app/widget/item/title.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -26,7 +26,7 @@ class ProfileScreenState extends State {
             radius: Dimen.x42,
             backgroundColor: AppColor.colorAccent,
             backgroundImage: CachedNetworkImageProvider(
-              'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg',
+              "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg",
             ),
           ),
           Container(width: Dimen.x12),
@@ -35,7 +35,7 @@ class ProfileScreenState extends State {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Ubah foto profil',
+                  "Ubah foto profil",
                   style: CircularStdFont.bold.getStyle(size: Dimen.x14),
                 ),
                 Container(height: Dimen.x12),
@@ -49,7 +49,7 @@ class ProfileScreenState extends State {
                             LocalImage.ic_gallery.toSvg(width: Dimen.x16),
                             Container(width: Dimen.x16),
                             Text(
-                              'Galeri',
+                              "Galeri",
                               style: CircularStdFont.book
                                   .getStyle(size: Dimen.x12),
                             ),
@@ -71,7 +71,7 @@ class ProfileScreenState extends State {
                             LocalImage.ic_camera.toSvg(width: Dimen.x16),
                             Container(width: Dimen.x16),
                             Text(
-                              'Kamera',
+                              "Kamera",
                               style: CircularStdFont.book
                                   .getStyle(size: Dimen.x12),
                             ),
@@ -104,13 +104,13 @@ class ProfileScreenState extends State {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Ubah nama dan nomor handphone',
+            "Ubah nama dan nomor handphone",
             style: CircularStdFont.bold.getStyle(size: Dimen.x14),
           ),
           Container(height: Dimen.x21),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Nama Baru',
+              labelText: "Nama Baru",
               alignLabelWithHint: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimen.x6),
@@ -120,7 +120,7 @@ class ProfileScreenState extends State {
           Container(height: Dimen.x16),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Nomor Handphone',
+              labelText: "Nomor Handphone",
               alignLabelWithHint: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimen.x6),
@@ -139,13 +139,13 @@ class ProfileScreenState extends State {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Ubah password',
+            "Ubah password",
             style: CircularStdFont.bold.getStyle(size: Dimen.x14),
           ),
           Container(height: Dimen.x21),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Password lama',
+              labelText: "Password lama",
               alignLabelWithHint: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimen.x6),
@@ -155,7 +155,7 @@ class ProfileScreenState extends State {
           Container(height: Dimen.x16),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Password baru',
+              labelText: "Password baru",
               alignLabelWithHint: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimen.x6),
@@ -165,7 +165,7 @@ class ProfileScreenState extends State {
           Container(height: Dimen.x16),
           TextFormField(
             decoration: InputDecoration(
-              labelText: 'Masukkan Kembali Password baru',
+              labelText: "Masukkan Kembali Password baru",
               alignLabelWithHint: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimen.x6),
@@ -189,8 +189,8 @@ class ProfileScreenState extends State {
             padding: EdgeInsets.all(0),
             children: <Widget>[
               ThemedTitle(
-                title: 'Profil dan password',
-                subtitle: 'Ubah peraturan pada profil dan password',
+                title: "Profil dan password",
+                subtitle: "Ubah peraturan pada profil dan password",
               ),
               createSpace(),
               createPictureCard(),
@@ -206,7 +206,7 @@ class ProfileScreenState extends State {
       bottomNavigationBar: Container(
         padding: EdgeInsets.only(bottom: padding.bottom),
         child: StandardButton(
-          text: 'Simpan',
+          text: "Simpan",
           backgroundColor: AppColor.colorPrimary,
           buttonClick: () {},
         ),

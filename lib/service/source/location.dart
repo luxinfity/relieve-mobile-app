@@ -1,4 +1,4 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import "package:google_maps_flutter/google_maps_flutter.dart";
 
 // dummy
 final lat = -6.892534;

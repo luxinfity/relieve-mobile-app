@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/app_config.dart';
-import 'package:relieve_app/screen/call/call_list.dart';
-import 'package:relieve_app/screen/call/components/address_bar.dart';
-import 'package:relieve_app/screen/call/components/item_button.dart';
-import 'package:relieve_app/service/model/address.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/app_config.dart";
+import "package:relieve_app/screen/call/call_list.dart";
+import "package:relieve_app/screen/call/components/address_bar.dart";
+import "package:relieve_app/screen/call/components/item_button.dart";
+import "package:relieve_app/service/model/address.dart";
 
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/source/api/bakau.dart';
-import 'package:relieve_app/service/source/api/config.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
-import 'package:relieve_app/widget/item/title.dart';
-import 'package:relieve_app/widget/item/family_item.dart';
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/service/source/api/bakau.dart";
+import "package:relieve_app/service/source/api/config.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
+import "package:relieve_app/widget/item/title.dart";
+import "package:relieve_app/widget/item/family_item.dart";
 
 class CallScreen extends StatefulWidget {
   @override
@@ -55,12 +55,12 @@ class CallScreenState extends State {
                       top: Dimen.x16,
                       bottom: Dimen.x12,
                     ),
-                    child: ScreenTitle(title: 'Panggilan Darurat'),
+                    child: ScreenTitle(title: "Panggilan Darurat"),
                   ),
                   AddressBar(addressList: addressList),
                   Padding(
                     padding: const EdgeInsets.only(top: Dimen.x32),
-                    child: ThemedTitle(title: 'Lembaga Penanganan Darurat'),
+                    child: ThemedTitle(title: "Lembaga Penanganan Darurat"),
                   )
                 ]),
               ),
@@ -74,27 +74,27 @@ class CallScreenState extends State {
                   children: <Widget>[
                     ItemButton(
                       icon: LocalImage.ic_police,
-                      title: 'Kantor Polisi',
+                      title: "Kantor Polisi",
                     ),
                     ItemButton(
                       icon: LocalImage.ic_ambulance,
-                      title: 'Ambulance',
+                      title: "Ambulance",
                     ),
                     ItemButton(
                       icon: LocalImage.ic_red_cross,
-                      title: 'Palang Merah',
+                      title: "Palang Merah",
                     ),
                     ItemButton(
                       icon: LocalImage.ic_fire_fighter,
-                      title: 'Pemadam Kebakaran',
+                      title: "Pemadam Kebakaran",
                     ),
                     ItemButton(
                       icon: LocalImage.ic_sar,
-                      title: 'Badan SAR',
+                      title: "Badan SAR",
                     ),
                     ItemButton(
                       icon: LocalImage.ic_others,
-                      title: 'Lainnya',
+                      title: "Lainnya",
                       isTintBlue: true,
                       onClick: () {
                         Navigator.push(
@@ -110,7 +110,7 @@ class CallScreenState extends State {
                 delegate: SliverChildListDelegate(<Widget>[
                   Padding(
                     padding: const EdgeInsets.only(top: Dimen.x32),
-                    child: ThemedTitle(title: 'Panggilan Cepat'),
+                    child: ThemedTitle(title: "Panggilan Cepat"),
                   )
                 ]),
               ),

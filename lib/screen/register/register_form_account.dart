@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:relieve_app/widget/item/title.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:relieve_app/widget/item/title.dart";
 
 class RegisterFormAccount extends StatefulWidget {
   final VoidCallback onNextClick;
@@ -32,8 +32,8 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
             padding: safePadding.copyWith(top: 0),
             children: <Widget>[
               ThemedTitle(
-                title: 'Akun',
-                subtitle: 'Gunakan username kesukaan mu',
+                title: "Akun",
+                subtitle: "Gunakan username kesukaan mu",
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -44,7 +44,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                 ),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: "Email",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -66,7 +66,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                 ),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Username',
+                    labelText: "Username",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -89,7 +89,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                 child: TextFormField(
                   obscureText: passwordVisible,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: "Password",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -122,7 +122,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                 child: TextFormField(
                   obscureText: passwordVisible,
                   decoration: InputDecoration(
-                    labelText: 'Ketikkan Kembali Password',
+                    labelText: "Ketikkan Kembali Password",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -145,7 +145,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
           ),
         ),
         StandardButton(
-          text: 'Simpan',
+          text: "Simpan",
           buttonClick: widget.onNextClick,
           backgroundColor: AppColor.colorPrimary,
         ),

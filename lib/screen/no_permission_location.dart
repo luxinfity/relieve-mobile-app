@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:relieve_app/res/res.dart';
+import "package:flutter/material.dart";
+import "package:permission_handler/permission_handler.dart";
+import "package:relieve_app/res/res.dart";
 
 class LocationPermissionScreen extends StatefulWidget {
   final VoidCallback onPermissionGranted;
@@ -48,13 +48,13 @@ class LocationPermissionScreenState extends State<LocationPermissionScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Izinkan Relieve Id mengetahui lokasi',
+            "Izinkan Relieve Id mengetahui lokasi",
             style: CircularStdFont.black.getStyle(size: Dimen.x21),
             textAlign: TextAlign.center,
           ),
           Container(height: Dimen.x18),
           Text(
-            'Informasi lokasi dibutuhkan untuk memberikan kabar terkini sesuai lokasi mu',
+            "Informasi lokasi dibutuhkan untuk memberikan kabar terkini sesuai lokasi mu",
             style: CircularStdFont.book.getStyle(
               size: Dimen.x14,
               color: AppColor.colorTextGrey,
@@ -63,7 +63,7 @@ class LocationPermissionScreenState extends State<LocationPermissionScreen>
           ),
           Container(height: Dimen.x36),
           RaisedButton(
-            child: Text('Izinkan'),
+            child: Text("Izinkan"),
             color: AppColor.colorPrimary,
             textColor: Colors.white,
             elevation: 1,

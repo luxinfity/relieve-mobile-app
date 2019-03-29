@@ -1,11 +1,11 @@
-import 'package:flutter_keychain/flutter_keychain.dart';
+import "package:flutter_keychain/flutter_keychain.dart";
 
 // logout
 void clearData() {
-  setGoogleId('');
-  setUsername('');
-  setToken('');
-  setRefreshToken('');
+  setGoogleId("");
+  setUsername("");
+  setToken("");
+  setRefreshToken("");
   setExpireIn(0);
 }
 
