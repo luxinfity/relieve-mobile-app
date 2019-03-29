@@ -29,19 +29,8 @@ class BoardingRegisterScreen extends StatefulWidget {
 class BoardingRegisterState extends State {
   var steps = 0;
   var passwordVisible = false;
-  var isFirstFormEmpty = false;
   var isSecondFormEmpty = false;
   var isThirdFormEmpty = false;
-
-  // first step
-  var isUsernameValid = true;
-  var isEmailValid = true;
-  var isPasswordValid = true;
-  var isPasswordMatch = true;
-  final emailController = TextEditingController();
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
 
   // second step
   var isPhoneValid = true;
@@ -55,30 +44,6 @@ class BoardingRegisterState extends State {
   final districtController = TextEditingController();
   final cityController = TextEditingController();
   final coordinateController = TextEditingController();
-
-  void checkStep1() {
-    setState(() {
-      isFirstFormEmpty = [
-        emailController,
-        usernameController,
-        passwordController,
-        confirmPasswordController
-      ].any((controller) => controller.text.isEmpty);
-
-      isUsernameValid = usernameController.text.length >= 4;
-      isEmailValid = EmailValidator.validate(emailController.text);
-      isPasswordValid = passwordController.text.length >= 5;
-      isPasswordMatch =
-          passwordController.text == confirmPasswordController.text;
-
-      if (!isFirstFormEmpty &&
-          isEmailValid &&
-          isPasswordValid &&
-          isPasswordMatch) {
-        steps = 1;
-      }
-    });
-  }
 
   void checkStep2() {
     setState(() {
@@ -115,9 +80,9 @@ class BoardingRegisterState extends State {
 
   void doRegister() async {
     final user = User(
-      username: usernameController.text,
-      email: emailController.text,
-      password: passwordController.text,
+      username: "",
+      email: "",
+      password: "",
       fullname: fullnameController.text,
       phones: [
         Phone("+62${phoneController.text.replaceFirst("0", "")}", 1),
@@ -132,7 +97,7 @@ class BoardingRegisterState extends State {
       await pref.setToken(tokenResponse.content.token);
       await pref.setRefreshToken(tokenResponse.content.refreshToken);
       await pref.setExpireIn(tokenResponse.content.expiresIn);
-      await pref.setUsername(usernameController.text);
+      await pref.setUsername("");
       onRegisterSuccess();
     } else {
       createRelieveBottomModal(context, <Widget>[
@@ -148,7 +113,7 @@ class BoardingRegisterState extends State {
   void onButtonClick() {
     switch (steps) {
       case 0:
-        checkStep1();
+//        checkStep1();
         break;
       case 1:
         checkStep2();
@@ -224,74 +189,6 @@ class BoardingRegisterState extends State {
         buttonClick: () => onButtonClick(),
       ),
     );
-  }
-
-  List<Widget> createForm1() {
-    return <Widget>[
-      buildInputForm(
-        key: "emailInput",
-        label: "Email",
-        controller: emailController,
-        inputType: TextInputType.emailAddress,
-        textInputAction: TextInputAction.next,
-        errorTextGenerator: () {
-          if (isFirstFormEmpty && emailController.text.isEmpty) {
-            return "Silahkan diisi dulu";
-          } else if (!isEmailValid) {
-            return "Format email tidak valid";
-          } else {
-            return null;
-          }
-        },
-      ),
-      buildInputForm(
-        key: "usernameInput",
-        label: "Username",
-        controller: usernameController,
-        textInputAction: TextInputAction.next,
-        errorTextGenerator: () {
-          if (isFirstFormEmpty && usernameController.text.isEmpty) {
-            return "Silahkan diisi dulu";
-          } else if (!isUsernameValid) {
-            return "Panjang username minimal 4 huruf";
-          } else {
-            return null;
-          }
-        },
-      ),
-      buildInputForm(
-        key: "passwordInput",
-        label: "Password",
-        obscureText: true,
-        controller: passwordController,
-        textInputAction: TextInputAction.next,
-        errorTextGenerator: () {
-          if (isFirstFormEmpty && passwordController.text.isEmpty) {
-            return "Silahkan diisi dulu";
-          } else if (!isPasswordValid) {
-            return "Panjang password minimal 5 huruf";
-          } else {
-            return null;
-          }
-        },
-      ),
-      buildInputForm(
-        key: "confirmPassInput",
-        label: "Ketik Ulang Password",
-        obscureText: true,
-        controller: confirmPasswordController,
-        textInputAction: TextInputAction.done,
-        errorTextGenerator: () {
-          if (isFirstFormEmpty && confirmPasswordController.text.isEmpty) {
-            return "Silahkan diisi dulu";
-          } else if (!isPasswordMatch) {
-            return "Masukkan password yang sama";
-          } else {
-            return null;
-          }
-        },
-      ),
-    ];
   }
 
   List<Widget> createForm2() {
@@ -389,7 +286,8 @@ class BoardingRegisterState extends State {
   List<Widget> createForm() {
     switch (steps) {
       case 0:
-        return createForm1();
+//        return createForm1();
+        return createForm2();
       case 1:
         return createForm2();
       default:

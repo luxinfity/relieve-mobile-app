@@ -9,6 +9,7 @@ import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
 import "package:relieve_app/widget/loading_dialog.dart";
 import "package:relieve_app/widget/relieve_scaffold.dart";
+import 'package:relieve_app/widget/snackbar.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -62,36 +63,12 @@ class BoardingLoginScreenState extends State {
         pref.setUsername(usernameController.text);
         onLoginSuccess();
       } else {
-        _showErrorSnackBar();
+        showSnackBar(context, "Ups! Username atau password salah", buttonText: "Mengerti");
         setState(() {
           isWrongCredential = true;
         });
       }
     }
-  }
-
-  Flushbar flush;
-
-  void _showErrorSnackBar() {
-    flush = Flushbar(
-      flushbarStyle: FlushbarStyle.FLOATING,
-      aroundPadding:
-          EdgeInsets.symmetric(horizontal: Dimen.x16, vertical: Dimen.x16),
-      backgroundColor: AppColor.colorTextBlack,
-      message: "Ups! Username atau password salah",
-      mainButton: FlatButton(
-        child: Text(
-          "Mengerti",
-          style: CircularStdFont.medium
-              .getStyle(size: Dimen.x14, color: AppColor.colorAccent),
-        ),
-        onPressed: () {
-          flush?.dismiss(true);
-        },
-      ),
-      duration: Duration(seconds: 4),
-      borderRadius: Dimen.x8,
-    )..show(context);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
 import "package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart";
@@ -5,12 +6,30 @@ import "package:relieve_app/res/res.dart";
 import "package:relieve_app/widget/bottom_modal.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
+import 'package:relieve_app/widget/snackbar.dart';
 import "package:url_launcher/url_launcher.dart";
+import 'package:validators/validators.dart';
+
+class Profile {
+  final String fullName;
+  final String phoneNum;
+  final String dob;
+  final String gender;
+
+  Profile(this.fullName, this.phoneNum, this.dob, this.gender);
+}
+
+typedef ProfileFormCallback = void Function(Profile profile);
 
 class RegisterFormProfile extends StatefulWidget {
-  final VoidCallback onNextClick;
+  final ProfileFormCallback onNextClick;
+  final Profile initialData;
 
-  const RegisterFormProfile({Key key, this.onNextClick}) : super(key: key);
+  const RegisterFormProfile({
+    Key key,
+    this.onNextClick,
+    this.initialData,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -21,11 +40,68 @@ class RegisterFormProfile extends StatefulWidget {
 class RegisterFormProfileState extends State<RegisterFormProfile> {
   bool passwordVisible = false;
 
+  var isFormValid = true;
+  var isFullNameValid = true;
+  var isPhoneValid = true;
+
+  final fullNameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final dobController = TextEditingController();
+  final genderController = TextEditingController();
+
   final FocusNode _nameFocus = FocusNode();
   final FocusNode _phoneFocus = FocusNode();
 
-  final genderController = TextEditingController();
-  final dobController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialData != null) {
+      fullNameController.text = widget.initialData.fullName;
+      phoneController.text = widget.initialData.phoneNum;
+      dobController.text = widget.initialData.dob;
+      genderController.text = widget.initialData.gender;
+    }
+  }
+
+  void onSaveClick() {
+    setState(() {
+      isFullNameValid = fullNameController.text.length >= 2;
+      isPhoneValid = isNumeric(phoneController.text) &&
+          phoneController.text.replaceFirst("0", "").length >= 7;
+
+      isFormValid = ![
+        fullNameController,
+        phoneController,
+        dobController,
+        genderController
+      ].any((controller) => controller.text.isEmpty);
+
+      if (isFormValid && isFullNameValid && isPhoneValid) {
+        widget.onNextClick(Profile(
+          fullNameController.text.toLowerCase(),
+          phoneController.text,
+          dobController.text,
+          genderController.text,
+        ));
+      } else if (dobController.text.isEmpty) {
+        showSnackBar(context, "Silahkan pilih tanggal lahir");
+      } else if (genderController.text.isEmpty) {
+        showSnackBar(context, "Silahkan pilih gender anda");
+      }
+    });
+  }
+
+  String getErrorText(TextEditingController controller) {
+    if (controller.text.isEmpty && !isFormValid) {
+      return "Silahkan diisi dulu";
+    } else if (!isFullNameValid && controller == fullNameController) {
+      return "Nama lengkap minimal 2 huruf";
+    } else if (!isPhoneValid && controller == phoneController) {
+      return "Panjang nomor handphone tidak valid";
+    } else {
+      return null;
+    }
+  }
 
   void onDoBClick() {
     DatePicker.showDatePicker(
@@ -121,12 +197,13 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
+                  controller: fullNameController,
                   decoration: InputDecoration(
-                    labelText: "Nama Lengkap",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(Dimen.x6),
-                    ),
-                  ),
+                      labelText: "Nama Lengkap",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(Dimen.x6),
+                      ),
+                      errorText: getErrorText(fullNameController)),
                   focusNode: _nameFocus,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
@@ -143,14 +220,16 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
+                  controller: phoneController,
                   decoration: InputDecoration(
                     prefixText: "+62 ",
                     labelText: "Nomor Handphone",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
+                    errorText: getErrorText(phoneController),
                   ),
-                  keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.phone,
                   autovalidate: true,
                   validator: (value) {
                     if (value.isEmpty) {
@@ -164,9 +243,6 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                   },
                   focusNode: _phoneFocus,
                   textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (term) {
-                    onDoBClick();
-                  },
                 ),
               ),
               Container(
@@ -239,7 +315,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
         ),
         StandardButton(
           text: "Simpan",
-          buttonClick: widget.onNextClick,
+          buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,
         ),
         Container(

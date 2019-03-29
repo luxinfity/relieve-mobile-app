@@ -4,10 +4,25 @@ import "package:relieve_app/res/res.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
 
-class RegisterFormAccount extends StatefulWidget {
-  final VoidCallback onNextClick;
+class Account {
+  final String email;
+  final String username;
+  final String password;
 
-  const RegisterFormAccount({Key key, this.onNextClick}) : super(key: key);
+  Account(this.email, this.username, this.password);
+}
+
+typedef AccountFormCallback = void Function(Account account);
+
+class RegisterFormAccount extends StatefulWidget {
+  final AccountFormCallback onNextClick;
+  final Account initialData;
+
+  const RegisterFormAccount({
+    Key key,
+    this.onNextClick,
+    this.initialData,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -50,7 +65,11 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
       ].any((controller) => controller.text.isEmpty);
 
       if (isFormValid && isEmailValid && isPasswordValid && isPasswordMatch) {
-        widget.onNextClick();
+        widget.onNextClick(Account(
+          _emailController.text.toLowerCase(),
+          _usernameController.text.toLowerCase(),
+          _passwordController.text,
+        ));
       }
     });
   }
@@ -68,6 +87,17 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
       return "Masukkan password yang sama";
     } else {
       return null;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialData != null) {
+      _emailController.text = widget.initialData.email;
+      _usernameController.text = widget.initialData.username;
+      _passwordController.text = widget.initialData.password;
+      _confirmPasswordController.text = widget.initialData.password;
     }
   }
 

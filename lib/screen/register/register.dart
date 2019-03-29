@@ -24,6 +24,9 @@ class RegisterScreenState extends State<RegisterScreen> {
   int progressCount = 0;
   int progressTotal = 3;
 
+  Account _account;
+  Profile _profile;
+
   Future<bool> checkPermissionDenied() async {
     PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.location);
@@ -56,18 +59,23 @@ class RegisterScreenState extends State<RegisterScreen> {
     switch (progressCount) {
       case 0:
         return RegisterFormAccount(
-          onNextClick: () {
+          initialData: _account,
+          onNextClick: (account) {
             setState(() {
+              _account = account;
               progressCount += 1;
             });
           },
         );
       case 1:
         return RegisterFormProfile(
-          onNextClick: () async {
+          initialData: _profile,
+          onNextClick: (profile) async {
             bool isPermissionDenied = await checkPermissionDenied();
             setState(() {
+              _profile = profile;
               if (isPermissionDenied) {
+                // go to request permission page, only for ios
                 progressCount = 3;
               } else {
                 progressCount += 1;
