@@ -60,14 +60,43 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
       ThemedTitle(
         title: "Pilih jenis kelamin",
       ),
-      StandardButton(
-        text: "Perempuan",
-        backgroundColor: Colors.blue,
-        buttonClick: () {
-          genderController.text = "Perempuan";
-          Navigator.pop(context);
-        },
-      )
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+        child: FlatButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimen.x4),
+              side: BorderSide(color: AppColor.colorPrimary)),
+          padding: EdgeInsets.symmetric(vertical: Dimen.x16),
+          child: Text(
+            "Perempuan",
+            style: CircularStdFont.medium
+                .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
+          ),
+          onPressed: () {
+            genderController.text = "Perempuan";
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      Container(height: Dimen.x16),
+      Container(
+        margin: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+        child: FlatButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(Dimen.x4),
+              side: BorderSide(color: AppColor.colorPrimary)),
+          padding: EdgeInsets.symmetric(vertical: Dimen.x16),
+          child: Text(
+            "Laki - Laki",
+            style: CircularStdFont.medium
+                .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
+          ),
+          onPressed: () {
+            genderController.text = "Laki - Laki";
+            Navigator.pop(context);
+          },
+        ),
+      ),
     ]);
   }
 
@@ -122,8 +151,22 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                     ),
                   ),
                   keyboardType: TextInputType.number,
+                  autovalidate: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return null;
+                    }
+                    final n = num.tryParse(value);
+                    if (n == null) {
+                      return "Masukkan hanya angka";
+                    }
+                    return null;
+                  },
                   focusNode: _phoneFocus,
                   textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {
+                    onDoBClick();
+                  },
                 ),
               ),
               Container(
