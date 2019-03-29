@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:relieve_app/utils/common_utils.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:relieve_app/widget/item/title.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
+import "package:google_maps_flutter/google_maps_flutter.dart";
+import "package:relieve_app/utils/common_utils.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:relieve_app/widget/item/title.dart";
+import "package:permission_handler/permission_handler.dart";
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
@@ -19,10 +20,33 @@ class RegisterFormAddress extends StatefulWidget {
 }
 
 class RegisterFormAddressState extends State<RegisterFormAddress> {
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  static final CameraPosition jakartaCoordinate = CameraPosition(
+    target: LatLng(-6.21462, 106.84513),
+    zoom: 14,
   );
+
+  GoogleMapController _mapController;
+
+  void checkPermission() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
+
+    bool hasPermission = permission == PermissionStatus.granted ||
+        permission == PermissionStatus.restricted;
+
+    if (!hasPermission &&
+        Theme.of(context).platform == TargetPlatform.android) {
+      await PermissionHandler().requestPermissions([PermissionGroup.location]);
+    }
+  }
+
+  void moveToMyLocation() async {}
+
+  @override
+  void initState() {
+    super.initState();
+    checkPermission();
+  }
 
   Widget createAddressBar() {
     return Row(
@@ -45,11 +69,11 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Jl. Mahmud No.320',
+                "Jl. Mahmud No.320",
                 style: CircularStdFont.medium.getStyle(size: Dimen.x16),
               ),
               Text(
-                'Jl. Mahmud No.320, Pamoyanan, Cicendo, Kota Bandung, Jawa Barat 40173',
+                "Jl. Mahmud No.320, Pamoyanan, Cicendo, Kota Bandung, Jawa Barat 40173",
                 style: CircularStdFont.book.getStyle(size: Dimen.x14),
               ),
             ],
@@ -69,8 +93,18 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
           child: Stack(
             children: <Widget>[
               GoogleMap(
-                initialCameraPosition: _kGooglePlex,
+                initialCameraPosition: jakartaCoordinate,
                 myLocationEnabled: true,
+                onMapCreated: (controller) {
+                  _mapController = controller;
+                  moveToMyLocation();
+                },
+              ),
+              Align(
+                child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
+                alignment: Theme.of(context).platform == TargetPlatform.iOS
+                    ? Alignment(0, -0.11)
+                    : Alignment(0, -0.2),
               ),
               Padding(
                 padding: const EdgeInsets.all(Dimen.x8),
@@ -83,21 +117,39 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                 ),
               ),
               Align(
-                child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
-                alignment: Alignment(0, -0.11),
-              )
+                alignment: Theme.of(context).platform == TargetPlatform.iOS
+                    ? Alignment.bottomRight
+                    : Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimen.x10),
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    elevation: Theme.of(context).platform == TargetPlatform.iOS
+                        ? 0
+                        : Dimen.x4,
+                    highlightElevation: Dimen.x4,
+                    child: Icon(
+                      Icons.gps_fixed,
+                      color: AppColor.colorPrimary,
+                    ),
+                    onPressed: () {
+                      // TODO center icon
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         Container(height: Dimen.x16),
         ThemedTitle(
-          title: 'Temukan alamat kamu',
+          title: "Temukan alamat kamu",
         ),
         Container(height: Dimen.x10),
         createAddressBar(),
         Container(height: Dimen.x21),
         StandardButton(
-          text: 'Simpan',
+          text: "Simpan",
           backgroundColor: AppColor.colorPrimary,
           buttonClick: () {},
         ),

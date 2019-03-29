@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:cached_network_image/cached_network_image.dart';
+import "package:cached_network_image/cached_network_image.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/family.dart";
 import "package:relieve_app/widget/bottom_modal.dart";
@@ -299,8 +299,8 @@ class FamilyItemListState extends State {
                 style: CircularStdFont.medium
                     .getStyle(size: Dimen.x14, color: Colors.white),
               ),
-              elevation: 0,
-              highlightElevation: 0,
+              elevation: 1,
+              highlightElevation: 1,
               color: AppColor.colorDanger,
             ),
           ),
@@ -320,8 +320,8 @@ class FamilyItemListState extends State {
                 style: CircularStdFont.medium
                     .getStyle(size: Dimen.x14, color: Colors.white),
               ),
-              elevation: 0,
-              highlightElevation: 0,
+              elevation: 1,
+              highlightElevation: 1,
               color: AppColor.colorPrimary,
             ),
           ),

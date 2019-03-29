@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 import "package:flushbar/flushbar.dart";
-import 'package:relieve_app/app_config.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/screen/boarding/components/boarding_register_here.dart';
-import 'package:relieve_app/screen/register/boarding_register.dart';
-import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
-import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:relieve_app/widget/item/title.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import "package:relieve_app/app_config.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/screen/walkthrough/walkthrough.dart";
+import "package:relieve_app/service/service.dart";
+import "package:relieve_app/utils/preference_utils.dart" as pref;
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:relieve_app/widget/item/title.dart";
+import "package:relieve_app/widget/loading_dialog.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
+import 'package:relieve_app/widget/snackbar.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -21,12 +21,12 @@ class BoardingLoginScreen extends StatefulWidget {
 class BoardingLoginScreenState extends State {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final _usernameFocus = FocusNode();
+  final _passwordFocus = FocusNode();
 
   var isFormEmpty = false;
   var isWrongCredential = false;
   var passwordVisible = false;
-
-  var snackbar;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -47,48 +47,28 @@ class BoardingLoginScreenState extends State {
         isWrongCredential = false;
       });
 
+      showLoadingDialog(context);
+
       final tokenResponse = await BakauApi(AppConfig.of(context)).login(
         usernameController.text,
         passwordController.text,
       );
 
+      dismissLoadingDialog(context);
+
       if (tokenResponse?.status == REQUEST_SUCCESS) {
-        await pref.setToken(tokenResponse.content.token);
-        await pref.setRefreshToken(tokenResponse.content.refreshToken);
-        await pref.setExpireIn(tokenResponse.content.expiresIn);
-        await pref.setUsername(usernameController.text);
+        pref.setToken(tokenResponse.content.token);
+        pref.setRefreshToken(tokenResponse.content.refreshToken);
+        pref.setExpireIn(tokenResponse.content.expiresIn);
+        pref.setUsername(usernameController.text);
         onLoginSuccess();
       } else {
-        _showErrorSnackBar();
+        showSnackBar(context, "Ups! Username atau password salah", buttonText: "Mengerti");
         setState(() {
           isWrongCredential = true;
         });
       }
     }
-  }
-
-  void _showErrorSnackBar() {
-    Flushbar(
-      flushbarStyle: FlushbarStyle.FLOATING,
-      aroundPadding: EdgeInsets.symmetric(horizontal: Dimen.x16),
-      backgroundColor: AppColor.colorTextBlack,
-      message: "Ups! Username atau password salah",
-      mainButton: FlatButton(
-        child: Text(
-          "Mengerti",
-          style: CircularStdFont.medium
-              .getStyle(size: Dimen.x14, color: AppColor.colorAccent),
-        ),
-        onPressed: () {},
-      ),
-      duration: Duration(seconds: 4),
-      borderRadius: Dimen.x8,
-    )..show(context);
-  }
-
-  void registerButtonClicked() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => BoardingRegisterScreen()));
   }
 
   @override
@@ -109,11 +89,11 @@ class BoardingLoginScreenState extends State {
               buildFormPassword(),
               buildForgotPassword(),
               StandardButton(
-                text: 'Login',
+                text: "Login",
                 buttonClick: () => onLoginClick(),
                 backgroundColor: AppColor.colorPrimary,
               ),
-              // buildRegisterHere()
+              Container(height: Dimen.x16),
             ],
           ),
         ),
@@ -122,19 +102,19 @@ class BoardingLoginScreenState extends State {
   }
 
   String getErrorUsername() {
-    if (isFormEmpty && passwordController.text.isEmpty)
-      return 'Silahkan diisi dulu';
+    if (isFormEmpty && usernameController.text.isEmpty)
+      return "Silahkan diisi dulu";
     else if (isWrongCredential)
-      return 'Username atau Password salah';
+      return "Username atau Password salah";
     else
       return null;
   }
 
   String getErrorPassword() {
-    if (isFormEmpty && usernameController.text.isEmpty)
-      return 'Silahkan diisi dulu';
+    if (isFormEmpty && passwordController.text.isEmpty)
+      return "Silahkan diisi dulu";
     else if (isWrongCredential)
-      return 'Username atau Password salah';
+      return "Username atau Password salah";
     else
       return null;
   }
@@ -150,7 +130,7 @@ class BoardingLoginScreenState extends State {
       ),
       child: TextFormField(
         decoration: InputDecoration(
-          labelText: 'Password',
+          labelText: "Password",
           alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
@@ -163,12 +143,16 @@ class BoardingLoginScreenState extends State {
               setState(() => passwordVisible = !passwordVisible);
             },
           ),
-          errorText: getErrorUsername(),
+          errorText: getErrorPassword(),
         ),
-        textInputAction: TextInputAction.done,
         controller: passwordController,
         obscureText: !passwordVisible,
         maxLines: 1,
+        focusNode: _passwordFocus,
+        textInputAction: TextInputAction.done,
+        onFieldSubmitted: (term) {
+          onLoginClick();
+        },
       ),
     );
   }
@@ -179,25 +163,24 @@ class BoardingLoginScreenState extends State {
       margin: EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
       child: TextFormField(
         decoration: InputDecoration(
-          labelText: 'Username',
+          labelText: "Username",
           alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
           ),
-          errorText: getErrorPassword(),
+          errorText: getErrorUsername(),
         ),
-        textInputAction: TextInputAction.next,
         controller: usernameController,
         maxLines: 1,
-      ),
-    );
-  }
-
-  Padding buildRegisterHere() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: RegisterHere(
-        onClick: () => registerButtonClicked(),
+        focusNode: _usernameFocus,
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (term) {
+          _usernameFocus.unfocus();
+          setState(() {
+            isWrongCredential = false;
+          }); // trigger re render
+          FocusScope.of(context).requestFocus(_passwordFocus);
+        },
       ),
     );
   }
@@ -208,7 +191,7 @@ class BoardingLoginScreenState extends State {
       children: <Widget>[
         FlatButton(
           child: Text(
-            'Forgot Password?',
+            "Forgot Password?",
             style: CircularStdFont.book
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
@@ -220,7 +203,7 @@ class BoardingLoginScreenState extends State {
 
   ThemedTitle buildTitle() {
     return ThemedTitle(
-        title: 'Masuk', subtitle: 'Bersiap untuk jelajahi aplikasi');
+        title: "Masuk", subtitle: "Bersiap untuk jelajahi aplikasi");
   }
 
   Widget buildImage() {

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
 
 class StandardButton extends StatelessWidget {
   final String text;
@@ -30,34 +30,11 @@ class StandardButton extends StatelessWidget {
         left: Dimen.x16,
         right: Dimen.x16,
       ),
-      child: isHollow ? _hollowButton() : _filledButton(),
+      child: _createButton(),
     );
   }
 
-  Widget _hollowButton() {
-    return Material(
-      elevation: 1,
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(Dimen.x4),
-      child: InkWell(
-        onTap: buttonClick,
-        child: Container(
-          alignment: Alignment.center,
-          child: getButtonContent(),
-          padding: EdgeInsets.only(
-            top: Dimen.x16,
-            bottom: Dimen.x16,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimen.x4),
-            border: Border.all(color: backgroundColor, width: 2),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _filledButton() {
+  Widget _createButton() {
     return RaisedButton(
       child: getButtonContent(),
       color: backgroundColor,
@@ -69,6 +46,9 @@ class StandardButton extends StatelessWidget {
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Dimen.x4),
+        side: isHollow
+            ? BorderSide.none
+            : BorderSide(color: backgroundColor, width: 2),
       ),
       onPressed: buttonClick,
     );

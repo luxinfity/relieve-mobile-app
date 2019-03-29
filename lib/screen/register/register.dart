@@ -1,11 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:relieve_app/screen/register/register_form_account.dart';
-import 'package:relieve_app/screen/register/register_form_profile.dart';
-import 'package:relieve_app/screen/register/register_form_address.dart';
-import 'package:relieve_app/utils/common_utils.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import "package:flutter/material.dart";
+import "package:permission_handler/permission_handler.dart";
+import "package:relieve_app/screen/no_permission_location.dart";
+import "package:relieve_app/screen/register/register_form_account.dart";
+import "package:relieve_app/screen/register/register_form_profile.dart";
+import "package:relieve_app/screen/register/register_form_address.dart";
+import "package:relieve_app/utils/common_utils.dart";
+import "package:relieve_app/utils/preference_utils.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
 
 class RegisterScreen extends StatefulWidget {
+  final int progressCount;
+
+  RegisterScreen({this.progressCount = 0});
+
   @override
   State<StatefulWidget> createState() {
     return RegisterScreenState();
@@ -13,28 +20,64 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class RegisterScreenState extends State<RegisterScreen> {
-  int progressCount = 1;
+  bool isPermissionDenied = false;
+  int progressCount = 0;
   int progressTotal = 3;
+
+  Account _account;
+  Profile _profile;
+
+  Future<bool> checkPermissionDenied() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
+
+    bool hasNoPermission = permission == PermissionStatus.denied ||
+        permission == PermissionStatus.unknown;
+
+    if (Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission) {
+      isPermissionDenied = true;
+    } else {
+      isPermissionDenied = false;
+    }
+
+    return isPermissionDenied;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    progressCount = widget.progressCount;
+  }
 
   Widget createPage() {
     switch (progressCount) {
-      case 1:
+      case 0:
         return RegisterFormAccount(
-          onNextClick: () {
+          initialData: _account,
+          onNextClick: (account) {
             setState(() {
+              _account = account;
               progressCount += 1;
+            });
+          },
+        );
+      case 1:
+        return RegisterFormProfile(
+          initialData: _profile,
+          onNextClick: (profile) async {
+            bool isPermissionDenied = await checkPermissionDenied();
+            setState(() {
+              _profile = profile;
+              if (isPermissionDenied) {
+                // go to request permission page, only for ios
+                progressCount = 3;
+              } else {
+                progressCount += 1;
+              }
             });
           },
         );
       case 2:
-        return RegisterFormProfile(
-          onNextClick: () {
-            setState(() {
-              progressCount += 1;
-            });
-          },
-        );
-      default:
         return RegisterFormAddress(
           onBackClick: onBackButtonClick,
           onNextClick: () {
@@ -43,32 +86,54 @@ class RegisterScreenState extends State<RegisterScreen> {
             });
           },
         );
+      default:
+        return LocationPermissionScreen(
+          onPermissionGranted: () {
+            setState(() {
+              progressCount = 2;
+            });
+          },
+        );
     }
   }
 
-  bool showDefaultBackButton() {
+  bool isHasBackButton(int progressCount) {
     switch (progressCount) {
-      case 3:
+      case 2:
         return false;
       default:
         return true;
     }
   }
 
-  void onBackButtonClick(context) {
-    setState(() {
-      if (progressCount > 1)
+  void onBackButtonClick(context) async {
+    String googleId = await getGoogleId();
+    int limit = googleId.isEmpty ? 0 : 1;
+
+    if (progressCount == 3) {
+      setState(() {
+        progressCount = 1;
+      });
+    } else if (progressCount > limit) {
+      setState(() {
         progressCount -= 1;
-      else
-        defaultBackPressed(context);
-    });
+      });
+    } else {
+      defaultBackPressed(context);
+
+      // remove google data
+      if (googleId.isNotEmpty) {
+        googleSignInScope.signOut();
+        clearData();
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return RelieveScaffold(
-      hasBackButton: showDefaultBackButton(),
-      progressCount: progressCount,
+      hasBackButton: isHasBackButton(progressCount),
+      progressCount: progressCount == 3 ? 2 : progressCount,
       progressTotal: progressTotal,
       crossAxisAlignment: CrossAxisAlignment.start,
       onBackPressed: onBackButtonClick,

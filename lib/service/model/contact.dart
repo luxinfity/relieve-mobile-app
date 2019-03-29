@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'dart:convert';
+import "package:flutter/foundation.dart";
+import "dart:convert";
 
-import './base.dart';
+import "./base.dart";
 
 class Contact {
   final String name;
@@ -16,18 +16,18 @@ class Contact {
 
   String toJson() {
     return jsonEncode({
-      'name': name,
-      'type': type,
-      'phone': phone,
+      "name": name,
+      "type": type,
+      "phone": phone,
     });
   }
 
   factory Contact.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return Contact(
-        name: parsedJson['name'],
-        type: parsedJson['type'],
-        phone: parsedJson['phone'],
+        name: parsedJson["name"],
+        type: parsedJson["type"],
+        phone: parsedJson["phone"],
       );
     } catch (e) {
       return null;
@@ -48,9 +48,9 @@ class ContactResponse extends BaseResponse {
   factory ContactResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return ContactResponse(
-        message: parsedJson['message'],
-        status: parsedJson['status'],
-        content: (parsedJson['content'] as List)
+        message: parsedJson["message"],
+        status: parsedJson["status"],
+        content: (parsedJson["content"] as List)
             .map((content) => Contact.fromJson(content))
             .toList(),
       );

@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
-import 'package:relieve_app/service/model/base.dart';
-import 'dart:convert';
+import "package:flutter/foundation.dart";
+import "package:relieve_app/service/model/base.dart";
+import "dart:convert";
 
-import 'package:relieve_app/service/service.dart';
+import "package:relieve_app/service/service.dart";
 
 
 class AddressDetail {
@@ -25,24 +25,24 @@ class AddressDetail {
 
   String toJson() {
     return jsonEncode({
-      'country': country,
-      'zip_code': zipCode,
-      'area_1': area1,
-      'area_2': area2,
-      'area_3': area3,
-      'area_4': area4,
+      "country": country,
+      "zip_code": zipCode,
+      "area_1": area1,
+      "area_2": area2,
+      "area_3": area3,
+      "area_4": area4,
     });
   }
 
   factory AddressDetail.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return AddressDetail(
-        country: parsedJson['country'],
-        zipCode: parsedJson['zip_code'],
-        area1: parsedJson['area_1'],
-        area2: parsedJson['area_2'],
-        area3: parsedJson['area_3'],
-        area4: parsedJson['area_4'],
+        country: parsedJson["country"],
+        zipCode: parsedJson["zip_code"],
+        area1: parsedJson["area_1"],
+        area2: parsedJson["area_2"],
+        area3: parsedJson["area_3"],
+        area4: parsedJson["area_4"],
       );
     } catch (e) {
       return null;
@@ -65,20 +65,20 @@ class Address {
 
   String toJson() {
     return jsonEncode({
-      'uuid': uuid,
-      'name': name,
-      'coordinates': location.toString(),
-      'details': details.toJson(),
+      "uuid": uuid,
+      "name": name,
+      "coordinates": location.toString(),
+      "details": details.toJson(),
     });
   }
 
   factory Address.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return Address(
-        uuid: parsedJson['uuid'],
-        name: parsedJson['name'],
-        location: Location.parseString(parsedJson['coordinates']),
-        details: AddressDetail.fromJson(parsedJson['details']),
+        uuid: parsedJson["uuid"],
+        name: parsedJson["name"],
+        location: Location.parseString(parsedJson["coordinates"]),
+        details: AddressDetail.fromJson(parsedJson["details"]),
       );
     } catch (e) {
       return null;
@@ -99,9 +99,9 @@ class AddressResponse extends BaseResponse {
   factory AddressResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return AddressResponse(
-        message: parsedJson['message'],
-        status: parsedJson['status'],
-        content: (parsedJson['content'] as List)
+        message: parsedJson["message"],
+        status: parsedJson["status"],
+        content: (parsedJson["content"] as List)
             .map((content) => Address.fromJson(content))
             .toList(),
       );

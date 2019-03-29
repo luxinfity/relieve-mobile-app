@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_page_indicator/flutter_page_indicator.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/screen/dashboard/dashboard.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import "package:flutter/material.dart";
+import "package:flutter_page_indicator/flutter_page_indicator.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/screen/dashboard/dashboard.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
+import "package:relieve_app/widget/relieve_scaffold.dart";
 
 class WalkthroughScreen extends StatefulWidget {
   WalkthroughScreen({Key key}) : super(key: key);
@@ -132,25 +132,25 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
     switch (position) {
       case 0:
         return Text(
-          'Pastikan data yang kamu input sudah benar',
+          "Pastikan data yang kamu input sudah benar",
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 1:
         return Text(
-          'Tambakan keluarga mu ke dalam daftar kerabat',
+          "Tambakan keluarga mu ke dalam daftar kerabat",
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       case 2:
         return Text(
-          'Laporkan kondisi mu setiap hari!',
+          "Laporkan kondisi mu setiap hari!",
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
       default:
         return Text(
-          'Tetap tenang, dalam keadaan darurat',
+          "Tetap tenang, dalam keadaan darurat",
           textAlign: TextAlign.center,
           style: CircularStdFont.bold.getStyle(size: Dimen.x18),
         );
@@ -161,26 +161,26 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
     switch (position) {
       case 0:
         return Text(
-            'Data yang benar dan lengkap dapat mempermudah keluarga mu untuk menghubungi dan mengidetifikasi dirimu',
+            "Data yang benar dan lengkap dapat mempermudah keluarga mu untuk menghubungi dan mengidetifikasi dirimu",
             textAlign: TextAlign.center);
       case 1:
         return Text(
-            'Jangan sampai kamu ketinggalan berita terkini dari keluarga mu, Ayo tambahkan semua dan pantau setiap hari',
+            "Jangan sampai kamu ketinggalan berita terkini dari keluarga mu, Ayo tambahkan semua dan pantau setiap hari",
             textAlign: TextAlign.center);
       case 2:
         return Text(
-            'Selalu berikan berita terkini mengenai dirimu, cukup 3 kali klik dan hilangkan kecemasan keluarga mu',
+            "Selalu berikan berita terkini mengenai dirimu, cukup 3 kali klik dan hilangkan kecemasan keluarga mu",
             textAlign: TextAlign.center);
       default:
         return Text(
-            'Semua nomor emergency dapat kamu temukan dalam aplikasi, tetap tenang, tetap semangat! ',
+            "Semua nomor emergency dapat kamu temukan dalam aplikasi, tetap tenang, tetap semangat! ",
             textAlign: TextAlign.center);
     }
   }
 
   StandardButton buildActionButton(BuildContext context) {
     return StandardButton(
-      text: (_counter < WALKTHROUGH_SIZE - 1) ? 'Mengerti' : 'Ayo mulai!',
+      text: (_counter < WALKTHROUGH_SIZE - 1) ? "Mengerti" : "Ayo mulai!",
       backgroundColor: AppColor.colorPrimary,
       buttonClick: () => _moveToNext(context),
     );

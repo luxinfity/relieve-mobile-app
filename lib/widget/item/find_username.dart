@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/item/standard_button.dart';
+import "package:cached_network_image/cached_network_image.dart";
+import "package:flutter/material.dart";
+import "package:relieve_app/res/res.dart";
+import "package:relieve_app/widget/item/standard_button.dart";
 
 class FindUsername extends StatefulWidget {
   final VoidCallback onFinishClick;
@@ -47,7 +47,7 @@ class FindUsernameState extends State<FindUsername> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          'Tambahkan keluarga mu',
+          "Tambahkan keluarga mu",
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
@@ -56,7 +56,7 @@ class FindUsernameState extends State<FindUsername> {
             horizontal: Dimen.x16, vertical: Dimen.x8),
         child: TextFormField(
           decoration: InputDecoration(
-            labelText: 'Tulis username',
+            labelText: "Tulis username / email",
             prefixIcon: Padding(
               padding: const EdgeInsets.all(Dimen.x14),
               child: LocalImage.ic_search
@@ -94,7 +94,7 @@ class FindUsernameState extends State<FindUsername> {
                 Container(width: Dimen.x16),
                 Expanded(
                   child: Text(
-                    'Sultan Akbar',
+                    "Sultan Akbar",
                     style: CircularStdFont.medium.getStyle(size: Dimen.x18),
                   ),
                 ),
@@ -104,7 +104,7 @@ class FindUsernameState extends State<FindUsername> {
           : Container(),
       Container(height: Dimen.x28),
       StandardButton(
-        text: isUserNameExist ? 'Tambahkan ke Daftar' : 'Cari Username',
+        text: isUserNameExist ? "Tambahkan ke Daftar" : "Cari Username",
         backgroundColor: AppColor.colorPrimary,
         buttonClick: buttonClick,
       )
@@ -117,7 +117,7 @@ class FindUsernameState extends State<FindUsername> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          'Masukkan kode unik',
+          "Masukkan kode unik",
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
@@ -184,7 +184,7 @@ class FindUsernameState extends State<FindUsername> {
       Container(height: Dimen.x18),
       Center(
         child: Text(
-          '05:00',
+          "05:00",
           style: CircularStdFont.book
               .getStyle(size: Dimen.x12, color: AppColor.colorTextGrey),
         ),
@@ -204,7 +204,7 @@ class FindUsernameState extends State<FindUsername> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          'Masukkan nama panggilan nya',
+          "Masukkan nama panggilan nya",
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
@@ -238,7 +238,7 @@ class FindUsernameState extends State<FindUsername> {
             horizontal: Dimen.x16, vertical: Dimen.x8),
         child: TextFormField(
           decoration: InputDecoration(
-            labelText: 'Nama Panggilan',
+            labelText: "Nama Panggilan",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimen.x6),
             ),
@@ -260,7 +260,7 @@ class FindUsernameState extends State<FindUsername> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          'Yeay keluarga mu berhasil di tambahkan!!',
+          "Yeay keluarga mu berhasil di tambahkan!!",
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),

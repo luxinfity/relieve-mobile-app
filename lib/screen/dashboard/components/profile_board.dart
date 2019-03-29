@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:relieve_app/app_config.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:recase/recase.dart';
-import 'package:relieve_app/service/model/user.dart';
-import 'package:relieve_app/service/source/api/api.dart';
-import 'package:relieve_app/service/model/family.dart';
-import 'package:relieve_app/widget/item/user_location.dart';
+import "package:flutter/material.dart";
+import "package:cached_network_image/cached_network_image.dart";
+import "package:relieve_app/app_config.dart";
+import "package:relieve_app/res/res.dart";
+import "package:recase/recase.dart";
+import "package:relieve_app/service/model/user.dart";
+import "package:relieve_app/service/source/api/api.dart";
+import "package:relieve_app/service/model/family.dart";
+import "package:relieve_app/widget/item/user_location.dart";
 
 class ProfileBoard extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class ProfileBoard extends StatefulWidget {
 }
 
 class ProfileBoardState extends State {
-  User user = User(fullname: '');
+  User user = User(fullname: "");
 
   void loadUser() async {
     final userResponse = await BakauApi(AppConfig.of(context)).getUser();
@@ -58,7 +58,7 @@ class ProfileBoardState extends State {
                   radius: Dimen.x36 + Dimen.x16,
                   backgroundColor: AppColor.colorAccent,
                   backgroundImage: CachedNetworkImageProvider(
-                      'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg'),
+                      "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg"),
                 ),
               ),
               Padding(
@@ -79,7 +79,7 @@ class ProfileBoardState extends State {
                   horizontal: Dimen.x21,
                 ),
                 child: UserLocation(
-                  location: 'Sukajadi, Bandung',
+                  location: "Sukajadi, Bandung",
                   icon: LocalImage.ic_location,
                   personHealth: PersonHealth.None,
                 ),

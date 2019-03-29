@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import "package:flutter/foundation.dart";
 
 enum PersonHealth { Fine, Bad, None }
 
@@ -16,5 +16,5 @@ class Family {
   });
 
   String get initials =>
-      fullName.toUpperCase().split(' ').map((word) => word[0]).join(' ');
+      fullName.toUpperCase().split(" ").map((word) => word[0]).join(" ");
 }

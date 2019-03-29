@@ -1,10 +1,11 @@
-import 'package:flutter_keychain/flutter_keychain.dart';
+import "package:flutter_keychain/flutter_keychain.dart";
 
 // logout
 void clearData() {
-  setUsername('');
-  setToken('');
-  setRefreshToken('');
+  setGoogleId("");
+  setUsername("");
+  setToken("");
+  setRefreshToken("");
   setExpireIn(0);
 }
 
@@ -20,7 +21,9 @@ Future<bool> isGoogleLogin() async {
 
 // Google Sign In
 Future<String> getGoogleId() async {
-  return await FlutterKeychain.get(key: "googleId");
+  String data = await FlutterKeychain.get(key: "googleId");
+  if (data == null) data = "";
+  return data;
 }
 
 void setGoogleId(String id) async {
@@ -29,7 +32,9 @@ void setGoogleId(String id) async {
 
 // Username
 Future<String> getUsername() async {
-  return await FlutterKeychain.get(key: "username");
+  String data = await FlutterKeychain.get(key: "username");
+  if (data == null) data = "";
+  return data;
 }
 
 void setUsername(String username) async {
@@ -38,7 +43,9 @@ void setUsername(String username) async {
 
 // TOKEN
 Future<String> getToken() async {
-  return await FlutterKeychain.get(key: "token");
+  String data = await FlutterKeychain.get(key: "token");
+  if (data == null) data = "";
+  return data;
 }
 
 void setToken(String token) async {
@@ -47,7 +54,9 @@ void setToken(String token) async {
 
 // refresh token
 Future<String> getRefreshToken() async {
-  return await FlutterKeychain.get(key: "refreshToken");
+  String data = await FlutterKeychain.get(key: "refreshToken");
+  if (data == null) data = "";
+  return data;
 }
 
 void setRefreshToken(String refreshToken) async {
@@ -56,7 +65,9 @@ void setRefreshToken(String refreshToken) async {
 
 // expire in
 Future<int> getExpireIn() async {
-  return int.parse(await FlutterKeychain.get(key: "expireIn"));
+  String data = await FlutterKeychain.get(key: "expireIn");
+  if (data == null) data = "0";
+  return int.parse(data);
 }
 
 void setExpireIn(int expireIn) async {
