@@ -31,12 +31,6 @@ class RegisterScreenState extends State<RegisterScreen> {
     PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.location);
 
-    // print(permission == PermissionStatus.granted);
-    // print(permission == PermissionStatus.restricted);
-    // print(permission == PermissionStatus.denied);
-    // print(permission == PermissionStatus.disabled);
-    // print(permission == PermissionStatus.unknown);
-
     bool hasNoPermission = permission == PermissionStatus.denied ||
         permission == PermissionStatus.unknown;
 

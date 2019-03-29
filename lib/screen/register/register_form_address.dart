@@ -20,10 +20,12 @@ class RegisterFormAddress extends StatefulWidget {
 }
 
 class RegisterFormAddressState extends State<RegisterFormAddress> {
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  static final CameraPosition jakartaCoordinate = CameraPosition(
+    target: LatLng(-6.21462, 106.84513),
+    zoom: 14,
   );
+
+  GoogleMapController _mapController;
 
   void checkPermission() async {
     PermissionStatus permission = await PermissionHandler()
@@ -37,6 +39,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       await PermissionHandler().requestPermissions([PermissionGroup.location]);
     }
   }
+
+  void moveToMyLocation() async {}
 
   @override
   void initState() {
@@ -89,8 +93,18 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
           child: Stack(
             children: <Widget>[
               GoogleMap(
-                initialCameraPosition: _kGooglePlex,
+                initialCameraPosition: jakartaCoordinate,
                 myLocationEnabled: true,
+                onMapCreated: (controller) {
+                  _mapController = controller;
+                  moveToMyLocation();
+                },
+              ),
+              Align(
+                child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
+                alignment: Theme.of(context).platform == TargetPlatform.iOS
+                    ? Alignment(0, -0.11)
+                    : Alignment(0, -0.2),
               ),
               Padding(
                 padding: const EdgeInsets.all(Dimen.x8),
@@ -103,9 +117,27 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                 ),
               ),
               Align(
-                child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
-                alignment: Alignment(0, -0.11),
-              )
+                alignment: Theme.of(context).platform == TargetPlatform.iOS
+                    ? Alignment.bottomRight
+                    : Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimen.x10),
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    elevation: Theme.of(context).platform == TargetPlatform.iOS
+                        ? 0
+                        : Dimen.x4,
+                    highlightElevation: Dimen.x4,
+                    child: Icon(
+                      Icons.gps_fixed,
+                      color: AppColor.colorPrimary,
+                    ),
+                    onPressed: () {
+                      // TODO center icon
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -43,7 +43,7 @@ class BoardingHomeScreen extends StatelessWidget {
   }
 
   void registerButtonClicked(BuildContext context) {
-    //TODO: check is data has filled
+    // TODO: check is data has filled
     Navigator.push(
       context,
       MaterialPageRoute(
