@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import "package:flutter/material.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
@@ -17,10 +18,58 @@ class RegisterFormAccount extends StatefulWidget {
 class RegisterFormAccountState extends State<RegisterFormAccount> {
   bool passwordVisible = false;
 
+  var isFormValid = true;
+  var isUsernameValid = true;
+  var isEmailValid = true;
+  var isPasswordValid = true;
+  var isPasswordMatch = true;
+
+  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _passwordConfirmFocus = FocusNode();
+
+  void onSaveClick() {
+    setState(() {
+      isUsernameValid = _usernameController.text.length >= 4;
+      isEmailValid = EmailValidator.validate(_emailController.text);
+      isPasswordValid = _passwordController.text.length >= 5;
+      isPasswordMatch =
+          _passwordController.text == _confirmPasswordController.text;
+
+      isFormValid = ![
+        _emailController,
+        _usernameController,
+        _passwordController,
+        _confirmPasswordController
+      ].any((controller) => controller.text.isEmpty);
+
+      if (isFormValid && isEmailValid && isPasswordValid && isPasswordMatch) {
+        widget.onNextClick();
+      }
+    });
+  }
+
+  String getErrorText(TextEditingController controller) {
+    if (controller.text.isEmpty && !isFormValid) {
+      return "Silahkan diisi dulu";
+    } else if (!isEmailValid && controller == _emailController) {
+      return "Format email tidak valid";
+    } else if (!isUsernameValid && controller == _usernameController) {
+      return "Panjang username minimal 4 huruf";
+    } else if (!isPasswordValid && controller == _passwordController) {
+      return "Panjang password minimal 5 huruf";
+    } else if (!isPasswordMatch && controller == _confirmPasswordController) {
+      return "Masukkan password yang sama";
+    } else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +92,17 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
+                  controller: _emailController,
                   decoration: InputDecoration(
                     labelText: "Email",
+                    errorText: getErrorText(_emailController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                   ),
                   focusNode: _emailFocus,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term){
+                  onFieldSubmitted: (term) {
                     _emailFocus.unfocus();
                     FocusScope.of(context).requestFocus(_usernameFocus);
                   },
@@ -65,15 +116,17 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
+                  controller: _usernameController,
                   decoration: InputDecoration(
                     labelText: "Username",
+                    errorText: getErrorText(_usernameController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                   ),
                   focusNode: _usernameFocus,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term){
+                  onFieldSubmitted: (term) {
                     _usernameFocus.unfocus();
                     FocusScope.of(context).requestFocus(_passwordFocus);
                   },
@@ -87,17 +140,19 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
-                  obscureText: passwordVisible,
+                  controller: _passwordController,
+                  obscureText: !passwordVisible,
                   decoration: InputDecoration(
                     labelText: "Password",
+                    errorText: getErrorText(_passwordController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
                       onPressed: () {
                         setState(() => passwordVisible = !passwordVisible);
@@ -106,7 +161,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                   ),
                   focusNode: _passwordFocus,
                   textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (term){
+                  onFieldSubmitted: (term) {
                     _usernameFocus.unfocus();
                     FocusScope.of(context).requestFocus(_passwordConfirmFocus);
                   },
@@ -120,17 +175,19 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
-                  obscureText: passwordVisible,
+                  controller: _confirmPasswordController,
+                  obscureText: !passwordVisible,
                   decoration: InputDecoration(
                     labelText: "Ketikkan Kembali Password",
+                    errorText: getErrorText(_confirmPasswordController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
                       onPressed: () {
                         setState(() => passwordVisible = !passwordVisible);
@@ -146,7 +203,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
         ),
         StandardButton(
           text: "Simpan",
-          buttonClick: widget.onNextClick,
+          buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,
         ),
         Container(
