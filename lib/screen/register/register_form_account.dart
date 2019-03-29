@@ -17,6 +17,11 @@ class RegisterFormAccount extends StatefulWidget {
 class RegisterFormAccountState extends State<RegisterFormAccount> {
   bool passwordVisible = false;
 
+  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _usernameFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _passwordConfirmFocus = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     final EdgeInsets safePadding = MediaQuery.of(context).padding;
@@ -44,6 +49,12 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                   ),
+                  focusNode: _emailFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term){
+                    _emailFocus.unfocus();
+                    FocusScope.of(context).requestFocus(_usernameFocus);
+                  },
                 ),
               ),
               Container(
@@ -60,6 +71,12 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                   ),
+                  focusNode: _usernameFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term){
+                    _usernameFocus.unfocus();
+                    FocusScope.of(context).requestFocus(_passwordFocus);
+                  },
                 ),
               ),
               Container(
@@ -87,6 +104,12 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                       },
                     ),
                   ),
+                  focusNode: _passwordFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term){
+                    _usernameFocus.unfocus();
+                    FocusScope.of(context).requestFocus(_passwordConfirmFocus);
+                  },
                 ),
               ),
               Container(
@@ -114,6 +137,8 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                       },
                     ),
                   ),
+                  focusNode: _passwordConfirmFocus,
+                  textInputAction: TextInputAction.done,
                 ),
               ),
             ],

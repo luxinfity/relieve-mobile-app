@@ -7,6 +7,7 @@ import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 import 'package:relieve_app/widget/item/standard_button.dart';
 import 'package:relieve_app/widget/item/title.dart';
+import 'package:relieve_app/widget/loading_dialog.dart';
 import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
@@ -19,12 +20,12 @@ class BoardingLoginScreen extends StatefulWidget {
 class BoardingLoginScreenState extends State {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final _usernameFocus = FocusNode();
+  final _passwordFocus = FocusNode();
 
   var isFormEmpty = false;
   var isWrongCredential = false;
   var passwordVisible = false;
-
-  var snackbar;
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -45,10 +46,14 @@ class BoardingLoginScreenState extends State {
         isWrongCredential = false;
       });
 
+      showLoadingDialog(context);
+
       final tokenResponse = await BakauApi(AppConfig.of(context)).login(
         usernameController.text,
         passwordController.text,
       );
+
+      dismissLoadingDialog(context);
 
       if (tokenResponse?.status == REQUEST_SUCCESS) {
         pref.setToken(tokenResponse.content.token);
@@ -66,6 +71,7 @@ class BoardingLoginScreenState extends State {
   }
 
   Flushbar flush;
+
   void _showErrorSnackBar() {
     flush = Flushbar(
       flushbarStyle: FlushbarStyle.FLOATING,
@@ -119,7 +125,7 @@ class BoardingLoginScreenState extends State {
   }
 
   String getErrorUsername() {
-    if (isFormEmpty && passwordController.text.isEmpty)
+    if (isFormEmpty && usernameController.text.isEmpty)
       return 'Silahkan diisi dulu';
     else if (isWrongCredential)
       return 'Username atau Password salah';
@@ -128,7 +134,7 @@ class BoardingLoginScreenState extends State {
   }
 
   String getErrorPassword() {
-    if (isFormEmpty && usernameController.text.isEmpty)
+    if (isFormEmpty && passwordController.text.isEmpty)
       return 'Silahkan diisi dulu';
     else if (isWrongCredential)
       return 'Username atau Password salah';
@@ -160,12 +166,16 @@ class BoardingLoginScreenState extends State {
               setState(() => passwordVisible = !passwordVisible);
             },
           ),
-          errorText: getErrorUsername(),
+          errorText: getErrorPassword(),
         ),
-        textInputAction: TextInputAction.done,
         controller: passwordController,
         obscureText: !passwordVisible,
         maxLines: 1,
+        focusNode: _passwordFocus,
+        textInputAction: TextInputAction.done,
+        onFieldSubmitted: (term) {
+          onLoginClick();
+        },
       ),
     );
   }
@@ -181,11 +191,19 @@ class BoardingLoginScreenState extends State {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
           ),
-          errorText: getErrorPassword(),
+          errorText: getErrorUsername(),
         ),
-        textInputAction: TextInputAction.next,
         controller: usernameController,
         maxLines: 1,
+        focusNode: _usernameFocus,
+        textInputAction: TextInputAction.next,
+        onFieldSubmitted: (term) {
+          _usernameFocus.unfocus();
+          setState(() {
+            isWrongCredential = false;
+          }); // trigger re render
+          FocusScope.of(context).requestFocus(_passwordFocus);
+        },
       ),
     );
   }
