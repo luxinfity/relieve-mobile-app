@@ -28,6 +28,7 @@ class BoardingHomeScreen extends StatelessWidget {
         setGoogleId(account.id);
         setUsername(account.email);
 
+        // check, has user already registered before
         final checkResponse = await BakauApi(AppConfig.of(context))
             .checkUser(UserCheckIdentifier.email, account.email);
 
@@ -53,7 +54,6 @@ class BoardingHomeScreen extends StatelessWidget {
   }
 
   void registerButtonClicked(BuildContext context) {
-    // TODO: check is data has filled
     Navigator.push(
       context,
       MaterialPageRoute(
