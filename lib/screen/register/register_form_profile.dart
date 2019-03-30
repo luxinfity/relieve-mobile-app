@@ -1,12 +1,9 @@
-import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
 import "package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/widget/bottom_modal.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
-import 'package:relieve_app/widget/snackbar.dart';
-import "package:url_launcher/url_launcher.dart";
 import 'package:validators/validators.dart';
 
 class Profile {
@@ -74,10 +71,6 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           dobController.text,
           genderController.text,
         ));
-      } else if (dobController.text.isEmpty) {
-        showSnackBar(context, "Silahkan pilih tanggal lahir");
-      } else if (genderController.text.isEmpty) {
-        showSnackBar(context, "Silahkan pilih gender anda");
       }
     });
   }
@@ -289,29 +282,6 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                 ),
               ),
             ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: Dimen.x32, right: Dimen.x32),
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-                text: "Dengan mendaftar, kamu menyetujui ",
-                style: CircularStdFont.book
-                    .getStyle(size: Dimen.x12, color: AppColor.colorTextBlack),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: "ketentuan layanan dan kebijakan perivasi",
-                    style: CircularStdFont.book.getStyle(
-                        size: Dimen.x12, color: AppColor.colorPrimary),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        launch(
-                            "https://github.com/RelieveID/terms-and-conditions/");
-                      },
-                  ),
-                  TextSpan(text: " dalam penggunaan Relieve.ID")
-                ]),
           ),
         ),
         StandardButton(

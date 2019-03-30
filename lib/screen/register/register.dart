@@ -1,6 +1,4 @@
 import "package:flutter/material.dart";
-import "package:permission_handler/permission_handler.dart";
-import "package:relieve_app/screen/no_permission_location.dart";
 import "package:relieve_app/screen/register/register_form_account.dart";
 import "package:relieve_app/screen/register/register_form_profile.dart";
 import "package:relieve_app/screen/register/register_form_address.dart";
@@ -26,22 +24,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   Account _account;
   Profile _profile;
-
-  Future<bool> checkPermissionDenied() async {
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.location);
-
-    bool hasNoPermission = permission == PermissionStatus.denied ||
-        permission == PermissionStatus.unknown;
-
-    if (Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission) {
-      isPermissionDenied = true;
-    } else {
-      isPermissionDenied = false;
-    }
-
-    return isPermissionDenied;
-  }
+  MapAddress _mapAddress;
 
   @override
   void initState() {
@@ -64,45 +47,21 @@ class RegisterScreenState extends State<RegisterScreen> {
       case 1:
         return RegisterFormProfile(
           initialData: _profile,
-          onNextClick: (profile) async {
-            bool isPermissionDenied = await checkPermissionDenied();
+          onNextClick: (profile) {
             setState(() {
               _profile = profile;
-              if (isPermissionDenied) {
-                // go to request permission page, only for ios
-                progressCount = 3;
-              } else {
-                progressCount += 1;
-              }
-            });
-          },
-        );
-      case 2:
-        return RegisterFormAddress(
-          onBackClick: onBackButtonClick,
-          onNextClick: () {
-            setState(() {
               progressCount += 1;
             });
           },
         );
       default:
-        return LocationPermissionScreen(
-          onPermissionGranted: () {
-            setState(() {
-              progressCount = 2;
-            });
+        return RegisterFormAddress(
+          initialData: _mapAddress,
+          onNextClick: (mapAddress) {
+            _mapAddress = mapAddress;
+            // TODO: Register
           },
         );
-    }
-  }
-
-  bool isHasBackButton(int progressCount) {
-    switch (progressCount) {
-      case 2:
-        return false;
-      default:
-        return true;
     }
   }
 
@@ -110,11 +69,7 @@ class RegisterScreenState extends State<RegisterScreen> {
     String googleId = await getGoogleId();
     int limit = googleId.isEmpty ? 0 : 1;
 
-    if (progressCount == 3) {
-      setState(() {
-        progressCount = 1;
-      });
-    } else if (progressCount > limit) {
+    if (progressCount > limit) {
       setState(() {
         progressCount -= 1;
       });
@@ -132,7 +87,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return RelieveScaffold(
-      hasBackButton: isHasBackButton(progressCount),
+      hasBackButton: true,
       progressCount: progressCount == 3 ? 2 : progressCount,
       progressTotal: progressTotal,
       crossAxisAlignment: CrossAxisAlignment.start,
