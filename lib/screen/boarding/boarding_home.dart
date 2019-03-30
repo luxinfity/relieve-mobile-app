@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
+import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
 import "package:relieve_app/service/model/user_check.dart";
 import "package:relieve_app/service/service.dart";
 import "package:relieve_app/widget/item/title.dart";
@@ -27,15 +28,24 @@ class BoardingHomeScreen extends StatelessWidget {
         setGoogleId(account.id);
         setUsername(account.email);
 
-        await BakauApi(AppConfig.of(context))
+        final checkResponse = await BakauApi(AppConfig.of(context))
             .checkUser(UserCheckIdentifier.email, account.email);
 
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (builder) => RegisterScreen(progressCount: 1),
-          ),
-        );
+        if (checkResponse?.status == REQUEST_SUCCESS &&
+            checkResponse?.content?.isExsist == true) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+            (_) => false, // clean all back stack
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (builder) => RegisterScreen(progressCount: 2),
+            ),
+          );
+        }
       }
     } catch (error) {
       print(error);

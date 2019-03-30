@@ -47,7 +47,7 @@ class RegisterScreenState extends State<RegisterScreen> {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
-          (_) => false, // clean all back stack
+      (_) => false, // clean all back stack
     );
   }
 

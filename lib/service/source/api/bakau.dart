@@ -21,7 +21,7 @@ class BakauApi extends BaseApi {
   // Auth
   Future<UserCheckResponse> checkUser(
       UserCheckIdentifier checkIdentifier, String value) async {
-    var url = "$completeUri/user/profile";
+    var url = "$completeUri/auth/check";
     final response = await http.post(
       url,
       headers: {
