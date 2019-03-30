@@ -45,11 +45,11 @@ class RegisterFormMapState extends State<RegisterFormMap> {
 
   Future<bool> askForPermission() async {
     await PermissionHandler().requestPermissions([PermissionGroup.location]);
-    return await isLocationRequestPermitted();
+    return await LocationService.isLocationRequestPermitted();
   }
 
   void loadLocation() async {
-    hasPermission = await isLocationRequestPermitted();
+    hasPermission = await LocationService.isLocationRequestPermitted();
     if (!hasPermission) {
       hasPermission = await askForPermission();
       hasAskOnce = true;

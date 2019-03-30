@@ -23,7 +23,8 @@ class Location extends LatLng {
   }
 
   factory Location.parseString(String coordinate) {
-    final splited = coordinate.split(",").map((s) => double.parse(s.trim())).toList();
+    final splited =
+        coordinate.split(",").map((s) => double.parse(s.trim())).toList();
     return Location(splited[0], splited[1]);
   }
 
@@ -33,12 +34,21 @@ class Location extends LatLng {
 }
 
 class LocationService {
+  static Future<bool> isLocationRequestPermitted() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
+
+    return permission == PermissionStatus.granted ||
+        permission == PermissionStatus.restricted;
+  }
+
   static Future<Position> gerCurrentLocation() async {
     return await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
   static Future<IndonesiaPlace> getPlaceDetail(Location position) async {
+    // TODO: use server side geocode
     final places = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     if (places.isNotEmpty) {
@@ -52,12 +62,4 @@ class LocationService {
       return null;
     }
   }
-}
-
-Future<bool> isLocationRequestPermitted() async {
-  PermissionStatus permission =
-      await PermissionHandler().checkPermissionStatus(PermissionGroup.location);
-
-  return permission == PermissionStatus.granted ||
-      permission == PermissionStatus.restricted;
 }
