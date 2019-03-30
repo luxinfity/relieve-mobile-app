@@ -17,8 +17,9 @@ import "package:relieve_app/utils/preference_utils.dart" as pref;
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
+  final Account initialData;
 
-  RegisterScreen({this.progressCount = 1});
+  RegisterScreen({this.progressCount = 1, this.initialData});
 
   @override
   State<StatefulWidget> createState() {
@@ -38,6 +39,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
+    _account = widget.initialData;
     progressCount = widget.progressCount;
   }
 

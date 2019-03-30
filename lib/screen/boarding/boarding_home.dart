@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
+import 'package:relieve_app/screen/register/register_form_account.dart';
 import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
 import "package:relieve_app/service/model/user_check.dart";
 import "package:relieve_app/service/service.dart";
@@ -26,7 +27,6 @@ class BoardingHomeScreen extends StatelessWidget {
       final account = await googleSignInScope.signIn();
       if (account.email.isNotEmpty) {
         setGoogleId(account.id);
-        setUsername(account.email);
 
         // check, has user already registered before
         final checkResponse = await BakauApi(AppConfig.of(context))
@@ -34,6 +34,8 @@ class BoardingHomeScreen extends StatelessWidget {
 
         if (checkResponse?.status == REQUEST_SUCCESS &&
             checkResponse?.content?.isExsist == true) {
+          // set username as flag user login
+          setUsername(account.email);
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -43,7 +45,11 @@ class BoardingHomeScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (builder) => RegisterScreen(progressCount: 2),
+              builder: (builder) => RegisterScreen(
+                    progressCount: 2,
+                    initialData:
+                        Account(account.email, account.email, account.id),
+                  ),
             ),
           );
         }

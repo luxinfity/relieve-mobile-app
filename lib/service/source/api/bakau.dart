@@ -29,7 +29,7 @@ class BakauApi extends BaseApi {
         "secret": secret
       },
       body: jsonEncode({
-        "param": checkIdentifier.toString(),
+        "param": checkIdentifier.toString().split(".")[1],
         "value": value,
       }),
     );
