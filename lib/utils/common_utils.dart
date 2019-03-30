@@ -3,7 +3,7 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "package:google_sign_in/google_sign_in.dart";
-import 'package:permission_handler/permission_handler.dart';
+
 
 typedef VoidContextCallback = void Function(BuildContext context);
 typedef StringCallback = String Function();
@@ -41,12 +41,4 @@ void debounce(VoidCallback callback,
   }
 
   _debounceTimer = Timer(duration, callback);
-}
-
-Future<bool> isLocationRequestPermitted() async {
-  PermissionStatus permission =
-      await PermissionHandler().checkPermissionStatus(PermissionGroup.location);
-
-  return permission == PermissionStatus.granted ||
-      permission == PermissionStatus.restricted;
 }

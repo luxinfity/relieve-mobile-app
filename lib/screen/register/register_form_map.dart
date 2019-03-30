@@ -4,10 +4,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:permission_handler/permission_handler.dart';
 import "package:relieve_app/res/res.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
+import 'package:relieve_app/service/service.dart';
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
-import 'package:geolocator/geolocator.dart';
 import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class MapAddress {
@@ -53,11 +53,10 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     if (!hasPermission) {
       hasPermission = await askForPermission();
       hasAskOnce = true;
-      if (!hasPermission) return;  
+      if (!hasPermission) return;
     }
 
-    final position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    final position = await LocationService.gerCurrentLocation();
 
     setState(() {
       currentPositionCamera = CameraPosition(
@@ -65,7 +64,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
         zoom: 14,
       );
 
-      // if after asking permission, 
+      // if after asking permission,
       // view already be loaded, move to current location
       if (hasAskOnce) moveToMyLocation();
     });
@@ -81,8 +80,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     }
 
     if (currentPositionCamera == null) {
-      final position = await Geolocator()
-          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      final position = await LocationService.gerCurrentLocation();
 
       currentPositionCamera = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
@@ -105,19 +103,16 @@ class RegisterFormMapState extends State<RegisterFormMap> {
       if (mapCenter != null) {
         final position = mapCenter.target;
 
-        List<Placemark> locationDetail = await Geolocator()
-            .placemarkFromCoordinates(position.latitude, position.longitude);
+        IndonesiaPlace locationDetail =
+            await LocationService.getPlaceDetail(position);
 
-        if (locationDetail.isNotEmpty) {
+        if (locationDetail != null) {
           setState(() {
-            addressTitle =
-                "${locationDetail[0].thoroughfare} ${locationDetail[0].subThoroughfare}";
-            addressDetail = "${locationDetail[0].thoroughfare}, " +
-                "${locationDetail[0].subThoroughfare}, " +
-                "${locationDetail[0].subLocality}, " +
-                "${locationDetail[0].locality}, " +
-                "${locationDetail[0].subAdministrativeArea}, " +
-                "${locationDetail[0].administrativeArea}";
+            addressTitle = locationDetail.street;
+            addressDetail = "${locationDetail.street}, " +
+                "${locationDetail.district}, " +
+                "${locationDetail.city}, " +
+                "${locationDetail.province}";
           });
         }
       }
