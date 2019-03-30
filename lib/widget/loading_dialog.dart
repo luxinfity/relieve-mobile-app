@@ -25,14 +25,4 @@ void showLoadingDialog(BuildContext context) {
 
 void dismissLoadingDialog(BuildContext context) {
   Navigator.pop(context);
-  print("dismissd");
-}
-
-class DialogTest extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      child: Text("asa"),
-    );
-  }
 }

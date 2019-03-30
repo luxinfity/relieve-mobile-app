@@ -61,8 +61,8 @@ class BoardingHomeScreen extends StatelessWidget {
     try {
       final account = await googleSignInScope.signIn();
       if (account.email.isNotEmpty) {
-        final idToken = (await account.authentication).idToken;
-        setGoogleId(idToken);
+        // final idToken = (await account.authentication).idToken;
+        setGoogleId(account.id);
 
         // check, has user already registered before
         final checkResponse = await BakauApi(AppConfig.of(context))
@@ -70,14 +70,15 @@ class BoardingHomeScreen extends StatelessWidget {
 
         if (checkResponse?.status == REQUEST_SUCCESS &&
             checkResponse?.content?.isExsist == true) {
-          doGoogleLogin(context, account.email, idToken);
+          doGoogleLogin(context, account.email, account.id);
         } else {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (builder) => RegisterScreen(
                     progressCount: 2,
-                    initialData: Account(account.email, account.email, idToken),
+                    initialData:
+                        Account(account.email, account.email, account.id),
                   ),
             ),
           );

@@ -102,9 +102,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     debounce(() async {
       if (mapCenter != null) {
         final position = mapCenter.target;
-
         IndonesiaPlace locationDetail =
-            await LocationService.getPlaceDetail(position);
+            await LocationService.getPlaceDetail(Location.parseFromLatLng(position));
 
         if (locationDetail != null) {
           setState(() {

@@ -10,6 +10,13 @@ class Phone {
 
   Phone(this.number, this.status);
 
+  Map toMap() {
+    return {
+      "number": number,
+      "status": status,
+    };
+  }
+
   String toJson() {
     return jsonEncode({
       "number": number,
@@ -60,13 +67,13 @@ class User {
       "email": email,
       "birthdate": birthdate,
       "gender": gender,
-      "address": address.toJson(),
+      "address": address.toMap(),
     };
 
     if (onlyFirstPhone) {
       data["phone"] = phones[0].number;
     } else {
-      data["phones"] = "[${phones.map((phone) => phone.toJson()).join(",")}]";
+      data["phones"] = phones.map((phone) => phone.toMap());
     }
 
     return jsonEncode(data);

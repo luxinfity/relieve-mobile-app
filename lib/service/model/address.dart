@@ -4,7 +4,6 @@ import "dart:convert";
 
 import "package:relieve_app/service/service.dart";
 
-
 class AddressDetail {
   final String area1;
   final String area2;
@@ -22,6 +21,17 @@ class AddressDetail {
     this.country,
     this.zipCode,
   });
+
+  Map toMap() {
+    return {
+      "country": country,
+      "zip_code": zipCode,
+      "area_1": area1,
+      "area_2": area2,
+      "area_3": area3,
+      "area_4": area4,
+    };
+  }
 
   String toJson() {
     return jsonEncode({
@@ -63,12 +73,21 @@ class Address {
     this.details,
   });
 
+  Map toMap() {
+    return {
+      "uuid": uuid,
+      "name": name,
+      "coordinates": location.toString(),
+      "details": details?.toMap(),
+    };
+  }
+
   String toJson() {
     return jsonEncode({
       "uuid": uuid,
       "name": name,
       "coordinates": location.toString(),
-      "details": details?.toJson(),
+      "details": details?.toMap(),
     });
   }
 

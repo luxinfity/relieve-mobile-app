@@ -31,6 +31,10 @@ class Location extends LatLng {
   factory Location.parseFromPosition(Position position) {
     return Location(position.latitude, position.longitude);
   }
+
+  factory Location.parseFromLatLng(LatLng position) {
+    return Location(position.latitude, position.longitude);
+  }
 }
 
 class LocationService {
