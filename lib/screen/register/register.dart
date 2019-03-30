@@ -129,7 +129,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   void onBackButtonClick(context) async {
     String googleId = await getGoogleId();
-    int limit = googleId.isEmpty ? 0 : 1;
+    int limit = googleId.isEmpty ? 1 : 2;
 
     if (progressCount > limit) {
       setState(() {
