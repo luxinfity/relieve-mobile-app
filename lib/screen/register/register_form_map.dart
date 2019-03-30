@@ -8,21 +8,30 @@ import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
 import "package:permission_handler/permission_handler.dart";
 import 'package:geolocator/geolocator.dart';
+import 'package:relieve_app/widget/relieve_scaffold.dart';
 
-class RegisterFormAddress extends StatefulWidget {
-  final VoidContextCallback onBackClick;
+class MapAddress {
+  final String coordinate;
+  final String address;
+  final String name;
+
+  MapAddress(this.coordinate, this.address, this.name);
+}
+
+typedef MapAddressFormCallback = void Function(MapAddress profile);
+
+class RegisterFormMap extends StatefulWidget {
   final VoidCallback onNextClick;
 
-  const RegisterFormAddress({Key key, this.onBackClick, this.onNextClick})
-      : super(key: key);
+  const RegisterFormMap({Key key, this.onNextClick}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormAddressState();
+    return RegisterFormMapState();
   }
 }
 
-class RegisterFormAddressState extends State<RegisterFormAddress> {
+class RegisterFormMapState extends State<RegisterFormMap> {
   CameraPosition currentPositionCamera;
   CameraPosition mapCenter;
   Completer<GoogleMapController> _mapController = Completer();
@@ -77,22 +86,24 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
 
   void cameraIdle() {
     debounce(() async {
-      final position = mapCenter.target;
+      if (mapCenter != null) {
+        final position = mapCenter.target;
 
-      List<Placemark> locationDetail = await Geolocator()
-          .placemarkFromCoordinates(position.latitude, position.longitude);
+        List<Placemark> locationDetail = await Geolocator()
+            .placemarkFromCoordinates(position.latitude, position.longitude);
 
-      if (locationDetail.isNotEmpty) {
-        setState(() {
-          addressTitle =
-              "${locationDetail[0].thoroughfare} ${locationDetail[0].subThoroughfare}";
-          addressDetail = "${locationDetail[0].thoroughfare}, " +
-              "${locationDetail[0].subThoroughfare}, " +
-              "${locationDetail[0].subLocality}, " +
-              "${locationDetail[0].locality}, " +
-              "${locationDetail[0].subAdministrativeArea}, " +
-              "${locationDetail[0].administrativeArea}";
-        });
+        if (locationDetail.isNotEmpty) {
+          setState(() {
+            addressTitle =
+                "${locationDetail[0].thoroughfare} ${locationDetail[0].subThoroughfare}";
+            addressDetail = "${locationDetail[0].thoroughfare}, " +
+                "${locationDetail[0].subThoroughfare}, " +
+                "${locationDetail[0].subLocality}, " +
+                "${locationDetail[0].locality}, " +
+                "${locationDetail[0].subAdministrativeArea}, " +
+                "${locationDetail[0].administrativeArea}";
+          });
+        }
       }
     });
   }
@@ -109,7 +120,9 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   }
 
   void buttonClick() {
-    // TODO:  Activity finish
+    final coordinateString =
+        "${currentPositionCamera.target.latitude},${currentPositionCamera.target.longitude}";
+    Navigator.of(context).pop(MapAddress(coordinateString, addressDetail, ""));
   }
 
   @override
@@ -184,8 +197,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   @override
   Widget build(BuildContext context) {
     final EdgeInsets safePadding = MediaQuery.of(context).padding;
-    return Column(
-      children: <Widget>[
+    return RelieveScaffold(
+      childs: <Widget>[
         Expanded(
           child: Stack(
             children: <Widget>[
@@ -211,11 +224,12 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
               Padding(
                 padding: const EdgeInsets.all(Dimen.x8),
                 child: FloatingActionButton(
+                  heroTag: "backButton",
                   backgroundColor: Colors.white,
                   elevation: Dimen.x4,
                   highlightElevation: Dimen.x4,
                   child: LocalImage.ic_back_arrow.toSvg(height: 26),
-                  onPressed: () => widget.onBackClick(context),
+                  onPressed: () => defaultBackPressed(context),
                 ),
               ),
               Align(
@@ -225,6 +239,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                 child: Padding(
                   padding: const EdgeInsets.all(Dimen.x10),
                   child: FloatingActionButton(
+                    heroTag: "centerButton",
                     backgroundColor: Colors.white,
                     elevation: Theme.of(context).platform == TargetPlatform.iOS
                         ? 0

@@ -1,25 +1,14 @@
-import 'dart:async';
-import 'package:flutter/gestures.dart';
+import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:permission_handler/permission_handler.dart';
 import "package:relieve_app/res/res.dart";
-import "package:google_maps_flutter/google_maps_flutter.dart";
+import 'package:relieve_app/screen/no_permission_location.dart';
+import "package:relieve_app/screen/register/register_form_map.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
-import "package:permission_handler/permission_handler.dart";
-import 'package:geolocator/geolocator.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-class MapAddress {
-  final String coordinate;
-  final String address;
-  final String name;
-
-  MapAddress(this.coordinate, this.address, this.name);
-}
-
-typedef MapAddressFormCallback = void Function(MapAddress profile);
+import "package:url_launcher/url_launcher.dart";
+export "package:relieve_app/screen/register/register_form_map.dart";
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
@@ -60,31 +49,36 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     }
   }
 
-  // TODO: enable check permission
-//  Future<bool> checkPermissionDenied() async {
-//    PermissionStatus permission = await PermissionHandler()
-//        .checkPermissionStatus(PermissionGroup.location);
-//
-//    bool hasNoPermission = permission == PermissionStatus.denied ||
-//        permission == PermissionStatus.unknown;
-//
-//    if (Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission) {
-//      isPermissionDenied = true;
-//    } else {
-//      isPermissionDenied = false;
-//    }
-//
-//    return isPermissionDenied;
-//  }
+  Future<bool> isPermissionDenied() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
 
-//      default:
-//        return LocationPermissionScreen(
-//          onPermissionGranted: () {
-//            setState(() {
-//              progressCount = 2;
-//            });
-//          },
-//        );
+    bool hasNoPermission = permission == PermissionStatus.denied ||
+        permission == PermissionStatus.unknown;
+
+    return Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission;
+  }
+
+  void moveToMap() async {
+    if (await isPermissionDenied()) {
+      final result = await Navigator.push(context,
+          MaterialPageRoute(builder: (builder) => LocationPermissionScreen()));
+
+      if (result == null) {
+        return; // exit here
+      }
+    }
+
+    final result = await Navigator.push(
+        context, MaterialPageRoute(builder: (builder) => RegisterFormMap()));
+    if (result != null) {
+      final mapAddress = (result as MapAddress);
+      setState(() {
+        coordinateController.text = mapAddress.coordinate;
+        addressController.text = mapAddress.address;
+      });
+    }
+  }
 
   void onSaveClick() {
     setState(() {
@@ -137,12 +131,20 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                   left: Dimen.x16,
                   right: Dimen.x16,
                 ),
-                child: TextFormField(
-                  controller: coordinateController,
-                  decoration: InputDecoration(
-                    labelText: "Temukan dengan peta",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(Dimen.x6),
+                child: InkWell(
+                  onTap: moveToMap,
+                  child: TextFormField(
+                    enabled: false,
+                    controller: coordinateController,
+                    decoration: InputDecoration(
+                      labelText: "Temukan dengan peta",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(Dimen.x6),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: LocalImage.ic_map.toSvg(),
+                        onPressed: () {},
+                      ),
                     ),
                   ),
                 ),
@@ -156,6 +158,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                 ),
                 child: TextFormField(
                   controller: addressController,
+                  maxLines: null,
                   decoration: InputDecoration(
                       labelText: "Alamat Lengkap",
                       border: OutlineInputBorder(
@@ -165,7 +168,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                   focusNode: _addressFocus,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
-                    _addressFocus.unfocus();
+                    _nameFocus.unfocus();
                     FocusScope.of(context).requestFocus(_nameFocus);
                   },
                 ),
@@ -186,6 +189,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                   ),
+                  focusNode: _nameFocus,
+                  textInputAction: TextInputAction.done,
                 ),
               ),
             ],
@@ -215,7 +220,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
           ),
         ),
         StandardButton(
-          text: "Simpan",
+          text: "Daftar",
           isEnabled: isFormFilled(),
           buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,

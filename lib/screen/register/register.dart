@@ -9,7 +9,7 @@ import "package:relieve_app/widget/relieve_scaffold.dart";
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
 
-  RegisterScreen({this.progressCount = 0});
+  RegisterScreen({this.progressCount = 1});
 
   @override
   State<StatefulWidget> createState() {
@@ -19,7 +19,7 @@ class RegisterScreen extends StatefulWidget {
 
 class RegisterScreenState extends State<RegisterScreen> {
   bool isPermissionDenied = false;
-  int progressCount = 0;
+  int progressCount = 1;
   int progressTotal = 3;
 
   Account _account;
@@ -34,7 +34,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   Widget createPage() {
     switch (progressCount) {
-      case 0:
+      case 1:
         return RegisterFormAccount(
           initialData: _account,
           onNextClick: (account) {
@@ -44,7 +44,7 @@ class RegisterScreenState extends State<RegisterScreen> {
             });
           },
         );
-      case 1:
+      case 2:
         return RegisterFormProfile(
           initialData: _profile,
           onNextClick: (profile) {
@@ -88,7 +88,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return RelieveScaffold(
       hasBackButton: true,
-      progressCount: progressCount == 3 ? 2 : progressCount,
+      progressCount: progressCount,
       progressTotal: progressTotal,
       crossAxisAlignment: CrossAxisAlignment.start,
       onBackPressed: onBackButtonClick,
