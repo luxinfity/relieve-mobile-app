@@ -67,7 +67,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
       if (isFullNameValid && isPhoneValid) {
         widget.onNextClick(Profile(
           fullNameController.text.toLowerCase(),
-          phoneController.text,
+          phoneController.text.replaceFirst("0", ""),
           dobController.text,
           genderController.text,
         ));

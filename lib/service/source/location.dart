@@ -10,7 +10,7 @@ class Location extends LatLng {
 
   @override
   String toString() {
-    return "$latitude, $longitude";
+    return "$latitude,$longitude";
   }
 
   factory Location.parseString(String coordinate) {

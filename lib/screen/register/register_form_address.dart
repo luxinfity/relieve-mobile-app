@@ -13,13 +13,11 @@ export "package:relieve_app/screen/register/register_form_map.dart";
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
   final MapAddressFormCallback onNextClick;
-  final MapAddress initialData;
 
   const RegisterFormAddress({
     Key key,
     this.onBackClick,
     this.onNextClick,
-    this.initialData,
   }) : super(key: key);
 
   @override
@@ -38,16 +36,6 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
 
   final FocusNode _addressFocus = FocusNode();
   final FocusNode _nameFocus = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.initialData != null) {
-      coordinateController.text = widget.initialData.coordinate;
-      addressController.text = widget.initialData.address;
-      nameController.text = widget.initialData.name;
-    }
-  }
 
   Future<bool> isPermissionDenied() async {
     PermissionStatus permission = await PermissionHandler()
