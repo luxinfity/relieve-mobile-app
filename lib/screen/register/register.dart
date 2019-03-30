@@ -1,17 +1,25 @@
 import "package:flutter/material.dart";
-import "package:permission_handler/permission_handler.dart";
-import "package:relieve_app/screen/no_permission_location.dart";
+import 'package:relieve_app/app_config.dart';
+import 'package:relieve_app/res/res.dart';
 import "package:relieve_app/screen/register/register_form_account.dart";
 import "package:relieve_app/screen/register/register_form_profile.dart";
 import "package:relieve_app/screen/register/register_form_address.dart";
+import 'package:relieve_app/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/service/model/address.dart';
+import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/service/service.dart';
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/utils/preference_utils.dart";
+import 'package:relieve_app/widget/bottom_modal.dart';
+import 'package:relieve_app/widget/loading_dialog.dart';
 import "package:relieve_app/widget/relieve_scaffold.dart";
+import "package:relieve_app/utils/preference_utils.dart" as pref;
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
+  final Account initialData;
 
-  RegisterScreen({this.progressCount = 0});
+  RegisterScreen({this.progressCount = 1, this.initialData});
 
   @override
   State<StatefulWidget> createState() {
@@ -21,37 +29,76 @@ class RegisterScreen extends StatefulWidget {
 
 class RegisterScreenState extends State<RegisterScreen> {
   bool isPermissionDenied = false;
-  int progressCount = 0;
+  int progressCount = 1;
   int progressTotal = 3;
 
   Account _account;
   Profile _profile;
-
-  Future<bool> checkPermissionDenied() async {
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.location);
-
-    bool hasNoPermission = permission == PermissionStatus.denied ||
-        permission == PermissionStatus.unknown;
-
-    if (Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission) {
-      isPermissionDenied = true;
-    } else {
-      isPermissionDenied = false;
-    }
-
-    return isPermissionDenied;
-  }
+  MapAddress _mapAddress;
 
   @override
   void initState() {
     super.initState();
+    _account = widget.initialData;
     progressCount = widget.progressCount;
+  }
+
+  void onRegisterSuccess() {
+    // auto login
+    pref.setUsername(_account.username);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+      (_) => false, // clean all back stack
+    );
+  }
+
+  void doRegister(MapAddress mapAddress) async {
+    showLoadingDialog(context);
+    final location = mapAddress.coordinate.split(",");
+    final user = User(
+      username: _account.username,
+      email: _account.email,
+      password: _account.password,
+      fullname: _profile.fullName,
+      phones: <Phone>[Phone("+62${_profile.phoneNum}", 1)],
+      birthdate: _profile.dob,
+      isComplete: false,
+      gender: _profile.gender == "Perempuan" ? "f" : "m",
+      address: Address(
+        uuid: "1",
+        location:
+            Location(double.parse(location[0]), double.parse(location[1])),
+        name: "${mapAddress.name}|${mapAddress.address}",
+      ),
+    );
+
+    final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
+    dismissLoadingDialog(context);
+
+    if (tokenResponse?.status == REQUEST_SUCCESS) {
+      pref.setToken(tokenResponse.content.token);
+      pref.setRefreshToken(tokenResponse.content.refreshToken);
+      pref.setExpireIn(tokenResponse.content.expiresIn);
+
+      onRegisterSuccess();
+    } else {
+      createRelieveBottomModal(context, <Widget>[
+        Container(height: Dimen.x21),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+          child: Text(
+            "Username atau Email telah terdaftar",
+            style: CircularStdFont.book.getStyle(size: Dimen.x16),
+          ),
+        ),
+      ]);
+    }
   }
 
   Widget createPage() {
     switch (progressCount) {
-      case 0:
+      case 1:
         return RegisterFormAccount(
           initialData: _account,
           onNextClick: (account) {
@@ -61,60 +108,32 @@ class RegisterScreenState extends State<RegisterScreen> {
             });
           },
         );
-      case 1:
+      case 2:
         return RegisterFormProfile(
           initialData: _profile,
-          onNextClick: (profile) async {
-            bool isPermissionDenied = await checkPermissionDenied();
+          onNextClick: (profile) {
             setState(() {
               _profile = profile;
-              if (isPermissionDenied) {
-                // go to request permission page, only for ios
-                progressCount = 3;
-              } else {
-                progressCount += 1;
-              }
-            });
-          },
-        );
-      case 2:
-        return RegisterFormAddress(
-          onBackClick: onBackButtonClick,
-          onNextClick: () {
-            setState(() {
               progressCount += 1;
             });
           },
         );
       default:
-        return LocationPermissionScreen(
-          onPermissionGranted: () {
-            setState(() {
-              progressCount = 2;
-            });
+        return RegisterFormAddress(
+          initialData: _mapAddress,
+          onNextClick: (mapAddress) {
+            _mapAddress = mapAddress;
+            doRegister(mapAddress);
           },
         );
     }
   }
 
-  bool isHasBackButton(int progressCount) {
-    switch (progressCount) {
-      case 2:
-        return false;
-      default:
-        return true;
-    }
-  }
-
   void onBackButtonClick(context) async {
     String googleId = await getGoogleId();
-    int limit = googleId.isEmpty ? 0 : 1;
+    int limit = googleId.isEmpty ? 1 : 2;
 
-    if (progressCount == 3) {
-      setState(() {
-        progressCount = 1;
-      });
-    } else if (progressCount > limit) {
+    if (progressCount > limit) {
       setState(() {
         progressCount -= 1;
       });
@@ -132,8 +151,8 @@ class RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return RelieveScaffold(
-      hasBackButton: isHasBackButton(progressCount),
-      progressCount: progressCount == 3 ? 2 : progressCount,
+      hasBackButton: true,
+      progressCount: progressCount,
       progressTotal: progressTotal,
       crossAxisAlignment: CrossAxisAlignment.start,
       onBackPressed: onBackButtonClick,

@@ -1,17 +1,27 @@
+import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
+import 'package:permission_handler/permission_handler.dart';
 import "package:relieve_app/res/res.dart";
-import "package:google_maps_flutter/google_maps_flutter.dart";
+import 'package:relieve_app/screen/no_permission_location.dart';
+import "package:relieve_app/screen/register/register_form_map.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
-import "package:permission_handler/permission_handler.dart";
+import 'package:relieve_app/widget/snackbar.dart';
+import "package:url_launcher/url_launcher.dart";
+export "package:relieve_app/screen/register/register_form_map.dart";
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
-  final VoidCallback onNextClick;
+  final MapAddressFormCallback onNextClick;
+  final MapAddress initialData;
 
-  const RegisterFormAddress({Key key, this.onBackClick, this.onNextClick})
-      : super(key: key);
+  const RegisterFormAddress({
+    Key key,
+    this.onBackClick,
+    this.onNextClick,
+    this.initialData,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -20,68 +30,85 @@ class RegisterFormAddress extends StatefulWidget {
 }
 
 class RegisterFormAddressState extends State<RegisterFormAddress> {
-  static final CameraPosition jakartaCoordinate = CameraPosition(
-    target: LatLng(-6.21462, 106.84513),
-    zoom: 14,
-  );
+  var isAddressValid = true;
+  var isNameValid = true;
 
-  GoogleMapController _mapController;
+  final coordinateController = TextEditingController();
+  final addressController = TextEditingController();
+  final nameController = TextEditingController();
 
-  void checkPermission() async {
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.location);
-
-    bool hasPermission = permission == PermissionStatus.granted ||
-        permission == PermissionStatus.restricted;
-
-    if (!hasPermission &&
-        Theme.of(context).platform == TargetPlatform.android) {
-      await PermissionHandler().requestPermissions([PermissionGroup.location]);
-    }
-  }
-
-  void moveToMyLocation() async {}
+  final FocusNode _addressFocus = FocusNode();
+  final FocusNode _nameFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    checkPermission();
+    if (widget.initialData != null) {
+      coordinateController.text = widget.initialData.coordinate;
+      addressController.text = widget.initialData.address;
+      nameController.text = widget.initialData.name;
+    }
   }
 
-  Widget createAddressBar() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          margin: const EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
-          height: Dimen.x42,
-          width: Dimen.x42,
-          alignment: Alignment.center,
-          child:
-              LocalImage.ic_map.toSvg(color: Colors.white, height: Dimen.x21),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColor.colorPrimary,
-          ),
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Jl. Mahmud No.320",
-                style: CircularStdFont.medium.getStyle(size: Dimen.x16),
-              ),
-              Text(
-                "Jl. Mahmud No.320, Pamoyanan, Cicendo, Kota Bandung, Jawa Barat 40173",
-                style: CircularStdFont.book.getStyle(size: Dimen.x14),
-              ),
-            ],
-          ),
-        ),
-        Container(width: Dimen.x16)
-      ],
-    );
+  Future<bool> isPermissionDenied() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.location);
+
+    bool hasNoPermission = permission == PermissionStatus.denied ||
+        permission == PermissionStatus.unknown;
+
+    return Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission;
+  }
+
+  void moveToMap() async {
+    if (await isPermissionDenied()) {
+      final result = await Navigator.push(context,
+          MaterialPageRoute(builder: (builder) => LocationPermissionScreen()));
+      if (result == null) {
+        showSnackBar(context, "Silahkan izinkan penggunaan lokasi terlebih dulu");
+        return; // exit here
+      }
+    }
+
+    final result = await Navigator.push(
+        context, MaterialPageRoute(builder: (builder) => RegisterFormMap()));
+    if (result != null) {
+      final mapAddress = (result as MapAddress);
+      setState(() {
+        coordinateController.text = mapAddress.coordinate;
+        addressController.text = mapAddress.address;
+      });
+    }
+  }
+
+  void onSaveClick() {
+    setState(() {
+      isAddressValid = addressController.text.length >= 2;
+      isNameValid = nameController.text.length >= 2;
+
+      if (isAddressValid && isNameValid) {
+        widget.onNextClick(MapAddress(
+          coordinateController.text,
+          addressController.text.toLowerCase(),
+          nameController.text.toLowerCase(),
+        ));
+      }
+    });
+  }
+
+  bool isFormFilled() {
+    return ![coordinateController, addressController, nameController]
+        .any((controller) => controller.text.isEmpty);
+  }
+
+  String getErrorText(TextEditingController controller) {
+    if (!isAddressValid && controller == addressController) {
+      return "Alamat minimal 2 huruf";
+    } else if (!isNameValid && controller == nameController) {
+      return "Nama tempat minimal 2 huruf";
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -90,70 +117,118 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     return Column(
       children: <Widget>[
         Expanded(
-          child: Stack(
+          child: ListView(
+            padding: safePadding.copyWith(top: 0),
             children: <Widget>[
-              GoogleMap(
-                initialCameraPosition: jakartaCoordinate,
-                myLocationEnabled: true,
-                onMapCreated: (controller) {
-                  _mapController = controller;
-                  moveToMyLocation();
-                },
+              ThemedTitle(
+                title: "Alamat Tinggal",
+                subtitle:
+                    "Informasi aplikasi akan sesuai dengan alamat kamu tinggal",
               ),
-              Align(
-                child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
-                alignment: Theme.of(context).platform == TargetPlatform.iOS
-                    ? Alignment(0, -0.11)
-                    : Alignment(0, -0.2),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(Dimen.x8),
-                child: FloatingActionButton(
-                  backgroundColor: Colors.white,
-                  elevation: Dimen.x4,
-                  highlightElevation: Dimen.x4,
-                  child: LocalImage.ic_back_arrow.toSvg(height: 26),
-                  onPressed: () => widget.onBackClick(context),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: Dimen.x8,
+                  bottom: Dimen.x6,
+                  left: Dimen.x16,
+                  right: Dimen.x16,
+                ),
+                child: InkWell(
+                  onTap: moveToMap,
+                  child: TextFormField(
+                    enabled: false,
+                    controller: coordinateController,
+                    decoration: InputDecoration(
+                      labelText: "Temukan dengan peta",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(Dimen.x6),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: LocalImage.ic_map.toSvg(),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              Align(
-                alignment: Theme.of(context).platform == TargetPlatform.iOS
-                    ? Alignment.bottomRight
-                    : Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(Dimen.x10),
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.white,
-                    elevation: Theme.of(context).platform == TargetPlatform.iOS
-                        ? 0
-                        : Dimen.x4,
-                    highlightElevation: Dimen.x4,
-                    child: Icon(
-                      Icons.gps_fixed,
-                      color: AppColor.colorPrimary,
+              Container(
+                margin: const EdgeInsets.only(
+                  top: Dimen.x8,
+                  bottom: Dimen.x6,
+                  left: Dimen.x16,
+                  right: Dimen.x16,
+                ),
+                child: TextFormField(
+                  controller: addressController,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                      labelText: "Alamat Lengkap",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(Dimen.x6),
+                      ),
+                      errorText: getErrorText(addressController)),
+                  focusNode: _addressFocus,
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (term) {
+                    _nameFocus.unfocus();
+                    FocusScope.of(context).requestFocus(_nameFocus);
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: Dimen.x8,
+                  bottom: Dimen.x6,
+                  left: Dimen.x16,
+                  right: Dimen.x16,
+                ),
+                child: TextFormField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    labelText: "Nama Rumah",
+                    helperText: "Contoh : Rumah, Kantor, Rumah Bandung",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
-                    onPressed: () {
-                      // TODO center icon
-                    },
                   ),
+                  focusNode: _nameFocus,
+                  textInputAction: TextInputAction.done,
                 ),
               ),
             ],
           ),
         ),
-        Container(height: Dimen.x16),
-        ThemedTitle(
-          title: "Temukan alamat kamu",
+        Padding(
+          padding: const EdgeInsets.only(left: Dimen.x32, right: Dimen.x32),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+                text: "Dengan mendaftar, kamu menyetujui ",
+                style: CircularStdFont.book
+                    .getStyle(size: Dimen.x12, color: AppColor.colorTextBlack),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: "ketentuan layanan dan kebijakan perivasi",
+                    style: CircularStdFont.book.getStyle(
+                        size: Dimen.x12, color: AppColor.colorPrimary),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        launch(
+                            "https://github.com/RelieveID/terms-and-conditions/");
+                      },
+                  ),
+                  TextSpan(text: " dalam penggunaan Relieve.ID")
+                ]),
+          ),
         ),
-        Container(height: Dimen.x10),
-        createAddressBar(),
-        Container(height: Dimen.x21),
         StandardButton(
-          text: "Simpan",
+          text: "Daftar",
+          isEnabled: isFormFilled(),
+          buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,
-          buttonClick: () {},
         ),
-        Container(height: Dimen.x16 + safePadding.bottom)
+        Container(
+          height: Dimen.x16 + safePadding.bottom,
+        )
       ],
     );
   }

@@ -1,5 +1,7 @@
 import "dart:convert";
 
+import 'package:relieve_app/service/model/address.dart';
+
 import "./base.dart";
 
 class Phone {
@@ -7,6 +9,13 @@ class Phone {
   final int status;
 
   Phone(this.number, this.status);
+
+  Map toMap() {
+    return {
+      "number": number,
+      "status": status,
+    };
+  }
 
   String toJson() {
     return jsonEncode({
@@ -36,6 +45,7 @@ class User {
   final String birthdate;
   final bool isComplete;
   final String gender;
+  final Address address;
 
   User({
     this.username,
@@ -46,19 +56,27 @@ class User {
     this.birthdate,
     this.isComplete,
     this.gender,
+    this.address,
   });
 
-  String toJson() {
-    return jsonEncode({
+  String toJson({bool onlyFirstPhone = true}) {
+    var data = {
       "username": username,
       "password": password,
       "fullname": fullname,
       "email": email,
-      // "phone": phones.map((phone) => phone.toJson()),
-      "phones": phones,
       "birthdate": birthdate,
       "gender": gender,
-    });
+      "address": address.toMap(),
+    };
+
+    if (onlyFirstPhone) {
+      data["phone"] = phones[0].number;
+    } else {
+      data["phones"] = phones.map((phone) => phone.toMap());
+    }
+
+    return jsonEncode(data);
   }
 
   factory User.fromJson(Map<String, dynamic> parsedJson) {

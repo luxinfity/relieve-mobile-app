@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import "package:flushbar/flushbar.dart";
 import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/screen/walkthrough/walkthrough.dart";
