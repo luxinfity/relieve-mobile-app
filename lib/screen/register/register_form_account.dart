@@ -33,7 +33,6 @@ class RegisterFormAccount extends StatefulWidget {
 class RegisterFormAccountState extends State<RegisterFormAccount> {
   bool passwordVisible = false;
 
-  var isFormValid = true;
   var isUsernameValid = true;
   var isEmailValid = true;
   var isPasswordValid = true;
@@ -57,14 +56,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
       isPasswordMatch =
           _passwordController.text == _confirmPasswordController.text;
 
-      isFormValid = ![
-        _emailController,
-        _usernameController,
-        _passwordController,
-        _confirmPasswordController
-      ].any((controller) => controller.text.isEmpty);
-
-      if (isFormValid && isEmailValid && isPasswordValid && isPasswordMatch) {
+      if (isEmailValid && isPasswordValid && isPasswordMatch) {
         widget.onNextClick(Account(
           _emailController.text.toLowerCase(),
           _usernameController.text.toLowerCase(),
@@ -74,10 +66,17 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
     });
   }
 
+  bool isFormFilled() {
+    return ![
+      _emailController,
+      _usernameController,
+      _passwordController,
+      _confirmPasswordController
+    ].any((controller) => controller.text.isEmpty);
+  }
+
   String getErrorText(TextEditingController controller) {
-    if (controller.text.isEmpty && !isFormValid) {
-      return "Silahkan diisi dulu";
-    } else if (!isEmailValid && controller == _emailController) {
+    if (!isEmailValid && controller == _emailController) {
       return "Format email tidak valid";
     } else if (!isUsernameValid && controller == _usernameController) {
       return "Panjang username minimal 4 huruf";
@@ -233,6 +232,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
         ),
         StandardButton(
           text: "Simpan",
+          isEnabled: isFormFilled(),
           buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,
         ),

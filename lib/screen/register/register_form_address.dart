@@ -27,7 +27,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   CameraPosition mapCenter;
   Completer<GoogleMapController> _mapController = Completer();
 
-  final debounceDuration = 3; // second
+  final locationNameController = TextEditingController();
 
   String addressTitle = "DKI Jakarta";
   String addressDetail = "Kantor Relieve ID";
@@ -75,29 +75,25 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     mapCenter = movedPosition;
   }
 
-  Timer searchDebounce;
-
   void cameraIdle() {
-    if (searchDebounce != null) {
-      searchDebounce.cancel();
-    }
-
-    searchDebounce = Timer(Duration(seconds: debounceDuration), () async {
+    debounce(() async {
       final position = mapCenter.target;
 
       List<Placemark> locationDetail = await Geolocator()
           .placemarkFromCoordinates(position.latitude, position.longitude);
 
-      setState(() {
-        addressTitle = "${locationDetail[0].thoroughfare} ${locationDetail[0]
-            .subThoroughfare}";
-        addressDetail = "${locationDetail[0].thoroughfare} " +
-            "${locationDetail[0].subThoroughfare} " +
-            "${locationDetail[0].subLocality} " +
-            "${locationDetail[0].locality} " +
-            "${locationDetail[0].subAdministrativeArea} " +
-            "${locationDetail[0].administrativeArea}";
-      });
+      if (locationDetail.isNotEmpty) {
+        setState(() {
+          addressTitle =
+              "${locationDetail[0].thoroughfare} ${locationDetail[0].subThoroughfare}";
+          addressDetail = "${locationDetail[0].thoroughfare}, " +
+              "${locationDetail[0].subThoroughfare}, " +
+              "${locationDetail[0].subLocality}, " +
+              "${locationDetail[0].locality}, " +
+              "${locationDetail[0].subAdministrativeArea}, " +
+              "${locationDetail[0].administrativeArea}";
+        });
+      }
     });
   }
 
@@ -106,6 +102,14 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       addressTitle = "";
       addressDetail = "";
     });
+  }
+
+  bool isAddressKnown() {
+    return addressTitle.isNotEmpty && addressDetail.isNotEmpty;
+  }
+
+  void buttonClick() {
+    // TODO:  Activity finish
   }
 
   @override
@@ -125,6 +129,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
             size: Dimen.x14,
           ),
         ),
+        Container(height: Dimen.x10),
         Container(
           alignment: Alignment.centerLeft,
           width: 50,
@@ -140,6 +145,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
           addressTitle,
           style: CircularStdFont.medium.getStyle(size: Dimen.x16),
         ),
+        Container(height: Dimen.x10),
         Text(
           addressDetail,
           style: CircularStdFont.book.getStyle(size: Dimen.x14),
@@ -243,11 +249,12 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
         ),
         Container(height: Dimen.x10),
         createAddressBar(),
-        Container(height: Dimen.x21),
+        Container(height: Dimen.x12),
         StandardButton(
-          text: "Simpan",
+          text: "Pilih",
+          isEnabled: isAddressKnown(),
           backgroundColor: AppColor.colorPrimary,
-          buttonClick: () {},
+          buttonClick: buttonClick,
         ),
         Container(height: Dimen.x16 + safePadding.bottom)
       ],

@@ -1,4 +1,3 @@
-import 'package:flushbar/flushbar.dart';
 import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
 import "package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart";
@@ -40,7 +39,6 @@ class RegisterFormProfile extends StatefulWidget {
 class RegisterFormProfileState extends State<RegisterFormProfile> {
   bool passwordVisible = false;
 
-  var isFormValid = true;
   var isFullNameValid = true;
   var isPhoneValid = true;
 
@@ -69,14 +67,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
       isPhoneValid = isNumeric(phoneController.text) &&
           phoneController.text.replaceFirst("0", "").length >= 7;
 
-      isFormValid = ![
-        fullNameController,
-        phoneController,
-        dobController,
-        genderController
-      ].any((controller) => controller.text.isEmpty);
-
-      if (isFormValid && isFullNameValid && isPhoneValid) {
+      if (isFullNameValid && isPhoneValid) {
         widget.onNextClick(Profile(
           fullNameController.text.toLowerCase(),
           phoneController.text,
@@ -91,10 +82,17 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
     });
   }
 
+  bool isFormFilled() {
+    return ![
+      fullNameController,
+      phoneController,
+      dobController,
+      genderController
+    ].any((controller) => controller.text.isEmpty);
+  }
+
   String getErrorText(TextEditingController controller) {
-    if (controller.text.isEmpty && !isFormValid) {
-      return "Silahkan diisi dulu";
-    } else if (!isFullNameValid && controller == fullNameController) {
+    if (!isFullNameValid && controller == fullNameController) {
       return "Nama lengkap minimal 2 huruf";
     } else if (!isPhoneValid && controller == phoneController) {
       return "Panjang nomor handphone tidak valid";
@@ -127,6 +125,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
         final monthStr = month.toString().padLeft(2, "0");
         final dateStr = date.toString().padLeft(2, "0");
         dobController.text = "$year-$monthStr-$dateStr";
+        setState(() {});
       },
     );
   }
@@ -151,6 +150,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           onPressed: () {
             genderController.text = "Perempuan";
             Navigator.pop(context);
+            setState(() {});
           },
         ),
       ),
@@ -170,6 +170,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           onPressed: () {
             genderController.text = "Laki - Laki";
             Navigator.pop(context);
+            setState(() {});
           },
         ),
       ),
@@ -315,6 +316,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
         ),
         StandardButton(
           text: "Simpan",
+          isEnabled: isFormFilled(),
           buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,
         ),

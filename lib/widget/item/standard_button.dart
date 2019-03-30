@@ -9,6 +9,7 @@ class StandardButton extends StatelessWidget {
   final Color textColor;
   final bool isHollow;
   final bool isCenteredIcon;
+  final bool isEnabled;
 
   const StandardButton({
     Key key,
@@ -19,6 +20,7 @@ class StandardButton extends StatelessWidget {
     this.isCenteredIcon = false,
     this.textColor = Colors.white,
     this.isHollow = false,
+    this.isEnabled = true,
   }) : super(key: key);
 
   @override
@@ -48,9 +50,9 @@ class StandardButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(Dimen.x4),
         side: isHollow
             ? BorderSide.none
-            : BorderSide(color: backgroundColor, width: 2),
+            : BorderSide(color: isEnabled ? backgroundColor : Colors.transparent, width: 2),
       ),
-      onPressed: buttonClick,
+      onPressed: isEnabled ? buttonClick : null,
     );
   }
 
