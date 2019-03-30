@@ -7,17 +7,20 @@ import "package:relieve_app/screen/register/register_form_map.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
+import 'package:relieve_app/widget/snackbar.dart';
 import "package:url_launcher/url_launcher.dart";
 export "package:relieve_app/screen/register/register_form_map.dart";
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
   final MapAddressFormCallback onNextClick;
+  final MapAddress initialData;
 
   const RegisterFormAddress({
     Key key,
     this.onBackClick,
     this.onNextClick,
+    this.initialData,
   }) : super(key: key);
 
   @override
@@ -37,6 +40,16 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   final FocusNode _addressFocus = FocusNode();
   final FocusNode _nameFocus = FocusNode();
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initialData != null) {
+      coordinateController.text = widget.initialData.coordinate;
+      addressController.text = widget.initialData.address;
+      nameController.text = widget.initialData.name;
+    }
+  }
+
   Future<bool> isPermissionDenied() async {
     PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.location);
@@ -51,8 +64,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     if (await isPermissionDenied()) {
       final result = await Navigator.push(context,
           MaterialPageRoute(builder: (builder) => LocationPermissionScreen()));
-
       if (result == null) {
+        showSnackBar(context, "Silahkan izinkan penggunaan lokasi terlebih dulu");
         return; // exit here
       }
     }

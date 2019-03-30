@@ -11,6 +11,7 @@ import 'package:relieve_app/service/service.dart';
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/utils/preference_utils.dart";
 import 'package:relieve_app/widget/bottom_modal.dart';
+import 'package:relieve_app/widget/loading_dialog.dart';
 import "package:relieve_app/widget/relieve_scaffold.dart";
 import "package:relieve_app/utils/preference_utils.dart" as pref;
 
@@ -32,6 +33,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   Account _account;
   Profile _profile;
+  MapAddress _mapAddress;
 
   @override
   void initState() {
@@ -50,6 +52,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void doRegister(MapAddress mapAddress) async {
+    showLoadingDialog(context);
     final location = mapAddress.coordinate.split(",");
     final user = User(
       username: _account.username,
@@ -67,7 +70,9 @@ class RegisterScreenState extends State<RegisterScreen> {
         name: "${mapAddress.name}|${mapAddress.address}",
       ),
     );
+
     final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
+    dismissLoadingDialog(context);
 
     if (tokenResponse?.status == REQUEST_SUCCESS) {
       pref.setToken(tokenResponse.content.token);
@@ -78,9 +83,12 @@ class RegisterScreenState extends State<RegisterScreen> {
     } else {
       createRelieveBottomModal(context, <Widget>[
         Container(height: Dimen.x21),
-        Text(
-          "Username atau Email telah terdaftar",
-          style: CircularStdFont.book.getStyle(size: Dimen.x21),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+          child: Text(
+            "Username atau Email telah terdaftar",
+            style: CircularStdFont.book.getStyle(size: Dimen.x16),
+          ),
         ),
       ]);
     }
@@ -110,7 +118,9 @@ class RegisterScreenState extends State<RegisterScreen> {
         );
       default:
         return RegisterFormAddress(
+          initialData: _mapAddress,
           onNextClick: (mapAddress) {
+            _mapAddress = mapAddress;
             doRegister(mapAddress);
           },
         );

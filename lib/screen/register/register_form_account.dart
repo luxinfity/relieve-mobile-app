@@ -129,6 +129,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
                   ),
+                  keyboardType: TextInputType.emailAddress,
                   focusNode: _emailFocus,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {

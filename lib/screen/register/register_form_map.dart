@@ -1,12 +1,12 @@
 import 'dart:async';
 import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:permission_handler/permission_handler.dart';
 import "package:relieve_app/res/res.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
-import "package:permission_handler/permission_handler.dart";
 import 'package:geolocator/geolocator.dart';
 import 'package:relieve_app/widget/relieve_scaffold.dart';
 
@@ -35,35 +35,51 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   CameraPosition currentPositionCamera;
   CameraPosition mapCenter;
   Completer<GoogleMapController> _mapController = Completer();
+  bool hasPermission = false;
+  bool hasAskOnce = false;
 
   final locationNameController = TextEditingController();
 
   String addressTitle = "DKI Jakarta";
-  String addressDetail = "Kantor Relieve ID";
+  String addressDetail = "R&D Relieve ID";
+
+  Future<bool> askForPermission() async {
+    await PermissionHandler().requestPermissions([PermissionGroup.location]);
+    return await isLocationRequestPermitted();
+  }
 
   void loadLocation() async {
-    // checkPermission
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.location);
-
-    bool hasPermission = permission == PermissionStatus.granted ||
-        permission == PermissionStatus.restricted;
-
-    if (!hasPermission &&
-        Theme.of(context).platform == TargetPlatform.android) {
-      await PermissionHandler().requestPermissions([PermissionGroup.location]);
+    hasPermission = await isLocationRequestPermitted();
+    if (!hasPermission) {
+      hasPermission = await askForPermission();
+      hasAskOnce = true;
+      if (!hasPermission) return;  
     }
 
     final position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-    currentPositionCamera = CameraPosition(
-      target: LatLng(position.latitude, position.longitude),
-      zoom: 14,
-    );
+    setState(() {
+      currentPositionCamera = CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: 14,
+      );
+
+      // if after asking permission, 
+      // view already be loaded, move to current location
+      if (hasAskOnce) moveToMyLocation();
+    });
   }
 
   void moveToMyLocation() async {
+    if (!hasPermission) {
+      if (hasAskOnce) {
+        hasPermission = await askForPermission();
+      }
+      if (!hasPermission) return;
+      setState(() {});
+    }
+
     if (currentPositionCamera == null) {
       final position = await Geolocator()
           .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -84,7 +100,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     mapCenter = movedPosition;
   }
 
-  void cameraIdle() {
+  void cameraIdle() async {
     debounce(() async {
       if (mapCenter != null) {
         final position = mapCenter.target;
@@ -206,7 +222,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
                 initialCameraPosition: currentPositionCamera == null
                     ? jakartaCoordinate
                     : currentPositionCamera,
-                myLocationEnabled: true,
+                myLocationEnabled: hasPermission,
                 onMapCreated: (controller) {
                   _mapController.complete(controller);
                   moveToMyLocation();

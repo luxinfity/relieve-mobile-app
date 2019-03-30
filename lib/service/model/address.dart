@@ -68,7 +68,7 @@ class Address {
       "uuid": uuid,
       "name": name,
       "coordinates": location.toString(),
-      "details": details.toJson(),
+      "details": details?.toJson(),
     });
   }
 
