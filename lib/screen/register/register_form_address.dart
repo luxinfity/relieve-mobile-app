@@ -1,10 +1,13 @@
+import 'dart:async';
 import "package:flutter/material.dart";
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import "package:relieve_app/res/res.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
 import "package:permission_handler/permission_handler.dart";
+import 'package:geolocator/geolocator.dart';
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
@@ -20,14 +23,17 @@ class RegisterFormAddress extends StatefulWidget {
 }
 
 class RegisterFormAddressState extends State<RegisterFormAddress> {
-  static final CameraPosition jakartaCoordinate = CameraPosition(
-    target: LatLng(-6.21462, 106.84513),
-    zoom: 14,
-  );
+  CameraPosition currentPositionCamera;
+  CameraPosition mapCenter;
+  Completer<GoogleMapController> _mapController = Completer();
 
-  GoogleMapController _mapController;
+  final debounceDuration = 3; // second
 
-  void checkPermission() async {
+  String addressTitle = "DKI Jakarta";
+  String addressDetail = "Kantor Relieve ID";
+
+  void loadLocation() async {
+    // checkPermission
     PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.location);
 
@@ -38,14 +44,108 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
         Theme.of(context).platform == TargetPlatform.android) {
       await PermissionHandler().requestPermissions([PermissionGroup.location]);
     }
+
+    final position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+    currentPositionCamera = CameraPosition(
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 14,
+    );
   }
 
-  void moveToMyLocation() async {}
+  void moveToMyLocation() async {
+    if (currentPositionCamera == null) {
+      final position = await Geolocator()
+          .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
+      currentPositionCamera = CameraPosition(
+        target: LatLng(position.latitude, position.longitude),
+        zoom: 14,
+      );
+    }
+
+    final controller = await _mapController.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(currentPositionCamera),
+    );
+  }
+
+  void cameraMoved(CameraPosition movedPosition) async {
+    mapCenter = movedPosition;
+  }
+
+  Timer searchDebounce;
+
+  void cameraIdle() {
+    if (searchDebounce != null) {
+      searchDebounce.cancel();
+    }
+
+    searchDebounce = Timer(Duration(seconds: debounceDuration), () async {
+      final position = mapCenter.target;
+
+      List<Placemark> locationDetail = await Geolocator()
+          .placemarkFromCoordinates(position.latitude, position.longitude);
+
+      setState(() {
+        addressTitle = "${locationDetail[0].thoroughfare} ${locationDetail[0]
+            .subThoroughfare}";
+        addressDetail = "${locationDetail[0].thoroughfare} " +
+            "${locationDetail[0].subThoroughfare} " +
+            "${locationDetail[0].subLocality} " +
+            "${locationDetail[0].locality} " +
+            "${locationDetail[0].subAdministrativeArea} " +
+            "${locationDetail[0].administrativeArea}";
+      });
+    });
+  }
+
+  void cameraStartMoving() {
+    setState(() {
+      addressTitle = "";
+      addressDetail = "";
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    checkPermission();
+    loadLocation();
+  }
+
+  List<Widget> getAddressColumn() {
+    if (addressTitle.isEmpty || addressDetail.isEmpty) {
+      return <Widget>[
+        Container(
+          alignment: Alignment.centerLeft,
+          width: 50,
+          child: SpinKitThreeBounce(
+            color: AppColor.colorTextBlack,
+            size: Dimen.x14,
+          ),
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          width: 50,
+          child: SpinKitThreeBounce(
+            color: AppColor.colorTextBlack,
+            size: Dimen.x14,
+          ),
+        ),
+      ];
+    } else {
+      return <Widget>[
+        Text(
+          addressTitle,
+          style: CircularStdFont.medium.getStyle(size: Dimen.x16),
+        ),
+        Text(
+          addressDetail,
+          style: CircularStdFont.book.getStyle(size: Dimen.x14),
+        ),
+      ];
+    }
   }
 
   Widget createAddressBar() {
@@ -67,16 +167,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Jl. Mahmud No.320",
-                style: CircularStdFont.medium.getStyle(size: Dimen.x16),
-              ),
-              Text(
-                "Jl. Mahmud No.320, Pamoyanan, Cicendo, Kota Bandung, Jawa Barat 40173",
-                style: CircularStdFont.book.getStyle(size: Dimen.x14),
-              ),
-            ],
+            children: getAddressColumn(),
           ),
         ),
         Container(width: Dimen.x16)
@@ -93,12 +184,17 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
           child: Stack(
             children: <Widget>[
               GoogleMap(
-                initialCameraPosition: jakartaCoordinate,
+                initialCameraPosition: currentPositionCamera == null
+                    ? jakartaCoordinate
+                    : currentPositionCamera,
                 myLocationEnabled: true,
                 onMapCreated: (controller) {
-                  _mapController = controller;
+                  _mapController.complete(controller);
                   moveToMyLocation();
                 },
+                onCameraMove: cameraMoved,
+                onCameraIdle: cameraIdle,
+                onCameraMoveStarted: cameraStartMoving,
               ),
               Align(
                 child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
@@ -133,7 +229,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                       color: AppColor.colorPrimary,
                     ),
                     onPressed: () {
-                      // TODO center icon
+                      moveToMyLocation();
                     },
                   ),
                 ),

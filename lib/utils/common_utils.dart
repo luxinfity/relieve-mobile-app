@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import "package:google_sign_in/google_sign_in.dart";
 
 typedef VoidContextCallback = void Function(BuildContext context);
@@ -21,4 +22,9 @@ final GoogleSignIn googleSignInScope = GoogleSignIn(
     "email",
     "https://www.googleapis.com/auth/contacts.readonly",
   ],
+);
+
+final CameraPosition jakartaCoordinate = CameraPosition(
+  target: LatLng(-6.21462, 106.84513),
+  zoom: 14,
 );
