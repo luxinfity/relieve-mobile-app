@@ -60,7 +60,6 @@ class LocalImage {
   static LocalImage get ic_chat => LocalImage("ic_chat");
   static LocalImage get ic_discover => LocalImage("ic_discover");
   static LocalImage get ic_home => LocalImage("ic_home");
-  static LocalImage get ic_profile => LocalImage("ic_profile");
 
   // items
   static LocalImage get ic_live => LocalImage("ic_live");
