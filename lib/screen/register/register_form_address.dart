@@ -51,10 +51,13 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   }
 
   void tryAllowPermission() async {
-    if (!await LocationService.askForPermission() &&
-        Theme.of(context).platform == TargetPlatform.iOS) {
-      PermissionHandler().openAppSettings();
+    if (!await LocationService.askForPermission()) {
+      await PermissionHandler().openAppSettings();
+      if (!await LocationService.isLocationRequestPermitted()) return;
     }
+
+    Navigator.of(context).pop();
+    moveToMap();
   }
 
   void moveToMap() async {
@@ -67,7 +70,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
               right: Dimen.x16,
               left: Dimen.x16),
           child: Text(
-            "Izinkan Relieve Id mengetahui lokasi kamu",
+            "Izinkan Relieve mengetahui lokasi kamu",
             style: CircularStdFont.black.getStyle(size: Dimen.x18),
           ),
         ),

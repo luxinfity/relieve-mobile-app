@@ -95,8 +95,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     debounce(() async {
       if (mapCenter != null) {
         final position = mapCenter.target;
-        IndonesiaPlace locationDetail =
-            await LocationService.getPlaceDetail(Location.parseFromLatLng(position));
+        IndonesiaPlace locationDetail = await LocationService.getPlaceDetail(
+            Location.parseFromLatLng(position));
 
         if (locationDetail != null) {
           setState(() {
@@ -233,29 +233,6 @@ class RegisterFormMapState extends State<RegisterFormMap> {
                   highlightElevation: Dimen.x4,
                   child: LocalImage.ic_back_arrow.toSvg(height: 26),
                   onPressed: () => defaultBackPressed(context),
-                ),
-              ),
-              Align(
-                alignment: Theme.of(context).platform == TargetPlatform.iOS
-                    ? Alignment.bottomRight
-                    : Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(Dimen.x10),
-                  child: FloatingActionButton(
-                    heroTag: "centerButton",
-                    backgroundColor: Colors.white,
-                    elevation: Theme.of(context).platform == TargetPlatform.iOS
-                        ? 0
-                        : Dimen.x4,
-                    highlightElevation: Dimen.x4,
-                    child: Icon(
-                      Icons.gps_fixed,
-                      color: AppColor.colorPrimary,
-                    ),
-                    onPressed: () {
-                      moveToMyLocation();
-                    },
-                  ),
                 ),
               ),
             ],
