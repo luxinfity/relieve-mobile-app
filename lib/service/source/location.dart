@@ -38,6 +38,11 @@ class Location extends LatLng {
 }
 
 class LocationService {
+  static Future<bool> askForPermission() async {
+    await PermissionHandler().requestPermissions([PermissionGroup.location]);
+    return await LocationService.isLocationRequestPermitted();
+  }
+
   static Future<bool> isLocationRequestPermitted() async {
     PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.location);

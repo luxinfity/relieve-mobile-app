@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:permission_handler/permission_handler.dart";
 import "package:relieve_app/res/res.dart";
+import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/relieve_scaffold.dart';
 
 class LocationPermissionScreen extends StatefulWidget {
@@ -34,6 +35,13 @@ class LocationPermissionScreenState extends State<LocationPermissionScreen>
           permission == PermissionStatus.restricted;
 
       if (hasPermission) Navigator.pop(context, true);
+    }
+  }
+
+  void tryAllowPermission() async {
+    if (!await LocationService.askForPermission() &&
+        Theme.of(context).platform == TargetPlatform.iOS) {
+      PermissionHandler().openAppSettings();
     }
   }
 
@@ -79,7 +87,7 @@ class LocationPermissionScreenState extends State<LocationPermissionScreen>
                     borderRadius: BorderRadius.circular(Dimen.x4),
                   ),
                   onPressed: () {
-                    PermissionHandler().openAppSettings();
+                    tryAllowPermission();
                   },
                 )
               ],

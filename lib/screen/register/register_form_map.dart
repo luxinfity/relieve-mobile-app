@@ -1,7 +1,6 @@
 import 'dart:async';
 import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:permission_handler/permission_handler.dart';
 import "package:relieve_app/res/res.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import 'package:relieve_app/service/service.dart';
@@ -43,15 +42,10 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   String addressTitle = "DKI Jakarta";
   String addressDetail = "R&D Relieve ID";
 
-  Future<bool> askForPermission() async {
-    await PermissionHandler().requestPermissions([PermissionGroup.location]);
-    return await LocationService.isLocationRequestPermitted();
-  }
-
   void loadLocation() async {
     hasPermission = await LocationService.isLocationRequestPermitted();
     if (!hasPermission) {
-      hasPermission = await askForPermission();
+      hasPermission = await LocationService.askForPermission();
       hasAskOnce = true;
       if (!hasPermission) return;
     }
@@ -73,7 +67,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   void moveToMyLocation() async {
     if (!hasPermission) {
       if (hasAskOnce) {
-        hasPermission = await askForPermission();
+        hasPermission = await LocationService.askForPermission();
       }
       if (!hasPermission) return;
       setState(() {});

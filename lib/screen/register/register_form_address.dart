@@ -65,7 +65,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       final result = await Navigator.push(context,
           MaterialPageRoute(builder: (builder) => LocationPermissionScreen()));
       if (result == null) {
-        showSnackBar(context, "Silahkan izinkan penggunaan lokasi terlebih dulu");
+        showSnackBar(
+            context, "Silahkan izinkan penggunaan lokasi terlebih dulu");
         return; // exit here
       }
     }
