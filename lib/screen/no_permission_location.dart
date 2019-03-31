@@ -39,8 +39,7 @@ class LocationPermissionScreenState extends State<LocationPermissionScreen>
   }
 
   void tryAllowPermission() async {
-    if (!await LocationService.askForPermission() &&
-        Theme.of(context).platform == TargetPlatform.iOS) {
+    if (!await LocationService.askForPermission()) {
       PermissionHandler().openAppSettings();
     }
   }
