@@ -1,9 +1,9 @@
 import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
-import 'package:permission_handler/permission_handler.dart';
 import "package:relieve_app/res/res.dart";
 import 'package:relieve_app/screen/no_permission_location.dart';
 import "package:relieve_app/screen/register/register_form_map.dart";
+import 'package:relieve_app/service/service.dart';
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
@@ -50,18 +50,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     }
   }
 
-  Future<bool> isPermissionDenied() async {
-    PermissionStatus permission = await PermissionHandler()
-        .checkPermissionStatus(PermissionGroup.location);
-
-    bool hasNoPermission = permission == PermissionStatus.denied ||
-        permission == PermissionStatus.unknown;
-
-    return Theme.of(context).platform == TargetPlatform.iOS && hasNoPermission;
-  }
-
   void moveToMap() async {
-    if (await isPermissionDenied()) {
+    if (!await LocationService.isLocationRequestPermitted()) {
       final result = await Navigator.push(context,
           MaterialPageRoute(builder: (builder) => LocationPermissionScreen()));
       if (result == null) {

@@ -50,7 +50,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
       if (!hasPermission) return;
     }
 
-    final position = await LocationService.gerCurrentLocation();
+    final position = await LocationService.getCurrentLocation();
 
     setState(() {
       currentPositionCamera = CameraPosition(
@@ -74,8 +74,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     }
 
     if (currentPositionCamera == null) {
-      final position = await LocationService.gerCurrentLocation();
-
+      final position = await LocationService.getCurrentLocation();
       currentPositionCamera = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
         zoom: 14,

@@ -51,9 +51,10 @@ class LocationService {
         permission == PermissionStatus.restricted;
   }
 
-  static Future<Position> gerCurrentLocation() async {
+  static Future<Position> getCurrentLocation() async {
     return await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        .getCurrentPosition()
+        .timeout(Duration(seconds: 10));
   }
 
   static Future<IndonesiaPlace> getPlaceDetail(Location position) async {
