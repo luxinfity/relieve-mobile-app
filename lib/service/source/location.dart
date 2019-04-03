@@ -38,15 +38,8 @@ class Location extends LatLng {
 }
 
 class LocationService {
-  static IndonesiaPlace indonesiaPlace = IndonesiaPlace(
-    "dki-jakarta",
-    "jakarta",
-    "jakarta pusat",
-    "",
-    Location(-6.21462, 106.84513),
-  );
-
-  static Position position;
+  static Position position; // coordinate
+  static IndonesiaPlace indonesiaPlace; // place detail
 
   static Future<bool> askForPermission() async {
     await PermissionHandler().requestPermissions([PermissionGroup.location]);
@@ -67,15 +60,6 @@ class LocationService {
     return position;
   }
 
-  static Future<Position> getLastKnownLocation() async {
-    if (position == null) {
-      position = await Geolocator()
-          .getCurrentPosition()
-          .timeout(Duration(seconds: 10));
-    }
-    return position;
-  }
-
   static Future<IndonesiaPlace> getPlaceDetail(Location position) async {
     // TODO: use server side geocode
     final places = await Geolocator()
@@ -90,5 +74,22 @@ class LocationService {
     } else {
       return null;
     }
+  }
+
+  /// Use these function to minimize google api call
+  static Future<Position> getLastKnownLocation() async {
+    if (position == null) {
+      position = await getCurrentLocation();
+    }
+    return position;
+  }
+
+  static Future<IndonesiaPlace> getCurrentPlaceDetail() async {
+    if (indonesiaPlace == null) {
+      final position = await getLastKnownLocation();
+      indonesiaPlace =
+          await getPlaceDetail(Location.parseFromPosition(position));
+    }
+    return indonesiaPlace;
   }
 }
