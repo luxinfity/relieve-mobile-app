@@ -1,6 +1,6 @@
-import 'package:geolocator/geolocator.dart';
+import "package:geolocator/geolocator.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
-import 'package:permission_handler/permission_handler.dart';
+import "package:permission_handler/permission_handler.dart";
 
 class IndonesiaPlace {
   final String province;
@@ -38,6 +38,16 @@ class Location extends LatLng {
 }
 
 class LocationService {
+  static IndonesiaPlace indonesiaPlace = IndonesiaPlace(
+    "dki-jakarta",
+    "jakarta",
+    "jakarta pusat",
+    "",
+    Location(-6.21462, 106.84513),
+  );
+
+  static Position position;
+
   static Future<bool> askForPermission() async {
     await PermissionHandler().requestPermissions([PermissionGroup.location]);
     return await LocationService.isLocationRequestPermitted();
@@ -52,9 +62,18 @@ class LocationService {
   }
 
   static Future<Position> getCurrentLocation() async {
-    return await Geolocator()
-        .getCurrentPosition()
-        .timeout(Duration(seconds: 10));
+    position =
+        await Geolocator().getCurrentPosition().timeout(Duration(seconds: 10));
+    return position;
+  }
+
+  static Future<Position> getLastKnownLocation() async {
+    if (position == null) {
+      position = await Geolocator()
+          .getCurrentPosition()
+          .timeout(Duration(seconds: 10));
+    }
+    return position;
   }
 
   static Future<IndonesiaPlace> getPlaceDetail(Location position) async {

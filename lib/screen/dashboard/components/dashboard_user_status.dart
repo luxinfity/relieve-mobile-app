@@ -115,8 +115,7 @@ class UserAppBarState extends State {
 
   Container buildBgImage() {
     return Container(
-      width: double.infinity,
-      child: RemoteImage.bg_jawa_barat.toImage(fit: BoxFit.fitHeight),
+      child: RemoteImage.bg_jawa_barat.toImage(fit: BoxFit.cover),
     );
   }
 }

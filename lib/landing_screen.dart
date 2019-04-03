@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
 import "package:relieve_app/screen/boarding/boarding_home.dart";
 import "package:relieve_app/screen/dashboard/dashboard.dart";
-import 'package:relieve_app/utils/common_utils.dart';
+import "package:relieve_app/utils/common_utils.dart";
 import "utils/preference_utils.dart" as pref;
 
 class LandingScreen extends StatelessWidget {
