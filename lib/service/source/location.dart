@@ -65,12 +65,13 @@ class LocationService {
     final places = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     if (places.isNotEmpty) {
-      return IndonesiaPlace(
+      indonesiaPlace = IndonesiaPlace(
           places[0].administrativeArea,
           places[0].locality,
           places[0].subLocality,
           "${places[0].thoroughfare} ${places[0].subThoroughfare}",
           position);
+      return indonesiaPlace;
     } else {
       return null;
     }
@@ -84,7 +85,7 @@ class LocationService {
     return position;
   }
 
-  static Future<IndonesiaPlace> getCurrentPlaceDetail() async {
+  static Future<IndonesiaPlace> getLastKnownPlaceDetail() async {
     if (indonesiaPlace == null) {
       final position = await getLastKnownLocation();
       indonesiaPlace =
