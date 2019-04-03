@@ -15,7 +15,7 @@ class ProfileBoard extends StatefulWidget {
 }
 
 class ProfileBoardState extends State {
-  IndonesiaPlace indonesiaPlace;
+  String locationName;
   User user = User(fullname: "");
 
   void loadUser() async {
@@ -28,9 +28,15 @@ class ProfileBoardState extends State {
   }
 
   void loadPositionName() async {
-    final place = await LocationService.getLastKnownPlaceDetail();
+    var location = "Kamu belum punya alamat";
+    final addressResponse =
+        await BakauApi(AppConfig.of(context)).getUserAddress();
+    if (addressResponse?.status == REQUEST_SUCCESS &&
+        addressResponse.content.length > 0) {
+      location = addressResponse.content[0].name;
+    }
     setState(() {
-      indonesiaPlace = place;
+      locationName = location;
     });
   }
 
@@ -89,9 +95,9 @@ class ProfileBoardState extends State {
                   horizontal: Dimen.x21,
                 ),
                 child: UserLocation(
-                  location: indonesiaPlace == null
+                  location: locationName == null
                       ? "Menunggu Lokasi..."
-                      : "${indonesiaPlace.city}, ${indonesiaPlace.province}",
+                      : locationName,
                   icon: LocalImage.ic_map,
                   personHealth: PersonHealth.None,
                 ),
