@@ -78,15 +78,16 @@ class LocationService {
   }
 
   /// Use these function to minimize google api call
-  static Future<Position> getLastKnownLocation() async {
-    if (position == null) {
+  static Future<Position> getLastKnownLocation({bool isRefresh = false}) async {
+    if (position == null && isRefresh) {
       position = await getCurrentLocation();
     }
     return position;
   }
 
-  static Future<IndonesiaPlace> getLastKnownPlaceDetail() async {
-    if (indonesiaPlace == null) {
+  static Future<IndonesiaPlace> getLastKnownPlaceDetail(
+      {bool isRefresh = false}) async {
+    if (indonesiaPlace == null && isRefresh) {
       final position = await getLastKnownLocation();
       indonesiaPlace =
           await getPlaceDetail(Location.parseFromPosition(position));

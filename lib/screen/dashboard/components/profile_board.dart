@@ -4,6 +4,7 @@ import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:recase/recase.dart";
 import "package:relieve_app/service/model/user.dart";
+import 'package:relieve_app/service/service.dart';
 import "package:relieve_app/service/source/api/api.dart";
 import "package:relieve_app/service/model/family.dart";
 import "package:relieve_app/widget/item/user_location.dart";
@@ -14,6 +15,7 @@ class ProfileBoard extends StatefulWidget {
 }
 
 class ProfileBoardState extends State {
+  IndonesiaPlace indonesiaPlace;
   User user = User(fullname: "");
 
   void loadUser() async {
@@ -25,10 +27,18 @@ class ProfileBoardState extends State {
     }
   }
 
+  void loadPositionName() async {
+    final place = await LocationService.getLastKnownPlaceDetail();
+    setState(() {
+      indonesiaPlace = place;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     loadUser();
+    loadPositionName();
   }
 
   @override
@@ -79,7 +89,9 @@ class ProfileBoardState extends State {
                   horizontal: Dimen.x21,
                 ),
                 child: UserLocation(
-                  location: "Sukajadi, Bandung",
+                  location: indonesiaPlace == null
+                      ? "Menunggu Lokasi..."
+                      : "${indonesiaPlace.city}, ${indonesiaPlace.province}",
                   icon: LocalImage.ic_map,
                   personHealth: PersonHealth.None,
                 ),
