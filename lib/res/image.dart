@@ -60,7 +60,6 @@ class LocalImage {
   static LocalImage get ic_chat => LocalImage("ic_chat");
   static LocalImage get ic_discover => LocalImage("ic_discover");
   static LocalImage get ic_home => LocalImage("ic_home");
-  static LocalImage get ic_profile => LocalImage("ic_profile");
 
   // items
   static LocalImage get ic_live => LocalImage("ic_live");
@@ -72,7 +71,6 @@ class LocalImage {
   static LocalImage get ic_map_pin => LocalImage("ic_map_pin");
 
   // profile
-  static LocalImage get ic_location => LocalImage("ic_location");
   static LocalImage get ic_exit => LocalImage("ic_exit");
   static LocalImage get ic_faq => LocalImage("ic_faq");
   static LocalImage get ic_info_contributor =>

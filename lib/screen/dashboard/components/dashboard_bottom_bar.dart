@@ -107,7 +107,7 @@ class RelieveBottomNavigationBarState
         buildItem(1, LocalImage.ic_discover, "Discover"),
         buildCallWidget(),
         buildItem(3, LocalImage.ic_chat, "Chat"),
-        buildItem(4, LocalImage.ic_profile, "Profile")
+        buildItem(4, LocalImage.ic_user, "Profile")
       ],
     );
   }

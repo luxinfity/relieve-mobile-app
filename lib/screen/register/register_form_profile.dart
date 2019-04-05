@@ -185,7 +185,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
               ),
               Container(
                 margin: const EdgeInsets.only(
-                  top: Dimen.x8,
+                  top: Dimen.x32,
                   bottom: Dimen.x6,
                   left: Dimen.x16,
                   right: Dimen.x16,

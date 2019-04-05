@@ -123,7 +123,7 @@ class WeatherItemListState extends State {
   WeatherResponse _weatherResponse = WeatherResponse();
 
   void fetchData() async {
-    final userLocation = await LocationService.gerCurrentLocation();
+    final userLocation = await LocationService.getCurrentLocation();
 
     final response = await KalomangApi(AppConfig.of(context)).weatherCheck(
       userLocation.latitude,

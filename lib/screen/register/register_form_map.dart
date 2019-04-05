@@ -1,7 +1,6 @@
 import 'dart:async';
 import "package:flutter/material.dart";
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:permission_handler/permission_handler.dart';
 import "package:relieve_app/res/res.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import 'package:relieve_app/service/service.dart';
@@ -43,20 +42,15 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   String addressTitle = "DKI Jakarta";
   String addressDetail = "R&D Relieve ID";
 
-  Future<bool> askForPermission() async {
-    await PermissionHandler().requestPermissions([PermissionGroup.location]);
-    return await LocationService.isLocationRequestPermitted();
-  }
-
   void loadLocation() async {
     hasPermission = await LocationService.isLocationRequestPermitted();
     if (!hasPermission) {
-      hasPermission = await askForPermission();
+      hasPermission = await LocationService.askForPermission();
       hasAskOnce = true;
       if (!hasPermission) return;
     }
 
-    final position = await LocationService.gerCurrentLocation();
+    final position = await LocationService.getCurrentLocation();
 
     setState(() {
       currentPositionCamera = CameraPosition(
@@ -73,15 +67,14 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   void moveToMyLocation() async {
     if (!hasPermission) {
       if (hasAskOnce) {
-        hasPermission = await askForPermission();
+        hasPermission = await LocationService.askForPermission();
       }
       if (!hasPermission) return;
       setState(() {});
     }
 
     if (currentPositionCamera == null) {
-      final position = await LocationService.gerCurrentLocation();
-
+      final position = await LocationService.getCurrentLocation();
       currentPositionCamera = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
         zoom: 14,
@@ -102,8 +95,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     debounce(() async {
       if (mapCenter != null) {
         final position = mapCenter.target;
-        IndonesiaPlace locationDetail =
-            await LocationService.getPlaceDetail(Location.parseFromLatLng(position));
+        IndonesiaPlace locationDetail = await LocationService.getPlaceDetail(
+            Location.parseFromLatLng(position));
 
         if (locationDetail != null) {
           setState(() {
@@ -240,29 +233,6 @@ class RegisterFormMapState extends State<RegisterFormMap> {
                   highlightElevation: Dimen.x4,
                   child: LocalImage.ic_back_arrow.toSvg(height: 26),
                   onPressed: () => defaultBackPressed(context),
-                ),
-              ),
-              Align(
-                alignment: Theme.of(context).platform == TargetPlatform.iOS
-                    ? Alignment.bottomRight
-                    : Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.all(Dimen.x10),
-                  child: FloatingActionButton(
-                    heroTag: "centerButton",
-                    backgroundColor: Colors.white,
-                    elevation: Theme.of(context).platform == TargetPlatform.iOS
-                        ? 0
-                        : Dimen.x4,
-                    highlightElevation: Dimen.x4,
-                    child: Icon(
-                      Icons.gps_fixed,
-                      color: AppColor.colorPrimary,
-                    ),
-                    onPressed: () {
-                      moveToMyLocation();
-                    },
-                  ),
                 ),
               ),
             ],

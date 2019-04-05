@@ -80,7 +80,7 @@ class ProfileBoardState extends State {
                 ),
                 child: UserLocation(
                   location: "Sukajadi, Bandung",
-                  icon: LocalImage.ic_location,
+                  icon: LocalImage.ic_map,
                   personHealth: PersonHealth.None,
                 ),
               ),

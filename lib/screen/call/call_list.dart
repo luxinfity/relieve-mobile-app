@@ -25,7 +25,7 @@ class CallListScreenState extends State {
   List<bool> isSelectedList = List<bool>();
 
   void getAllContact() async {
-    final position = await LocationService.gerCurrentLocation();
+    final position = await LocationService.getCurrentLocation();
     final contactResponse = await BakauApi(AppConfig.of(context))
         .getNearbyEmergencyContact(Location.parseFromPosition(position));
 

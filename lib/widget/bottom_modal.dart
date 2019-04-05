@@ -10,8 +10,8 @@ double _calculatePaddingBottom(BuildContext context) {
   }
 }
 
-void createRelieveBottomModal(BuildContext context, List<Widget> children) {
-  showModalBottomSheet(
+Future createRelieveBottomModal(BuildContext context, List<Widget> children) {
+  return showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
       return Container(
