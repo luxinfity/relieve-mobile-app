@@ -4,7 +4,7 @@ import "package:relieve_app/res/res.dart";
 import "package:relieve_app/widget/bottom_modal.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
-import 'package:validators/validators.dart';
+import "package:validators/validators.dart";
 
 class Profile {
   final String fullName;

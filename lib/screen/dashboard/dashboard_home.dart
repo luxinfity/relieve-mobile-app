@@ -15,11 +15,11 @@ class DashboardHomeScreen extends StatelessWidget {
           UserAppBar(),
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              _createTitle(
-                "Cuaca Hari Ini",
-                "Selalu siap apapun cuaca nya",
-                Dimen.x16,
-              ),
+             _createTitle(
+               "Cuaca Hari Ini",
+               "Selalu siap apapun cuaca nya",
+               Dimen.x16,
+             ),
               WeatherItemList(),
               _createTitle(
                 "Daftar Kerabat",

@@ -1,6 +1,6 @@
-import 'package:geolocator/geolocator.dart';
+import "package:geolocator/geolocator.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
-import 'package:permission_handler/permission_handler.dart';
+import "package:permission_handler/permission_handler.dart";
 
 class IndonesiaPlace {
   final String province;
@@ -38,6 +38,9 @@ class Location extends LatLng {
 }
 
 class LocationService {
+  static Position position; // coordinate
+  static IndonesiaPlace indonesiaPlace; // place detail
+
   static Future<bool> askForPermission() async {
     await PermissionHandler().requestPermissions([PermissionGroup.location]);
     return await LocationService.isLocationRequestPermitted();
@@ -52,9 +55,9 @@ class LocationService {
   }
 
   static Future<Position> getCurrentLocation() async {
-    return await Geolocator()
-        .getCurrentPosition()
-        .timeout(Duration(seconds: 10));
+    position =
+        await Geolocator().getCurrentPosition().timeout(Duration(seconds: 10));
+    return position;
   }
 
   static Future<IndonesiaPlace> getPlaceDetail(Location position) async {
@@ -62,14 +65,34 @@ class LocationService {
     final places = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     if (places.isNotEmpty) {
-      return IndonesiaPlace(
+      indonesiaPlace = IndonesiaPlace(
           places[0].administrativeArea,
           places[0].locality,
           places[0].subLocality,
           "${places[0].thoroughfare} ${places[0].subThoroughfare}",
           position);
+      return indonesiaPlace;
     } else {
       return null;
     }
+  }
+
+  /// Use these function to minimize google api call
+  /// only one request at a time
+  static Future<Position> getLastKnownLocation({bool isRefresh = false}) async {
+    if (position == null || isRefresh) {
+      position = await getCurrentLocation();
+    }
+    return position;
+  }
+
+  static Future<IndonesiaPlace> getLastKnownPlaceDetail(
+      {bool isRefresh = false}) async {
+    if (indonesiaPlace == null || isRefresh) {
+      final position = await getLastKnownLocation();
+      indonesiaPlace =
+          await getPlaceDetail(Location.parseFromPosition(position));
+    }
+    return indonesiaPlace;
   }
 }
