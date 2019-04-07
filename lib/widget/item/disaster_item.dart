@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
+import 'package:relieve_app/app_config.dart';
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/disaster.dart";
+import 'package:relieve_app/service/service.dart';
 import "package:relieve_app/service/source/location.dart";
 import "package:relieve_app/widget/bottom_modal.dart";
 import "package:relieve_app/widget/static_map.dart";
@@ -251,6 +253,24 @@ class DisasterItemList extends StatefulWidget {
 }
 
 class DisasterItemListState extends State {
+  List<DisasterDesc> listDisaster = [];
+
+  void loadDisaster() async {
+    final disasterResponse =
+        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 10);
+    if (disasterResponse?.status == REQUEST_SUCCESS) {
+      setState(() {
+        listDisaster = disasterResponse.content.data;
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadDisaster();
+  }
+
   Widget _hollowButton() {
     return Material(
       elevation: 1,
@@ -333,52 +353,66 @@ class DisasterItemListState extends State {
       height: 205,
       width: double.infinity,
       padding: EdgeInsets.only(top: Dimen.x12, bottom: Dimen.x4),
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Container(
-            width: Dimen.x12,
-          ),
-          DisasterItem(
-            disaster: Disaster(
-              isLive: true,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
-            ),
-            onClick: () {
-              testSheet(context);
-            },
-          ),
-          DisasterItem(
+        itemBuilder: (bc, index) {
+          return DisasterItem(
             disaster: Disaster(
               isLive: false,
               location: "Palembang",
               time: 20000,
               title: "Gempa 7.6 SR",
             ),
-          ),
-          DisasterItem(
-            disaster: Disaster(
-              isLive: false,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
-            ),
-          ),
-          DisasterItem(
-            disaster: Disaster(
-              isLive: false,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
-            ),
-          ),
-          Container(
-            width: Dimen.x12,
-          ),
-        ],
+          );
+        },
+        itemCount: listDisaster.length,
       ),
+//      child: ListView(
+//        scrollDirection: Axis.horizontal,
+//        children: <Widget>[
+//          Container(
+//            width: Dimen.x12,
+//          ),
+//          DisasterItem(
+//            disaster: Disaster(
+//              isLive: true,
+//              location: "Palembang",
+//              time: 20000,
+//              title: "Gempa 7.6 SR",
+//            ),
+//            onClick: () {
+//              testSheet(context);
+//            },
+//          ),
+//          DisasterItem(
+//            disaster: Disaster(
+//              isLive: false,
+//              location: "Palembang",
+//              time: 20000,
+//              title: "Gempa 7.6 SR",
+//            ),
+//          ),
+//          DisasterItem(
+//            disaster: Disaster(
+//              isLive: false,
+//              location: "Palembang",
+//              time: 20000,
+//              title: "Gempa 7.6 SR",
+//            ),
+//          ),
+//          DisasterItem(
+//            disaster: Disaster(
+//              isLive: false,
+//              location: "Palembang",
+//              time: 20000,
+//              title: "Gempa 7.6 SR",
+//            ),
+//          ),
+//          Container(
+//            width: Dimen.x12,
+//          ),
+//        ],
+//      ),
     );
   }
 }

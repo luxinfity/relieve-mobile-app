@@ -1,10 +1,29 @@
 import "package:flutter/material.dart";
+import 'package:relieve_app/app_config.dart';
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/disaster.dart";
+import 'package:relieve_app/service/service.dart';
 import "package:relieve_app/widget/item/disaster_item.dart";
 import "package:relieve_app/widget/item/title.dart";
 
-class DashboardDiscoverScreen extends StatelessWidget {
+class DashboardDiscoverScreen extends StatefulWidget {
+  @override
+  _DashboardDiscoverScreenState createState() =>
+      _DashboardDiscoverScreenState();
+}
+
+class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
+  void loadDisaster() async {
+    final listDisaster =
+        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 10);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadDisaster();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
