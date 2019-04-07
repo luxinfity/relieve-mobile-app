@@ -81,15 +81,10 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      var phonesRaw = parsedJson["phones"] as List;
-      List<Phone> phonesParsed =
-          phonesRaw.map((i) => Phone.fromJson(i)).toList();
-
       return User(
         username: parsedJson["username"],
         fullname: parsedJson["fullname"],
         email: parsedJson["email"],
-        phones: phonesParsed,
         birthdate: parsedJson["birthdate"],
         isComplete: parsedJson["is_complete"],
         gender: parsedJson["gender"],

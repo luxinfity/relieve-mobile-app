@@ -129,7 +129,6 @@ class UserAppBarState extends State {
         child: indonesiaPlace == null
             ? RemoteImage.bg_dki_jakarta.toImage(fit: BoxFit.cover)
             : BackgroundImage(indonesiaPlace.province)
-                .toImage(fit: BoxFit.cover)
-        );
+                .toImage(fit: BoxFit.cover));
   }
 }
