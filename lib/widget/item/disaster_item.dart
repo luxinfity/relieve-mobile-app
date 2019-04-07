@@ -257,7 +257,7 @@ class DisasterItemListState extends State {
 
   void loadDisaster() async {
     final disasterResponse =
-        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 10);
+        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 5);
     if (disasterResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         listDisaster = disasterResponse.content.data;
@@ -356,63 +356,22 @@ class DisasterItemListState extends State {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (bc, index) {
-          return DisasterItem(
-            disaster: Disaster(
-              isLive: false,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
+          return Container(
+            padding: EdgeInsets.only(
+                left: index == 0 ? 8.0 : 0.0,
+                right: index == listDisaster.length - 1 ? 8.0 : 0.0),
+            child: DisasterItem(
+              disaster: Disaster(
+                isLive: false,
+                location: "Palembang",
+                time: 20000,
+                title: "Gempa ${listDisaster[index].magnitude} SR",
+              ),
             ),
           );
         },
         itemCount: listDisaster.length,
       ),
-//      child: ListView(
-//        scrollDirection: Axis.horizontal,
-//        children: <Widget>[
-//          Container(
-//            width: Dimen.x12,
-//          ),
-//          DisasterItem(
-//            disaster: Disaster(
-//              isLive: true,
-//              location: "Palembang",
-//              time: 20000,
-//              title: "Gempa 7.6 SR",
-//            ),
-//            onClick: () {
-//              testSheet(context);
-//            },
-//          ),
-//          DisasterItem(
-//            disaster: Disaster(
-//              isLive: false,
-//              location: "Palembang",
-//              time: 20000,
-//              title: "Gempa 7.6 SR",
-//            ),
-//          ),
-//          DisasterItem(
-//            disaster: Disaster(
-//              isLive: false,
-//              location: "Palembang",
-//              time: 20000,
-//              title: "Gempa 7.6 SR",
-//            ),
-//          ),
-//          DisasterItem(
-//            disaster: Disaster(
-//              isLive: false,
-//              location: "Palembang",
-//              time: 20000,
-//              title: "Gempa 7.6 SR",
-//            ),
-//          ),
-//          Container(
-//            width: Dimen.x12,
-//          ),
-//        ],
-//      ),
     );
   }
 }
