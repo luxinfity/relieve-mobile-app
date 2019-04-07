@@ -1,6 +1,6 @@
 import "package:http/http.dart" as http;
 import "package:relieve_app/app_config.dart";
-import 'package:relieve_app/service/model/disaster.dart';
+import "package:relieve_app/service/model/disaster.dart";
 import "package:relieve_app/service/model/weather.dart";
 import "package:relieve_app/service/service.dart";
 import "dart:convert";
