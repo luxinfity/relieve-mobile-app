@@ -6,13 +6,15 @@ class Disaster {
   final bool isLive;
   final String title;
   final String location;
-  final int time;
+  final DateTime time;
+  final Location coordinate;
 
   const Disaster({
     @required this.isLive,
     @required this.title,
     @required this.location,
     @required this.time,
+    @required this.coordinate,
   });
 }
 

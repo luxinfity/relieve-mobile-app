@@ -138,7 +138,21 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
+  String _getDescBasedOnTime(Duration diff) {
+    if (diff.inDays > 0) {
+      return '${diff.inDays} hari yang lalu';
+    } else if (diff.inHours > 0) {
+      return '${diff.inHours} jam yang lalu';
+    } else if (diff.inMinutes > 0) {
+      return '${diff.inMinutes} menit yang lalu';
+    } else {
+      return '${diff.inSeconds} detik yang lalu';
+    }
+  }
+
   RichText _buildSubtitle() {
+    final timeDiff = DateTime.now().difference(disaster.time);
+
     return RichText(
       text: TextSpan(
         text: disaster.location,
@@ -148,7 +162,7 @@ class DisasterItem extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: " - ${disaster.time} ",
+            text: " - ${_getDescBasedOnTime(timeDiff)}",
             style: CircularStdFont.medium.getStyle(
               color: AppColor.colorEmptyRect,
               size: Dimen.x10,
@@ -208,7 +222,7 @@ class DisasterItem extends StatelessWidget {
 
   Widget _buildMap(BuildContext context) {
     return StaticMap(
-      Location(37.42796133580664, -122.085749655962),
+      disaster.coordinate,
       width.toInt() + 1,
       144,
     ).toMapWidget(context);
@@ -362,11 +376,11 @@ class DisasterItemListState extends State {
                 right: index == listDisaster.length - 1 ? 8.0 : 0.0),
             child: DisasterItem(
               disaster: Disaster(
-                isLive: false,
-                location: "Palembang",
-                time: 20000,
-                title: "Gempa ${listDisaster[index].magnitude} SR",
-              ),
+                  isLive: false,
+                  location: "Palembang",
+                  time: listDisaster[index].occursAt,
+                  title: "Gempa ${listDisaster[index].magnitude} SR",
+                  coordinate: listDisaster[index].coordinate),
             ),
           );
         },
