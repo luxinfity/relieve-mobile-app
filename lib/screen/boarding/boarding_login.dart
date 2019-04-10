@@ -10,6 +10,8 @@ import "package:relieve_app/widget/loading_dialog.dart";
 import "package:relieve_app/widget/relieve_scaffold.dart";
 import 'package:relieve_app/widget/snackbar.dart';
 
+import 'package:relieve_app/app_container.dart';
+
 class BoardingLoginScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -26,6 +28,15 @@ class BoardingLoginScreenState extends State {
   var isFormEmpty = false;
   var isWrongCredential = false;
   var passwordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    NotificationController.startListen(() => context, (map) {
+      showDialog(context: context, builder: (context) => Text('Hello'));
+    });
+  }
 
   void onLoginSuccess() {
     Navigator.pushAndRemoveUntil(
@@ -62,7 +73,8 @@ class BoardingLoginScreenState extends State {
         pref.setUsername(usernameController.text);
         onLoginSuccess();
       } else {
-        showSnackBar(context, "Ups! Username atau password salah", buttonText: "Mengerti");
+        showSnackBar(context, "Ups! Username atau password salah",
+            buttonText: "Mengerti");
         setState(() {
           isWrongCredential = true;
         });
