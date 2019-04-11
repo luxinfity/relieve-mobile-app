@@ -33,7 +33,6 @@ dependencies:
   firebase_messaging: ^4.0.0+1
   permission_handler: ^3.0.0
   geolocator: ^3.0.1
-  scoped_model: ^1.0.1
 
 dev_dependencies:
   flutter_test:
