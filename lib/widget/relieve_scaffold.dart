@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/utils/common_utils.dart";
 
+import 'package:relieve_app/app_container.dart';
+
 class RelieveScaffold extends StatelessWidget {
   final List<Widget> childs;
   final CrossAxisAlignment crossAxisAlignment;
@@ -57,6 +59,8 @@ class RelieveScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppContainer.update(context);
+
     final EdgeInsets padding = MediaQuery.of(context).padding;
     final _body = _createBody(context, padding);
 

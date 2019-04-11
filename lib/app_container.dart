@@ -2,16 +2,22 @@ import "package:flutter/material.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
 
 abstract class AppPlugin {
-  void onInitState(BuildContext context);
+  void onContextUpdate(BuildContext context);
 }
 
 class NotificationPlugin extends AppPlugin {
-  @override
-  void onInitState(BuildContext context) {
-    _getFcmToken(context);
+  NotificationPlugin({this.context}) {
+    _getFcmToken();
   }
 
-  void _getFcmToken(BuildContext context) async {
+  BuildContext context;
+
+  @override
+  void onContextUpdate(BuildContext context) {
+    this.context = context;
+  }
+
+  void _getFcmToken() async {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging();
     final token = await firebaseMessaging.getToken();
     firebaseMessaging.requestNotificationPermissions();
@@ -20,7 +26,7 @@ class NotificationPlugin extends AppPlugin {
     firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("on message $message");
-        _showDialog(context);
+        _showDialog();
       },
       onResume: (Map<String, dynamic> message) async {
         print("on resume $message");
@@ -31,35 +37,33 @@ class NotificationPlugin extends AppPlugin {
     );
   }
 
-  void _showDialog(BuildContext context) {
+  void _showDialog() {
+    print('showing dialog');
     showDialog(context: context, builder: (context) => Text('Hello'));
   }
 }
 
-class AppContainer extends StatefulWidget {
+class AppContainer extends InheritedWidget {
   AppContainer({this.child, this.plugins});
 
   List<AppPlugin> plugins;
   Widget child;
+  BuildContext currentContext;
 
-  @override
-  State<StatefulWidget> createState() {
-    return AppContainerState();
-  }
-}
-
-class AppContainerState extends State<AppContainer> {
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(Duration.zero, () {
-      widget.plugins.forEach((p) => p.onInitState(context));
-    });
+  static AppContainer _of(BuildContext context) {
+    return context.inheritFromWidgetOfExactType(AppContainer);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
+  static void update(BuildContext context) {
+    _of(context)
+      ..currentContext = context
+      .._onContextUpdate();
   }
+
+  void _onContextUpdate() {
+    plugins.forEach((plugins) => plugins.onContextUpdate(currentContext));
+  }
+
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget) => false;
 }
