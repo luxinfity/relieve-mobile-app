@@ -1,42 +1,26 @@
 import "package:flutter/material.dart";
-import 'package:meta/meta.dart';
-import 'package:scoped_model/scoped_model.dart';
 import "package:firebase_messaging/firebase_messaging.dart";
 
-typedef NotificationListener = void Function(Map<String, dynamic> map);
-typedef BuildContext ContextProvider();
+abstract class AppPlugin {
+  void onInitState(BuildContext context);
+}
 
-class NotificationController extends InheritedWidget {
-  Map<String, dynamic> _receivedMessage;
-  List<NotificationListener> listeners = List();
-
-  NotificationController({
-    @required Widget child,
-  }) : super(child: child) {
-    getFcmToken();
+class NotificationPlugin extends AppPlugin {
+  @override
+  void onInitState(BuildContext context) {
+    _getFcmToken(context);
   }
 
-  void listen(NotificationListener listener) {
-    listeners.add(listener);
-  }
-
-  void _broadcast() {
-    listeners.forEach((listener) => listener(_receivedMessage));
-  }
-
-  void getFcmToken() async {
+  void _getFcmToken(BuildContext context) async {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging();
     final token = await firebaseMessaging.getToken();
     firebaseMessaging.requestNotificationPermissions();
     print("Firebase token:" + token);
 
-    // TODO: save fcm token
-
     firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("on message $message");
-        _receivedMessage = message;
-        _broadcast();
+        _showDialog(context);
       },
       onResume: (Map<String, dynamic> message) async {
         print("on resume $message");
@@ -47,68 +31,35 @@ class NotificationController extends InheritedWidget {
     );
   }
 
-  static startListen(ContextProvider provider, NotificationListener listener) {
-    return Future.delayed(Duration.zero, () {
-      NotificationController.of(provider()).listen(listener);
+  void _showDialog(BuildContext context) {
+    showDialog(context: context, builder: (context) => Text('Hello'));
+  }
+}
+
+class AppContainer extends StatefulWidget {
+  AppContainer({this.child, this.plugins});
+
+  List<AppPlugin> plugins;
+  Widget child;
+
+  @override
+  State<StatefulWidget> createState() {
+    return AppContainerState();
+  }
+}
+
+class AppContainerState extends State<AppContainer> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero, () {
+      widget.plugins.forEach((p) => p.onInitState(context));
     });
   }
 
-  static NotificationController of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(NotificationController);
-  }
-
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => false;
-}
-
-class NotificationModel extends Model {
-  Map<String, dynamic> _receivedMessage;
-
-  NotificationModel() {
-    getFcmToken();
-  }
-
-  void consume(Function(Map<String, dynamic> value) consumer) {
-    if (_receivedMessage != null) {
-      consumer(_receivedMessage);
-      _receivedMessage = null;
-    }
-  }
-
-  void getFcmToken() async {
-    FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-    final token = await firebaseMessaging.getToken();
-    firebaseMessaging.requestNotificationPermissions();
-    print("Firebase token:" + token);
-
-    // TODO: save fcm token
-
-    firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("on message $message");
-        _receivedMessage = message;
-        notifyListeners();
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("on resume $message");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("on launch $message");
-      },
-    );
-  }
-}
-
-class AppContainer extends StatelessWidget {
-  AppContainer({@required this.child});
-
-  final Widget child;
-
   @override
   Widget build(BuildContext context) {
-    return ScopedModel(
-      model: NotificationModel(),
-      child: child,
-    );
+    return widget.child;
   }
 }
