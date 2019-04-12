@@ -62,7 +62,8 @@ class BoardingLoginScreenState extends State {
         pref.setUsername(usernameController.text);
         onLoginSuccess();
       } else {
-        showSnackBar(context, "Ups! Username atau password salah", buttonText: "Mengerti");
+        showSnackBar(context, "Ups! Username atau password salah",
+            buttonText: "Mengerti");
         setState(() {
           isWrongCredential = true;
         });

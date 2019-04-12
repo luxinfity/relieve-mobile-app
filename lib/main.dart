@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:relieve_app/app_config.dart";
+import 'package:relieve_app/app_container.dart';
 import "package:relieve_app/landing_screen.dart";
 import "package:relieve_app/res/res.dart";
 
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
-    return MaterialApp(
+    return AppContainer(
+      plugins: [NotificationPlugin()],
+      child: MaterialApp(
         title: "Relieve ID",
         theme: ThemeData(
           primaryColor: AppColor.colorPrimary,
@@ -32,6 +35,7 @@ class MyApp extends StatelessWidget {
           fontFamily: CircularStdFont.book.fontFamily,
           hintColor: AppColor.colorEmptyRect,
         ),
-        home: LandingScreen());
+        home: LandingScreen());,
+    )
   }
 }
