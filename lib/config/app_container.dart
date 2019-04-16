@@ -43,6 +43,7 @@ class NotificationPlugin extends AppPlugin {
   }
 }
 
+// ignore: must_be_immutable
 class AppContainer extends InheritedWidget {
   List<AppPlugin> plugins;
   Widget child;
