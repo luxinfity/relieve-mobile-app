@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:relieve_app/app_config.dart";
+import 'package:relieve_app/app_container.dart';
 import "package:relieve_app/landing_screen.dart";
 import "package:relieve_app/res/res.dart";
 
@@ -21,17 +22,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
-    return MaterialApp(
-        title: "Relieve ID",
-        theme: ThemeData(
-          primaryColor: AppColor.colorPrimary,
-          primaryColorDark: AppColor.colorPrimaryDark,
-          accentColor: AppColor.colorAccent,
-          backgroundColor: Colors.white,
-          canvasColor: Colors.transparent,
-          fontFamily: CircularStdFont.book.fontFamily,
-          hintColor: AppColor.colorEmptyRect,
-        ),
-        home: LandingScreen());
+    return AppContainer(
+      plugins: [NotificationPlugin()],
+      child: MaterialApp(
+          title: "Relieve ID",
+          theme: ThemeData(
+            primaryColor: AppColor.colorPrimary,
+            primaryColorDark: AppColor.colorPrimaryDark,
+            accentColor: AppColor.colorAccent,
+            backgroundColor: Colors.white,
+            canvasColor: Colors.transparent,
+            fontFamily: CircularStdFont.book.fontFamily,
+            hintColor: AppColor.colorEmptyRect,
+          ),
+          home: LandingScreen()),
+    );
   }
 }
