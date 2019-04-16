@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/chat.dart";
-import "package:relieve_app/widget/item/chat_item.dart";
-import "package:relieve_app/widget/item/title.dart";
+import "package:relieve_app/widget/chat/chat_item.dart";
+import "package:relieve_app/widget/common/title.dart";
 
 class DashboardChatScreen extends StatefulWidget {
   @override

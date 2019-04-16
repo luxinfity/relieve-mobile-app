@@ -2,9 +2,9 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_stetho/flutter_stetho.dart";
 
-import 'app_container.dart';
-import "landing_screen.dart";
-import "./app_config.dart";
+import 'package:relieve_app/config/app_container.dart';
+import "package:relieve_app/screen/landing_screen.dart";
+import "package:relieve_app/config/app_config.dart";
 import "res/res.dart";
 
 void main() {

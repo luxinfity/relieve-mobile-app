@@ -5,7 +5,7 @@ import "package:relieve_app/screen/dashboard/dashboard_chat.dart";
 import "package:relieve_app/screen/dashboard/dashboard_discover.dart";
 import "package:relieve_app/screen/dashboard/dashboard_home.dart";
 import "package:relieve_app/screen/dashboard/dashboard_profile.dart";
-import "package:relieve_app/widget/relieve_scaffold.dart";
+import "package:relieve_app/widget/common/relieve_scaffold.dart";
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key, this.title}) : super(key: key);

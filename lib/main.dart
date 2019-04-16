@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
-import "package:relieve_app/app_config.dart";
-import 'package:relieve_app/app_container.dart';
-import "package:relieve_app/landing_screen.dart";
+import "package:relieve_app/config/app_config.dart";
+import 'package:relieve_app/config/app_container.dart';
+import "package:relieve_app/screen/landing_screen.dart";
 import "package:relieve_app/res/res.dart";
 
 void main() {

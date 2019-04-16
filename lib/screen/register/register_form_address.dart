@@ -5,9 +5,9 @@ import "package:relieve_app/res/res.dart";
 import "package:relieve_app/screen/register/register_form_map.dart";
 import "package:relieve_app/service/service.dart";
 import "package:relieve_app/utils/common_utils.dart";
-import "package:relieve_app/widget/bottom_modal.dart";
-import "package:relieve_app/widget/item/standard_button.dart";
-import "package:relieve_app/widget/item/title.dart";
+import "package:relieve_app/widget/common/bottom_modal.dart";
+import "package:relieve_app/widget/common/standard_button.dart";
+import "package:relieve_app/widget/common/title.dart";
 import "package:url_launcher/url_launcher.dart";
 export "package:relieve_app/screen/register/register_form_map.dart";
 
