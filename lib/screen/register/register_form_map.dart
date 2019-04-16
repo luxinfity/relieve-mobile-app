@@ -35,7 +35,6 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   CameraPosition mapCenter;
   Completer<GoogleMapController> _mapController = Completer();
   bool hasPermission = false;
-  bool hasAskOnce = false;
 
   final locationNameController = TextEditingController();
 
@@ -61,18 +60,17 @@ class RegisterFormMapState extends State<RegisterFormMap> {
 
       // if after asking permission,
       // view already be loaded, move to current location
-      if (hasAskOnce) moveToMyLocation();
+      moveToMyLocation();
     });
   }
 
   void moveToMyLocation() async {
     if (!hasPermission) {
-      if (hasAskOnce) {
-        LocationService.showAskPermissionModal(context, () {
-          setState(() {});
-          moveToMyLocation();
-        });
-      }
+      LocationService.showAskPermissionModal(context, () {
+        setState(() {});
+        moveToMyLocation();
+      });
+
       return;
     }
 
