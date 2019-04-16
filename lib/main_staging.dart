@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_stetho/flutter_stetho.dart";
 
+import 'app_container.dart';
 import "landing_screen.dart";
 import "./app_config.dart";
 import "res/res.dart";
@@ -24,17 +25,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
-    return MaterialApp(
-        title: "Relieve ID",
-        theme: ThemeData(
-          primaryColor: AppColor.colorPrimary,
-          primaryColorDark: AppColor.colorPrimaryDark,
-          accentColor: AppColor.colorAccent,
-          backgroundColor: Colors.white,
-          canvasColor: Colors.transparent,
-          fontFamily: CircularStdFont.book.fontFamily,
-          hintColor: AppColor.colorEmptyRect,
-        ),
-        home: LandingScreen());
+    return AppContainer(
+      plugins: [NotificationPlugin()],
+      child: MaterialApp(
+          title: "Relieve ID",
+          theme: ThemeData(
+            primaryColor: AppColor.colorPrimary,
+            primaryColorDark: AppColor.colorPrimaryDark,
+            accentColor: AppColor.colorAccent,
+            backgroundColor: Colors.white,
+            canvasColor: Colors.transparent,
+            fontFamily: CircularStdFont.book.fontFamily,
+            hintColor: AppColor.colorEmptyRect,
+          ),
+          home: LandingScreen()),
+    );
   }
 }

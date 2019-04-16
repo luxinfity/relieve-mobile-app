@@ -5,6 +5,7 @@ import "package:relieve_app/res/res.dart";
 import "package:relieve_app/screen/dashboard/components/dashboard_title.dart";
 import "package:relieve_app/service/model/family.dart";
 import "package:relieve_app/service/model/user.dart";
+import "package:relieve_app/service/service.dart";
 import "package:relieve_app/service/source/api/api.dart";
 import "package:relieve_app/widget/item/user_location.dart";
 
@@ -47,7 +48,7 @@ class UserAppBar extends StatefulWidget {
 }
 
 class UserAppBarState extends State {
-  String location = "Dago, Bandung";
+  IndonesiaPlace indonesiaPlace;
   bool isSafe = false;
 
   User user = User(fullname: "");
@@ -61,10 +62,27 @@ class UserAppBarState extends State {
     }
   }
 
+  void loadPositionName() async {
+    if (!await LocationService.isLocationRequestPermitted()) {
+      LocationService.showAskPermissionModal(context, () {
+        loadPositionName();
+      });
+      return;
+    }
+
+    final place = await LocationService.getLastKnownPlaceDetail();
+    if (place != null) {
+      setState(() {
+        indonesiaPlace = place;
+      });
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    loadUser();
+     loadUser();
+     loadPositionName();
   }
 
   @override
@@ -91,7 +109,9 @@ class UserAppBarState extends State {
                 Padding(
                   padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserLocation(
-                    location: location,
+                    location: indonesiaPlace == null
+                        ? "Menunggu Lokasi..."
+                        : "${indonesiaPlace.city}, ${indonesiaPlace.province}",
                     icon: LocalImage.ic_live,
                     personHealth: PersonHealth.Fine,
                   ),
@@ -115,8 +135,9 @@ class UserAppBarState extends State {
 
   Container buildBgImage() {
     return Container(
-      width: double.infinity,
-      child: RemoteImage.bg_jawa_barat.toImage(fit: BoxFit.fitHeight),
-    );
+        child: indonesiaPlace == null
+            ? RemoteImage.bg_dki_jakarta.toImage(fit: BoxFit.cover)
+            : BackgroundImage(indonesiaPlace.province)
+                .toImage(fit: BoxFit.cover));
   }
 }

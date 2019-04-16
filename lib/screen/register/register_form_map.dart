@@ -1,13 +1,13 @@
-import 'dart:async';
+import "dart:async";
 import "package:flutter/material.dart";
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import "package:flutter_spinkit/flutter_spinkit.dart";
 import "package:relieve_app/res/res.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
-import 'package:relieve_app/service/service.dart';
+import "package:relieve_app/service/service.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
-import 'package:relieve_app/widget/relieve_scaffold.dart';
+import "package:relieve_app/widget/relieve_scaffold.dart";
 
 class MapAddress {
   final String coordinate;
@@ -45,9 +45,10 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   void loadLocation() async {
     hasPermission = await LocationService.isLocationRequestPermitted();
     if (!hasPermission) {
-      hasPermission = await LocationService.askForPermission();
-      hasAskOnce = true;
-      if (!hasPermission) return;
+      LocationService.showAskPermissionModal(context, () {
+        loadLocation();
+      });
+      return;
     }
 
     final position = await LocationService.getCurrentLocation();
@@ -67,10 +68,12 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   void moveToMyLocation() async {
     if (!hasPermission) {
       if (hasAskOnce) {
-        hasPermission = await LocationService.askForPermission();
+        LocationService.showAskPermissionModal(context, () {
+          setState(() {});
+          moveToMyLocation();
+        });
       }
-      if (!hasPermission) return;
-      setState(() {});
+      return;
     }
 
     if (currentPositionCamera == null) {
@@ -129,8 +132,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     loadLocation();
   }
 

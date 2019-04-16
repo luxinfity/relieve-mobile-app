@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
+import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/disaster.dart";
-import "package:relieve_app/service/source/location.dart";
+import "package:relieve_app/service/service.dart";
 import "package:relieve_app/widget/bottom_modal.dart";
 import "package:relieve_app/widget/static_map.dart";
 
@@ -95,7 +96,7 @@ class DiscoverItem extends StatelessWidget {
 
   Widget _buildMap(BuildContext context) {
     return StaticMap(
-      Location(37.42796133580664, -122.085749655962),
+      disaster.coordinate,
       300,
       220,
     ).toMapWidget(context);
@@ -136,7 +137,20 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
+  String _getDescBasedOnTime(Duration diff) {
+    if (diff.inDays > 0) {
+      return "${diff.inDays} hari yang lalu";
+    } else if (diff.inHours > 0) {
+      return "${diff.inHours} jam yang lalu";
+    } else if (diff.inMinutes > 0) {
+      return "${diff.inMinutes} menit yang lalu";
+    } else {
+      return "${diff.inSeconds} detik yang lalu";
+    }
+  }
+
   RichText _buildSubtitle() {
+    final timeDiff = DateTime.now().difference(disaster.time);
     return RichText(
       text: TextSpan(
         text: disaster.location,
@@ -146,7 +160,7 @@ class DisasterItem extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: " - ${disaster.time} ",
+            text: " - ${_getDescBasedOnTime(timeDiff)}",
             style: CircularStdFont.medium.getStyle(
               color: AppColor.colorEmptyRect,
               size: Dimen.x10,
@@ -206,7 +220,7 @@ class DisasterItem extends StatelessWidget {
 
   Widget _buildMap(BuildContext context) {
     return StaticMap(
-      Location(37.42796133580664, -122.085749655962),
+      disaster.coordinate,
       width.toInt() + 1,
       144,
     ).toMapWidget(context);
@@ -251,6 +265,24 @@ class DisasterItemList extends StatefulWidget {
 }
 
 class DisasterItemListState extends State {
+  List<DisasterDesc> listDisaster = [];
+
+  void loadDisaster() async {
+    final disasterResponse =
+        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 5);
+    if (disasterResponse?.status == REQUEST_SUCCESS) {
+      setState(() {
+        listDisaster = disasterResponse.content.data;
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadDisaster();
+  }
+
   Widget _hollowButton() {
     return Material(
       elevation: 1,
@@ -333,51 +365,26 @@ class DisasterItemListState extends State {
       height: 205,
       width: double.infinity,
       padding: EdgeInsets.only(top: Dimen.x12, bottom: Dimen.x4),
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Container(
-            width: Dimen.x12,
-          ),
-          DisasterItem(
-            disaster: Disaster(
-              isLive: true,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
-            ),
-            onClick: () {
-              testSheet(context);
-            },
-          ),
-          DisasterItem(
-            disaster: Disaster(
-              isLive: false,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
-            ),
-          ),
-          DisasterItem(
-            disaster: Disaster(
-              isLive: false,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
-            ),
-          ),
-          DisasterItem(
-            disaster: Disaster(
-              isLive: false,
-              location: "Palembang",
-              time: 20000,
-              title: "Gempa 7.6 SR",
-            ),
-          ),
-          Container(
-            width: Dimen.x12,
-          ),
-        ],
+        itemBuilder: (bc, index) {
+          return Container(
+            padding: EdgeInsets.only(
+                left: index == 0 ? 8.0 : 0.0,
+                right: index == listDisaster.length - 1 ? 8.0 : 0.0),
+            child: DisasterItem(
+                disaster: Disaster(
+                    isLive: false,
+                    location: "Palembang",
+                    time: listDisaster[index].occursAt,
+                    title: "Gempa ${listDisaster[index].magnitude} SR",
+                    coordinate: listDisaster[index].coordinate),
+                onClick: () {
+                  testSheet(context);
+                }),
+          );
+        },
+        itemCount: listDisaster.length,
       ),
     );
   }

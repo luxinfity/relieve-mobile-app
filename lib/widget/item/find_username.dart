@@ -1,6 +1,9 @@
 import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
+import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
+import "package:relieve_app/service/model/user_check.dart";
+import "package:relieve_app/service/service.dart";
 import "package:relieve_app/widget/item/standard_button.dart";
 
 class FindUsername extends StatefulWidget {
@@ -18,27 +21,61 @@ enum AddPersonStep { Search, Found, Confirmation, Naming, Finish }
 
 class FindUsernameState extends State<FindUsername> {
   var step = AddPersonStep.Search;
+  final _usernameController = TextEditingController();
+  var friendUsername = "";
+  var friendSearchFound = true;
+
+  /// return true if friend found
+  bool setFriendUsername(UserCheckResponse checkResponse) {
+    if (checkResponse?.status == REQUEST_SUCCESS &&
+        checkResponse?.content?.isExsist == true) {
+      print(checkResponse?.content?.value);
+      friendUsername = checkResponse?.content?.value;
+      return true;
+    }
+    return false;
+  }
+
+  void findUsername(String username) async {
+    var checkResponse = await BakauApi(AppConfig.of(context))
+        .checkUser(UserCheckIdentifier.username, username);
+
+    var found = setFriendUsername(checkResponse);
+
+    print(found);
+    if (!found) {
+      checkResponse = await BakauApi(AppConfig.of(context))
+          .checkUser(UserCheckIdentifier.email, username);
+      found = setFriendUsername(checkResponse);
+    }
+
+//    setState(() {
+//      friendSearchFound = found;
+//      if (found) {
+//        step = AddPersonStep.Found;
+//      }
+//    });
+  }
 
   void buttonClick() {
-    setState(() {
-      switch (step) {
-        case AddPersonStep.Search:
-          step = AddPersonStep.Found;
-          break;
-        case AddPersonStep.Found:
-          step = AddPersonStep.Confirmation;
-          break;
-        case AddPersonStep.Confirmation:
-          step = AddPersonStep.Naming;
-          break;
-        case AddPersonStep.Naming:
-          step = AddPersonStep.Finish;
-          break;
-        case AddPersonStep.Finish:
-          widget.onFinishClick();
-          break;
-      }
-    });
+    switch (step) {
+      case AddPersonStep.Search:
+        findUsername(_usernameController.value.text);
+        break;
+      case AddPersonStep.Found:
+        step = AddPersonStep.Confirmation;
+        break;
+      case AddPersonStep.Confirmation:
+        step = AddPersonStep.Naming;
+        break;
+      case AddPersonStep.Naming:
+        step = AddPersonStep.Finish;
+        break;
+      case AddPersonStep.Finish:
+        widget.onFinishClick();
+        break;
+    }
+    setState(() {});
   }
 
   List<Widget> getSearchStep(bool isUserNameExist) {
@@ -55,17 +92,19 @@ class FindUsernameState extends State<FindUsername> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x8),
         child: TextFormField(
+          controller: _usernameController,
           decoration: InputDecoration(
-            labelText: "Tulis username / email",
-            prefixIcon: Padding(
-              padding: const EdgeInsets.all(Dimen.x14),
-              child: LocalImage.ic_search
-                  .toSvg(width: Dimen.x18, height: Dimen.x18),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimen.x6),
-            ),
-          ),
+              labelText: "Tulis username / email",
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(Dimen.x14),
+                child: LocalImage.ic_search
+                    .toSvg(width: Dimen.x18, height: Dimen.x18),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Dimen.x6),
+              ),
+              errorText:
+                  friendSearchFound ? null : "Opps.. user tidak ditemukan"),
         ),
       ),
       Container(height: isUserNameExist ? Dimen.x16 : 0),
@@ -94,7 +133,7 @@ class FindUsernameState extends State<FindUsername> {
                 Container(width: Dimen.x16),
                 Expanded(
                   child: Text(
-                    "Sultan Akbar",
+                    friendUsername,
                     style: CircularStdFont.medium.getStyle(size: Dimen.x18),
                   ),
                 ),

@@ -8,7 +8,7 @@ import "package:relieve_app/widget/item/standard_button.dart";
 import "package:relieve_app/widget/item/title.dart";
 import "package:relieve_app/widget/loading_dialog.dart";
 import "package:relieve_app/widget/relieve_scaffold.dart";
-import 'package:relieve_app/widget/snackbar.dart';
+import "package:relieve_app/widget/snackbar.dart";
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -62,7 +62,8 @@ class BoardingLoginScreenState extends State {
         pref.setUsername(usernameController.text);
         onLoginSuccess();
       } else {
-        showSnackBar(context, "Ups! Username atau password salah", buttonText: "Mengerti");
+        showSnackBar(context, "Ups! Username atau password salah",
+            buttonText: "Mengerti");
         setState(() {
           isWrongCredential = true;
         });
