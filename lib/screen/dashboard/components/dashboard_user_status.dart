@@ -63,6 +63,7 @@ class UserAppBarState extends State {
   }
 
   void loadPositionName() async {
+    // TODO: handle null
     final place = await LocationService.getLastKnownPlaceDetail();
     setState(() {
       indonesiaPlace = place;

@@ -123,6 +123,14 @@ class WeatherItemListState extends State {
   WeatherResponse _weatherResponse = WeatherResponse();
 
   void fetchData() async {
+    if (!await LocationService.isLocationRequestPermitted()) {
+      LocationService.showAskPermissionModal(context, () {
+        fetchData();
+      });
+      return;
+    }
+
+    // TODO: handle null
     final userLocation = await LocationService.getLastKnownLocation();
 
     final response = await KalomangApi(AppConfig.of(context)).weatherCheck(

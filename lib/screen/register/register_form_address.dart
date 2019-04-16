@@ -50,51 +50,12 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     }
   }
 
-  void tryAllowPermission() async {
-    if (!await LocationService.askForPermission()) {
-      await PermissionHandler().openAppSettings();
-      if (!await LocationService.isLocationRequestPermitted()) return;
-    }
-
-    Navigator.of(context).pop();
-    moveToMap();
-  }
-
   void moveToMap() async {
     if (!await LocationService.isLocationRequestPermitted()) {
-      createRelieveBottomModal(context, <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(
-              top: Dimen.x12,
-              bottom: Dimen.x32,
-              right: Dimen.x16,
-              left: Dimen.x16),
-          child: Text(
-            "Izinkan Relieve mengetahui lokasi kamu",
-            style: CircularStdFont.black.getStyle(size: Dimen.x18),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
-          child: RaisedButton(
-            child: Text("Izinkan"),
-            color: AppColor.colorPrimary,
-            textColor: Colors.white,
-            elevation: 1,
-            highlightElevation: 1,
-            padding: EdgeInsets.symmetric(
-              vertical: Dimen.x16,
-              horizontal: Dimen.x28,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(Dimen.x4),
-            ),
-            onPressed: () {
-              tryAllowPermission();
-            },
-          ),
-        )
-      ]);
+      LocationService.showAskPermissionModal(context, () {
+        // if permitted
+        moveToMap();
+      });
     } else {
       final result = await Navigator.push(
           context, MaterialPageRoute(builder: (builder) => RegisterFormMap()));

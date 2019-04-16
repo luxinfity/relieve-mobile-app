@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import "package:geolocator/geolocator.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "package:permission_handler/permission_handler.dart";
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/bottom_modal.dart';
 
 class IndonesiaPlace {
   final String province;
@@ -41,9 +44,17 @@ class LocationService {
   static Position position; // coordinate
   static IndonesiaPlace indonesiaPlace; // place detail
 
-  static Future<bool> askForPermission() async {
+  static Future<bool> _askForPermission() async {
     await PermissionHandler().requestPermissions([PermissionGroup.location]);
-    return await LocationService.isLocationRequestPermitted();
+    final hasPermitted = await LocationService.isLocationRequestPermitted();
+
+    if (!hasPermitted) {
+      // try to open app setting
+      await PermissionHandler().openAppSettings();
+      return await LocationService.isLocationRequestPermitted();
+    } else {
+      return true;
+    }
   }
 
   static Future<bool> isLocationRequestPermitted() async {
@@ -54,12 +65,19 @@ class LocationService {
         permission == PermissionStatus.restricted;
   }
 
+  /// nullable return value
   static Future<Position> getCurrentLocation() async {
-    position =
-        await Geolocator().getCurrentPosition().timeout(Duration(seconds: 10));
-    return position;
+    if (await isLocationRequestPermitted()) {
+      position = await Geolocator()
+          .getCurrentPosition()
+          .timeout(Duration(seconds: 10));
+      return position;
+    } else {
+      return position;
+    }
   }
 
+  /// nullable return value
   static Future<IndonesiaPlace> getPlaceDetail(Location position) async {
     // TODO: use server side geocode
     final places = await Geolocator()
@@ -79,6 +97,7 @@ class LocationService {
 
   /// Use these function to minimize google api call
   /// only one request at a time
+  /// nullable return value
   static Future<Position> getLastKnownLocation({bool isRefresh = false}) async {
     if (position == null || isRefresh) {
       position = await getCurrentLocation();
@@ -86,13 +105,57 @@ class LocationService {
     return position;
   }
 
+  /// nullable return value
   static Future<IndonesiaPlace> getLastKnownPlaceDetail(
       {bool isRefresh = false}) async {
     if (indonesiaPlace == null || isRefresh) {
       final position = await getLastKnownLocation();
-      indonesiaPlace =
-          await getPlaceDetail(Location.parseFromPosition(position));
+      if (position != null) {
+        indonesiaPlace =
+            await getPlaceDetail(Location.parseFromPosition(position));
+      }
     }
     return indonesiaPlace;
+  }
+
+  static void showAskPermissionModal(
+      BuildContext context, VoidCallback onPermitted) {
+    createRelieveBottomModal(context, <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(
+            top: Dimen.x12,
+            bottom: Dimen.x32,
+            right: Dimen.x16,
+            left: Dimen.x16),
+        child: Text(
+          "Izinkan Relieve mengetahui lokasi kamu",
+          style: CircularStdFont.black.getStyle(size: Dimen.x18),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+        child: RaisedButton(
+          child: Text("Izinkan"),
+          color: AppColor.colorPrimary,
+          textColor: Colors.white,
+          elevation: 1,
+          highlightElevation: 1,
+          padding: EdgeInsets.symmetric(
+            vertical: Dimen.x16,
+            horizontal: Dimen.x28,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Dimen.x4),
+          ),
+          onPressed: () async {
+            final isPermitted = await _askForPermission();
+            if (isPermitted) {
+              Navigator.of(context).pop();
+              onPermitted();
+            }
+          },
+        ),
+      )
+    ]);
   }
 }
