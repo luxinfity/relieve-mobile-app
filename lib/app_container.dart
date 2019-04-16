@@ -44,11 +44,11 @@ class NotificationPlugin extends AppPlugin {
 }
 
 class AppContainer extends InheritedWidget {
-  AppContainer({this.child, this.plugins});
-
   List<AppPlugin> plugins;
   Widget child;
   BuildContext currentContext;
+
+  AppContainer({this.child, this.plugins});
 
   static AppContainer _of(BuildContext context) {
     return context.inheritFromWidgetOfExactType(AppContainer);

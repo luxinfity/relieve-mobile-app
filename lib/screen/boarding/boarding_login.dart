@@ -4,11 +4,11 @@ import "package:relieve_app/res/res.dart";
 import "package:relieve_app/screen/walkthrough/walkthrough.dart";
 import "package:relieve_app/service/service.dart";
 import "package:relieve_app/utils/preference_utils.dart" as pref;
-import "package:relieve_app/widget/item/standard_button.dart";
-import "package:relieve_app/widget/item/title.dart";
-import "package:relieve_app/widget/loading_dialog.dart";
-import "package:relieve_app/widget/relieve_scaffold.dart";
-import "package:relieve_app/widget/snackbar.dart";
+import "package:relieve_app/widget/common/standard_button.dart";
+import "package:relieve_app/widget/common/title.dart";
+import "package:relieve_app/widget/common/loading_dialog.dart";
+import "package:relieve_app/widget/common/relieve_scaffold.dart";
+import "package:relieve_app/widget/common/snackbar.dart";
 
 class BoardingLoginScreen extends StatefulWidget {
   @override

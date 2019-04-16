@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 import "package:cached_network_image/cached_network_image.dart";
 import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/item/standard_button.dart";
-import "package:relieve_app/widget/item/title.dart";
-import "package:relieve_app/widget/relieve_scaffold.dart";
+import "package:relieve_app/widget/common/standard_button.dart";
+import "package:relieve_app/widget/common/title.dart";
+import "package:relieve_app/widget/common/relieve_scaffold.dart";
 
 class ProfileScreen extends StatefulWidget {
   @override

@@ -3,8 +3,8 @@ import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/disaster.dart";
 import "package:relieve_app/service/service.dart";
-import "package:relieve_app/widget/item/disaster_item.dart";
-import "package:relieve_app/widget/item/title.dart";
+import "package:relieve_app/widget/disaster/disaster_item.dart";
+import "package:relieve_app/widget/common/title.dart";
 
 class DashboardDiscoverScreen extends StatefulWidget {
   @override

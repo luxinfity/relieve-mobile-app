@@ -3,8 +3,8 @@ import "package:relieve_app/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/disaster.dart";
 import "package:relieve_app/service/service.dart";
-import "package:relieve_app/widget/bottom_modal.dart";
-import "package:relieve_app/widget/static_map.dart";
+import "package:relieve_app/widget/common/bottom_modal.dart";
+import "package:relieve_app/widget/map/static_map.dart";
 
 class DiscoverItem extends StatelessWidget {
   final Disaster disaster;

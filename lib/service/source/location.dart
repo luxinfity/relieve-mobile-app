@@ -3,7 +3,7 @@ import "package:geolocator/geolocator.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "package:permission_handler/permission_handler.dart";
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/bottom_modal.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
 
 class IndonesiaPlace {
   final String province;
