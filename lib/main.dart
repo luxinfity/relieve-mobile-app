@@ -25,17 +25,17 @@ class MyApp extends StatelessWidget {
     return AppContainer(
       plugins: [NotificationPlugin()],
       child: MaterialApp(
-        title: "Relieve ID",
-        theme: ThemeData(
-          primaryColor: AppColor.colorPrimary,
-          primaryColorDark: AppColor.colorPrimaryDark,
-          accentColor: AppColor.colorAccent,
-          backgroundColor: Colors.white,
-          canvasColor: Colors.transparent,
-          fontFamily: CircularStdFont.book.fontFamily,
-          hintColor: AppColor.colorEmptyRect,
-        ),
-        home: LandingScreen());,
-    )
+          title: "Relieve ID",
+          theme: ThemeData(
+            primaryColor: AppColor.colorPrimary,
+            primaryColorDark: AppColor.colorPrimaryDark,
+            accentColor: AppColor.colorAccent,
+            backgroundColor: Colors.white,
+            canvasColor: Colors.transparent,
+            fontFamily: CircularStdFont.book.fontFamily,
+            hintColor: AppColor.colorEmptyRect,
+          ),
+          home: LandingScreen()),
+    );
   }
 }
