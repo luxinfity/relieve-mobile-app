@@ -45,9 +45,10 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   void loadLocation() async {
     hasPermission = await LocationService.isLocationRequestPermitted();
     if (!hasPermission) {
-      hasPermission = await LocationService.askForPermission();
-      hasAskOnce = true;
-      if (!hasPermission) return;
+      LocationService.showAskPermissionModal(context, () {
+        loadLocation();
+      });
+      return;
     }
 
     final position = await LocationService.getCurrentLocation();
@@ -67,10 +68,12 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   void moveToMyLocation() async {
     if (!hasPermission) {
       if (hasAskOnce) {
-        hasPermission = await LocationService.askForPermission();
+        LocationService.showAskPermissionModal(context, () {
+          setState(() {});
+          moveToMyLocation();
+        });
       }
-      if (!hasPermission) return;
-      setState(() {});
+      return;
     }
 
     if (currentPositionCamera == null) {
@@ -129,8 +132,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     loadLocation();
   }
 

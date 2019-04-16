@@ -1,5 +1,6 @@
 import "package:http/http.dart" as http;
 import "package:relieve_app/app_config.dart";
+import "package:relieve_app/service/model/disaster.dart";
 import "package:relieve_app/service/model/weather.dart";
 import "package:relieve_app/service/service.dart";
 import "dart:convert";
@@ -23,5 +24,18 @@ class KalomangApi extends BaseApi {
     final response = await http.get(uri, headers: headers);
 
     return WeatherResponse.fromJson(jsonDecode(response.body));
+  }
+
+  Future<DisasterResponse> getDisasterList(int page, int limit) async {
+    var uri = "$completeUri/earthquake?page=$page&limit=$limit";
+
+    final headers = {
+      "authorization": await pref.getToken(),
+      "secret": secret,
+    };
+
+    final response = await http.get(uri, headers: headers);
+
+    return DisasterResponse.fromJson(jsonDecode(response.body));
   }
 }

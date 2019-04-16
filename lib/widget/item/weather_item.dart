@@ -123,15 +123,23 @@ class WeatherItemListState extends State {
   WeatherResponse _weatherResponse = WeatherResponse();
 
   void fetchData() async {
-    final userLocation = await LocationService.getLastKnownLocation();
+    if (!await LocationService.isLocationRequestPermitted()) {
+      LocationService.showAskPermissionModal(context, () {
+        fetchData();
+      });
+      return;
+    }
 
-    final response = await KalomangApi(AppConfig.of(context)).weatherCheck(
-      userLocation.latitude,
-      userLocation.longitude,
-    );
-    setState(() {
-      _weatherResponse = response;
-    });
+    final userLocation = await LocationService.getLastKnownLocation();
+    if (userLocation != null) {
+      final response = await KalomangApi(AppConfig.of(context)).weatherCheck(
+        userLocation.latitude,
+        userLocation.longitude,
+      );
+      setState(() {
+        _weatherResponse = response;
+      });
+    }
   }
 
   @override

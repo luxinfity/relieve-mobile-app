@@ -10,26 +10,33 @@ double _calculatePaddingBottom(BuildContext context) {
   }
 }
 
-Future createRelieveBottomModal(BuildContext context, List<Widget> children) {
+Future createRelieveBottomModal(
+  BuildContext context,
+  List<Widget> children, {
+  WillPopCallback onWillPop,
+}) {
   return showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
-      return Container(
-        padding: EdgeInsets.only(
-          top: Dimen.x16,
-          bottom: _calculatePaddingBottom(context),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(Dimen.x16),
-            topRight: Radius.circular(Dimen.x16),
+      return WillPopScope(
+        onWillPop: onWillPop,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: Dimen.x16,
+            bottom: _calculatePaddingBottom(context),
           ),
-        ),
-        child: ListView(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          children: children,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(Dimen.x16),
+              topRight: Radius.circular(Dimen.x16),
+            ),
+          ),
+          child: ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: children,
+          ),
         ),
       );
     },
