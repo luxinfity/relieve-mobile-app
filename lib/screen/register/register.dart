@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:relieve_app/app_config.dart";
+import "package:relieve_app/config/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/screen/register/register_form_account.dart";
 import "package:relieve_app/screen/register/register_form_profile.dart";

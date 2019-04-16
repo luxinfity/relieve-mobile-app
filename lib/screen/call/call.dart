@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:relieve_app/app_config.dart";
+import "package:relieve_app/config/app_config.dart";
 import "package:relieve_app/screen/call/call_list.dart";
 import "package:relieve_app/screen/call/components/address_bar.dart";
 import "package:relieve_app/screen/call/components/item_button.dart";

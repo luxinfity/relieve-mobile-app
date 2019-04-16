@@ -3,7 +3,7 @@ import "package:recase/recase.dart";
 
 import "./components/item_button.dart";
 import "package:relieve_app/res/res.dart";
-import "package:relieve_app/app_config.dart";
+import "package:relieve_app/config/app_config.dart";
 import "package:relieve_app/widget/common/title.dart";
 import "package:relieve_app/service/model/contact.dart";
 import "package:relieve_app/service/source/api/api.dart";
