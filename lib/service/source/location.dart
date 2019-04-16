@@ -171,6 +171,7 @@ class LocationService {
       onWillPop: () {
         _isBottomSheetShowed = false;
         _onPermittedCallBackList.clear();
+        return new Future.value(true);
       },
     );
     _isBottomSheetShowed = true;
