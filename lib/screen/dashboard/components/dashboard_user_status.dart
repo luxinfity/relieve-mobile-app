@@ -63,18 +63,26 @@ class UserAppBarState extends State {
   }
 
   void loadPositionName() async {
-    // TODO: handle null
+    if (!await LocationService.isLocationRequestPermitted()) {
+      LocationService.showAskPermissionModal(context, () {
+        loadPositionName();
+      });
+      return;
+    }
+
     final place = await LocationService.getLastKnownPlaceDetail();
-    setState(() {
-      indonesiaPlace = place;
-    });
+    if (place != null) {
+      setState(() {
+        indonesiaPlace = place;
+      });
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    loadUser();
-    loadPositionName();
+     loadUser();
+     loadPositionName();
   }
 
   @override

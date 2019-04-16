@@ -48,7 +48,6 @@ class RegisterFormMapState extends State<RegisterFormMap> {
       LocationService.showAskPermissionModal(context, () {
         loadLocation();
       });
-      hasAskOnce = true;
       return;
     }
 

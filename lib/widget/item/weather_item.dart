@@ -130,16 +130,16 @@ class WeatherItemListState extends State {
       return;
     }
 
-    // TODO: handle null
     final userLocation = await LocationService.getLastKnownLocation();
-
-    final response = await KalomangApi(AppConfig.of(context)).weatherCheck(
-      userLocation.latitude,
-      userLocation.longitude,
-    );
-    setState(() {
-      _weatherResponse = response;
-    });
+    if (userLocation != null) {
+      final response = await KalomangApi(AppConfig.of(context)).weatherCheck(
+        userLocation.latitude,
+        userLocation.longitude,
+      );
+      setState(() {
+        _weatherResponse = response;
+      });
+    }
   }
 
   @override
