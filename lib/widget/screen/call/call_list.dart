@@ -7,9 +7,9 @@ import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/service/model/contact.dart';
-import 'package:relieve_app/service/source/api/api.dart';
+import 'package:relieve_app/service/source/api/base.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
-import 'package:relieve_app/service/source/location.dart';
+import 'package:relieve_app/service/source/location/location.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 
 class CallListScreen extends StatefulWidget {
