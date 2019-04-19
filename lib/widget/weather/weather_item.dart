@@ -1,8 +1,8 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/config/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/weather.dart";
-import "package:relieve_app/service/service.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/weather.dart';
+import 'package:relieve_app/service/service.dart';
 
 enum WeatherType { Temparature, Rain, Wind, UV }
 
@@ -34,25 +34,25 @@ class WeatherItem extends StatelessWidget {
   String getMetric() {
     switch (weatherType) {
       case WeatherType.Temparature:
-        return "c";
+        return 'c';
       case WeatherType.Wind:
-        return "kph";
+        return 'kph';
       case WeatherType.UV:
-        return "uv";
+        return 'uv';
       default:
-        return "%";
+        return '%';
     }
   }
 
   Widget createValueView() {
-    var strVal = "";
+    var strVal = '';
 
     switch (weatherType) {
       case WeatherType.Temparature:
-        strVal += "${value.toInt()}°";
+        strVal += '${value.toInt()}°';
         break;
       case WeatherType.Rain:
-        strVal += "${(value * 100).toInt()}";
+        strVal += '${(value * 100).toInt()}';
         break;
       default:
         strVal += value.toInt().toString();
@@ -160,7 +160,7 @@ class WeatherItemListState extends State {
             child: WeatherItem(
               weatherType: WeatherType.Temparature,
               classification:
-                  _weatherResponse.content.temparature.desc?.id ?? "Normal",
+                  _weatherResponse.content.temparature.desc?.id ?? 'Normal',
               value: _weatherResponse.content.temparature.value,
             ),
           ),

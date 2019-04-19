@@ -1,4 +1,4 @@
-import "./base.dart";
+import './base.dart';
 
 class Token {
   final String token;
@@ -10,9 +10,9 @@ class Token {
   factory Token.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return Token(
-        token: parsedJson["token"],
-        refreshToken: parsedJson["refresh_token"],
-        expiresIn: parsedJson["expires_in"],
+        token: parsedJson['token'],
+        refreshToken: parsedJson['refresh_token'],
+        expiresIn: parsedJson['expires_in'],
       );
     } catch (e) {
       return null;
@@ -33,9 +33,9 @@ class TokenResponse extends BaseResponse {
   factory TokenResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return TokenResponse(
-        message: parsedJson["message"],
-        status: parsedJson["status"],
-        content: Token.fromJson(parsedJson["content"]),
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: Token.fromJson(parsedJson['content']),
       );
     } catch (e) {
       return null;

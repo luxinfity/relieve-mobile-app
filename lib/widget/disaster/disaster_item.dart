@@ -1,10 +1,10 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/config/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/disaster.dart";
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/widget/common/bottom_modal.dart";
-import "package:relieve_app/widget/map/static_map.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/disaster.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/map/static_map.dart';
 
 class DiscoverItem extends StatelessWidget {
   final Disaster disaster;
@@ -51,7 +51,7 @@ class DiscoverItem extends StatelessWidget {
         LocalImage.ic_live
             .toSvg(height: Dimen.x14, color: AppColor.colorDanger),
         Text(
-          "Sekarang!",
+          'Sekarang!',
           style: CircularStdFont.black.getStyle(
             size: Dimen.x18,
             color: AppColor.colorDanger,
@@ -139,13 +139,13 @@ class DisasterItem extends StatelessWidget {
 
   String _getDescBasedOnTime(Duration diff) {
     if (diff.inDays > 0) {
-      return "${diff.inDays} hari yang lalu";
+      return '${diff.inDays} hari yang lalu';
     } else if (diff.inHours > 0) {
-      return "${diff.inHours} jam yang lalu";
+      return '${diff.inHours} jam yang lalu';
     } else if (diff.inMinutes > 0) {
-      return "${diff.inMinutes} menit yang lalu";
+      return '${diff.inMinutes} menit yang lalu';
     } else {
-      return "${diff.inSeconds} detik yang lalu";
+      return '${diff.inSeconds} detik yang lalu';
     }
   }
 
@@ -160,7 +160,7 @@ class DisasterItem extends StatelessWidget {
         ),
         children: [
           TextSpan(
-            text: " - ${_getDescBasedOnTime(timeDiff)}",
+            text: ' - ${_getDescBasedOnTime(timeDiff)}',
             style: CircularStdFont.medium.getStyle(
               color: AppColor.colorEmptyRect,
               size: Dimen.x10,
@@ -246,7 +246,7 @@ class DisasterItem extends StatelessWidget {
               color: Colors.white,
             ),
             Text(
-              "Live",
+              'Live',
               style: CircularStdFont.medium
                   .getStyle(size: Dimen.x12, color: Colors.white),
             ),
@@ -311,7 +311,7 @@ class DisasterItemListState extends State {
       Container(height: 150, color: AppColor.colorEmptyRect),
       Container(height: Dimen.x24),
       Text(
-        "Awas!! \nGempa terjadi didekatmu",
+        'Awas!! \nGempa terjadi didekatmu',
         style: CircularStdFont.black.getStyle(size: Dimen.x21),
       ),
       Container(height: Dimen.x36),
@@ -342,7 +342,7 @@ class DisasterItemListState extends State {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      "Saya Aman",
+                      'Saya Aman',
                       style: CircularStdFont.bold.getStyle(
                         size: Dimen.x18,
                         color: Colors.white,
@@ -375,9 +375,9 @@ class DisasterItemListState extends State {
             child: DisasterItem(
                 disaster: Disaster(
                     isLive: false,
-                    location: "Palembang",
+                    location: 'Palembang',
                     time: listDisaster[index].occursAt,
-                    title: "Gempa ${listDisaster[index].magnitude} SR",
+                    title: 'Gempa ${listDisaster[index].magnitude} SR',
                     coordinate: listDisaster[index].coordinate),
                 onClick: () {
                   testSheet(context);

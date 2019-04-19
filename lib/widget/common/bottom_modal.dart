@@ -1,5 +1,5 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/res/res.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
 
 double _calculatePaddingBottom(BuildContext context) {
   final padding = MediaQuery.of(context).padding;

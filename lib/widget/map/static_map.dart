@@ -1,14 +1,14 @@
-import "package:cached_network_image/cached_network_image.dart";
-import "package:flutter/material.dart";
-import "package:google_maps_flutter/google_maps_flutter.dart";
-import "package:relieve_app/service/source/location.dart";
-import "package:relieve_app/utils/common_utils.dart";
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 
 enum ImageFormat { JPEG, PNG, GIF }
 
 class StaticMap {
   static const String baseUrl =
-      "https://maps.googleapis.com/maps/api/staticmap?";
+      'https://maps.googleapis.com/maps/api/staticmap?';
 
   /// Location Parameter
   final Location center;
@@ -29,18 +29,18 @@ class StaticMap {
 
   String generateGoogleStaticUrl(BuildContext context,
       {Map<String, String> queries}) {
-    String queryString = """
+    String queryString = '''
       key=${getGoogleApiKey(context)}&
       center=${center.toString()}&
       zoom=$zoom&
       size=${width}x$height&
-      format=${imageFormat.toString().split(".")[1]}&
-      maptype=${mapType.toString().split(".")[1]}
-    """
-        .replaceAll(RegExp(r"[ \n]"), ""); // replace space and newline
+      format=${imageFormat.toString().split('.')[1]}&
+      maptype=${mapType.toString().split('.')[1]}
+    '''
+        .replaceAll(RegExp(r'[ \n]'), ''); // replace space and newline
 
     queries?.forEach((key, value) {
-      queryString += "&$key=$value";
+      queryString += '&$key=$value';
     });
 
     queryString = Uri.encodeFull(queryString);

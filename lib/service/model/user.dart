@@ -1,8 +1,8 @@
-import "dart:convert";
+import 'dart:convert';
 
-import "package:relieve_app/service/model/address.dart";
+import 'package:relieve_app/service/model/address.dart';
 
-import "./base.dart";
+import './base.dart';
 
 class Phone {
   final String number;
@@ -12,23 +12,23 @@ class Phone {
 
   Map toMap() {
     return {
-      "number": number,
-      "status": status,
+      'number': number,
+      'status': status,
     };
   }
 
   String toJson() {
     return jsonEncode({
-      "number": number,
-      "status": status,
+      'number': number,
+      'status': status,
     });
   }
 
   factory Phone.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return Phone(
-        parsedJson["number"],
-        parsedJson["status"],
+        parsedJson['number'],
+        parsedJson['status'],
       );
     } catch (e) {
       return null;
@@ -61,19 +61,19 @@ class User {
 
   String toJson({bool onlyFirstPhone = true}) {
     var data = {
-      "username": username,
-      "password": password,
-      "fullname": fullname,
-      "email": email,
-      "birthdate": birthdate,
-      "gender": gender,
-      "address": address.toMap(),
+      'username': username,
+      'password': password,
+      'fullname': fullname,
+      'email': email,
+      'birthdate': birthdate,
+      'gender': gender,
+      'address': address.toMap(),
     };
 
     if (onlyFirstPhone) {
-      data["phone"] = phones[0].number;
+      data['phone'] = phones[0].number;
     } else {
-      data["phones"] = phones.map((phone) => phone.toMap());
+      data['phones'] = phones.map((phone) => phone.toMap());
     }
 
     return jsonEncode(data);
@@ -82,12 +82,12 @@ class User {
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return User(
-        username: parsedJson["username"],
-        fullname: parsedJson["fullname"],
-        email: parsedJson["email"],
-        birthdate: parsedJson["birthdate"],
-        isComplete: parsedJson["is_complete"],
-        gender: parsedJson["gender"],
+        username: parsedJson['username'],
+        fullname: parsedJson['fullname'],
+        email: parsedJson['email'],
+        birthdate: parsedJson['birthdate'],
+        isComplete: parsedJson['is_complete'],
+        gender: parsedJson['gender'],
       );
     } catch (e) {
       return null;
@@ -108,9 +108,9 @@ class UserResponse extends BaseResponse {
   factory UserResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return UserResponse(
-        message: parsedJson["message"],
-        status: parsedJson["status"],
-        content: User.fromJson(parsedJson["content"]),
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: User.fromJson(parsedJson['content']),
       );
     } catch (e) {
       return null;

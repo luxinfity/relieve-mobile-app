@@ -1,15 +1,15 @@
-import "package:flutter/material.dart";
-import "package:flutter/services.dart";
-import "package:relieve_app/config/app_config.dart";
-import 'package:relieve_app/config/app_container.dart';
-import "package:relieve_app/screen/landing_screen.dart";
-import "package:relieve_app/res/res.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/widget/inherited/app_container.dart';
+import 'package:relieve_app/widget/screen/landing_screen.dart';
+import 'package:relieve_app/res/res.dart';
 
 void main() {
   var configuredApp = new AppConfig(
-    flavorName: "production",
-    apiProtocol: "https",
-    apiUrlPrefix: "",
+    flavorName: 'production',
+    apiProtocol: 'https',
+    apiUrlPrefix: '',
     child: new MyApp(),
   );
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     return AppContainer(
       plugins: [NotificationPlugin()],
       child: MaterialApp(
-          title: "Relieve ID",
+          title: 'Relieve ID',
           theme: ThemeData(
             primaryColor: AppColor.colorPrimary,
             primaryColorDark: AppColor.colorPrimaryDark,

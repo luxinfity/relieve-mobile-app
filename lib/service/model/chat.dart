@@ -1,4 +1,4 @@
-import "package:flutter/foundation.dart";
+import 'package:flutter/foundation.dart';
 
 class Chat {
   final String userId;

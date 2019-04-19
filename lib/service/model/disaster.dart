@@ -1,6 +1,6 @@
-import "package:flutter/foundation.dart";
-import "package:relieve_app/service/model/base.dart";
-import "package:relieve_app/service/service.dart";
+import 'package:flutter/foundation.dart';
+import 'package:relieve_app/service/model/base.dart';
+import 'package:relieve_app/service/model/location.dart';
 
 class Disaster {
   final bool isLive;
@@ -32,9 +32,9 @@ class DisasterMeta {
   factory DisasterMeta.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return DisasterMeta(
-        totalPage: parsedJson["total_page"],
-        page: parsedJson["page"],
-        limit: parsedJson["limit"],
+        totalPage: parsedJson['total_page'],
+        page: parsedJson['page'],
+        limit: parsedJson['limit'],
       );
     } catch (e) {
       return null;
@@ -60,11 +60,11 @@ class DisasterDesc {
   factory DisasterDesc.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return DisasterDesc(
-        id: parsedJson["id"],
-        coordinate: Location.parseString(parsedJson["coordinates"]),
-        magnitude: parsedJson["magnitude"].toDouble(),
-        depth: parsedJson["depth"].toDouble(),
-        occursAt: DateTime.parse(parsedJson["occurs_at"]),
+        id: parsedJson['id'],
+        coordinate: Location.parseString(parsedJson['coordinates']),
+        magnitude: parsedJson['magnitude'].toDouble(),
+        depth: parsedJson['depth'].toDouble(),
+        occursAt: DateTime.parse(parsedJson['occurs_at']),
       );
     } catch (e) {
       return null;
@@ -81,10 +81,10 @@ class DisasterContent {
   factory DisasterContent.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return DisasterContent(
-        data: (parsedJson["data"] as List)
+        data: (parsedJson['data'] as List)
             .map((content) => DisasterDesc.fromJson(content))
             .toList(),
-        meta: DisasterMeta.fromJson(parsedJson["meta"]),
+        meta: DisasterMeta.fromJson(parsedJson['meta']),
       );
     } catch (e) {
       return null;
@@ -105,9 +105,9 @@ class DisasterResponse extends BaseResponse {
   factory DisasterResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return DisasterResponse(
-        message: parsedJson["message"],
-        status: parsedJson["status"],
-        content: DisasterContent.fromJson(parsedJson["content"]),
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: DisasterContent.fromJson(parsedJson['content']),
       );
     } catch (e) {
       return null;
