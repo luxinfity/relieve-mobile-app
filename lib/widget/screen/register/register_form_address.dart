@@ -1,15 +1,15 @@
-import "package:flutter/gestures.dart";
-import "package:flutter/material.dart";
-import "package:permission_handler/permission_handler.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/screen/register/register_form_map.dart";
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/utils/common_utils.dart";
-import "package:relieve_app/widget/common/bottom_modal.dart";
-import "package:relieve_app/widget/common/standard_button.dart";
-import "package:relieve_app/widget/common/title.dart";
-import "package:url_launcher/url_launcher.dart";
-export "package:relieve_app/widget/screen/register/register_form_map.dart";
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/screen/register/register_form_map.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:url_launcher/url_launcher.dart';
+export 'package:relieve_app/widget/screen/register/register_form_map.dart';
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
@@ -91,9 +91,9 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
 
   String getErrorText(TextEditingController controller) {
     if (!isAddressValid && controller == addressController) {
-      return "Alamat minimal 2 huruf";
+      return 'Alamat minimal 2 huruf';
     } else if (!isNameValid && controller == nameController) {
-      return "Nama tempat minimal 2 huruf";
+      return 'Nama tempat minimal 2 huruf';
     } else {
       return null;
     }
@@ -109,9 +109,9 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
             padding: safePadding.copyWith(top: 0),
             children: <Widget>[
               ThemedTitle(
-                title: "Alamat Tinggal",
+                title: 'Alamat Tinggal',
                 subtitle:
-                    "Informasi aplikasi akan sesuai dengan alamat kamu tinggal",
+                    'Informasi aplikasi akan sesuai dengan alamat kamu tinggal',
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -126,7 +126,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                     enabled: false,
                     controller: coordinateController,
                     decoration: InputDecoration(
-                      labelText: "Temukan dengan peta",
+                      labelText: 'Temukan dengan peta',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
@@ -149,7 +149,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                   controller: addressController,
                   maxLines: null,
                   decoration: InputDecoration(
-                      labelText: "Alamat Lengkap",
+                      labelText: 'Alamat Lengkap',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
@@ -172,8 +172,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                 child: TextFormField(
                   controller: nameController,
                   decoration: InputDecoration(
-                    labelText: "Nama Rumah",
-                    helperText: "Contoh : Rumah, Kantor, Rumah Bandung",
+                    labelText: 'Nama Rumah',
+                    helperText: 'Contoh : Rumah, Kantor, Rumah Bandung',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -190,26 +190,26 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-                text: "Dengan mendaftar, kamu menyetujui ",
+                text: 'Dengan mendaftar, kamu menyetujui ',
                 style: CircularStdFont.book
                     .getStyle(size: Dimen.x12, color: AppColor.colorTextBlack),
                 children: <TextSpan>[
                   TextSpan(
-                    text: "ketentuan layanan dan kebijakan perivasi",
+                    text: 'ketentuan layanan dan kebijakan perivasi',
                     style: CircularStdFont.book.getStyle(
                         size: Dimen.x12, color: AppColor.colorPrimary),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         launch(
-                            "https://github.com/RelieveID/terms-and-conditions/");
+                            'https://github.com/RelieveID/terms-and-conditions/');
                       },
                   ),
-                  TextSpan(text: " dalam penggunaan Relieve.ID")
+                  TextSpan(text: ' dalam penggunaan Relieve.ID')
                 ]),
           ),
         ),
         StandardButton(
-          text: "Daftar",
+          text: 'Daftar',
           isEnabled: isFormFilled(),
           buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,

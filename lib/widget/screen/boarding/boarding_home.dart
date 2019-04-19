@@ -1,21 +1,21 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/screen/register/register_form_account.dart";
-import "package:relieve_app/widget/screen/walkthrough/walkthrough.dart";
-import "package:relieve_app/service/model/user_check.dart";
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/widget/common/bottom_modal.dart";
-import "package:relieve_app/widget/common/title.dart";
-import "package:relieve_app/utils/common_utils.dart";
-import "package:relieve_app/utils/preference_utils.dart";
-import "package:relieve_app/widget/common/loading_dialog.dart";
-import "package:relieve_app/widget/common/relieve_scaffold.dart";
-import "package:relieve_app/widget/screen/register/register.dart";
-import "package:relieve_app/widget/common/standard_button.dart";
-import "package:relieve_app/widget/screen/boarding/boarding_login.dart";
-import "package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart";
-import "package:relieve_app/utils/preference_utils.dart" as pref;
+import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/screen/register/register_form_account.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/service/model/user_check.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
+import 'package:relieve_app/widget/common/loading_dialog.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
+import 'package:relieve_app/widget/screen/register/register.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
+import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);
@@ -49,7 +49,7 @@ class BoardingHomeScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
           child: Text(
-            "Google login sedang tidak bisa digunakan, Gunakan metode login yang lain",
+            'Google login sedang tidak bisa digunakan, Gunakan metode login yang lain',
             style: CircularStdFont.book.getStyle(size: Dimen.x16),
           ),
         ),
@@ -105,14 +105,14 @@ class BoardingHomeScreen extends StatelessWidget {
         buildTitle(),
         buildImage(),
         StandardButton(
-          key: Key("home-login"),
-          text: "Login Now",
+          key: Key('home-login'),
+          text: 'Login Now',
           backgroundColor: AppColor.colorPrimary,
           buttonClick: () => loginButtonClicked(context),
         ),
         StandardButton(
-          key: Key("home-google-sign-in"),
-          text: "Sign In With Google",
+          key: Key('home-google-sign-in'),
+          text: 'Sign In With Google',
           svgIcon: LocalImage.ic_google,
           backgroundColor: AppColor.colorDanger,
           buttonClick: () => googleButtonClicked(context),
@@ -141,8 +141,8 @@ class BoardingHomeScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: 12, bottom: 18),
       child: ThemedTitle(
-        title: "Selamat datang di Relieve!",
-        subtitle: "Harta yang paling berharga adalah keluarga",
+        title: 'Selamat datang di Relieve!',
+        subtitle: 'Harta yang paling berharga adalah keluarga',
       ),
     );
   }

@@ -1,4 +1,4 @@
-import "./base.dart";
+import './base.dart';
 
 enum UserCheckIdentifier { email, username }
 
@@ -12,9 +12,9 @@ class UserCheck {
   factory UserCheck.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return UserCheck(
-        param: parsedJson["token"],
-        value: parsedJson["refresh_token"],
-        isExsist: parsedJson["is_exsist"],
+        param: parsedJson['token'],
+        value: parsedJson['refresh_token'],
+        isExsist: parsedJson['is_exsist'],
       );
     } catch (e) {
       return null;
@@ -35,9 +35,9 @@ class UserCheckResponse extends BaseResponse {
   factory UserCheckResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return UserCheckResponse(
-        message: parsedJson["message"],
-        status: parsedJson["status"],
-        content: UserCheck.fromJson(parsedJson["content"]),
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: UserCheck.fromJson(parsedJson['content']),
       );
     } catch (e) {
       return null;

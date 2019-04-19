@@ -1,14 +1,14 @@
-import "package:flutter/material.dart";
-import "package:recase/recase.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/screen/dashboard/components/dashboard_title.dart";
-import "package:relieve_app/service/model/family.dart";
-import "package:relieve_app/service/model/location.dart";
-import "package:relieve_app/service/model/user.dart";
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/service/source/api/api.dart";
-import "package:relieve_app/widget/profile/user_location.dart";
+import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/screen/dashboard/components/dashboard_title.dart';
+import 'package:relieve_app/service/model/family.dart';
+import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/api.dart';
+import 'package:relieve_app/widget/profile/user_location.dart';
 
 class Greeting extends StatelessWidget {
   final String name;
@@ -25,7 +25,7 @@ class Greeting extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Halo",
+            'Halo',
             style: CircularStdFont.book
                 .getStyle(size: Dimen.x24)
                 .apply(color: Colors.white),
@@ -52,7 +52,7 @@ class UserAppBarState extends State {
   IndonesiaPlace indonesiaPlace;
   bool isSafe = false;
 
-  User user = User(fullname: "");
+  User user = User(fullname: '');
 
   void loadUser() async {
     final userResponse = await BakauApi(AppConfig.of(context)).getUser();
@@ -111,8 +111,8 @@ class UserAppBarState extends State {
                   padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserLocation(
                     location: indonesiaPlace == null
-                        ? "Menunggu Lokasi..."
-                        : "${indonesiaPlace.city}, ${indonesiaPlace.province}",
+                        ? 'Menunggu Lokasi...'
+                        : '${indonesiaPlace.city}, ${indonesiaPlace.province}',
                     icon: LocalImage.ic_live,
                     personHealth: PersonHealth.Fine,
                   ),

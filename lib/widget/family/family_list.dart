@@ -33,22 +33,22 @@ class FamilyItemListState extends State {
 
 //  List<Family> _defaultFamilyList = [
 //    Family(
-//      fullName: "Ayah",
+//      fullName: 'Ayah',
 //      condition: Condition(health: PersonHealth.Fine),
 //      imageUrl:
-//          "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg",
+//          'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg',
 //    ),
 //    Family(
-//      fullName: "Ibu",
+//      fullName: 'Ibu',
 //      condition: Condition(health: PersonHealth.Bad),
 //      imageUrl:
-//          "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg",
+//          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
 //    ),
 //    Family(
-//      fullName: "Kak dinda",
+//      fullName: 'Kak dinda',
 //      condition: Condition(health: PersonHealth.None),
 //      imageUrl:
-//          "https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg",
+//          'https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg',
 //    )
 //  ];
 

@@ -1,7 +1,7 @@
-import "package:cached_network_image/cached_network_image.dart";
-import "package:flutter/material.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/family.dart";
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/family.dart';
 
 enum FamilyItemType { Normal, Empty, Add }
 
@@ -123,14 +123,14 @@ class FamilyItem extends StatelessWidget {
   }
 
   FamilyItem.empty({
-    this.family = const Family(fullName: "Kerabat"),
+    this.family = const Family(fullName: 'Kerabat'),
     this.type = FamilyItemType.Empty,
     this.onClick,
     this.hideName = false,
   });
 
   FamilyItem.add({
-    this.family = const Family(fullName: "Tambah"),
+    this.family = const Family(fullName: 'Tambah'),
     this.type = FamilyItemType.Add,
     this.onClick,
     this.hideName = false,

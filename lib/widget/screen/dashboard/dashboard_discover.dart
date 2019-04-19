@@ -1,11 +1,11 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/disaster.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/disaster.dart';
 import 'package:relieve_app/service/model/location.dart';
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/widget/disaster/disaster_item.dart";
-import "package:relieve_app/widget/common/title.dart";
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/widget/disaster/disaster_item.dart';
+import 'package:relieve_app/widget/common/title.dart';
 
 class DashboardDiscoverScreen extends StatefulWidget {
   @override
@@ -45,7 +45,7 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   top: Dimen.x24,
                   bottom: Dimen.x12,
                 ),
-                child: ScreenTitle(title: "Discover"),
+                child: ScreenTitle(title: 'Discover'),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -57,15 +57,15 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                 child: DiscoverItem(
                   disaster: Disaster(
                     isLive: true,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
               ThemedTitle(
-                title: "Highlight Bencana",
+                title: 'Highlight Bencana',
               )
             ]),
           ),
@@ -88,8 +88,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
@@ -102,8 +102,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
@@ -115,8 +115,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
@@ -128,8 +128,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
@@ -141,8 +141,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
@@ -154,8 +154,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
@@ -167,8 +167,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),
@@ -180,8 +180,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                   width: 185,
                   disaster: Disaster(
                     isLive: false,
-                    title: "Gunung Semeru Meletus",
-                    location: "Jawa Timur",
+                    title: 'Gunung Semeru Meletus',
+                    location: 'Jawa Timur',
                     time: DateTime.now(),
                     coordinate: Location(37.42796133580664, -122.085749655962),
                   ),

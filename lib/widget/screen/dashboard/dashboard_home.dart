@@ -1,10 +1,10 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/screen/dashboard/components/dashboard_user_status.dart";
-import "package:relieve_app/widget/common/title.dart";
-import "package:relieve_app/widget/disaster/disaster_item.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/screen/dashboard/components/dashboard_user_status.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/widget/disaster/disaster_item.dart';
 import 'package:relieve_app/widget/family/family_list.dart';
-import "package:relieve_app/widget/weather/weather_item.dart";
+import 'package:relieve_app/widget/weather/weather_item.dart';
 
 class DashboardHomeScreen extends StatelessWidget {
   @override
@@ -16,20 +16,20 @@ class DashboardHomeScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
               _createTitle(
-                "Cuaca Hari Ini",
-                "Selalu siap apapun cuaca nya",
+                'Cuaca Hari Ini',
+                'Selalu siap apapun cuaca nya',
                 Dimen.x16,
               ),
               WeatherItemList(),
               _createTitle(
-                "Daftar Kerabat",
-                "Pantau kondisi kerabat terdekat anda dimanapun berada",
+                'Daftar Kerabat',
+                'Pantau kondisi kerabat terdekat anda dimanapun berada',
                 Dimen.x16,
               ),
               FamilyItemList(),
               _createTitle(
-                "Discover",
-                "Update informasi terkini bencana di seluruh Indonesia",
+                'Discover',
+                'Update informasi terkini bencana di seluruh Indonesia',
                 Dimen.x16,
               ),
               DisasterItemList()

@@ -1,6 +1,6 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/chat.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/chat.dart';
 
 class ChatItem extends StatelessWidget {
   final Chat chat;
@@ -31,7 +31,7 @@ class ChatItem extends StatelessWidget {
                     )),
                 child: CircleAvatar(
                   radius: Dimen.x28,
-                  child: Text("JE"),
+                  child: Text('JE'),
                 ),
               ),
               Container(width: Dimen.x21),
@@ -43,7 +43,7 @@ class ChatItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            "Nia ramadhani",
+                            'Nia ramadhani',
                             overflow: TextOverflow.ellipsis,
                             style: CircularStdFont.bold.getStyle(
                               size: Dimen.x16,
@@ -51,7 +51,7 @@ class ChatItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "12:00",
+                          '12:00',
                           style: CircularStdFont.book.getStyle(
                             size: Dimen.x14,
                             color: AppColor.colorTextGrey,
@@ -62,7 +62,7 @@ class ChatItem extends StatelessWidget {
                     Container(
                       height: Dimen.x32,
                       child: Text(
-                        "Sayang sudah makan?",
+                        'Sayang sudah makan?',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: CircularStdFont.book.getStyle(

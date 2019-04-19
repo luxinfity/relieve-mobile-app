@@ -1,14 +1,14 @@
-import "dart:async";
-import "package:flutter/material.dart";
-import "package:flutter_spinkit/flutter_spinkit.dart";
-import "package:relieve_app/res/res.dart";
-import "package:google_maps_flutter/google_maps_flutter.dart";
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/service/model/location.dart';
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/utils/common_utils.dart";
-import "package:relieve_app/widget/common/standard_button.dart";
-import "package:relieve_app/widget/common/title.dart";
-import "package:relieve_app/widget/common/relieve_scaffold.dart";
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 
 class MapAddress {
   final String coordinate;
@@ -39,8 +39,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
 
   final locationNameController = TextEditingController();
 
-  String addressTitle = "DKI Jakarta";
-  String addressDetail = "R&D Relieve ID";
+  String addressTitle = 'DKI Jakarta';
+  String addressDetail = 'R&D Relieve ID';
 
   void loadLocation() async {
     hasPermission = await LocationService.isLocationRequestPermitted();
@@ -103,10 +103,10 @@ class RegisterFormMapState extends State<RegisterFormMap> {
         if (locationDetail != null) {
           setState(() {
             addressTitle = locationDetail.street;
-            addressDetail = "${locationDetail.street}, " +
-                "${locationDetail.district}, " +
-                "${locationDetail.city}, " +
-                "${locationDetail.province}";
+            addressDetail = '${locationDetail.street}, ' +
+                '${locationDetail.district}, ' +
+                '${locationDetail.city}, ' +
+                '${locationDetail.province}';
           });
         }
       }
@@ -115,8 +115,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
 
   void cameraStartMoving() {
     setState(() {
-      addressTitle = "";
-      addressDetail = "";
+      addressTitle = '';
+      addressDetail = '';
     });
   }
 
@@ -126,8 +126,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
 
   void buttonClick() {
     final coordinateString =
-        "${currentPositionCamera.target.latitude},${currentPositionCamera.target.longitude}";
-    Navigator.of(context).pop(MapAddress(coordinateString, addressDetail, ""));
+        '${currentPositionCamera.target.latitude},${currentPositionCamera.target.longitude}';
+    Navigator.of(context).pop(MapAddress(coordinateString, addressDetail, ''));
   }
 
   @override
@@ -229,7 +229,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
               Padding(
                 padding: const EdgeInsets.all(Dimen.x8),
                 child: FloatingActionButton(
-                  heroTag: "backButton",
+                  heroTag: 'backButton',
                   backgroundColor: Colors.white,
                   elevation: Dimen.x4,
                   highlightElevation: Dimen.x4,
@@ -242,13 +242,13 @@ class RegisterFormMapState extends State<RegisterFormMap> {
         ),
         Container(height: Dimen.x16),
         ThemedTitle(
-          title: "Temukan alamat kamu",
+          title: 'Temukan alamat kamu',
         ),
         Container(height: Dimen.x10),
         createAddressBar(),
         Container(height: Dimen.x12),
         StandardButton(
-          text: "Pilih",
+          text: 'Pilih',
           isEnabled: isAddressKnown(),
           backgroundColor: AppColor.colorPrimary,
           buttonClick: buttonClick,

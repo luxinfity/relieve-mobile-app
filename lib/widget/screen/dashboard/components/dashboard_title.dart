@@ -1,5 +1,5 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/res/res.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
 
 enum RelieveTitleStyle { light, dark }
 
@@ -12,7 +12,7 @@ class RelieveTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "Relieve",
+      'Relieve',
       style: CircularStdFont.black.getStyle(
           size: Dimen.x21,
           color: (style == RelieveTitleStyle.dark)

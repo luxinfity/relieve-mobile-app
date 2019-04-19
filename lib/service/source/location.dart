@@ -1,9 +1,9 @@
-import "package:flutter/material.dart";
-import "package:geolocator/geolocator.dart";
-import "package:permission_handler/permission_handler.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/location.dart";
-import "package:relieve_app/widget/common/bottom_modal.dart";
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
 
 class LocationService {
   static Position position; // coordinate
@@ -54,7 +54,7 @@ class LocationService {
           places[0].administrativeArea,
           places[0].locality,
           places[0].subLocality,
-          "${places[0].thoroughfare} ${places[0].subThoroughfare}",
+          '${places[0].thoroughfare} ${places[0].subThoroughfare}',
           position);
       return indonesiaPlace;
     } else {
@@ -101,14 +101,14 @@ class LocationService {
               right: Dimen.x16,
               left: Dimen.x16),
           child: Text(
-            "Izinkan Relieve mengetahui lokasi kamu",
+            'Izinkan Relieve mengetahui lokasi kamu',
             style: CircularStdFont.black.getStyle(size: Dimen.x18),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
           child: RaisedButton(
-            child: Text("Izinkan"),
+            child: Text('Izinkan'),
             color: AppColor.colorPrimary,
             textColor: Colors.white,
             elevation: 1,

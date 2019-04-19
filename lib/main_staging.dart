@@ -1,17 +1,17 @@
-import "package:flutter/material.dart";
-import "package:flutter/services.dart";
-import "package:flutter_stetho/flutter_stetho.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_stetho/flutter_stetho.dart';
 
-import "package:relieve_app/widget/inherited/app_container.dart";
-import "package:relieve_app/widget/screen/landing_screen.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "res/res.dart";
+import 'package:relieve_app/widget/inherited/app_container.dart';
+import 'package:relieve_app/widget/screen/landing_screen.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'res/res.dart';
 
 void main() {
   var configuredApp = new AppConfig(
-    flavorName: "staging",
-    apiProtocol: "http",
-    apiUrlPrefix: "staging-",
+    flavorName: 'staging',
+    apiProtocol: 'http',
+    apiUrlPrefix: 'staging-',
     child: new MyApp(),
   );
   Stetho.initialize();
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return AppContainer(
       plugins: [NotificationPlugin()],
       child: MaterialApp(
-          title: "Relieve ID",
+          title: 'Relieve ID',
           theme: ThemeData(
             primaryColor: AppColor.colorPrimary,
             primaryColorDark: AppColor.colorPrimaryDark,

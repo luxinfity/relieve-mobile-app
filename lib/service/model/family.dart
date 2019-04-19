@@ -1,6 +1,6 @@
-import "package:flutter/foundation.dart";
-import "package:relieve_app/service/model/base.dart";
-import "package:relieve_app/service/model/location.dart";
+import 'package:flutter/foundation.dart';
+import 'package:relieve_app/service/model/base.dart';
+import 'package:relieve_app/service/model/location.dart';
 
 enum PersonHealth { Fine, Bad, None }
 
@@ -12,13 +12,13 @@ class Condition {
   const Condition({
     this.health = PersonHealth.Fine,
     this.location = const Location(0.0, 0.0),
-    this.date = "01-01-2019", // TODO: remove default date
+    this.date = '01-01-2019', // TODO: remove default date
   });
 
   factory Condition.fromJson(Map<String, dynamic> parsedJson) {
     try {
       PersonHealth health = PersonHealth.None;
-      int status = parsedJson["status"];
+      int status = parsedJson['status'];
       // enum from backend = [10,20,30] => none, fine, bad
       if (status == 20) {
         health = PersonHealth.Fine;
@@ -29,8 +29,8 @@ class Condition {
       }
       return Condition(
         health: health,
-        location: Location.parseString(parsedJson["location"]),
-        date: parsedJson["date"],
+        location: Location.parseString(parsedJson['location']),
+        date: parsedJson['date'],
       );
     } catch (e) {
       return null;
@@ -48,29 +48,29 @@ class Family {
   final Condition condition;
 
   const Family({
-    this.id = "",
+    this.id = '',
     @required this.fullName,
-    this.nickName = "",
-    this.role = "",
-    this.phoneNumber = "",
-    this.imageUrl = "",
+    this.nickName = '',
+    this.role = '',
+    this.phoneNumber = '',
+    this.imageUrl = '',
     this.condition = const Condition(),
   });
 
   String get initials =>
-      fullName.toUpperCase().split(" ").map((word) => word[0]).join(" ");
+      fullName.toUpperCase().split(' ').map((word) => word[0]).join(' ');
 
   factory Family.fromJson(Map<String, dynamic> parsedJson) {
     try {
       // TODO: handle non existent value
       return Family(
-        id: parsedJson["id"],
-        fullName: parsedJson["fullname"],
-        nickName: parsedJson["nick"],
-        role: parsedJson["role"],
-        phoneNumber: parsedJson["phoneNumber"],
-        imageUrl: parsedJson["imageUrl"],
-        condition: Condition.fromJson(parsedJson["condition"]),
+        id: parsedJson['id'],
+        fullName: parsedJson['fullname'],
+        nickName: parsedJson['nick'],
+        role: parsedJson['role'],
+        phoneNumber: parsedJson['phoneNumber'],
+        imageUrl: parsedJson['imageUrl'],
+        condition: Condition.fromJson(parsedJson['condition']),
       );
     } catch (e) {
       return null;
@@ -91,9 +91,9 @@ class FamilyResponse extends BaseResponse {
   factory FamilyResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return FamilyResponse(
-        message: parsedJson["message"],
-        status: parsedJson["status"],
-        content: (parsedJson["content"] as List)
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: (parsedJson['content'] as List)
             .map((content) => Family.fromJson(content))
             .toList(),
       );

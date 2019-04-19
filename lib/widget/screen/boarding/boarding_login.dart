@@ -1,14 +1,14 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/screen/walkthrough/walkthrough.dart";
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/utils/preference_utils.dart" as pref;
-import "package:relieve_app/widget/common/standard_button.dart";
-import "package:relieve_app/widget/common/title.dart";
-import "package:relieve_app/widget/common/loading_dialog.dart";
-import "package:relieve_app/widget/common/relieve_scaffold.dart";
-import "package:relieve_app/widget/common/snackbar.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/widget/common/loading_dialog.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
+import 'package:relieve_app/widget/common/snackbar.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -62,8 +62,8 @@ class BoardingLoginScreenState extends State {
         pref.setUsername(usernameController.text);
         onLoginSuccess();
       } else {
-        showSnackBar(context, "Ups! Username atau password salah",
-            buttonText: "Mengerti");
+        showSnackBar(context, 'Ups! Username atau password salah',
+            buttonText: 'Mengerti');
         setState(() {
           isWrongCredential = true;
         });
@@ -89,7 +89,7 @@ class BoardingLoginScreenState extends State {
               buildFormPassword(),
               buildForgotPassword(),
               StandardButton(
-                text: "Login",
+                text: 'Login',
                 buttonClick: () => onLoginClick(),
                 backgroundColor: AppColor.colorPrimary,
               ),
@@ -103,18 +103,18 @@ class BoardingLoginScreenState extends State {
 
   String getErrorUsername() {
     if (isFormEmpty && usernameController.text.isEmpty)
-      return "Silahkan diisi dulu";
+      return 'Silahkan diisi dulu';
     else if (isWrongCredential)
-      return "Username atau Password salah";
+      return 'Username atau Password salah';
     else
       return null;
   }
 
   String getErrorPassword() {
     if (isFormEmpty && passwordController.text.isEmpty)
-      return "Silahkan diisi dulu";
+      return 'Silahkan diisi dulu';
     else if (isWrongCredential)
-      return "Username atau Password salah";
+      return 'Username atau Password salah';
     else
       return null;
   }
@@ -130,7 +130,7 @@ class BoardingLoginScreenState extends State {
       ),
       child: TextFormField(
         decoration: InputDecoration(
-          labelText: "Password",
+          labelText: 'Password',
           alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
@@ -163,7 +163,7 @@ class BoardingLoginScreenState extends State {
       margin: EdgeInsets.only(left: Dimen.x16, right: Dimen.x16),
       child: TextFormField(
         decoration: InputDecoration(
-          labelText: "Username",
+          labelText: 'Username',
           alignLabelWithHint: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(Dimen.x6),
@@ -191,7 +191,7 @@ class BoardingLoginScreenState extends State {
       children: <Widget>[
         FlatButton(
           child: Text(
-            "Forgot Password?",
+            'Forgot Password?',
             style: CircularStdFont.book
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
@@ -203,7 +203,7 @@ class BoardingLoginScreenState extends State {
 
   ThemedTitle buildTitle() {
     return ThemedTitle(
-        title: "Masuk", subtitle: "Bersiap untuk jelajahi aplikasi");
+        title: 'Masuk', subtitle: 'Bersiap untuk jelajahi aplikasi');
   }
 
   Widget buildImage() {

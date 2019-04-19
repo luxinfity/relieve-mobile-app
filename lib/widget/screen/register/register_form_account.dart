@@ -1,8 +1,8 @@
-import "package:email_validator/email_validator.dart";
-import "package:flutter/material.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/common/standard_button.dart";
-import "package:relieve_app/widget/common/title.dart";
+import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
 
 class Account {
   final String email;
@@ -77,13 +77,13 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
 
   String getErrorText(TextEditingController controller) {
     if (!isEmailValid && controller == _emailController) {
-      return "Format email tidak valid";
+      return 'Format email tidak valid';
     } else if (!isUsernameValid && controller == _usernameController) {
-      return "Panjang username minimal 4 huruf";
+      return 'Panjang username minimal 4 huruf';
     } else if (!isPasswordValid && controller == _passwordController) {
-      return "Panjang password minimal 5 huruf";
+      return 'Panjang password minimal 5 huruf';
     } else if (!isPasswordMatch && controller == _confirmPasswordController) {
-      return "Masukkan password yang sama";
+      return 'Masukkan password yang sama';
     } else {
       return null;
     }
@@ -110,8 +110,8 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
             padding: safePadding.copyWith(top: 0),
             children: <Widget>[
               ThemedTitle(
-                title: "Akun",
-                subtitle: "Gunakan username kesukaan mu",
+                title: 'Akun',
+                subtitle: 'Gunakan username kesukaan mu',
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -123,7 +123,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                 child: TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    labelText: "Email",
+                    labelText: 'Email',
                     errorText: getErrorText(_emailController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
@@ -148,7 +148,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                 child: TextFormField(
                   controller: _usernameController,
                   decoration: InputDecoration(
-                    labelText: "Username",
+                    labelText: 'Username',
                     errorText: getErrorText(_usernameController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
@@ -173,7 +173,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                   controller: _passwordController,
                   obscureText: !passwordVisible,
                   decoration: InputDecoration(
-                    labelText: "Password",
+                    labelText: 'Password',
                     errorText: getErrorText(_passwordController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
@@ -208,7 +208,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
                   controller: _confirmPasswordController,
                   obscureText: !passwordVisible,
                   decoration: InputDecoration(
-                    labelText: "Ketikkan Kembali Password",
+                    labelText: 'Ketikkan Kembali Password',
                     errorText: getErrorText(_confirmPasswordController),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
@@ -232,7 +232,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
           ),
         ),
         StandardButton(
-          text: "Simpan",
+          text: 'Simpan',
           isEnabled: isFormFilled(),
           buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,

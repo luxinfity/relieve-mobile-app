@@ -1,20 +1,20 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/screen/register/register_form_account.dart";
-import "package:relieve_app/widget/screen/register/register_form_address.dart";
-import "package:relieve_app/widget/screen/register/register_form_profile.dart";
-import "package:relieve_app/widget/screen/walkthrough/walkthrough.dart";
-import "package:relieve_app/service/model/address.dart";
-import "package:relieve_app/service/model/location.dart";
-import "package:relieve_app/service/model/user.dart";
-import "package:relieve_app/service/service.dart";
-import "package:relieve_app/utils/common_utils.dart";
-import "package:relieve_app/utils/preference_utils.dart";
-import "package:relieve_app/utils/preference_utils.dart" as pref;
-import "package:relieve_app/widget/common/bottom_modal.dart";
-import "package:relieve_app/widget/common/loading_dialog.dart";
-import "package:relieve_app/widget/common/relieve_scaffold.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/screen/register/register_form_account.dart';
+import 'package:relieve_app/widget/screen/register/register_form_address.dart';
+import 'package:relieve_app/widget/screen/register/register_form_profile.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/service/model/address.dart';
+import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/common/loading_dialog.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
@@ -56,21 +56,21 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   void doRegister(MapAddress mapAddress) async {
     showLoadingDialog(context);
-    final location = mapAddress.coordinate.split(",");
+    final location = mapAddress.coordinate.split(',');
     final user = User(
       username: _account.username,
       email: _account.email,
       password: _account.password,
       fullname: _profile.fullName,
-      phones: <Phone>[Phone("+62${_profile.phoneNum}", 1)],
+      phones: <Phone>[Phone('+62${_profile.phoneNum}', 1)],
       birthdate: _profile.dob,
       isComplete: false,
-      gender: _profile.gender == "Perempuan" ? "f" : "m",
+      gender: _profile.gender == 'Perempuan' ? 'f' : 'm',
       address: Address(
-        uuid: "1",
+        uuid: '1',
         location:
             Location(double.parse(location[0]), double.parse(location[1])),
-        name: "${mapAddress.name}|${mapAddress.address}",
+        name: '${mapAddress.name}|${mapAddress.address}',
       ),
     );
 
@@ -89,7 +89,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
           child: Text(
-            "Username atau Email telah terdaftar",
+            'Username atau Email telah terdaftar',
             style: CircularStdFont.book.getStyle(size: Dimen.x16),
           ),
         ),

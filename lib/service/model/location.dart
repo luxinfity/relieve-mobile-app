@@ -1,5 +1,5 @@
-import "package:geolocator/geolocator.dart";
-import "package:google_maps_flutter/google_maps_flutter.dart";
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class IndonesiaPlace {
   final String province;
@@ -18,12 +18,12 @@ class Location extends LatLng {
 
   @override
   String toString() {
-    return "$latitude,$longitude";
+    return '$latitude,$longitude';
   }
 
   factory Location.parseString(String coordinate) {
     final splited =
-    coordinate.split(",").map((s) => double.parse(s.trim())).toList();
+    coordinate.split(',').map((s) => double.parse(s.trim())).toList();
     return Location(splited[0], splited[1]);
   }
 

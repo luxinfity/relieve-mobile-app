@@ -25,10 +25,10 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //          FamilyItem.normal(
 //            hideName: true,
 //            family: Family(
-//              fullName: "Ibu",
+//              fullName: 'Ibu',
 //              condition: Condition(health: PersonHealth.Fine),
 //              imageUrl:
-//                  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg",
+//                  'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
 //            ),
 //          ),
 //        ],
@@ -37,7 +37,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //        padding: const EdgeInsets.symmetric(
 //            horizontal: Dimen.x16, vertical: Dimen.x18),
 //        child: Text(
-//          "Ibu ingin mengetahui keadaan kamu, Bagaimana kabar mu?",
+//          'Ibu ingin mengetahui keadaan kamu, Bagaimana kabar mu?',
 //          style: CircularStdFont.black.getStyle(size: Dimen.x18),
 //        ),
 //      ),
@@ -55,7 +55,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //                borderRadius: BorderRadius.circular(Dimen.x4),
 //              ),
 //              child: Text(
-//                "Sakit",
+//                'Sakit',
 //                style: CircularStdFont.medium
 //                    .getStyle(size: Dimen.x14, color: Colors.white),
 //              ),
@@ -76,7 +76,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //                borderRadius: BorderRadius.circular(Dimen.x4),
 //              ),
 //              child: Text(
-//                "Sehat",
+//                'Sehat',
 //                style: CircularStdFont.medium
 //                    .getStyle(size: Dimen.x14, color: Colors.white),
 //              ),
@@ -114,9 +114,9 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //          FamilyItem.normal(
 //            hideName: true,
 //            family: Family(
-//              fullName: "Alif",
+//              fullName: 'Alif',
 //              imageUrl:
-//                  "https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg",
+//                  'https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg',
 //            ),
 //          ),
 //        ],
@@ -124,7 +124,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //      Container(height: Dimen.x10),
 //      StandardButton(
 //        isHollow: true,
-//        text: "Menunggu Respons...",
+//        text: 'Menunggu Respons...',
 //        textColor: AppColor.colorPrimary,
 //        backgroundColor: AppColor.colorPrimary,
 //        buttonClick: () => testSheet2(context),
@@ -141,14 +141,14 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //          FamilyItem.normal(
 //            hideName: true,
 //            family: Family(
-//              fullName: "Mama",
+//              fullName: 'Mama',
 //              imageUrl:
-//                  "https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg",
+//                  'https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg',
 //            ),
 //          ),
 //          Container(width: Dimen.x10),
 //          Text(
-//            "Mama",
+//            'Mama',
 //            style: CircularStdFont.black.getStyle(size: Dimen.x24),
 //          ),
 //          Container(width: Dimen.x12),
@@ -168,14 +168,14 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //                    LocalImage.ic_address_sign.toSvg(width: Dimen.x12),
 //                    Container(width: Dimen.x4),
 //                    Text(
-//                      "Tempat terakhir",
+//                      'Tempat terakhir',
 //                      style: CircularStdFont.book.getStyle(
 //                          size: Dimen.x12, color: AppColor.colorTextGrey),
 //                    )
 //                  ],
 //                ),
 //                Container(height: Dimen.x8),
-//                Text("Dayeuhkolot, Bandung"),
+//                Text('Dayeuhkolot, Bandung'),
 //              ],
 //            ),
 //          ),
@@ -189,7 +189,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //                    LocalImage.ic_clock.toSvg(width: Dimen.x12),
 //                    Container(width: Dimen.x4),
 //                    Text(
-//                      "Kondisi terakhir",
+//                      'Kondisi terakhir',
 //                      style: CircularStdFont.book.getStyle(
 //                          size: Dimen.x12, color: AppColor.colorTextGrey),
 //                    )
@@ -206,7 +206,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //                              transparency: 0.15),
 //                          borderRadius: BorderRadius.circular(Dimen.x16)),
 //                      child: Text(
-//                        "Aman",
+//                        'Aman',
 //                        style: CircularStdFont.bold.getStyle(
 //                            size: Dimen.x12, color: AppColor.colorPrimary),
 //                      ),
@@ -220,7 +220,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //                              transparency: 0.50),
 //                          borderRadius: BorderRadius.circular(Dimen.x16)),
 //                      child: Text(
-//                        "24h",
+//                        '24h',
 //                        style: CircularStdFont.bold.getStyle(
 //                            size: Dimen.x12, color: AppColor.colorTextBlack),
 //                      ),
@@ -235,7 +235,7 @@ import 'package:relieve_app/widget/family/add_family_modal.dart';
 //      ),
 //      Container(height: Dimen.x16),
 //      StandardButton(
-//        text: "PING",
+//        text: 'PING',
 //        svgIcon: LocalImage.ic_ping,
 //        backgroundColor: AppColor.colorPrimary,
 //        buttonClick: () => testSheet2(context),

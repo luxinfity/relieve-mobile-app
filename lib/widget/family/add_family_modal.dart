@@ -1,11 +1,11 @@
-import "package:cached_network_image/cached_network_image.dart";
-import "package:flutter/material.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/user_check.dart";
-import "package:relieve_app/service/service.dart";
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/user_check.dart';
+import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
-import "package:relieve_app/widget/common/standard_button.dart";
+import 'package:relieve_app/widget/common/standard_button.dart';
 
 class AddFamilyModal extends StatefulWidget {
   final VoidCallback onFinishClick;
@@ -40,7 +40,7 @@ enum AddPersonStep { Search, Found, Confirmation, Naming, Finish }
 class AddFamilyModalState extends State<AddFamilyModal> {
   var step = AddPersonStep.Search;
   final _usernameController = TextEditingController();
-  var friendUsername = "";
+  var friendUsername = '';
   var friendSearchFound = true;
 
   /// return true if friend found
@@ -102,7 +102,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          "Tambahkan keluarga mu",
+          'Tambahkan keluarga mu',
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
@@ -112,7 +112,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
         child: TextFormField(
           controller: _usernameController,
           decoration: InputDecoration(
-              labelText: "Tulis username / email",
+              labelText: 'Tulis username / email',
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(Dimen.x14),
                 child: LocalImage.ic_search
@@ -122,7 +122,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
                 borderRadius: BorderRadius.circular(Dimen.x6),
               ),
               errorText:
-                  friendSearchFound ? null : "Opps.. user tidak ditemukan"),
+                  friendSearchFound ? null : 'Opps.. user tidak ditemukan'),
         ),
       ),
       Container(height: isUserNameExist ? Dimen.x16 : 0),
@@ -138,7 +138,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
                       child: Material(
                         child: Ink.image(
                           image: CachedNetworkImageProvider(
-                              "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg"),
+                              'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg'),
                           fit: BoxFit.cover,
                           child: InkWell(
                             onTap: null,
@@ -161,7 +161,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
           : Container(),
       Container(height: Dimen.x28),
       StandardButton(
-        text: isUserNameExist ? "Tambahkan ke Daftar" : "Cari Username",
+        text: isUserNameExist ? 'Tambahkan ke Daftar' : 'Cari Username',
         backgroundColor: AppColor.colorPrimary,
         buttonClick: buttonClick,
       )
@@ -174,7 +174,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          "Masukkan kode unik",
+          'Masukkan kode unik',
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
@@ -241,14 +241,14 @@ class AddFamilyModalState extends State<AddFamilyModal> {
       Container(height: Dimen.x18),
       Center(
         child: Text(
-          "05:00",
+          '05:00',
           style: CircularStdFont.book
               .getStyle(size: Dimen.x12, color: AppColor.colorTextGrey),
         ),
       ),
       Container(height: Dimen.x24),
       StandardButton(
-        text: "Simpan",
+        text: 'Simpan',
         backgroundColor: AppColor.colorPrimary,
         buttonClick: buttonClick,
       )
@@ -261,7 +261,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          "Masukkan nama panggilan nya",
+          'Masukkan nama panggilan nya',
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
@@ -277,7 +277,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
                 child: Material(
                   child: Ink.image(
                     image: CachedNetworkImageProvider(
-                        "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg"),
+                        'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg'),
                     fit: BoxFit.cover,
                     child: InkWell(
                       onTap: null,
@@ -295,7 +295,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
             horizontal: Dimen.x16, vertical: Dimen.x8),
         child: TextFormField(
           decoration: InputDecoration(
-            labelText: "Nama Panggilan",
+            labelText: 'Nama Panggilan',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimen.x6),
             ),
@@ -304,7 +304,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
       ),
       Container(height: Dimen.x24),
       StandardButton(
-        text: "Simpan",
+        text: 'Simpan',
         backgroundColor: AppColor.colorPrimary,
         buttonClick: buttonClick,
       )
@@ -317,7 +317,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          "Yeay keluarga mu berhasil di tambahkan!!",
+          'Yeay keluarga mu berhasil di tambahkan!!',
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
@@ -325,7 +325,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
       RemoteImage.boardingLogin.toImage(height: 210),
       Container(height: Dimen.x24),
       StandardButton(
-        text: "Mulai Komunikasi!",
+        text: 'Mulai Komunikasi!',
         backgroundColor: AppColor.colorPrimary,
         buttonClick: buttonClick,
       )

@@ -1,8 +1,8 @@
-import "package:flutter/material.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/service/model/chat.dart";
-import "package:relieve_app/widget/chat/chat_item.dart";
-import "package:relieve_app/widget/common/title.dart";
+import 'package:flutter/material.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/model/chat.dart';
+import 'package:relieve_app/widget/chat/chat_item.dart';
+import 'package:relieve_app/widget/common/title.dart';
 
 class DashboardChatScreen extends StatefulWidget {
   @override
@@ -15,20 +15,20 @@ class DashboardChatScreenState extends State {
   List<Chat> chatList = [
     Chat(
       isRead: false,
-      userId: "1111",
-      lastMessage: "aldada",
+      userId: '1111',
+      lastMessage: 'aldada',
       lastTimeSend: 100,
     ),
     Chat(
       isRead: true,
-      userId: "1111",
-      lastMessage: "aldada",
+      userId: '1111',
+      lastMessage: 'aldada',
       lastTimeSend: 100,
     ),
     Chat(
       isRead: false,
-      userId: "1111",
-      lastMessage: "aldada",
+      userId: '1111',
+      lastMessage: 'aldada',
       lastTimeSend: 100,
     ),
   ];
@@ -49,7 +49,7 @@ class DashboardChatScreenState extends State {
               top: Dimen.x24,
               bottom: Dimen.x12,
             ),
-            child: ScreenTitle(title: "Chat"),
+            child: ScreenTitle(title: 'Chat'),
           ),
           Expanded(
             child: Column(
@@ -66,7 +66,7 @@ class DashboardChatScreenState extends State {
                 Padding(
                   padding: const EdgeInsets.all(Dimen.x16),
                   child: Text(
-                    "Tidak ada chat aktif",
+                    'Tidak ada chat aktif',
                     style: CircularStdFont.bold.getStyle(
                       size: Dimen.x16,
                       color: AppColor.colorTextCharcoal,
@@ -77,7 +77,7 @@ class DashboardChatScreenState extends State {
                   margin: const EdgeInsets.symmetric(
                       horizontal: Dimen.x64 + Dimen.x18),
                   child: Text(
-                    "Ayo hubungi keluarga mu, Tunjukkan kasih sayang kepada mereka.",
+                    'Ayo hubungi keluarga mu, Tunjukkan kasih sayang kepada mereka.',
                     textAlign: TextAlign.center,
                     softWrap: true,
                     style: CircularStdFont.book.getStyle(
@@ -107,7 +107,7 @@ class DashboardChatScreenState extends State {
                 left: Dimen.x16,
                 bottom: Dimen.x12,
               ),
-              child: ScreenTitle(title: "Chat"),
+              child: ScreenTitle(title: 'Chat'),
             );
           } else {
             return ChatItem(chat: chatList[position - 1]);

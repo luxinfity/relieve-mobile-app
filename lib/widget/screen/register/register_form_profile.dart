@@ -1,10 +1,10 @@
-import "package:flutter/material.dart";
-import "package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/common/bottom_modal.dart";
-import "package:relieve_app/widget/common/standard_button.dart";
-import "package:relieve_app/widget/common/title.dart";
-import "package:validators/validators.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:validators/validators.dart';
 
 class Profile {
   final String fullName;
@@ -62,12 +62,12 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
     setState(() {
       isFullNameValid = fullNameController.text.length >= 2;
       isPhoneValid = isNumeric(phoneController.text) &&
-          phoneController.text.replaceFirst("0", "").length >= 7;
+          phoneController.text.replaceFirst('0', '').length >= 7;
 
       if (isFullNameValid && isPhoneValid) {
         widget.onNextClick(Profile(
           fullNameController.text.toLowerCase(),
-          phoneController.text.replaceFirst("0", ""),
+          phoneController.text.replaceFirst('0', ''),
           dobController.text,
           genderController.text,
         ));
@@ -86,9 +86,9 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
 
   String getErrorText(TextEditingController controller) {
     if (!isFullNameValid && controller == fullNameController) {
-      return "Nama lengkap minimal 2 huruf";
+      return 'Nama lengkap minimal 2 huruf';
     } else if (!isPhoneValid && controller == phoneController) {
-      return "Panjang nomor handphone tidak valid";
+      return 'Panjang nomor handphone tidak valid';
     } else {
       return null;
     }
@@ -98,26 +98,26 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
     DatePicker.showDatePicker(
       context,
       showTitleActions: true,
-      locale: "i18n",
+      locale: 'i18n',
       cancel: Text(
-        "Batal",
+        'Batal',
         style: CircularStdFont.book.getStyle(
           size: Dimen.x12,
           color: AppColor.colorDanger,
         ),
       ),
       confirm: Text(
-        "Pilih",
+        'Pilih',
         style: CircularStdFont.book.getStyle(
           size: Dimen.x12,
           color: AppColor.colorPrimary,
         ),
       ),
-      dateFormat: "yyyy-mm-dd",
+      dateFormat: 'yyyy-mm-dd',
       onConfirm: (year, month, date) {
-        final monthStr = month.toString().padLeft(2, "0");
-        final dateStr = date.toString().padLeft(2, "0");
-        dobController.text = "$year-$monthStr-$dateStr";
+        final monthStr = month.toString().padLeft(2, '0');
+        final dateStr = date.toString().padLeft(2, '0');
+        dobController.text = '$year-$monthStr-$dateStr';
         setState(() {});
       },
     );
@@ -126,7 +126,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
   void onGenderClick() {
     createRelieveBottomModal(context, <Widget>[
       ThemedTitle(
-        title: "Pilih jenis kelamin",
+        title: 'Pilih jenis kelamin',
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: Dimen.x16),
@@ -136,12 +136,12 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
               side: BorderSide(color: AppColor.colorPrimary)),
           padding: EdgeInsets.symmetric(vertical: Dimen.x16),
           child: Text(
-            "Perempuan",
+            'Perempuan',
             style: CircularStdFont.medium
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
           onPressed: () {
-            genderController.text = "Perempuan";
+            genderController.text = 'Perempuan';
             Navigator.pop(context);
             setState(() {});
           },
@@ -156,12 +156,12 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
               side: BorderSide(color: AppColor.colorPrimary)),
           padding: EdgeInsets.symmetric(vertical: Dimen.x16),
           child: Text(
-            "Laki - Laki",
+            'Laki - Laki',
             style: CircularStdFont.medium
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
           onPressed: () {
-            genderController.text = "Laki - Laki";
+            genderController.text = 'Laki - Laki';
             Navigator.pop(context);
             setState(() {});
           },
@@ -180,8 +180,8 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
             padding: safePadding.copyWith(top: 0),
             children: <Widget>[
               ThemedTitle(
-                title: "Data Diri",
-                subtitle: "Beritahu kami mengenai diri kamu",
+                title: 'Data Diri',
+                subtitle: 'Beritahu kami mengenai diri kamu',
               ),
               Container(
                 margin: const EdgeInsets.only(
@@ -193,7 +193,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                 child: TextFormField(
                   controller: fullNameController,
                   decoration: InputDecoration(
-                      labelText: "Nama Lengkap",
+                      labelText: 'Nama Lengkap',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
@@ -216,8 +216,8 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                 child: TextFormField(
                   controller: phoneController,
                   decoration: InputDecoration(
-                    prefixText: "+62 ",
-                    labelText: "Nomor Handphone",
+                    prefixText: '+62 ',
+                    labelText: 'Nomor Handphone',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),
                     ),
@@ -231,7 +231,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                     }
                     final n = num.tryParse(value);
                     if (n == null) {
-                      return "Masukkan hanya angka";
+                      return 'Masukkan hanya angka';
                     }
                     return null;
                   },
@@ -250,7 +250,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                   child: TextFormField(
                     controller: dobController,
                     decoration: InputDecoration(
-                      labelText: "Tanggal Lahir",
+                      labelText: 'Tanggal Lahir',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
@@ -271,7 +271,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
                   child: TextFormField(
                     controller: genderController,
                     decoration: InputDecoration(
-                      labelText: "Jenis Kelamin",
+                      labelText: 'Jenis Kelamin',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
@@ -285,7 +285,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           ),
         ),
         StandardButton(
-          text: "Simpan",
+          text: 'Simpan',
           isEnabled: isFormFilled(),
           buttonClick: onSaveClick,
           backgroundColor: AppColor.colorPrimary,

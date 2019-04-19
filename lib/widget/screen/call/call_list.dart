@@ -1,16 +1,16 @@
-import "package:flutter/material.dart";
-import "package:recase/recase.dart";
+import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 import 'package:relieve_app/service/model/location.dart';
 
-import "package:relieve_app/widget/screen/call/components/item_button.dart";
-import "package:relieve_app/res/res.dart";
-import "package:relieve_app/widget/inherited/app_config.dart";
-import "package:relieve_app/widget/common/title.dart";
-import "package:relieve_app/service/model/contact.dart";
-import "package:relieve_app/service/source/api/api.dart";
-import "package:relieve_app/widget/common/relieve_scaffold.dart";
-import "package:relieve_app/service/source/location.dart";
-import "package:relieve_app/widget/common/standard_button.dart";
+import 'package:relieve_app/widget/screen/call/components/item_button.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/service/model/contact.dart';
+import 'package:relieve_app/service/source/api/api.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
+import 'package:relieve_app/service/source/location.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
 
 class CallListScreen extends StatefulWidget {
   @override
@@ -52,21 +52,21 @@ class CallListScreenState extends State {
 
   LocalImage getIcon(String type) {
     switch (type) {
-      case "hospital":
+      case 'hospital':
         return LocalImage.ic_ambulance;
-      case "police":
+      case 'police':
         return LocalImage.ic_police;
-      case "fire_station":
+      case 'fire_station':
         return LocalImage.ic_fire_fighter;
-      case "red_cross":
+      case 'red_cross':
         return LocalImage.ic_red_cross;
-      case "bmkg":
+      case 'bmkg':
         return LocalImage.ic_bmkg;
-      case "sar":
+      case 'sar':
         return LocalImage.ic_sar;
-      case "bpjs":
+      case 'bpjs':
         return LocalImage.ic_medic;
-      case "pln":
+      case 'pln':
         return LocalImage.ic_pln;
       default:
         return LocalImage.ic_ambulance;
@@ -89,10 +89,10 @@ class CallListScreenState extends State {
       0,
       ItemButton(
         icon: LocalImage.ic_add_other,
-        title: "Tambah Lainnya",
+        title: 'Tambah Lainnya',
         isTintBlue: true,
         onClick: () {
-          print("click");
+          print('click');
         },
       ),
     );
@@ -107,7 +107,7 @@ class CallListScreenState extends State {
       hasBackButton: true,
       crossAxisAlignment: CrossAxisAlignment.start,
       childs: <Widget>[
-        ThemedTitle(title: "Tentukan Panggilan Pilihanmu"),
+        ThemedTitle(title: 'Tentukan Panggilan Pilihanmu'),
         Expanded(
           child: GridView.count(
             padding: const EdgeInsets.symmetric(horizontal: Dimen.x12),
@@ -122,7 +122,7 @@ class CallListScreenState extends State {
             ? Padding(
                 padding: EdgeInsets.only(bottom: Dimen.x16 + padding.bottom),
                 child: StandardButton(
-                  text: "Simpan",
+                  text: 'Simpan',
                   backgroundColor: AppColor.colorPrimary,
                   buttonClick: () {
                     setState(() {
@@ -148,7 +148,7 @@ class CallListScreenState extends State {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(Dimen.x4),
                             side: BorderSide(color: AppColor.colorPrimary)),
-                        child: Text("Ubah Nomor Layanan"),
+                        child: Text('Ubah Nomor Layanan'),
                         textColor: AppColor.colorPrimary,
                         onPressed: () {
                           setState(() {
@@ -170,7 +170,7 @@ class CallListScreenState extends State {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(Dimen.x4),
                             side: BorderSide(color: AppColor.colorPrimary)),
-                        child: Text("Pilih Layanan Favorit"),
+                        child: Text('Pilih Layanan Favorit'),
                         textColor: AppColor.colorPrimary,
                         onPressed: () {
                           setState(() {

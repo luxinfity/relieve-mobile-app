@@ -1,5 +1,5 @@
-import "package:flutter/material.dart";
-import "package:firebase_messaging/firebase_messaging.dart";
+import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 abstract class AppPlugin {
   void onContextUpdate(BuildContext context);
@@ -21,25 +21,25 @@ class NotificationPlugin extends AppPlugin {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging();
     final token = await firebaseMessaging.getToken();
     firebaseMessaging.requestNotificationPermissions();
-    print("Firebase token:" + token);
+    print('Firebase token:' + token);
 
     firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("on message $message");
+        print('on message $message');
         _showDialog();
       },
       onResume: (Map<String, dynamic> message) async {
-        print("on resume $message");
+        print('on resume $message');
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print("on launch $message");
+        print('on launch $message');
       },
     );
   }
 
   void _showDialog() {
-    print("showing dialog");
-    showDialog(context: context, builder: (context) => Text("Hello"));
+    print('showing dialog');
+    showDialog(context: context, builder: (context) => Text('Hello'));
   }
 }
 
