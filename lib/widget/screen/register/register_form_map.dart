@@ -1,14 +1,15 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:relieve_app/res/res.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/location.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 
 class MapAddress {
   final String coordinate;
@@ -98,7 +99,9 @@ class RegisterFormMapState extends State<RegisterFormMap> {
       if (mapCenter != null) {
         final position = mapCenter.target;
         IndonesiaPlace locationDetail = await LocationService.getPlaceDetail(
-            Location.parseFromLatLng(position));
+          context,
+          Location.parseFromLatLng(position),
+        );
 
         if (locationDetail != null) {
           setState(() {

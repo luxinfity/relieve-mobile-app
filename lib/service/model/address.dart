@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:relieve_app/service/model/base.dart';
 import 'package:relieve_app/service/model/location.dart';
-import 'dart:convert';
 
 class AddressDetail {
   final String area1;
@@ -9,6 +10,7 @@ class AddressDetail {
   final String area3;
   final String area4;
 
+  final String street;
   final String country;
   final String zipCode;
 
@@ -17,6 +19,7 @@ class AddressDetail {
     this.area2,
     this.area3,
     this.area4,
+    this.street,
     this.country,
     this.zipCode,
   });
@@ -25,6 +28,7 @@ class AddressDetail {
     return {
       'country': country,
       'zip_code': zipCode,
+      'street': street,
       'area_1': area1,
       'area_2': area2,
       'area_3': area3,
@@ -36,6 +40,7 @@ class AddressDetail {
     return jsonEncode({
       'country': country,
       'zip_code': zipCode,
+      'street': street,
       'area_1': area1,
       'area_2': area2,
       'area_3': area3,
@@ -48,6 +53,7 @@ class AddressDetail {
       return AddressDetail(
         country: parsedJson['country'],
         zipCode: parsedJson['zip_code'],
+        street: parsedJson['street'],
         area1: parsedJson['area_1'],
         area2: parsedJson['area_2'],
         area3: parsedJson['area_3'],
@@ -97,6 +103,29 @@ class Address {
         name: parsedJson['name'],
         location: Location.parseString(parsedJson['coordinates']),
         details: AddressDetail.fromJson(parsedJson['details']),
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
+class AddressDetailResponse extends BaseResponse {
+  @override
+  final AddressDetail content;
+
+  AddressDetailResponse({
+    String message,
+    int status,
+    this.content,
+  }) : super(message, status, content);
+
+  factory AddressDetailResponse.fromJson(Map<String, dynamic> parsedJson) {
+    try {
+      return AddressDetailResponse(
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: AddressDetail.fromJson(parsedJson['content']),
       );
     } catch (e) {
       return null;

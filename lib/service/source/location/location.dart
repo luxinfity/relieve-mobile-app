@@ -3,7 +3,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/inherited/app_config.dart';
 
 class LocationService {
   static Position position; // coordinate
@@ -45,16 +47,18 @@ class LocationService {
   }
 
   /// nullable return value
-  static Future<IndonesiaPlace> getPlaceDetail(Location position) async {
-    // TODO: use server side geocode
-    final places = await Geolocator()
-        .placemarkFromCoordinates(position.latitude, position.longitude);
-    if (places.isNotEmpty) {
+  static Future<IndonesiaPlace> getPlaceDetail(
+      BuildContext context, Location position) async {
+    final locationResponse = await BakauApi(AppConfig.of(context))
+        .getAddressDetailOfPosition(position);
+
+    if (locationResponse?.status == REQUEST_SUCCESS &&
+        locationResponse.content != null) {
       indonesiaPlace = IndonesiaPlace(
-          places[0].administrativeArea,
-          places[0].locality,
-          places[0].subLocality,
-          '${places[0].thoroughfare} ${places[0].subThoroughfare}',
+          locationResponse.content.area1,
+          locationResponse.content.area2,
+          locationResponse.content.area3,
+          locationResponse.content.street,
           position);
       return indonesiaPlace;
     } else {
@@ -74,12 +78,14 @@ class LocationService {
 
   /// nullable return value
   static Future<IndonesiaPlace> getLastKnownPlaceDetail(
-      {bool isRefresh = false}) async {
+    BuildContext context, {
+    bool isRefresh = false,
+  }) async {
     if (indonesiaPlace == null || isRefresh) {
       final position = await getLastKnownLocation();
       if (position != null) {
         indonesiaPlace =
-            await getPlaceDetail(Location.parseFromPosition(position));
+            await getPlaceDetail(context, Location.parseFromPosition(position));
       }
     }
     return indonesiaPlace;
