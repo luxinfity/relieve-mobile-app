@@ -38,8 +38,8 @@ class NotificationPlugin extends AppPlugin {
   }
 
   void _showDialog() {
-    print('showing dialog');
-    showDialog(context: context, builder: (context) => Text('Hello'));
+    print("showing dialog");
+    showDialog(context: context, builder: (context) => Text("Hello"));
   }
 }
 

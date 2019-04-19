@@ -1,8 +1,7 @@
 import "package:flutter/foundation.dart";
 import "package:relieve_app/service/model/base.dart";
+import "package:relieve_app/service/model/location.dart";
 import "dart:convert";
-
-import "package:relieve_app/service/service.dart";
 
 class AddressDetail {
   final String area1;

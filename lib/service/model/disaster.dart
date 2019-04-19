@@ -1,6 +1,6 @@
 import "package:flutter/foundation.dart";
 import "package:relieve_app/service/model/base.dart";
-import "package:relieve_app/service/service.dart";
+import "package:relieve_app/service/model/location.dart";
 
 class Disaster {
   final bool isLive;

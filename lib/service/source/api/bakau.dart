@@ -2,6 +2,7 @@ import "package:http/http.dart" as http;
 import "package:relieve_app/config/app_config.dart";
 import "package:relieve_app/service/model/address.dart";
 import "package:relieve_app/service/model/contact.dart";
+import "package:relieve_app/service/model/location.dart";
 import "package:relieve_app/service/model/token.dart";
 import "package:relieve_app/service/model/user.dart";
 import "package:relieve_app/service/model/user_check.dart";
@@ -107,5 +108,17 @@ class BakauApi extends BaseApi {
     });
 
     return AddressResponse.fromJson(jsonDecode(response.body));
+  }
+
+  // families
+  Future<UserResponse> getFamilies() async {
+    var url = "$completeUri//family";
+    final response = await http.get(url, headers: {
+      HttpHeaders.contentTypeHeader: "application/json",
+      "authorization": await pref.getToken(),
+      "secret": secret,
+    });
+
+    return UserResponse.fromJson(jsonDecode(response.body));
   }
 }

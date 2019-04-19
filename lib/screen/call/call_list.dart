@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:recase/recase.dart";
+import 'package:relieve_app/service/model/location.dart';
 
 import "./components/item_button.dart";
 import "package:relieve_app/res/res.dart";

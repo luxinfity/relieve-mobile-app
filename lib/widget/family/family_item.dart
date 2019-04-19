@@ -1,11 +1,11 @@
-import "package:flutter/material.dart";
 import "package:cached_network_image/cached_network_image.dart";
+import "package:flutter/material.dart";
+import "package:flutter_spinkit/flutter_spinkit.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/family.dart";
 import "package:relieve_app/widget/common/bottom_modal.dart";
-import "package:relieve_app/widget/family/find_username.dart";
 import "package:relieve_app/widget/common/standard_button.dart";
-import "package:flutter_spinkit/flutter_spinkit.dart";
+import "package:relieve_app/widget/family/find_username.dart";
 
 enum FamilyItemType { Normal, Empty, Add }
 
@@ -47,9 +47,10 @@ class FamilyItem extends StatelessWidget {
   }
 
   Color _pickColorItem() {
-    if (family.personHealth == null) {
+    if (family.condition == null ||
+        family.condition.health == PersonHealth.None) {
       return HexColor(AppColor.colorEmptyRect.hexColor, transparency: 0.50);
-    } else if (family.personHealth == PersonHealth.Bad) {
+    } else if (family.condition.health == PersonHealth.Bad) {
       return AppColor.colorDanger;
     } else {
       return AppColor.colorPrimary;
@@ -158,18 +159,19 @@ class FamilyItemListState extends State {
   List<Family> _defaultFamilyList = [
     Family(
       fullName: "Ayah",
-      personHealth: PersonHealth.Fine,
+      condition: Condition(health: PersonHealth.Fine),
       imageUrl:
           "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg",
     ),
     Family(
       fullName: "Ibu",
-      personHealth: PersonHealth.Bad,
+      condition: Condition(health: PersonHealth.Bad),
       imageUrl:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg",
     ),
     Family(
       fullName: "Kak dinda",
+      condition: Condition(health: PersonHealth.None),
       imageUrl:
           "https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg",
     )
@@ -266,7 +268,7 @@ class FamilyItemListState extends State {
             hideName: true,
             family: Family(
               fullName: "Ibu",
-              personHealth: PersonHealth.Fine,
+              condition: Condition(health: PersonHealth.Fine),
               imageUrl:
                   "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg",
             ),

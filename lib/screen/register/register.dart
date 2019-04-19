@@ -2,18 +2,19 @@ import "package:flutter/material.dart";
 import "package:relieve_app/config/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/screen/register/register_form_account.dart";
-import "package:relieve_app/screen/register/register_form_profile.dart";
 import "package:relieve_app/screen/register/register_form_address.dart";
+import "package:relieve_app/screen/register/register_form_profile.dart";
 import "package:relieve_app/screen/walkthrough/walkthrough.dart";
 import "package:relieve_app/service/model/address.dart";
+import "package:relieve_app/service/model/location.dart";
 import "package:relieve_app/service/model/user.dart";
 import "package:relieve_app/service/service.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/utils/preference_utils.dart";
+import "package:relieve_app/utils/preference_utils.dart" as pref;
 import "package:relieve_app/widget/common/bottom_modal.dart";
 import "package:relieve_app/widget/common/loading_dialog.dart";
 import "package:relieve_app/widget/common/relieve_scaffold.dart";
-import "package:relieve_app/utils/preference_utils.dart" as pref;
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
