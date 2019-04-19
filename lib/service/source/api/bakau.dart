@@ -2,6 +2,7 @@ import "package:http/http.dart" as http;
 import "package:relieve_app/config/app_config.dart";
 import "package:relieve_app/service/model/address.dart";
 import "package:relieve_app/service/model/contact.dart";
+import 'package:relieve_app/service/model/family.dart';
 import "package:relieve_app/service/model/location.dart";
 import "package:relieve_app/service/model/token.dart";
 import "package:relieve_app/service/model/user.dart";
@@ -111,14 +112,14 @@ class BakauApi extends BaseApi {
   }
 
   // families
-  Future<UserResponse> getFamilies() async {
-    var url = "$completeUri//family";
+  Future<FamilyResponse> getFamilies() async {
+    var url = "$completeUri/family";
     final response = await http.get(url, headers: {
       HttpHeaders.contentTypeHeader: "application/json",
       "authorization": await pref.getToken(),
       "secret": secret,
     });
 
-    return UserResponse.fromJson(jsonDecode(response.body));
+    return FamilyResponse.fromJson(jsonDecode(response.body));
   }
 }

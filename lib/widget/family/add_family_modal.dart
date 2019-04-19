@@ -4,22 +4,40 @@ import "package:relieve_app/config/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/user_check.dart";
 import "package:relieve_app/service/service.dart";
+import 'package:relieve_app/widget/common/bottom_modal.dart';
 import "package:relieve_app/widget/common/standard_button.dart";
 
-class FindUsername extends StatefulWidget {
+class AddFamilyModal extends StatefulWidget {
   final VoidCallback onFinishClick;
 
-  const FindUsername({Key key, this.onFinishClick}) : super(key: key);
+  const AddFamilyModal({Key key, this.onFinishClick}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return FindUsernameState();
+    return AddFamilyModalState();
+  }
+
+  static showModal(BuildContext context, VoidCallback onExitModal) {
+    createRelieveBottomModal(
+      context,
+      <Widget>[
+        AddFamilyModal(
+          onFinishClick: () {
+            Navigator.pop(context);
+//          setState(() {
+//            familyList = _defaultFamilyList;
+//          });
+          },
+        )
+      ],
+      onWillPop: onExitModal,
+    );
   }
 }
 
 enum AddPersonStep { Search, Found, Confirmation, Naming, Finish }
 
-class FindUsernameState extends State<FindUsername> {
+class AddFamilyModalState extends State<AddFamilyModal> {
   var step = AddPersonStep.Search;
   final _usernameController = TextEditingController();
   var friendUsername = "";
