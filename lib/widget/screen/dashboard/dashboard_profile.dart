@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 import "package:relieve_app/res/res.dart";
-import "package:relieve_app/screen/dashboard/components/profile_board.dart";
-import "package:relieve_app/screen/setting/notification.dart";
-import "package:relieve_app/screen/setting/profile.dart";
+import "package:relieve_app/widget/screen/dashboard/components/profile_board.dart";
+import "package:relieve_app/widget/screen/setting/notification.dart";
+import "package:relieve_app/widget/screen/setting/profile.dart";
 import "package:url_launcher/url_launcher.dart";
 
-import "package:relieve_app/screen/boarding/boarding_home.dart";
+import "package:relieve_app/widget/screen/boarding/boarding_home.dart";
 import "package:relieve_app/utils/preference_utils.dart" as pref;
 import "package:relieve_app/utils/common_utils.dart";
 

@@ -1,4 +1,4 @@
-import "package:relieve_app/config/app_config.dart";
+import "package:relieve_app/widget/inherited/app_config.dart";
 
 const String DOMAIN = "relieve.id";
 const String secret = "BdQv7AHrFsAb5JMwYN6OZvCMSn7lU5nB";

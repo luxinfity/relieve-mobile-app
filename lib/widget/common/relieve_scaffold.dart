@@ -1,8 +1,7 @@
 import "package:flutter/material.dart";
+import "package:relieve_app/widget/inherited/app_container.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/utils/common_utils.dart";
-
-import "package:relieve_app/config/app_container.dart";
 
 class RelieveScaffold extends StatelessWidget {
   final List<Widget> childs;

@@ -1,6 +1,6 @@
 import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
-import "package:relieve_app/config/app_config.dart";
+import "package:relieve_app/widget/inherited/app_config.dart";
 import "package:relieve_app/res/res.dart";
 import "package:relieve_app/service/model/user_check.dart";
 import "package:relieve_app/service/service.dart";

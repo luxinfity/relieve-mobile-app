@@ -2,8 +2,6 @@ import "package:flushbar/flushbar.dart";
 import "package:flutter/material.dart";
 import "package:relieve_app/res/res.dart";
 
-Flushbar flush;
-
 void showSnackBar(
   BuildContext context,
   String text, {
@@ -12,7 +10,8 @@ void showSnackBar(
   Color backgroundColor,
   VoidCallback onClick,
 }) {
-  Flushbar(
+  Flushbar flush;
+  flush = Flushbar(
     flushbarStyle: FlushbarStyle.FLOATING,
     aroundPadding:
         EdgeInsets.symmetric(horizontal: Dimen.x16, vertical: Dimen.x16),

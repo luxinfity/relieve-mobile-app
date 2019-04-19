@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:relieve_app/screen/boarding/boarding_home.dart";
-import "package:relieve_app/screen/dashboard/dashboard.dart";
+import "package:relieve_app/widget/screen/boarding/boarding_home.dart";
+import "package:relieve_app/widget/screen/dashboard/dashboard.dart";
 import "package:relieve_app/utils/common_utils.dart";
 import "package:relieve_app/utils/preference_utils.dart" as pref;
 

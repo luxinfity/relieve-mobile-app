@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
-import "package:relieve_app/config/app_config.dart";
+import "package:relieve_app/widget/inherited/app_config.dart";
 import "package:relieve_app/res/res.dart";
-import "package:relieve_app/screen/walkthrough/walkthrough.dart";
+import "package:relieve_app/widget/screen/walkthrough/walkthrough.dart";
 import "package:relieve_app/service/service.dart";
 import "package:relieve_app/utils/preference_utils.dart" as pref;
 import "package:relieve_app/widget/common/standard_button.dart";

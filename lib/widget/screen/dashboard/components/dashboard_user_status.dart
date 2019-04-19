@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:recase/recase.dart";
-import "package:relieve_app/config/app_config.dart";
+import "package:relieve_app/widget/inherited/app_config.dart";
 import "package:relieve_app/res/res.dart";
-import "package:relieve_app/screen/dashboard/components/dashboard_title.dart";
+import "package:relieve_app/widget/screen/dashboard/components/dashboard_title.dart";
 import "package:relieve_app/service/model/family.dart";
 import "package:relieve_app/service/model/location.dart";
 import "package:relieve_app/service/model/user.dart";

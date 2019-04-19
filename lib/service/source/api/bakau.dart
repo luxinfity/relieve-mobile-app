@@ -1,5 +1,5 @@
 import "package:http/http.dart" as http;
-import "package:relieve_app/config/app_config.dart";
+import "package:relieve_app/widget/inherited/app_config.dart";
 import "package:relieve_app/service/model/address.dart";
 import "package:relieve_app/service/model/contact.dart";
 import 'package:relieve_app/service/model/family.dart';
