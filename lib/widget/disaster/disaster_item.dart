@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
+import 'package:relieve_app/datamodel/map_data.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
@@ -71,7 +72,7 @@ class DiscoverItem extends StatelessWidget {
           fit: StackFit.expand,
           overflow: Overflow.clip,
           children: <Widget>[
-            _buildMap(context),
+            _buildMap(),
             _buildRedDot(),
             Container(color: Colors.transparent)
           ],
@@ -93,12 +94,12 @@ class DiscoverItem extends StatelessWidget {
     );
   }
 
-  Widget _buildMap(BuildContext context) {
-    return StaticMap(
+  Widget _buildMap() {
+    return StaticMap(MapData(
       disaster.coordinate,
       300,
       220,
-    ).toMapWidget(context);
+    ));
   }
 }
 
@@ -194,7 +195,7 @@ class DisasterItem extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            _buildMap(context),
+            _buildMap(),
             _buildRedDot(),
             disaster.isLive ? _buildLiveTag() : null,
             Container(color: Colors.transparent)
@@ -217,12 +218,12 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
-  Widget _buildMap(BuildContext context) {
-    return StaticMap(
+  Widget _buildMap() {
+    return StaticMap(MapData(
       disaster.coordinate,
       width.toInt() + 1,
       144,
-    ).toMapWidget(context);
+    ));
   }
 
   Widget _buildLiveTag() {
