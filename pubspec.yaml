@@ -33,7 +33,7 @@ dependencies:
   google_maps_flutter: ^0.5.15+1
   google_sign_in: ^4.0.2
   permission_handler: ^3.1.0
-  geolocator: ^5.0.0  
+  geolocator: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +70,7 @@ flutter:
   fonts:
     - family: CircularStdBook
       fonts:
-        - asset: fonts/circular-std-book.otf        
+        - asset: fonts/circular-std-book.otf
     - family: CircularStdMedium
       fonts:
         - asset: fonts/circular-std-medium.otf
@@ -80,6 +80,6 @@ flutter:
     - family: CircularStdBlack
       fonts:
         - asset: fonts/circular-std-black.otf
-    
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
