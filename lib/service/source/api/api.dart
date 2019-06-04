@@ -28,6 +28,7 @@ class Api {
   static const Api PRODUCTION = const Api(Env.PRODUCTION);
 
   static Api _singleton;
+
   static Api get() {
     if (_singleton == null) {
       Env env = Env.get();

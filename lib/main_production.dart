@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:relieve_app/service/model/env.dart';
-
 import 'package:relieve_app/widget/inherited/app_container.dart';
 import 'package:relieve_app/widget/screen/landing_screen.dart';
+
 import 'res/res.dart';
 
 void main() {
   Env.storeEnv(Env.PRODUCTION);
-    
+
   runApp(MyApp());
 }
 

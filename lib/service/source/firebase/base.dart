@@ -8,14 +8,16 @@ class Firebase implements AuthApi {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  Future<UserCheckResponse> checkUser(UserCheckIdentifier checkIdentifier, String value) {
+  Future<UserCheckResponse> checkUser(
+      UserCheckIdentifier checkIdentifier, String value) {
     // TODO: implement checkUser
     return null;
   }
 
   @override
   Future<TokenResponse> login(String username, String password) async {
-    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+//    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
+//        email: email, password: password);
     return null;
   }
 
@@ -24,5 +26,4 @@ class Firebase implements AuthApi {
     // TODO: implement register
     return null;
   }
-
 }

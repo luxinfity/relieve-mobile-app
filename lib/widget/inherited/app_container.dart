@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 abstract class AppPlugin {
   void onContextUpdate(BuildContext context);

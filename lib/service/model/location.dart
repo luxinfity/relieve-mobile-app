@@ -23,7 +23,7 @@ class Location extends LatLng {
 
   factory Location.parseString(String coordinate) {
     final splited =
-    coordinate.split(',').map((s) => double.parse(s.trim())).toList();
+        coordinate.split(',').map((s) => double.parse(s.trim())).toList();
     return Location(splited[0], splited[1]);
   }
 
