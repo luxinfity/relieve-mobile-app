@@ -5,8 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
-typedef VoidContextCallback = void Function(BuildContext context);
-typedef StringCallback = String Function();
+typedef VoidContextCallback(BuildContext context);
+typedef String StringCallback();
 
 void defaultBackPressed(BuildContext context) {
   Navigator.pop(context);

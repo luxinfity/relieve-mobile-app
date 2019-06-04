@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 
-typedef RelieveBottomAction = void Function(int index, bool isCall);
+typedef RelieveBottomAction(int index, bool isCall);
 
 class RelieveBottomNavigationBar extends StatefulWidget {
   RelieveBottomNavigationBar({this.onPress});

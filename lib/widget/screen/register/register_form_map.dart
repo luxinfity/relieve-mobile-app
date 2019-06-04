@@ -19,7 +19,7 @@ class MapAddress {
   MapAddress(this.coordinate, this.address, this.name);
 }
 
-typedef MapAddressFormCallback = void Function(MapAddress profile);
+typedef MapAddressFormCallback(MapAddress profile);
 
 class RegisterFormMap extends StatefulWidget {
   final VoidCallback onNextClick;

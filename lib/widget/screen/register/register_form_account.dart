@@ -12,7 +12,7 @@ class Account {
   Account(this.email, this.username, this.password);
 }
 
-typedef AccountFormCallback = void Function(Account account);
+typedef AccountFormCallback(Account account);
 
 class RegisterFormAccount extends StatefulWidget {
   final AccountFormCallback onNextClick;

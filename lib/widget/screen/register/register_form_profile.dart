@@ -15,7 +15,7 @@ class Profile {
   Profile(this.fullName, this.phoneNum, this.dob, this.gender);
 }
 
-typedef ProfileFormCallback = void Function(Profile profile);
+typedef ProfileFormCallback(Profile profile);
 
 class RegisterFormProfile extends StatefulWidget {
   final ProfileFormCallback onNextClick;
