@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
-import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/user.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/api/base.dart';
+import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
 
 class ProfileBoard extends StatefulWidget {

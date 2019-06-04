@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/disaster/disaster_item.dart';

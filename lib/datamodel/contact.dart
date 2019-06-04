@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
 import 'package:relieve_app/datamodel/base.dart';
 
 class Contact {

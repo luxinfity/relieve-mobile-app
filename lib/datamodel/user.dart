@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:relieve_app/datamodel/address.dart';
-
 import 'package:relieve_app/datamodel/base.dart';
 
 class Phone {
