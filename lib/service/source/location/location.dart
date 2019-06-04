@@ -4,9 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/location.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 
 class LocationService {
   static Position position; // coordinate

@@ -1,10 +1,10 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:relieve_app/service/model/disaster.dart';
 import 'package:relieve_app/service/model/weather.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/kalomang/kalomang_api.dart';
 import 'package:relieve_app/service/source/api/provider.dart';
-import 'dart:convert';
-
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class KalomangProvider extends Provider implements KalomangApi {

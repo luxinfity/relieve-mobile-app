@@ -3,7 +3,6 @@ import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/disaster.dart';
 import 'package:relieve_app/service/model/location.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/service/source/api/kalomang/kalomang_provider.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/disaster/disaster_item.dart';
 

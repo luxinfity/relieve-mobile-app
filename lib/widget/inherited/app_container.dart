@@ -43,13 +43,16 @@ class NotificationPlugin extends AppPlugin {
   }
 }
 
+enum AppType { Debug, Production }
+
 // ignore: must_be_immutable
 class AppContainer extends InheritedWidget {
   List<AppPlugin> plugins;
+  AppType appType;
   Widget child;
   BuildContext currentContext;
 
-  AppContainer({this.child, this.plugins});
+  AppContainer(this.appType, {this.child, this.plugins});
 
   static AppContainer _of(BuildContext context) {
     return context.inheritFromWidgetOfExactType(AppContainer);
