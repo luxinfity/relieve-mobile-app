@@ -1,5 +1,5 @@
+import 'package:relieve_app/service/model/env.dart';
 import 'package:relieve_app/service/source/api/provider.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 const String PROTOCOL = 'https';
 const String DOMAIN = 'relieve.id';
@@ -9,42 +9,33 @@ const String SECRET = 'BdQv7AHrFsAb5JMwYN6OZvCMSn7lU5nB';
 const int REQUEST_SUCCESS = 200;
 
 class Api {
-  final String protocol;
-  final String domain;
-  final String port;
-  final String secret;
+  final Env env;
 
-  Api(this.protocol, this.domain, this.port, this.secret);
+  const Api(this.env);
 
   String get completeUri {
-    if (port == null) {
-      return '$protocol://$domain/api/';
+    if (env.port.isEmpty) {
+      return '${env.protocol}://${env.domain}/api/';
     } else {
-      return '$protocol://$domain:$port/api/';
+      return '${env.protocol}://${env.domain}:${env.port}/api/';
     }
   }
 
   T setProvider<T extends Provider>(T provider) {
-    return provider.setUri(completeUri).setSecret(secret);
+    return provider.setUri(completeUri).setSecret(env.secret);
   }
 
-  factory Api._production() {
-    return Api(PROTOCOL, DOMAIN, null, SECRET);
-  }
-
-  factory Api._debug({
-    String protocol = PROTOCOL,
-    String domain = "staging.$DOMAIN",
-    String port = "80",
-    String secret = SECRET,
-  }) {
-    return Api(protocol, domain, port, secret);
-  }
+  static const Api PRODUCTION = const Api(Env.PRODUCTION);
 
   static Api _singleton;
   static Api get() {
     if (_singleton == null) {
-
+      Env env = Env.get();
+      if (env != null) {
+        _singleton = Api(env);
+      } else {
+        _singleton = Api.PRODUCTION;
+      }
     }
 
     return _singleton;
