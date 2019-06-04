@@ -9,13 +9,21 @@ import Firebase
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
   ) -> Bool {
-    
+
     GMSServices.provideAPIKey("IOS_API_KEY")
-    
+
     // Use Firebase library to configure APIs
-    let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!
-    let options = FirebaseOptions(contentsOfFile: filePath)
-    FirebaseApp.configure(options: options!)
+    var filePath:String!
+#if DEBUG
+    print("[FIREBASE] Development mode.")
+    filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist", inDirectory: "Debug")
+#else
+    print("[FIREBASE] Production mode.")
+    filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist", inDirectory: "Release")
+#endif
+
+    let options = FirebaseOptions.init(contentsOfFile: filePath)!
+    FirebaseApp.configure(options: options)
 
     GeneratedPluginRegistrant.register(with: self)
     
