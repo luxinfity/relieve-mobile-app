@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/screen/register/register_form_account.dart';
-import 'package:relieve_app/widget/screen/register/register_form_address.dart';
-import 'package:relieve_app/widget/screen/register/register_form_profile.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 import 'package:relieve_app/service/model/address.dart';
 import 'package:relieve_app/service/model/location.dart';
 import 'package:relieve_app/service/model/user.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
+import 'package:relieve_app/widget/screen/register/register_form_account.dart';
+import 'package:relieve_app/widget/screen/register/register_form_address.dart';
+import 'package:relieve_app/widget/screen/register/register_form_profile.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
@@ -74,7 +74,8 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
-    final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
+    final tokenResponse =
+        await Api.get().setProvider(BakauProvider()).register(user);
     dismissLoadingDialog(context);
 
     if (tokenResponse?.status == REQUEST_SUCCESS) {

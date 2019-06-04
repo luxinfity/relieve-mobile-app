@@ -4,6 +4,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/location.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/inherited/app_config.dart';
 
@@ -49,7 +50,8 @@ class LocationService {
   /// nullable return value
   static Future<IndonesiaPlace> getPlaceDetail(
       BuildContext context, Location position) async {
-    final locationResponse = await BakauApi(AppConfig.of(context))
+    final locationResponse = await Api.get()
+        .setProvider(BakauProvider())
         .getAddressDetailOfPosition(position);
 
     if (locationResponse?.status == REQUEST_SUCCESS &&

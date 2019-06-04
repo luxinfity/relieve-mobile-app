@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
@@ -10,7 +11,6 @@ import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
 import 'package:relieve_app/widget/screen/register/register.dart';
@@ -29,7 +29,7 @@ class BoardingHomeScreen extends StatelessWidget {
     showLoadingDialog(context);
 
     final tokenResponse =
-        await BakauApi(AppConfig.of(context)).login(email, token);
+        await Api.get().setProvider(BakauProvider()).login(email, token);
 
     dismissLoadingDialog(context);
 
@@ -65,7 +65,8 @@ class BoardingHomeScreen extends StatelessWidget {
         setGoogleId(account.id);
 
         // check, has user already registered before
-        final checkResponse = await BakauApi(AppConfig.of(context))
+        final checkResponse = await Api.get()
+            .setProvider(BakauProvider())
             .checkUser(UserCheckIdentifier.email, account.email);
 
         if (checkResponse?.status == REQUEST_SUCCESS &&

@@ -44,7 +44,7 @@ class Api {
   static Api _singleton;
   static Api get() {
     if (_singleton == null) {
-      
+
     }
 
     return _singleton;

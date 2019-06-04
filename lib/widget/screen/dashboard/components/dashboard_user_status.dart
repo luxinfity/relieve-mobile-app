@@ -5,8 +5,8 @@ import 'package:relieve_app/service/model/family.dart';
 import 'package:relieve_app/service/model/location.dart';
 import 'package:relieve_app/service/model/user.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/service/source/api/base.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/dashboard_title.dart';
 
@@ -55,7 +55,7 @@ class UserAppBarState extends State {
   User user = User(fullname: '');
 
   void loadUser() async {
-    final userResponse = await BakauApi(AppConfig.of(context)).getUser();
+    final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
     if (userResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         user = userResponse.content;

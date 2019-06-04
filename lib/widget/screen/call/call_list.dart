@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
-import 'package:relieve_app/service/model/location.dart';
-
-import 'package:relieve_app/widget/screen/call/components/item_button.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
-import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/service/model/contact.dart';
+import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/service/source/api/base.dart';
-import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/service/source/location/location.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/widget/screen/call/components/item_button.dart';
 
 class CallListScreen extends StatefulWidget {
   @override
@@ -28,7 +27,8 @@ class CallListScreenState extends State {
   void getAllContact() async {
     // TODO: handle getCurrentLocation(...) null value
     final position = await LocationService.getCurrentLocation();
-    final contactResponse = await BakauApi(AppConfig.of(context))
+    final contactResponse = await Api.get()
+        .setProvider(BakauProvider())
         .getNearbyEmergencyContact(Location.parseFromPosition(position));
 
     if (contactResponse?.status == REQUEST_SUCCESS) {

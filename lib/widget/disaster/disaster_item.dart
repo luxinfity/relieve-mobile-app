@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/disaster.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/kalomang/kalomang_provider.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/map/static_map.dart';
 
@@ -269,7 +269,7 @@ class DisasterItemListState extends State {
 
   void loadDisaster() async {
     final disasterResponse =
-        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 5);
+        await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
     if (disasterResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         listDisaster = disasterResponse.content.data;

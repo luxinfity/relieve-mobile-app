@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 
@@ -55,14 +55,16 @@ class AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   void findUsername(String username) async {
-    var checkResponse = await BakauApi(AppConfig.of(context))
+    var checkResponse = await Api.get()
+        .setProvider(BakauProvider())
         .checkUser(UserCheckIdentifier.username, username);
 
     var found = setFriendUsername(checkResponse);
 
     print(found);
     if (!found) {
-      checkResponse = await BakauApi(AppConfig.of(context))
+      checkResponse = await Api.get()
+          .setProvider(BakauProvider())
           .checkUser(UserCheckIdentifier.email, username);
       found = setFriendUsername(checkResponse);
     }

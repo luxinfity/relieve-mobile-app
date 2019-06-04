@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/source/api/bakau/bakau_provider.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
-import 'package:relieve_app/widget/common/standard_button.dart';
-import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/snackbar.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -48,10 +48,10 @@ class BoardingLoginScreenState extends State {
 
       showLoadingDialog(context);
 
-      final tokenResponse = await BakauApi(AppConfig.of(context)).login(
-        usernameController.text,
-        passwordController.text,
-      );
+      final tokenResponse = await Api.get().setProvider(BakauProvider()).login(
+            usernameController.text,
+            passwordController.text,
+          );
 
       dismissLoadingDialog(context);
 
