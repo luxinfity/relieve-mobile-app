@@ -1,0 +1,40 @@
+{
+    "project_info": {
+        "project_number": "380354838173",
+        "firebase_url": "https://relieve-debug.firebaseio.com",
+        "project_id": "relieve-debug",
+        "storage_bucket": "relieve-debug.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:380354838173:android:89c4d65d7c14593b",
+            "android_client_info": {
+                "package_name": "com.relieve.android.debug"
+            }
+        },
+        "oauth_client": [{
+            "client_id": "380354838173-qdk2ga629866rq5489p3fdk55s39qfvi.apps.googleusercontent.com",
+            "client_type": 3
+        }],
+        "api_key": [{
+            "current_key": "ANDROID_API_KEY"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                        "client_id": "380354838173-qdk2ga629866rq5489p3fdk55s39qfvi.apps.googleusercontent.com",
+                        "client_type": 3
+                    },
+                    {
+                        "client_id": "380354838173-rfpukm4eqg6evsjd5n7t0ierct0rml24.apps.googleusercontent.com",
+                        "client_type": 2,
+                        "ios_info": {
+                            "bundle_id": "com.relieve.ios.debug"
+                        }
+                    }
+                ]
+            }
+        }
+    }],
+    "configuration_version": "1"
+}
