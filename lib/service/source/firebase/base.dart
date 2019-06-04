@@ -3,6 +3,8 @@ import 'package:relieve_app/service/model/token.dart';
 import 'package:relieve_app/service/model/user.dart';
 import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/source/api/bakau/auth_api.dart';
+import 'package:relieve_app/service/source/google/base.dart';
+import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class Firebase implements AuthApi {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -18,6 +20,46 @@ class Firebase implements AuthApi {
   Future<TokenResponse> login(String username, String password) async {
 //    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
 //        email: email, password: password);
+    return null;
+  }
+
+  @override
+  Future<TokenResponse> googleLogin(String accessToken, String idToken) async {
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: accessToken,
+      idToken: idToken,
+    );
+
+    final FirebaseUser user =
+        await _firebaseAuth.signInWithCredential(credential);
+    print("signed in " + user.displayName);
+
+    return null;
+  }
+
+  @override
+  Future<TokenResponse> googleLoginWrap() async {
+    final account = await googleSignInScope.signIn();
+    final user = await account.authentication;
+    return googleLogin(user.accessToken, user.idToken);
+  }
+
+  @override
+  Future<TokenResponse> logout() async {
+    if (await pref.isGoogleLogin()) {
+      googleSignInScope.signOut();
+    }
+
+    return null;
+  }
+
+  @override
+  Future<TokenResponse> googleLoginWrapper() {
+    return null;
+  }
+
+  @override
+  Future<TokenResponse> googleLogoutWrapper() {
     return null;
   }
 

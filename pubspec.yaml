@@ -31,6 +31,7 @@ dependencies:
   firebase_messaging: ^5.0.2
   firebase_auth: ^0.11.1+5
   google_maps_flutter: ^0.5.15+1
+  google_sign_in: ^4.0.2
   permission_handler: ^3.1.0
   geolocator: ^5.0.0  
 

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/service/model/location.dart';
-import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/service/source/google/base.dart';
 
 enum ImageFormat { JPEG, PNG, GIF }
 

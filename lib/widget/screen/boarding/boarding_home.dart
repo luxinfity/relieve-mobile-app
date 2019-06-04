@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/common_utils.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
@@ -13,7 +10,6 @@ import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
 import 'package:relieve_app/widget/screen/register/register.dart';
-import 'package:relieve_app/widget/screen/register/register_form_account.dart';
 import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class BoardingHomeScreen extends StatelessWidget {
@@ -58,32 +54,32 @@ class BoardingHomeScreen extends StatelessWidget {
 
   void googleButtonClicked(BuildContext context) async {
     try {
-      final account = await googleSignInScope.signIn();
-      if (account.email.isNotEmpty) {
-        // final idToken = (await account.authentication).idToken;
-        setGoogleId(account.id);
-
-        // check, has user already registered before
-        final checkResponse = await Api.get()
-            .setProvider(BakauProvider())
-            .checkUser(UserCheckIdentifier.email, account.email);
-
-        if (checkResponse?.status == REQUEST_SUCCESS &&
-            checkResponse?.content?.isExsist == true) {
-          doGoogleLogin(context, account.email, account.id);
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (builder) => RegisterScreen(
-                    progressCount: 2,
-                    initialData:
-                        Account(account.email, account.email, account.id),
-                  ),
-            ),
-          );
-        }
-      }
+//      final account = await googleSignInScope.signIn();
+//      if (account.email.isNotEmpty) {
+//        // final idToken = (await account.authentication).idToken;
+//        setGoogleId(account.id);
+//
+//        // check, has user already registered before
+//        final checkResponse = await Api.get()
+//            .setProvider(BakauProvider())
+//            .checkUser(UserCheckIdentifier.email, account.email);
+//
+//        if (checkResponse?.status == REQUEST_SUCCESS &&
+//            checkResponse?.content?.isExsist == true) {
+//          doGoogleLogin(context, account.email, account.id);
+//        } else {
+//          Navigator.push(
+//            context,
+//            MaterialPageRoute(
+//              builder: (builder) => RegisterScreen(
+//                    progressCount: 2,
+//                    initialData:
+//                        Account(account.email, account.email, account.id),
+//                  ),
+//            ),
+//          );
+//        }
+//      }
     } catch (error) {
       print(error);
     }

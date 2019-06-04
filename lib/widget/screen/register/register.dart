@@ -75,6 +75,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
     final tokenResponse =
         await Api.get().setProvider(BakauProvider()).register(user);
+
     dismissLoadingDialog(context);
 
     if (tokenResponse?.status == REQUEST_SUCCESS) {
@@ -143,7 +144,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
       // remove google data
       if (googleId.isNotEmpty) {
-        googleSignInScope.signOut();
+//        googleSignInScope.signOut();
         clearData();
       }
     }

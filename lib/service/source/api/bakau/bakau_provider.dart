@@ -11,6 +11,7 @@ import 'package:relieve_app/service/model/user.dart';
 import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/source/api/bakau/bakau_api.dart';
 import 'package:relieve_app/service/source/api/provider.dart';
+import 'package:relieve_app/service/source/google/base.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class BakauProvider extends Provider implements BakauApi {
@@ -57,6 +58,27 @@ class BakauProvider extends Provider implements BakauApi {
     );
 
     return TokenResponse.fromJson(jsonDecode(response.body));
+  }
+
+  /// Not Implemented
+  @override
+  Future<TokenResponse> googleLogin(String accessToken, String idToken) {
+    throw Exception('Bakau not implemented googleLogin yet');
+  }
+
+  @override
+  Future<TokenResponse> googleLoginWrap() async {
+    final account = await googleSignInScope.signIn();
+    final user = await account.authentication;
+    throw Exception('Bakau not implemented googleLoginWrap yet');
+    // return googleLogin(user.accessToken, user.idToken);
+  }
+
+  @override
+  Future<TokenResponse> logout() {
+    googleSignInScope.signOut();
+
+    throw Exception('Bakau not implemented logout yet');
   }
 
   @override

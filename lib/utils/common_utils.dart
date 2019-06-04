@@ -10,14 +10,6 @@ void defaultBackPressed(BuildContext context) {
   Navigator.pop(context);
 }
 
-String getGoogleApiKey(BuildContext context) {
-  if (Theme.of(context).platform == TargetPlatform.iOS) {
-    return 'IOS_API_KEY';
-  } else {
-    return 'ANDROID_API_KEY';
-  }
-}
-
 final CameraPosition jakartaCoordinate = CameraPosition(
   target: LatLng(-6.21462, 106.84513),
   zoom: 14,
