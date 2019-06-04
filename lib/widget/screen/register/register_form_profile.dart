@@ -97,27 +97,29 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
   void onDoBClick() {
     DatePicker.showDatePicker(
       context,
-      showTitleActions: true,
-      locale: 'i18n',
-      cancel: Text(
-        'Batal',
-        style: CircularStdFont.book.getStyle(
-          size: Dimen.x12,
-          color: AppColor.colorDanger,
+      locale: DateTimePickerLocale.en_us,
+      pickerTheme: DateTimePickerTheme(
+        showTitle: true,
+        cancel: Text(
+          'Batal',
+          style: CircularStdFont.book.getStyle(
+            size: Dimen.x12,
+            color: AppColor.colorDanger,
+          ),
         ),
-      ),
-      confirm: Text(
-        'Pilih',
-        style: CircularStdFont.book.getStyle(
-          size: Dimen.x12,
-          color: AppColor.colorPrimary,
+        confirm: Text(
+          'Pilih',
+          style: CircularStdFont.book.getStyle(
+            size: Dimen.x12,
+            color: AppColor.colorPrimary,
+          ),
         ),
       ),
       dateFormat: 'yyyy-mm-dd',
-      onConfirm: (year, month, date) {
-        final monthStr = month.toString().padLeft(2, '0');
-        final dateStr = date.toString().padLeft(2, '0');
-        dobController.text = '$year-$monthStr-$dateStr';
+      onConfirm: (dateTime, selectedIndex) {
+        final monthStr = dateTime.month.toString().padLeft(2, '0');
+        final dateStr = dateTime.day.toString().padLeft(2, '0');
+        dobController.text = '${dateTime.year.toString()}-$monthStr-$dateStr';
         setState(() {});
       },
     );
