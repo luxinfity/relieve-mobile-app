@@ -2,16 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:relieve_app/service/model/address.dart';
-import 'package:relieve_app/service/model/contact.dart';
-import 'package:relieve_app/service/model/family.dart';
-import 'package:relieve_app/service/model/location.dart';
-import 'package:relieve_app/service/model/token.dart';
-import 'package:relieve_app/service/model/user.dart';
-import 'package:relieve_app/service/model/user_check.dart';
-import 'package:relieve_app/service/source/api/bakau/bakau_api.dart';
-import 'package:relieve_app/service/source/api/provider.dart';
-import 'package:relieve_app/service/source/google/base.dart';
+import 'package:relieve_app/datamodel/address.dart';
+import 'package:relieve_app/datamodel/contact.dart';
+import 'package:relieve_app/datamodel/family.dart';
+import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/token.dart';
+import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/service/api/bakau/bakau_api.dart';
+import 'package:relieve_app/service/api/provider.dart';
+import 'package:relieve_app/service/google/base.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class BakauProvider extends Provider implements BakauApi {

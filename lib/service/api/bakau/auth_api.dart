@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
-import 'package:relieve_app/service/model/token.dart';
-import 'package:relieve_app/service/model/user.dart';
-import 'package:relieve_app/service/model/user_check.dart';
+import 'package:relieve_app/datamodel/token.dart';
+import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/user_check.dart';
 
 abstract class AuthApi {
   Future<UserCheckResponse> checkUser(

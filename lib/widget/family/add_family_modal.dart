@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/user_check.dart';
+import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';

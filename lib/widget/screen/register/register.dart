@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/address.dart';
-import 'package:relieve_app/service/model/location.dart';
-import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/datamodel/address.dart';
+import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';

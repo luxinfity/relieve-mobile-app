@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
-import './base.dart';
+import 'package:relieve_app/datamodel/base.dart';
 
 class Contact {
   final String name;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 

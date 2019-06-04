@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/address.dart';
+import 'package:relieve_app/datamodel/address.dart';
 
 class AddressBar extends StatelessWidget {
   final List<Address> addressList;

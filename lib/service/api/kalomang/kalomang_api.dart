@@ -1,5 +1,5 @@
-import 'package:relieve_app/service/model/disaster.dart';
-import 'package:relieve_app/service/model/weather.dart';
+import 'package:relieve_app/datamodel/disaster.dart';
+import 'package:relieve_app/datamodel/weather.dart';
 
 abstract class KalomangApi {
   Future<WeatherResponse> weatherCheck(double lat, double lang);

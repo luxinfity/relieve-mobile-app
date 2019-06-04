@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:relieve_app/service/model/token.dart';
-import 'package:relieve_app/service/model/user.dart';
-import 'package:relieve_app/service/model/user_check.dart';
-import 'package:relieve_app/service/source/api/bakau/auth_api.dart';
-import 'package:relieve_app/service/source/google/base.dart';
+import 'package:relieve_app/datamodel/token.dart';
+import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/service/api/bakau/auth_api.dart';
+import 'package:relieve_app/service/google/base.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
 
 class Firebase implements AuthApi {

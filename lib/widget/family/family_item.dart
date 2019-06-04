@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/family.dart';
+import 'package:relieve_app/datamodel/family.dart';
 
 enum FamilyItemType { Normal, Empty, Add }
 

@@ -1,4 +1,4 @@
-import './base.dart';
+import 'package:relieve_app/datamodel/base.dart';
 
 class WeatherDescription {
   final String id;

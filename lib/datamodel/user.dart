@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:relieve_app/service/model/address.dart';
+import 'package:relieve_app/datamodel/address.dart';
 
-import './base.dart';
+import 'package:relieve_app/datamodel/base.dart';
 
 class Phone {
   final String number;

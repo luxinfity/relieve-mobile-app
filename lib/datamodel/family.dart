@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:relieve_app/service/model/base.dart';
-import 'package:relieve_app/service/model/location.dart';
+import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/location.dart';
 
 enum PersonHealth { Fine, Bad, None }
 
