@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_home.dart';
 import 'package:relieve_app/widget/screen/dashboard/dashboard.dart';
 
 class LandingScreen extends StatelessWidget {
   void checkLogin(BuildContext context) async {
-    final isLogin = await pref.isLogin();
+    final isLogin = await PreferenceUtils.isLogin();
     if (isLogin) {
       Navigator.pushReplacement(
         context,
@@ -15,7 +15,7 @@ class LandingScreen extends StatelessWidget {
       );
     } else {
       // not login but has google ID
-      if (await pref.isGoogleLogin()) {
+      if (await PreferenceUtils.isGoogleLogin()) {
 //        googleSignInScope.signOut();
       }
       Navigator.pushReplacement(

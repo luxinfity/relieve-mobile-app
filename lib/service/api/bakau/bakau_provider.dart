@@ -12,7 +12,7 @@ import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';
 import 'package:relieve_app/service/api/provider.dart';
 import 'package:relieve_app/service/google/base.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/preference_utils.dart';
 
 class BakauProvider extends Provider implements BakauApi {
   @override
@@ -112,7 +112,7 @@ class BakauProvider extends Provider implements BakauApi {
         '$completeUri/discover/address-detail?coordinates=${position.toString()}';
     final response = await http.get(url, headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      'authorization': await pref.getToken(),
+      'authorization': await PreferenceUtils.getToken(),
       'secret': secret,
     });
 
@@ -129,7 +129,7 @@ class BakauProvider extends Provider implements BakauApi {
     var url = '$completeUri/family';
     final response = await http.get(url, headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      'authorization': await pref.getToken(),
+      'authorization': await PreferenceUtils.getToken(),
       'secret': secret,
     });
 
@@ -146,7 +146,7 @@ class BakauProvider extends Provider implements BakauApi {
     var url = '$completeUri/user/profile';
     final response = await http.get(url, headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      'authorization': await pref.getToken(),
+      'authorization': await PreferenceUtils.getToken(),
       'secret': secret,
     });
 
@@ -162,7 +162,7 @@ class BakauProvider extends Provider implements BakauApi {
       url,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-        'authorization': await pref.getToken(),
+        'authorization': await PreferenceUtils.getToken(),
         'secret': secret,
       },
       body: jsonEncode({
@@ -181,7 +181,7 @@ class BakauProvider extends Provider implements BakauApi {
     var url = '$completeUri/address';
     final response = await http.get(url, headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
-      'authorization': await pref.getToken(),
+      'authorization': await PreferenceUtils.getToken(),
       'secret': secret,
     });
 

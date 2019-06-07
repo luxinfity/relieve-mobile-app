@@ -7,7 +7,6 @@ import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
@@ -45,7 +44,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   void onRegisterSuccess() {
     // auto login
-    pref.setUsername(_user.username);
+    PreferenceUtils.setUsername(_user.username);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -79,9 +78,9 @@ class RegisterScreenState extends State<RegisterScreen> {
     dismissLoadingDialog(context);
 
     if (tokenResponse?.status == REQUEST_SUCCESS) {
-      pref.setToken(tokenResponse.content.token);
-      pref.setRefreshToken(tokenResponse.content.refreshToken);
-      pref.setExpireIn(tokenResponse.content.expiresIn);
+      PreferenceUtils.setToken(tokenResponse.content.token);
+      PreferenceUtils.setRefreshToken(tokenResponse.content.refreshToken);
+      PreferenceUtils.setExpireIn(tokenResponse.content.expiresIn);
 
       onRegisterSuccess();
     } else {
@@ -132,7 +131,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void onBackButtonClick(context) async {
-    String googleId = await getGoogleId();
+    String googleId = await PreferenceUtils.getGoogleId();
     int limit = googleId.isEmpty ? 1 : 2;
 
     if (progressCount > limit) {
@@ -145,7 +144,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       // remove google data
       if (googleId.isNotEmpty) {
 //        googleSignInScope.signOut();
-        clearData();
+        PreferenceUtils.clearData();
       }
     }
   }

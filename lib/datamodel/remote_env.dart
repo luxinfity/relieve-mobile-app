@@ -11,7 +11,8 @@ class RemoteEnv {
   final String port;
   final String secret;
 
-  const RemoteEnv(this.envName, this.protocol, this.domain, this.port, this.secret);
+  const RemoteEnv(
+      this.envName, this.protocol, this.domain, this.port, this.secret);
 
   static RemoteEnv _singleton;
 

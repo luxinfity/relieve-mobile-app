@@ -6,7 +6,7 @@ import 'package:relieve_app/service/base/auth_api.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/service/google/base.dart';
 import 'package:relieve_app/utils/common_utils.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
+import 'package:relieve_app/utils/preference_utils.dart';
 
 class FirebaseAuthHelper implements AuthApi {
   static FirebaseAuthHelper instance = FirebaseAuthHelper();
@@ -73,7 +73,7 @@ class FirebaseAuthHelper implements AuthApi {
 
   @override
   Future<bool> logout() async {
-    if (await pref.isGoogleLogin()) {
+    if (await PreferenceUtils.isGoogleLogin()) {
       googleSignInScope.signOut();
     }
 

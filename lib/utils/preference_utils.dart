@@ -1,86 +1,89 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_keychain/flutter_keychain.dart';
 
-// logout
-void clearData() {
-  setGoogleId('');
-  setUsername('');
-  setToken('');
-  setRefreshToken('');
-  setExpireIn(0);
-}
-
-Future<String> uid() async {
-  if (await isLogin()) {
-    final user = await FirebaseAuth.instance.currentUser();
-    return user.uid;
-  } else {
-    return null;
+abstract class PreferenceUtils {
+  // logout
+  static void clearData() {
+    setGoogleId('');
+    setUsername('');
+    setToken('');
+    setRefreshToken('');
+    setExpireIn(0);
   }
-}
 
-Future<bool> isLogin() async {
-  final user = await FirebaseAuth.instance.currentUser();
-  return user != null;
-}
+  static Future<String> uid() async {
+    if (await isLogin()) {
+      final user = await FirebaseAuth.instance.currentUser();
+      return user.uid;
+    } else {
+      return null;
+    }
+  }
 
-Future<bool> isGoogleLogin() async {
-  return false;
-//  final googleId = await getGoogleId();
-//  return googleId != null && googleId.isNotEmpty;
-}
+  static Future<bool> isLogin() async {
+    final user = await FirebaseAuth.instance.currentUser();
+    return user != null;
+  }
 
-// Google Sign In
-Future<String> getGoogleId() async {
-  String data = await FlutterKeychain.get(key: 'googleId');
-  if (data == null) data = '';
-  return data;
-}
+  static Future<bool> isGoogleLogin() async {
+    return false;
+    //  final googleId = await getGoogleId();
+    //  return googleId != null && googleId.isNotEmpty;
+  }
 
-void setGoogleId(String id) async {
-  return await FlutterKeychain.put(key: 'googleId', value: id);
-}
+  // Google Sign In
+  static Future<String> getGoogleId() async {
+    String data = await FlutterKeychain.get(key: 'googleId');
+    if (data == null) data = '';
+    return data;
+  }
 
-// Username
-Future<String> getUsername() async {
-  String data = await FlutterKeychain.get(key: 'username');
-  if (data == null) data = '';
-  return data;
-}
+  static void setGoogleId(String id) async {
+    return await FlutterKeychain.put(key: 'googleId', value: id);
+  }
 
-void setUsername(String username) async {
-  return await FlutterKeychain.put(key: 'username', value: username);
-}
+  // Username
+  static Future<String> getUsername() async {
+    String data = await FlutterKeychain.get(key: 'username');
+    if (data == null) data = '';
+    return data;
+  }
 
-// TOKEN
-Future<String> getToken() async {
-  String data = await FlutterKeychain.get(key: 'token');
-  if (data == null) data = '';
-  return data;
-}
+  static void setUsername(String username) async {
+    return await FlutterKeychain.put(key: 'username', value: username);
+  }
 
-void setToken(String token) async {
-  return await FlutterKeychain.put(key: 'token', value: token);
-}
+  // TOKEN
+  static Future<String> getToken() async {
+    String data = await FlutterKeychain.get(key: 'token');
+    if (data == null) data = '';
+    return data;
+  }
 
-// refresh token
-Future<String> getRefreshToken() async {
-  String data = await FlutterKeychain.get(key: 'refreshToken');
-  if (data == null) data = '';
-  return data;
-}
+  static void setToken(String token) async {
+    return await FlutterKeychain.put(key: 'token', value: token);
+  }
 
-void setRefreshToken(String refreshToken) async {
-  return await FlutterKeychain.put(key: 'refreshToken', value: refreshToken);
-}
+  // refresh token
+  static Future<String> getRefreshToken() async {
+    String data = await FlutterKeychain.get(key: 'refreshToken');
+    if (data == null) data = '';
+    return data;
+  }
 
-// expire in
-Future<int> getExpireIn() async {
-  String data = await FlutterKeychain.get(key: 'expireIn');
-  if (data == null) data = '0';
-  return int.parse(data);
-}
+  static void setRefreshToken(String refreshToken) async {
+    return await FlutterKeychain.put(key: 'refreshToken', value: refreshToken);
+  }
 
-void setExpireIn(int expireIn) async {
-  return await FlutterKeychain.put(key: 'expireIn', value: expireIn.toString());
+  // expire in
+  static Future<int> getExpireIn() async {
+    String data = await FlutterKeychain.get(key: 'expireIn');
+    if (data == null) data = '0';
+    return int.parse(data);
+  }
+
+  static void setExpireIn(int expireIn) async {
+    return await FlutterKeychain.put(
+        key: 'expireIn', value: expireIn.toString());
+  }
 }
