@@ -42,7 +42,7 @@ class BoardingLoginScreenState extends State {
         isWrongCredential = false;
       });
 
-      showLoadingDialog(context);
+      RelieveLoadingDialog.show(context);
 
 //      final tokenResponse = await Api.get().setProvider(BakauProvider()).login(
 //            usernameController.text,

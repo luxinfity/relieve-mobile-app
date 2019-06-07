@@ -53,7 +53,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   void doRegister(MapAddress mapAddress) async {
-    showLoadingDialog(context);
+    RelieveLoadingDialog.show(context);
     final location = mapAddress.coordinate.split(',');
     final user = User(
       username: _user.username,
@@ -75,7 +75,7 @@ class RegisterScreenState extends State<RegisterScreen> {
     final tokenResponse =
         await Api.get().setProvider(BakauProvider()).register(user);
 
-    dismissLoadingDialog(context);
+    RelieveLoadingDialog.dismiss(context);
 
     if (tokenResponse?.status == REQUEST_SUCCESS) {
       PreferenceUtils.setToken(tokenResponse.content.token);

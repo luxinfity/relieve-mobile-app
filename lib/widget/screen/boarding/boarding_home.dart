@@ -3,42 +3,24 @@ import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
 import 'package:relieve_app/widget/screen/register/register.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);
 
-  void loginButtonClicked(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
-  }
-
   void goToMainPage(BuildContext context) async {
-//    showLoadingDialog(context);
-
-//    final tokenResponse =
-//        await Api.get().setProvider(BakauProvider()).login(email, token);
-//
-//    dismissLoadingDialog(context);
-//
-//    if (tokenResponse?.status == REQUEST_SUCCESS) {
-//      pref.setToken(tokenResponse.content.token);
-//      pref.setRefreshToken(tokenResponse.content.refreshToken);
-//      pref.setExpireIn(tokenResponse.content.expiresIn);
-//      pref.setUsername(email);
-//      Navigator.pushAndRemoveUntil(
-//        context,
-//        MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
-//        (_) => false, // clean all back stack
-//      );
-//    } else {
-
-//    }
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+      (_) => false, // clean all back stack
+    );
   }
 
   void goToRegisterPage(BuildContext context, User user) {
@@ -57,7 +39,9 @@ class BoardingHomeScreen extends StatelessWidget {
   /// else if (email exist) go to register
   /// else login failed
   void googleButtonClicked(BuildContext context) async {
+    RelieveLoadingDialog.show(context);
     var user = await FirebaseAuthHelper.instance.googleLoginWrap();
+    RelieveLoadingDialog.dismiss(context);
 
     if (user != null && user.username != null) {
       goToMainPage(context);
@@ -69,30 +53,17 @@ class BoardingHomeScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
           child: Text(
-            'Google login sedang tidak bisa digunakan, Silahkan gunakan metode lain',
+            'Otentikasi Google sedang tidak bisa digunakan, Silahkan gunakan metode lain',
             style: CircularStdFont.book.getStyle(size: Dimen.x16),
           ),
         ),
       ]);
     }
+  }
 
-//      final account = await googleSignInScope.signIn();
-//      if (account.email.isNotEmpty) {
-//        // final idToken = (await account.authentication).idToken;
-//        setGoogleId(account.id);
-//
-//        // check, has user already registered before
-//        final checkResponse = await Api.get()
-//            .setProvider(BakauProvider())
-//            .checkUser(UserCheckIdentifier.email, account.email);
-//
-//        if (checkResponse?.status == REQUEST_SUCCESS &&
-//            checkResponse?.content?.isExsist == true) {
-//          doGoogleLogin(context, account.email, account.id);
-//        } else {
-
-//        }
-//      }
+  void loginButtonClicked(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
   }
 
   void registerButtonClicked(BuildContext context) {
