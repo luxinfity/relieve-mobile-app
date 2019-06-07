@@ -27,4 +27,12 @@ void debounce(VoidCallback callback,
   _debounceTimer = Timer(duration, callback);
 }
 
-Logger debugLog(Type where) => Logger(where.toString());
+Logger debugLog(Type where, {String whereStr}) {
+  if (where != null) {
+    return Logger(where.toString());
+  } else if (whereStr != null) {
+    return Logger(whereStr);
+  } else {
+    throw ArgumentError('either `where` or `whereStr` must not null');
+  }
+}
