@@ -20,7 +20,7 @@ class BakauProvider extends Provider implements BakauApi {
 
   /// region Auth resource
   @override
-  Future<UserCheckResponse> checkUser(
+  Future<bool> isUserExist(
       UserCheckIdentifier checkIdentifier, String value) async {
     this.checkProvider();
 
@@ -37,7 +37,8 @@ class BakauProvider extends Provider implements BakauApi {
       }),
     );
 
-    return UserCheckResponse.fromJson(jsonDecode(response.body));
+    throw Exception('Bakau not implemented isUserExist yet');
+    // return UserCheckResponse.fromJson(jsonDecode(response.body));
   }
 
   @override
@@ -57,8 +58,8 @@ class BakauProvider extends Provider implements BakauApi {
       }),
     );
 
-//    return TokenResponse.fromJson(jsonDecode(response.body));
-    return true;
+    throw Exception('Bakau not implemented login yet');
+    // return TokenResponse.fromJson(jsonDecode(response.body));
   }
 
   /// Not Implemented

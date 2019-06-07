@@ -55,19 +55,19 @@ class AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   void findUsername(String username) async {
-    var checkResponse = await Api.get()
-        .setProvider(BakauProvider())
-        .checkUser(UserCheckIdentifier.username, username);
-
-    var found = setFriendUsername(checkResponse);
-
-    debugLog(AddFamilyModalState).info(found);
-    if (!found) {
-      checkResponse = await Api.get()
-          .setProvider(BakauProvider())
-          .checkUser(UserCheckIdentifier.email, username);
-      found = setFriendUsername(checkResponse);
-    }
+//    var checkResponse = await Api.get()
+//        .setProvider(BakauProvider())
+//        .isUserExist(UserCheckIdentifier.username, username);
+//
+//    var found = setFriendUsername(checkResponse);
+//
+//    debugLog(AddFamilyModalState).info(found);
+//    if (!found) {
+//      checkResponse = await Api.get()
+//          .setProvider(BakauProvider())
+//          .isUserExist(UserCheckIdentifier.email, username);
+//      found = setFriendUsername(checkResponse);
+//    }
 
 //    setState(() {
 //      friendSearchFound = found;

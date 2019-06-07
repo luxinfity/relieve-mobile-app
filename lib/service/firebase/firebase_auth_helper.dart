@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:relieve_app/datamodel/token.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/service/base/auth_api.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/service/google/base.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart' as pref;
@@ -12,13 +12,10 @@ class FirebaseAuthHelper implements AuthApi {
   static FirebaseAuthHelper instance = FirebaseAuthHelper();
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final Firestore _fireStore = Firestore.instance;
 
   @override
-  Future<UserCheckResponse> checkUser(
-      UserCheckIdentifier checkIdentifier, String value) {
-    // TODO: implement checkUser
-    return null;
+  Future<bool> isUserExist(UserCheckIdentifier checkIdentifier, String value) {
+    return FirestoreHelper.instance.isUserExist(checkIdentifier, value);
   }
 
   @override
@@ -37,14 +34,14 @@ class FirebaseAuthHelper implements AuthApi {
 
     final FirebaseUser user =
         await _firebaseAuth.signInWithCredential(credential);
+
     debugLog(FirebaseAuthHelper).info("signed in " + user.displayName);
 
-    return null;
+    return true;
   }
 
   @override
   Future<bool> googleLoginWrap() async {
-    debugLog(FirebaseAuthHelper).info("login google try");
     try {
       final account = await googleSignInScope.signIn();
       final user = await account.authentication;

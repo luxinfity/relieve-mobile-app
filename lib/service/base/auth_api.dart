@@ -4,7 +4,7 @@ import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 
 abstract class AuthApi {
-  Future<UserCheckResponse> checkUser(
+  Future<bool> isUserExist(
       UserCheckIdentifier checkIdentifier, String value);
 
   Future<bool> login(String username, String password);
