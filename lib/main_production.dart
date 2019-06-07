@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       plugins: [NotificationPlugin()],
       child: MaterialApp(
           title: 'Relieve ID',
+          navigatorKey: Catcher.navigatorKey,
           theme: ThemeData(
             primaryColor: AppColor.colorPrimary,
             primaryColorDark: AppColor.colorPrimaryDark,

@@ -53,7 +53,7 @@ class BoardingHomeScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
           child: Text(
-            'Otentikasi Google sedang tidak bisa digunakan, Silahkan gunakan metode lain',
+            'Otentikasi Google tidak bisa digunakan, Silahkan gunakan metode lain',
             style: CircularStdFont.book.getStyle(size: Dimen.x16),
           ),
         ),
