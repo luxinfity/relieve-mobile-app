@@ -20,9 +20,19 @@ class FirebaseAuthHelper implements AuthApi {
 
   @override
   Future<bool> login(String username, String password) async {
-//    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
-//        email: email, password: password);
-    return null;
+    final email = await FirestoreHelper.instance
+        .findUserBy(UserCheckIdentifier.username, username);
+
+    if (email == null) return false;
+
+    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+
+    if (user == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -47,6 +57,9 @@ class FirebaseAuthHelper implements AuthApi {
   }
 
   /// nullable return type: User
+  ///
+  /// null means, user might be never register before
+  /// or haven't complete registration flow
   @override
   Future<User> googleLoginWrap() async {
     try {
@@ -56,14 +69,17 @@ class FirebaseAuthHelper implements AuthApi {
       final isSuccess =
           await googleLogin(authData.accessToken, authData.idToken);
 
-      if (isSuccess) {
-        return User(
-          email: user.email,
-          fullName: user.displayName,
-        );
-      } else {
-        return null;
-      }
+      if (!isSuccess) return null;
+
+      final isCompleteRegister =
+          await isUserExist(UserCheckIdentifier.email, user.email);
+
+      if (!isCompleteRegister) return null;
+
+      return User(
+        email: user.email,
+        fullName: user.displayName,
+      );
     } catch (error) {
       // sign-in failed due to any error
       debugLog(FirebaseAuthHelper).info(error);
