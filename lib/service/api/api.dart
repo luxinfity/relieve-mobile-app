@@ -1,4 +1,4 @@
-import 'package:relieve_app/datamodel/env.dart';
+import 'package:relieve_app/datamodel/remote_env.dart';
 import 'package:relieve_app/service/api/provider.dart';
 
 const String PROTOCOL = 'https';
@@ -9,7 +9,7 @@ const String SECRET = 'BdQv7AHrFsAb5JMwYN6OZvCMSn7lU5nB';
 const int REQUEST_SUCCESS = 200;
 
 class Api {
-  final Env env;
+  final RemoteEnv env;
 
   const Api(this.env);
 
@@ -25,13 +25,13 @@ class Api {
     return provider.setUri(completeUri).setSecret(env.secret);
   }
 
-  static const Api PRODUCTION = const Api(Env.PRODUCTION);
+  static const Api PRODUCTION = const Api(RemoteEnv.PRODUCTION);
 
   static Api _singleton;
 
   static Api get() {
     if (_singleton == null) {
-      Env env = Env.get();
+      RemoteEnv env = RemoteEnv.get();
       if (env != null) {
         _singleton = Api(env);
       } else {
