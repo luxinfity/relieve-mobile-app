@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     return AppContainer(
-      AppType.Production,
       plugins: [NotificationPlugin()],
       child: MaterialApp(
           title: 'Relieve ID',

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
-import 'package:relieve_app/widget/common/snackbar.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
@@ -47,26 +44,26 @@ class BoardingLoginScreenState extends State {
 
       showLoadingDialog(context);
 
-      final tokenResponse = await Api.get().setProvider(BakauProvider()).login(
-            usernameController.text,
-            passwordController.text,
-          );
-
-      dismissLoadingDialog(context);
-
-      if (tokenResponse?.status == REQUEST_SUCCESS) {
-        pref.setToken(tokenResponse.content.token);
-        pref.setRefreshToken(tokenResponse.content.refreshToken);
-        pref.setExpireIn(tokenResponse.content.expiresIn);
-        pref.setUsername(usernameController.text);
-        onLoginSuccess();
-      } else {
-        showSnackBar(context, 'Ups! Username atau password salah',
-            buttonText: 'Mengerti');
-        setState(() {
-          isWrongCredential = true;
-        });
-      }
+//      final tokenResponse = await Api.get().setProvider(BakauProvider()).login(
+//            usernameController.text,
+//            passwordController.text,
+//          );
+//
+//      dismissLoadingDialog(context);
+//
+//      if (tokenResponse?.status == REQUEST_SUCCESS) {
+//        pref.setToken(tokenResponse.content.token);
+//        pref.setRefreshToken(tokenResponse.content.refreshToken);
+//        pref.setExpireIn(tokenResponse.content.expiresIn);
+//        pref.setUsername(usernameController.text);
+//        onLoginSuccess();
+//      } else {
+//        showSnackBar(context, 'Ups! Username atau password salah',
+//            buttonText: 'Mengerti');
+//        setState(() {
+//          isWrongCredential = true;
+//        });
+//      }
     }
   }
 

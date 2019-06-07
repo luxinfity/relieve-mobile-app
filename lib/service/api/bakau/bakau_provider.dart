@@ -41,7 +41,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<TokenResponse> login(String username, String password) async {
+  Future<bool> login(String username, String password) async {
     this.checkProvider();
 
     var url = '$completeUri/auth/login';
@@ -57,17 +57,18 @@ class BakauProvider extends Provider implements BakauApi {
       }),
     );
 
-    return TokenResponse.fromJson(jsonDecode(response.body));
+//    return TokenResponse.fromJson(jsonDecode(response.body));
+    return true;
   }
 
   /// Not Implemented
   @override
-  Future<TokenResponse> googleLogin(String accessToken, String idToken) {
+  Future<bool> googleLogin(String accessToken, String idToken) {
     throw Exception('Bakau not implemented googleLogin yet');
   }
 
   @override
-  Future<TokenResponse> googleLoginWrap() async {
+  Future<bool> googleLoginWrap() async {
     final account = await googleSignInScope.signIn();
     final user = await account.authentication;
     throw Exception('Bakau not implemented googleLoginWrap yet');
@@ -75,7 +76,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<TokenResponse> logout() {
+  Future<bool> logout() {
     googleSignInScope.signOut();
 
     throw Exception('Bakau not implemented logout yet');

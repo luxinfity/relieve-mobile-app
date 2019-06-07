@@ -7,14 +7,14 @@ abstract class AuthApi {
   Future<UserCheckResponse> checkUser(
       UserCheckIdentifier checkIdentifier, String value);
 
-  Future<TokenResponse> login(String username, String password);
+  Future<bool> login(String username, String password);
 
-  Future<TokenResponse> logout();
+  Future<bool> logout();
 
   @protected
-  Future<TokenResponse> googleLogin(String accessToken, String idToken);
+  Future<bool> googleLogin(String accessToken, String idToken);
 
-  Future<TokenResponse> googleLoginWrap();
+  Future<bool> googleLoginWrap();
 
   Future<TokenResponse> register(User user);
 }

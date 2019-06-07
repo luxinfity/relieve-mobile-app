@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:relieve_app/datamodel/env.dart';
 
 typedef VoidContextCallback(BuildContext context);
 typedef String StringCallback();
@@ -24,4 +25,10 @@ void debounce(VoidCallback callback,
   }
 
   _debounceTimer = Timer(duration, callback);
+}
+
+void printIfDebug(Object object) {
+  if (!Env.isProd()) {
+    print(object);
+  }
 }

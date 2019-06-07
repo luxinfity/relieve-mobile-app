@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
-import 'package:relieve_app/widget/common/bottom_modal.dart';
-import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
 import 'package:relieve_app/widget/screen/register/register.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);
@@ -21,7 +17,6 @@ class BoardingHomeScreen extends StatelessWidget {
   }
 
   void doGoogleLogin(BuildContext context, String email, String token) async {
-    var token = await FirebaseAuthHelper().googleLoginWrap();
 //    showLoadingDialog(context);
 
 //    final tokenResponse =
@@ -55,6 +50,7 @@ class BoardingHomeScreen extends StatelessWidget {
 
   void googleButtonClicked(BuildContext context) async {
     try {
+      var token = await FirebaseAuthHelper.instance.googleLoginWrap();
 //      final account = await googleSignInScope.signIn();
 //      if (account.email.isNotEmpty) {
 //        // final idToken = (await account.authentication).idToken;
