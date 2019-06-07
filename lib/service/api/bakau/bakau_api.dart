@@ -3,7 +3,7 @@ import 'package:relieve_app/datamodel/contact.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/user.dart';
-import 'package:relieve_app/service/api/bakau/auth_api.dart';
+import 'package:relieve_app/service/base/auth_api.dart';
 
 abstract class BakauApi implements AuthApi {
   /// Families resource
