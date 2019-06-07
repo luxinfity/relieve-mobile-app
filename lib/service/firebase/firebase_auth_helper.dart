@@ -37,22 +37,22 @@ class FirebaseAuthHelper implements AuthApi {
 
     final FirebaseUser user =
         await _firebaseAuth.signInWithCredential(credential);
-    printIfDebug("signed in " + user.displayName);
+    debugLog(FirebaseAuthHelper).info("signed in " + user.displayName);
 
     return null;
   }
 
   @override
   Future<bool> googleLoginWrap() async {
-    printIfDebug("login google try");
+    debugLog(FirebaseAuthHelper).info("login google try");
     try {
       final account = await googleSignInScope.signIn();
       final user = await account.authentication;
-      printIfDebug("login success");
+      debugLog(FirebaseAuthHelper).info("login success");
       return googleLogin(user.accessToken, user.idToken);
     } catch (error) {
       // sign-in failed due to
-      printIfDebug(error);
+      debugLog(FirebaseAuthHelper).info(error);
       return false;
     }
   }

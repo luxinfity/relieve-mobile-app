@@ -92,7 +92,7 @@ class CallListScreenState extends State {
         title: 'Tambah Lainnya',
         isTintBlue: true,
         onClick: () {
-          printIfDebug('click');
+          debugLog(CallListScreenState).info('click');
         },
       ),
     );

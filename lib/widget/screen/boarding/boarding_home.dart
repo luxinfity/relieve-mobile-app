@@ -79,7 +79,7 @@ class BoardingHomeScreen extends StatelessWidget {
 //        }
 //      }
     } catch (error) {
-      printIfDebug(error);
+      debugLog(BoardingHomeScreen).severe(error);
     }
   }
 

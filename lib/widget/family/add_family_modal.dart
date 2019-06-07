@@ -47,7 +47,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
   bool setFriendUsername(UserCheckResponse checkResponse) {
     if (checkResponse?.status == REQUEST_SUCCESS &&
         checkResponse?.content?.isExsist == true) {
-      printIfDebug(checkResponse?.content?.value);
+      debugLog(AddFamilyModalState).info(checkResponse?.content?.value);
       friendUsername = checkResponse?.content?.value;
       return true;
     }
@@ -61,7 +61,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
 
     var found = setFriendUsername(checkResponse);
 
-    printIfDebug(found);
+    debugLog(AddFamilyModalState).info(found);
     if (!found) {
       checkResponse = await Api.get()
           .setProvider(BakauProvider())

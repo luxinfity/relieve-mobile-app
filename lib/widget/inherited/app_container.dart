@@ -22,24 +22,24 @@ class NotificationPlugin extends AppPlugin {
     FirebaseMessaging firebaseMessaging = FirebaseMessaging();
     final token = await firebaseMessaging.getToken();
     firebaseMessaging.requestNotificationPermissions();
-    printIfDebug('Firebase token:' + token);
+    debugLog(NotificationPlugin).info('Firebase token:' + token);
 
     firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        printIfDebug('on message $message');
+        debugLog(NotificationPlugin).info('on message $message');
         _showDialog();
       },
       onResume: (Map<String, dynamic> message) async {
-        printIfDebug('on resume $message');
+        debugLog(NotificationPlugin).info('on resume $message');
       },
       onLaunch: (Map<String, dynamic> message) async {
-        printIfDebug('on launch $message');
+        debugLog(NotificationPlugin).info('on launch $message');
       },
     );
   }
 
   void _showDialog() {
-    printIfDebug('showing dialog');
+    debugLog(NotificationPlugin).info('showing dialog');
     showDialog(context: context, builder: (context) => Text('Hello'));
   }
 }
