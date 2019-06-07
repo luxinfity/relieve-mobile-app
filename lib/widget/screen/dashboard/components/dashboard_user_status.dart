@@ -51,7 +51,7 @@ class UserAppBarState extends State {
   IndonesiaPlace indonesiaPlace;
   bool isSafe = false;
 
-  User user = User(fullname: '');
+  User user = User(fullName: '');
 
   void loadUser() async {
     final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
@@ -105,7 +105,7 @@ class UserAppBarState extends State {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Greeting(name: ReCase(user.fullname).titleCase),
+                Greeting(name: ReCase(user.fullName).titleCase),
                 Padding(
                   padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserLocation(

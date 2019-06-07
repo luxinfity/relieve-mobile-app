@@ -68,7 +68,6 @@ class AddFamilyModalState extends State<AddFamilyModal> {
 //          .isUserExist(UserCheckIdentifier.email, username);
 //      found = setFriendUsername(checkResponse);
 //    }
-
 //    setState(() {
 //      friendSearchFound = found;
 //      if (found) {

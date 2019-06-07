@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:relieve_app/datamodel/relieve_callback.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:validators/validators.dart';
 
-class Profile {
-  final String fullName;
-  final String phoneNum;
-  final String dob;
-  final String gender;
-
-  Profile(this.fullName, this.phoneNum, this.dob, this.gender);
-}
-
-typedef ProfileFormCallback(Profile profile);
-
 class RegisterFormProfile extends StatefulWidget {
-  final ProfileFormCallback onNextClick;
-  final Profile initialData;
+  final UserCallback onNextClick;
+  final User initialData;
 
   const RegisterFormProfile({
     Key key,
@@ -52,8 +43,8 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
     super.initState();
     if (widget.initialData != null) {
       fullNameController.text = widget.initialData.fullName;
-      phoneController.text = widget.initialData.phoneNum;
-      dobController.text = widget.initialData.dob;
+//      phoneController.text = widget.initialData.phones[];
+      dobController.text = widget.initialData.birthDate;
       genderController.text = widget.initialData.gender;
     }
   }
@@ -65,11 +56,11 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           phoneController.text.replaceFirst('0', '').length >= 7;
 
       if (isFullNameValid && isPhoneValid) {
-        widget.onNextClick(Profile(
-          fullNameController.text.toLowerCase(),
-          phoneController.text.replaceFirst('0', ''),
-          dobController.text,
-          genderController.text,
+        widget.onNextClick(User(
+          fullName: fullNameController.text.toLowerCase(),
+//          phones: phoneController.text.replaceFirst('0', ''),
+          birthDate: dobController.text,
+          gender: genderController.text,
         ));
       }
     });

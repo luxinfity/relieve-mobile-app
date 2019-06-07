@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
@@ -50,8 +49,23 @@ class BoardingHomeScreen extends StatelessWidget {
   }
 
   void googleButtonClicked(BuildContext context) async {
-    try {
-      var token = await FirebaseAuthHelper.instance.googleLoginWrap();
+    var isSuccess = await FirebaseAuthHelper.instance.googleLoginWrap();
+
+    if (isSuccess) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (builder) => RegisterScreen(
+                progressCount: 2,
+//                initialData: User(
+//                    username: user.email,
+//                    email: user.email,
+//                    password: user.id),
+              ),
+        ),
+      );
+    } else {}
+
 //      final account = await googleSignInScope.signIn();
 //      if (account.email.isNotEmpty) {
 //        // final idToken = (await account.authentication).idToken;
@@ -66,21 +80,9 @@ class BoardingHomeScreen extends StatelessWidget {
 //            checkResponse?.content?.isExsist == true) {
 //          doGoogleLogin(context, account.email, account.id);
 //        } else {
-//          Navigator.push(
-//            context,
-//            MaterialPageRoute(
-//              builder: (builder) => RegisterScreen(
-//                    progressCount: 2,
-//                    initialData:
-//                        Account(account.email, account.email, account.id),
-//                  ),
-//            ),
-//          );
+
 //        }
 //      }
-    } catch (error) {
-      debugLog(BoardingHomeScreen).severe(error);
-    }
   }
 
   void registerButtonClicked(BuildContext context) {

@@ -1,8 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:relieve_app/datamodel/map_address.dart';
+import 'package:relieve_app/datamodel/relieve_callback.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/register/register_form_map.dart';
@@ -12,7 +13,7 @@ export 'package:relieve_app/widget/screen/register/register_form_map.dart';
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidContextCallback onBackClick;
-  final MapAddressFormCallback onNextClick;
+  final MapAddressCallback onNextClick;
   final MapAddress initialData;
 
   const RegisterFormAddress({

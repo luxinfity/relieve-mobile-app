@@ -38,10 +38,10 @@ class Phone {
 class User {
   final String username;
   final String password;
-  final String fullname;
+  final String fullName;
   final String email;
   final List<Phone> phones;
-  final String birthdate;
+  final String birthDate;
   final bool isComplete;
   final String gender;
   final Address address;
@@ -49,10 +49,10 @@ class User {
   User({
     this.username,
     this.password,
-    this.fullname,
+    this.fullName,
     this.email,
     this.phones,
-    this.birthdate,
+    this.birthDate,
     this.isComplete,
     this.gender,
     this.address,
@@ -62,9 +62,9 @@ class User {
     var data = {
       'username': username,
       'password': password,
-      'fullname': fullname,
+      'fullname': fullName,
       'email': email,
-      'birthdate': birthdate,
+      'birthdate': birthDate,
       'gender': gender,
       'address': address.toMap(),
     };
@@ -82,9 +82,9 @@ class User {
     try {
       return User(
         username: parsedJson['username'],
-        fullname: parsedJson['fullname'],
+        fullName: parsedJson['fullname'],
         email: parsedJson['email'],
-        birthdate: parsedJson['birthdate'],
+        birthDate: parsedJson['birthdate'],
         isComplete: parsedJson['is_complete'],
         gender: parsedJson['gender'],
       );

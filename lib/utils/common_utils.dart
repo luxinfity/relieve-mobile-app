@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logging/logging.dart';
 
-typedef VoidContextCallback(BuildContext context);
-typedef String StringCallback();
-
 void defaultBackPressed(BuildContext context) {
   Navigator.pop(context);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/map_address.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
@@ -17,7 +18,7 @@ import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
-  final Account initialData;
+  final User initialData;
 
   RegisterScreen({this.progressCount = 1, this.initialData});
 
@@ -32,20 +33,19 @@ class RegisterScreenState extends State<RegisterScreen> {
   int progressCount = 1;
   int progressTotal = 3;
 
-  Account _account;
-  Profile _profile;
+  User _user;
   MapAddress _mapAddress;
 
   @override
   void initState() {
     super.initState();
-    _account = widget.initialData;
+    _user = widget.initialData;
     progressCount = widget.progressCount;
   }
 
   void onRegisterSuccess() {
     // auto login
-    pref.setUsername(_account.username);
+    pref.setUsername(_user.username);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -57,14 +57,14 @@ class RegisterScreenState extends State<RegisterScreen> {
     showLoadingDialog(context);
     final location = mapAddress.coordinate.split(',');
     final user = User(
-      username: _account.username,
-      email: _account.email,
-      password: _account.password,
-      fullname: _profile.fullName,
-      phones: <Phone>[Phone('+62${_profile.phoneNum}', 1)],
-      birthdate: _profile.dob,
+      username: _user.username,
+      email: _user.email,
+      password: _user.password,
+      fullName: _user.fullName,
+      phones: _user.phones,
+      birthDate: _user.birthDate,
       isComplete: false,
-      gender: _profile.gender == 'Perempuan' ? 'f' : 'm',
+      gender: _user.gender == 'Perempuan' ? 'f' : 'm',
       address: Address(
         uuid: '1',
         location:
@@ -102,20 +102,20 @@ class RegisterScreenState extends State<RegisterScreen> {
     switch (progressCount) {
       case 1:
         return RegisterFormAccount(
-          initialData: _account,
-          onNextClick: (account) {
+          initialData: _user,
+          onNextClick: (user) {
             setState(() {
-              _account = account;
+              _user = user;
               progressCount += 1;
             });
           },
         );
       case 2:
         return RegisterFormProfile(
-          initialData: _profile,
-          onNextClick: (profile) {
+          initialData: _user,
+          onNextClick: (user) {
             setState(() {
-              _profile = profile;
+              _user = user;
               progressCount += 1;
             });
           },

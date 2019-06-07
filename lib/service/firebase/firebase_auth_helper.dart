@@ -48,7 +48,7 @@ class FirebaseAuthHelper implements AuthApi {
       debugLog(FirebaseAuthHelper).info("login success");
       return googleLogin(user.accessToken, user.idToken);
     } catch (error) {
-      // sign-in failed due to
+      // sign-in failed due to any error
       debugLog(FirebaseAuthHelper).info(error);
       return false;
     }

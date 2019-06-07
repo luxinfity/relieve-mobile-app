@@ -15,7 +15,7 @@ class ProfileBoard extends StatefulWidget {
 
 class ProfileBoardState extends State {
   String locationName;
-  User user = User(fullname: '');
+  User user = User(fullName: '');
 
   void loadUser() async {
     final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
@@ -82,7 +82,7 @@ class ProfileBoardState extends State {
                   bottom: Dimen.x21,
                 ),
                 child: Text(
-                  ReCase(user.fullname).titleCase,
+                  ReCase(user.fullName).titleCase,
                   style: CircularStdFont.medium.getStyle(
                     size: Dimen.x21,
                     color: Colors.white,

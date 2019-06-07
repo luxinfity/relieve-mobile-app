@@ -4,22 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/map_address.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-
-class MapAddress {
-  final String coordinate;
-  final String address;
-  final String name;
-
-  MapAddress(this.coordinate, this.address, this.name);
-}
-
-typedef MapAddressFormCallback(MapAddress profile);
 
 class RegisterFormMap extends StatefulWidget {
   final VoidCallback onNextClick;
