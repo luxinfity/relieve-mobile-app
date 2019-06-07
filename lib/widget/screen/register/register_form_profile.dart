@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import 'package:relieve_app/datamodel/relieve_callback.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
@@ -9,7 +9,7 @@ import 'package:relieve_app/widget/common/title.dart';
 import 'package:validators/validators.dart';
 
 class RegisterFormProfile extends StatefulWidget {
-  final UserCallback onNextClick;
+  final VoidCallbackUser onNextClick;
   final User initialData;
 
   const RegisterFormProfile({

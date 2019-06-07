@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/relieve_callback.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/res/res.dart';
 
 class RelieveBottomNavigationBar extends StatefulWidget {

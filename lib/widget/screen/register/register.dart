@@ -143,7 +143,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
       // remove google data
       if (googleId.isNotEmpty) {
-//        googleSignInScope.signOut();
+        // googleSignInScope.signOut();
         PreferenceUtils.clearData();
       }
     }

@@ -1,13 +1,13 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/relieve_callback.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
 class RegisterFormAccount extends StatefulWidget {
-  final UserCallback onNextClick;
+  final VoidCallbackUser onNextClick;
   final User initialData;
 
   const RegisterFormAccount({

@@ -3,19 +3,19 @@ import 'package:relieve_app/datamodel/map_address.dart';
 import 'package:relieve_app/datamodel/user.dart';
 
 /// Naming Convention for custom `datamodel` callback
-/// typedef [Return][Model]Callback(Model model)
+/// typedef [Return]Callback[Model](Model model)
 ///
 /// Non `datamodel` callback name should use the context where it is used
 
 // relieve
-typedef UserCallback(User user);
+typedef VoidCallbackUser(User user);
 
 typedef RelieveBottomAction(int index, bool isCall); // non data model
 
-typedef MapAddressCallback(MapAddress profile);
+typedef VoidCallbackMapAddress(MapAddress profile);
 
 // flutter
-typedef VoidContextCallback(BuildContext context);
+typedef VoidCallbackContext(BuildContext context);
 
 // dart
 typedef String StringCallback();
