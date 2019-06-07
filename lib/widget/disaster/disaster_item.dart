@@ -307,7 +307,7 @@ class DisasterItemListState extends State {
   }
 
   void testSheet(BuildContext context) {
-    createRelieveBottomModal(context, <Widget>[
+    RelieveBottomModal.create(context, <Widget>[
       Container(height: 150, color: AppColor.colorEmptyRect),
       Container(height: Dimen.x24),
       Text(

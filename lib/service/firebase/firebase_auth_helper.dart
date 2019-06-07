@@ -27,30 +27,47 @@ class FirebaseAuthHelper implements AuthApi {
 
   @override
   Future<bool> googleLogin(String accessToken, String idToken) async {
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: accessToken,
-      idToken: idToken,
-    );
+    try {
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: accessToken,
+        idToken: idToken,
+      );
 
-    final FirebaseUser user =
-        await _firebaseAuth.signInWithCredential(credential);
-
-    debugLog(FirebaseAuthHelper).info("signed in " + user.displayName);
-
-    return true;
+      final FirebaseUser user =
+          await _firebaseAuth.signInWithCredential(credential);
+      if (user == null) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      debugLog(FirebaseAuthHelper).info(error);
+      return false;
+    }
   }
 
+  /// nullable return type: User
   @override
-  Future<bool> googleLoginWrap() async {
+  Future<User> googleLoginWrap() async {
     try {
-      final account = await googleSignInScope.signIn();
-      final user = await account.authentication;
-      debugLog(FirebaseAuthHelper).info("login success");
-      return googleLogin(user.accessToken, user.idToken);
+      final user = await googleSignInScope.signIn();
+      final authData = await user.authentication;
+
+      final isSuccess =
+          await googleLogin(authData.accessToken, authData.idToken);
+
+      if (isSuccess) {
+        return User(
+          email: user.email,
+          fullName: user.displayName,
+        );
+      } else {
+        return null;
+      }
     } catch (error) {
       // sign-in failed due to any error
       debugLog(FirebaseAuthHelper).info(error);
-      return false;
+      return null;
     }
   }
 

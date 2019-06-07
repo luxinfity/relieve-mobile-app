@@ -117,7 +117,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
   }
 
   void onGenderClick() {
-    createRelieveBottomModal(context, <Widget>[
+    RelieveBottomModal.create(context, <Widget>[
       ThemedTitle(
         title: 'Pilih jenis kelamin',
       ),

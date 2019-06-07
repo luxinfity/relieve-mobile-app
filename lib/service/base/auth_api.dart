@@ -4,8 +4,7 @@ import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 
 abstract class AuthApi {
-  Future<bool> isUserExist(
-      UserCheckIdentifier checkIdentifier, String value);
+  Future<bool> isUserExist(UserCheckIdentifier checkIdentifier, String value);
 
   Future<bool> login(String username, String password);
 
@@ -14,7 +13,7 @@ abstract class AuthApi {
   @protected
   Future<bool> googleLogin(String accessToken, String idToken);
 
-  Future<bool> googleLoginWrap();
+  Future<User> googleLoginWrap();
 
   Future<TokenResponse> register(User user);
 }

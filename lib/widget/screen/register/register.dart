@@ -85,7 +85,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
       onRegisterSuccess();
     } else {
-      createRelieveBottomModal(context, <Widget>[
+      RelieveBottomModal.create(context, <Widget>[
         Container(height: Dimen.x21),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),

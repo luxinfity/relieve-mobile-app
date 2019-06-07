@@ -18,7 +18,7 @@ class AddFamilyModal extends StatefulWidget {
   }
 
   static showModal(BuildContext context, VoidCallback onExitModal) {
-    createRelieveBottomModal(
+    RelieveBottomModal.create(
       context,
       <Widget>[
         AddFamilyModal(

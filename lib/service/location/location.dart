@@ -97,7 +97,7 @@ class LocationService {
     if (_isBottomSheetShowed) {
       return;
     }
-    createRelieveBottomModal(
+    RelieveBottomModal.create(
       context,
       <Widget>[
         Padding(

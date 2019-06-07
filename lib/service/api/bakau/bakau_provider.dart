@@ -69,9 +69,9 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<bool> googleLoginWrap() async {
-    final account = await googleSignInScope.signIn();
-    final user = await account.authentication;
+  Future<User> googleLoginWrap() async {
+    final user = await googleSignInScope.signIn();
+    final authData = await user.authentication;
     throw Exception('Bakau not implemented googleLoginWrap yet');
     // return googleLogin(user.accessToken, user.idToken);
   }

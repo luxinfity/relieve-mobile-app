@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_keychain/flutter_keychain.dart';
 
 // logout
@@ -9,9 +10,18 @@ void clearData() {
   setExpireIn(0);
 }
 
+Future<String> uid() async {
+  if (await isLogin()) {
+    final user = await FirebaseAuth.instance.currentUser();
+    return user.uid;
+  } else {
+    return null;
+  }
+}
+
 Future<bool> isLogin() async {
-  final username = await getUsername();
-  return username != null && username.isNotEmpty;
+  final user = await FirebaseAuth.instance.currentUser();
+  return user != null;
 }
 
 Future<bool> isGoogleLogin() async {

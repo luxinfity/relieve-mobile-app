@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
@@ -16,7 +18,7 @@ class BoardingHomeScreen extends StatelessWidget {
         MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
   }
 
-  void doGoogleLogin(BuildContext context, String email, String token) async {
+  void goToMainPage(BuildContext context) async {
 //    showLoadingDialog(context);
 
 //    final tokenResponse =
@@ -35,36 +37,44 @@ class BoardingHomeScreen extends StatelessWidget {
 //        (_) => false, // clean all back stack
 //      );
 //    } else {
-//      createRelieveBottomModal(context, <Widget>[
-//        Container(height: Dimen.x21),
-//        Padding(
-//          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
-//          child: Text(
-//            'Google login sedang tidak bisa digunakan, Gunakan metode login yang lain',
-//            style: CircularStdFont.book.getStyle(size: Dimen.x16),
-//          ),
-//        ),
-//      ]);
+
 //    }
   }
 
-  void googleButtonClicked(BuildContext context) async {
-    var isSuccess = await FirebaseAuthHelper.instance.googleLoginWrap();
+  void goToRegisterPage(BuildContext context, User user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (builder) => RegisterScreen(
+              progressCount: 2,
+              initialData: User(email: user.email, fullName: user.fullName),
+            ),
+      ),
+    );
+  }
 
-    if (isSuccess) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (builder) => RegisterScreen(
-                progressCount: 2,
-//                initialData: User(
-//                    username: user.email,
-//                    email: user.email,
-//                    password: user.id),
-              ),
+  /// if (username exist) go to home page
+  /// else if (email exist) go to register
+  /// else login failed
+  void googleButtonClicked(BuildContext context) async {
+    var user = await FirebaseAuthHelper.instance.googleLoginWrap();
+
+    if (user != null && user.username != null) {
+      goToMainPage(context);
+    } else if (user != null && user.email != null) {
+      goToRegisterPage(context, user);
+    } else {
+      RelieveBottomModal.create(context, <Widget>[
+        Container(height: Dimen.x21),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+          child: Text(
+            'Google login sedang tidak bisa digunakan, Silahkan gunakan metode lain',
+            style: CircularStdFont.book.getStyle(size: Dimen.x16),
+          ),
         ),
-      );
-    } else {}
+      ]);
+    }
 
 //      final account = await googleSignInScope.signIn();
 //      if (account.email.isNotEmpty) {
