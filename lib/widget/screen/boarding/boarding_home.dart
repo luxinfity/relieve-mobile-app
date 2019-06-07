@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
@@ -78,7 +79,7 @@ class BoardingHomeScreen extends StatelessWidget {
 //        }
 //      }
     } catch (error) {
-      print(error);
+      printIfDebug(error);
     }
   }
 

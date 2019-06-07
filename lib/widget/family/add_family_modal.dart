@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 
@@ -46,7 +47,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
   bool setFriendUsername(UserCheckResponse checkResponse) {
     if (checkResponse?.status == REQUEST_SUCCESS &&
         checkResponse?.content?.isExsist == true) {
-      print(checkResponse?.content?.value);
+      printIfDebug(checkResponse?.content?.value);
       friendUsername = checkResponse?.content?.value;
       return true;
     }
@@ -60,7 +61,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
 
     var found = setFriendUsername(checkResponse);
 
-    print(found);
+    printIfDebug(found);
     if (!found) {
       checkResponse = await Api.get()
           .setProvider(BakauProvider())

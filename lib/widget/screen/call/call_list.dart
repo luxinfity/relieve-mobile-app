@@ -5,6 +5,7 @@ import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/api/base.dart';
 import 'package:relieve_app/service/location/location.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
@@ -91,7 +92,7 @@ class CallListScreenState extends State {
         title: 'Tambah Lainnya',
         isTintBlue: true,
         onClick: () {
-          print('click');
+          printIfDebug('click');
         },
       ),
     );

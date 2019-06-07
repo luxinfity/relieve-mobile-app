@@ -37,7 +37,7 @@ class FirebaseAuthHelper implements AuthApi {
 
     final FirebaseUser user =
         await _firebaseAuth.signInWithCredential(credential);
-    print("signed in " + user.displayName);
+    printIfDebug("signed in " + user.displayName);
 
     return null;
   }

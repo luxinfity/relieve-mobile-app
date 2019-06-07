@@ -29,6 +29,6 @@ void debounce(VoidCallback callback,
 
 void printIfDebug(Object object) {
   if (!Env.isProd()) {
-    print(object);
+    printIfDebug(object);
   }
 }
