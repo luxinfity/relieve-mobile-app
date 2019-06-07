@@ -21,35 +21,36 @@ class BoardingHomeScreen extends StatelessWidget {
   }
 
   void doGoogleLogin(BuildContext context, String email, String token) async {
-    showLoadingDialog(context);
+    var token = await FirebaseAuthHelper().googleLoginWrap();
+//    showLoadingDialog(context);
 
-    final tokenResponse =
-        await Api.get().setProvider(BakauProvider()).login(email, token);
-
-    dismissLoadingDialog(context);
-
-    if (tokenResponse?.status == REQUEST_SUCCESS) {
-      pref.setToken(tokenResponse.content.token);
-      pref.setRefreshToken(tokenResponse.content.refreshToken);
-      pref.setExpireIn(tokenResponse.content.expiresIn);
-      pref.setUsername(email);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
-        (_) => false, // clean all back stack
-      );
-    } else {
-      createRelieveBottomModal(context, <Widget>[
-        Container(height: Dimen.x21),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
-          child: Text(
-            'Google login sedang tidak bisa digunakan, Gunakan metode login yang lain',
-            style: CircularStdFont.book.getStyle(size: Dimen.x16),
-          ),
-        ),
-      ]);
-    }
+//    final tokenResponse =
+//        await Api.get().setProvider(BakauProvider()).login(email, token);
+//
+//    dismissLoadingDialog(context);
+//
+//    if (tokenResponse?.status == REQUEST_SUCCESS) {
+//      pref.setToken(tokenResponse.content.token);
+//      pref.setRefreshToken(tokenResponse.content.refreshToken);
+//      pref.setExpireIn(tokenResponse.content.expiresIn);
+//      pref.setUsername(email);
+//      Navigator.pushAndRemoveUntil(
+//        context,
+//        MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+//        (_) => false, // clean all back stack
+//      );
+//    } else {
+//      createRelieveBottomModal(context, <Widget>[
+//        Container(height: Dimen.x21),
+//        Padding(
+//          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+//          child: Text(
+//            'Google login sedang tidak bisa digunakan, Gunakan metode login yang lain',
+//            style: CircularStdFont.book.getStyle(size: Dimen.x16),
+//          ),
+//        ),
+//      ]);
+//    }
   }
 
   void googleButtonClicked(BuildContext context) async {

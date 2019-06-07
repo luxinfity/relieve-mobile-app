@@ -15,8 +15,9 @@ Future<bool> isLogin() async {
 }
 
 Future<bool> isGoogleLogin() async {
-  final googleId = await getGoogleId();
-  return googleId != null && googleId.isNotEmpty;
+  return false;
+//  final googleId = await getGoogleId();
+//  return googleId != null && googleId.isNotEmpty;
 }
 
 // Google Sign In
