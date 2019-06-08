@@ -86,6 +86,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
+    // TODO: check whether fields already filled
     final isSuccess = await FirebaseAuthHelper.instance.register(user);
 
     RelieveLoadingDialog.dismiss(context);

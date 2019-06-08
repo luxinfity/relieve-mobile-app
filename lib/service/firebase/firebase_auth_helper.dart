@@ -94,18 +94,27 @@ class FirebaseAuthHelper implements AuthApi {
   /// else return null (user might already been registered before).
   @override
   Future<bool> register(User user) async {
-    String uid = await PreferenceUtils.uid();
     bool isExist = await isUserExist(UserCheckIdentifier.email, user.email);
+    String uid = await PreferenceUtils.uid();
 
     if (isExist) {
       // if user exist, don't register new user
       return false;
     } else if (uid != null) {
-      // if login with google. uid is not null
-      // drop password, so can not be seen on DB
-      user = user.copyWith(password: '');
+      // if uid is not null, user already login with google.
+      if (user.email == null || user.email.isEmpty)
+        throw ArgumentError(
+            'some user data is empty, recheck before calling register');
+
       await FirestoreHelper.instance.storeUser(uid, user);
     } else {
+      if (user.email == null ||
+          user.email.isEmpty ||
+          user.password == null ||
+          user.password.isEmpty)
+        throw ArgumentError(
+            'some user data is empty, recheck before calling register');
+
       FirebaseUser firebaseUser =
           await _firebaseAuth.createUserWithEmailAndPassword(
               email: user.email, password: user.password);
