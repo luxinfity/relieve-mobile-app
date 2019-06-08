@@ -5,7 +5,6 @@ import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/weather.dart';
 import 'package:relieve_app/service/api/kalomang/kalomang_api.dart';
 import 'package:relieve_app/service/api/provider.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
 
 class KalomangProvider extends Provider implements KalomangApi {
   @override
@@ -17,7 +16,7 @@ class KalomangProvider extends Provider implements KalomangApi {
 
     var uri = '$completeUri/weather/$lat,$lang';
     final headers = {
-      'authorization': await PreferenceUtils.getToken(),
+//      'authorization': await PreferenceUtils.getToken(),
       'secret': secret,
     };
 
@@ -32,7 +31,7 @@ class KalomangProvider extends Provider implements KalomangApi {
 
     var uri = '$completeUri/earthquake?page=$page&limit=$limit';
     final headers = {
-      'authorization': await PreferenceUtils.getToken(),
+//      'authorization': await PreferenceUtils.getToken(),
       'secret': secret,
     };
 

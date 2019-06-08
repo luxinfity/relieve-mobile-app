@@ -77,9 +77,9 @@ class RegisterScreenState extends State<RegisterScreen> {
     RelieveLoadingDialog.dismiss(context);
 
     if (tokenResponse?.status == REQUEST_SUCCESS) {
-      PreferenceUtils.setToken(tokenResponse.content.token);
-      PreferenceUtils.setRefreshToken(tokenResponse.content.refreshToken);
-      PreferenceUtils.setExpireIn(tokenResponse.content.expiresIn);
+//      PreferenceUtils.setToken(tokenResponse.content.token);
+//      PreferenceUtils.setRefreshToken(tokenResponse.content.refreshToken);
+//      PreferenceUtils.setExpireIn(tokenResponse.content.expiresIn);
 
       onRegisterSuccess();
     } else {
@@ -129,9 +129,13 @@ class RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  /// pick back press flow
+  /// if user register using google let user back until screen 2
+  /// else let user back until screen 1
   void onBackButtonClick(context) async {
-    String googleId = await PreferenceUtils.getGoogleId();
-    int limit = googleId.isEmpty ? 1 : 2;
+    bool isGoogleLogin = await PreferenceUtils.isGoogleLogin();
+
+    int limit = isGoogleLogin ? 2 : 1;
 
     if (progressCount > limit) {
       setState(() {
