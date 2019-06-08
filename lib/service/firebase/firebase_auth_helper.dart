@@ -20,13 +20,13 @@ class FirebaseAuthHelper implements AuthApi {
 
   @override
   Future<bool> login(String username, String password) async {
-    final user = await FirestoreHelper.instance
+    final completeProfile = await FirestoreHelper.instance
         .findUserBy(UserCheckIdentifier.username, username);
 
-    if (user == null) return false;
+    if (completeProfile == null) return false;
 
     FirebaseUser firebaseUser = await _firebaseAuth.signInWithEmailAndPassword(
-        email: user.email, password: password);
+        email: completeProfile.email, password: password);
 
     return firebaseUser != null;
   }
