@@ -4,16 +4,29 @@ import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_home.dart';
 import 'package:relieve_app/widget/screen/dashboard/dashboard.dart';
 
-class LandingScreen extends StatelessWidget {
-  void checkLogin(BuildContext context) async {
-    final isLogin = await PreferenceUtils.isLogin();
-    if (isLogin) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (builder) => DashboardScreen(),
-        ),
-      );
+/// Decision page, select main page base on login condition
+class HomeDecider extends StatelessWidget {
+  void goToLoggedInHomeScreen(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (builder) => DashboardScreen(),
+      ),
+    );
+  }
+
+  void goToLoggedOutHomeScreen(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (builder) => BoardingHomeScreen(),
+      ),
+    );
+  }
+
+  void pickHomeScreenBasedOn(BuildContext context) async {
+    if (await PreferenceUtils.isLogin()) {
+      goToLoggedInHomeScreen(context);
     } else {
       // not login but has google ID,
       // may be user has trying to register before, but not complete
@@ -21,18 +34,13 @@ class LandingScreen extends StatelessWidget {
       if (await PreferenceUtils.isGoogleLogin()) {
         FirebaseAuthHelper.instance.logout();
       }
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (builder) => BoardingHomeScreen(),
-        ),
-      );
+      goToLoggedOutHomeScreen(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    checkLogin(context);
+    pickHomeScreenBasedOn(context);
 
     return Container(
       alignment: Alignment.center,
