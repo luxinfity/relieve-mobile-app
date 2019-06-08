@@ -140,11 +140,8 @@ class RegisterScreenState extends State<RegisterScreen> {
     } else {
       defaultBackPressed(context);
 
-      // remove google data
-      if (googleId.isNotEmpty) {
-        // googleSignInScope.signOut();
-        PreferenceUtils.clearData();
-      }
+      // clear google credential
+      FirebaseAuthHelper.instance.logout();
     }
   }
 

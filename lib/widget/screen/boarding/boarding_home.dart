@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
@@ -44,6 +45,8 @@ class BoardingHomeScreen extends StatelessWidget {
     RelieveLoadingDialog.dismiss(context);
 
     if (user != null && user.username != null) {
+      // login success
+      PreferenceUtils.setUsername(user.username);
       goToMainPage(context);
     } else if (user != null && user.email.isNotEmpty) {
       goToRegisterPage(context, user);

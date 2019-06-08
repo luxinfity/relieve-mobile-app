@@ -22,8 +22,8 @@ abstract class PreferenceUtils {
   }
 
   static Future<bool> isLogin() async {
-    final user = await FirebaseAuth.instance.currentUser();
-    return user != null;
+    final username = await getUsername();
+    return username.isNotEmpty;
   }
 
   static Future<bool> isGoogleLogin() async {

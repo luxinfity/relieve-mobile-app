@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_home.dart';
 import 'package:relieve_app/widget/screen/dashboard/dashboard.dart';
@@ -14,9 +15,11 @@ class LandingScreen extends StatelessWidget {
         ),
       );
     } else {
-      // not login but has google ID
+      // not login but has google ID,
+      // may be user has trying to register before, but not complete
+      // so sign out user
       if (await PreferenceUtils.isGoogleLogin()) {
-//        googleSignInScope.signOut();
+        FirebaseAuthHelper.instance.logout();
       }
       Navigator.pushReplacement(
         context,

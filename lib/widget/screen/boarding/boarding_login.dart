@@ -26,7 +26,8 @@ class BoardingLoginScreenState extends State {
   var isWrongCredential = false;
   var passwordVisible = false;
 
-  void onLoginSuccess() {
+  void onLoginSuccess(String username) {
+    PreferenceUtils.setUsername(username);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -51,8 +52,7 @@ class BoardingLoginScreenState extends State {
       RelieveLoadingDialog.dismiss(context);
 
       if (isSuccess) {
-        PreferenceUtils.setUsername(usernameController.text);
-        onLoginSuccess();
+        onLoginSuccess(usernameController.text);
       } else {
         RelieveSnackBar.show(context, 'Ups! Username atau password salah',
             buttonText: 'Mengerti');

@@ -78,11 +78,17 @@ class FirebaseAuthHelper implements AuthApi {
 
   @override
   Future<bool> logout() async {
+    // handle google credential
     if (await PreferenceUtils.isGoogleLogin()) {
-      googleSignInScope.signOut();
+      await googleSignInScope.signOut();
     }
 
-    return null;
+    await _firebaseAuth.signOut();
+
+    // delete pref username
+    PreferenceUtils.clearData();
+
+    return true;
   }
 
   @override

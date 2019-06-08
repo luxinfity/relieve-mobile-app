@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
+import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_home.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/profile_board.dart';
 import 'package:relieve_app/widget/screen/setting/notification.dart';
@@ -9,11 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DashboardProfileScreen extends StatelessWidget {
   void onLogout(BuildContext context) async {
-    if (await PreferenceUtils.isGoogleLogin()) {
-//      await googleSignInScope.signOut();
-    }
+    FirebaseAuthHelper.instance.logout();
 
-    PreferenceUtils.clearData();
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => BoardingHomeScreen()),
