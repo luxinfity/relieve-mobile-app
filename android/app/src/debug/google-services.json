@@ -13,9 +13,18 @@
             }
         },
         "oauth_client": [{
-            "client_id": "380354838173-qdk2ga629866rq5489p3fdk55s39qfvi.apps.googleusercontent.com",
-            "client_type": 3
-        }],
+                "client_id": "380354838173-c8t4k5f9e2nvpsk640e1pvpr209ddiuc.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.relieve.android.debug",
+                    "certificate_hash": "bfbfb8e4d008c20e188ec74c1c4687bcd20217d3"
+                }
+            },
+            {
+                "client_id": "380354838173-qdk2ga629866rq5489p3fdk55s39qfvi.apps.googleusercontent.com",
+                "client_type": 3
+            }
+        ],
         "api_key": [{
             "current_key": "ANDROID_API_KEY"
         }],
