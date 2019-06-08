@@ -25,10 +25,7 @@ class RemoteEnv {
 
   static bool isTargetingProd() {
     RemoteEnv env = RemoteEnv.get();
-    if (env == null || env == RemoteEnv.PRODUCTION)
-      return true;
-    else
-      return false;
+    return (env == null || env == RemoteEnv.PRODUCTION);
   }
 
   static Future<RemoteEnv> loadEnv() async {

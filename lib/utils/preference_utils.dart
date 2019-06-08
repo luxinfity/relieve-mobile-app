@@ -40,8 +40,7 @@ abstract class PreferenceUtils {
 
   // Google Sign In
   static Future<String> getGoogleId() async {
-    String data = await FlutterKeychain.get(key: 'googleId');
-    if (data == null) data = '';
+    String data = (await FlutterKeychain.get(key: 'googleId')) ?? '';
     return data;
   }
 
@@ -51,8 +50,7 @@ abstract class PreferenceUtils {
 
   // Username
   static Future<String> getUsername() async {
-    String data = await FlutterKeychain.get(key: 'username');
-    if (data == null) data = '';
+    String data = (await FlutterKeychain.get(key: 'username')) ?? '';
     return data;
   }
 
@@ -60,10 +58,9 @@ abstract class PreferenceUtils {
     return await FlutterKeychain.put(key: 'username', value: username);
   }
 
-  // TOKEN
+  // token
   static Future<String> getToken() async {
-    String data = await FlutterKeychain.get(key: 'token');
-    if (data == null) data = '';
+    String data = (await FlutterKeychain.get(key: 'token')) ?? '';
     return data;
   }
 
@@ -73,8 +70,7 @@ abstract class PreferenceUtils {
 
   // refresh token
   static Future<String> getRefreshToken() async {
-    String data = await FlutterKeychain.get(key: 'refreshToken');
-    if (data == null) data = '';
+    String data = (await FlutterKeychain.get(key: 'refreshToken')) ?? '';
     return data;
   }
 
@@ -84,8 +80,7 @@ abstract class PreferenceUtils {
 
   // expire in
   static Future<int> getExpireIn() async {
-    String data = await FlutterKeychain.get(key: 'expireIn');
-    if (data == null) data = '0';
+    String data = (await FlutterKeychain.get(key: 'expireIn')) ?? '0';
     return int.parse(data);
   }
 

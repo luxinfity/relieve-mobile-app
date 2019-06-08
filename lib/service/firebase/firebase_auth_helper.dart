@@ -28,11 +28,7 @@ class FirebaseAuthHelper implements AuthApi {
     FirebaseUser firebaseUser = await _firebaseAuth.signInWithEmailAndPassword(
         email: user.email, password: password);
 
-    if (firebaseUser == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return firebaseUser != null;
   }
 
   @override
@@ -45,11 +41,8 @@ class FirebaseAuthHelper implements AuthApi {
 
       final FirebaseUser user =
           await _firebaseAuth.signInWithCredential(credential);
-      if (user == null) {
-        return false;
-      } else {
-        return true;
-      }
+
+      return user != null;
     } catch (error) {
       debugLog(FirebaseAuthHelper).info(error);
       return false;
@@ -74,11 +67,8 @@ class FirebaseAuthHelper implements AuthApi {
       final completeProfile = await FirestoreHelper.instance
           .findUserBy(UserCheckIdentifier.email, user.email);
 
-      if (completeProfile == null)
-        return User(email: user.email, fullName: user.displayName);
-
-      return FirestoreHelper.instance
-          .findUserBy(UserCheckIdentifier.email, user.email);
+      return completeProfile ??
+          User(email: user.email, fullName: user.displayName);
     } catch (error) {
       // sign-in failed due to any error
       debugLog(FirebaseAuthHelper).info(error);
