@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 
 abstract class CollectionPath {
   static const String USERS = "users";
@@ -12,38 +14,49 @@ class FirestoreHelper {
 
   Future<bool> isUserExist(
       UserCheckIdentifier checkIdentifier, String value) async {
-    String result = await findUserBy(checkIdentifier, value);
+    try {
+      User user = await findUserBy(checkIdentifier, value);
+      return user != null;
+    } catch (error) {
+      debugLog(FirestoreHelper).info(error);
 
-    return result != null && result.isNotEmpty;
+      // if query not allowed, return false
+      return false;
+    }
   }
 
   /// return email if found, and null if not found
-  Future<String> findUserBy(
+  Future<User> findUserBy(
       UserCheckIdentifier checkIdentifier, String value) async {
     if (value == null || value.isEmpty)
       throw ArgumentError('value must bot empty');
 
-    String email = "";
-    if (checkIdentifier == UserCheckIdentifier.username) {
-      final data = await _fireStore
-          .collection(CollectionPath.USERS)
-          .where("username", isEqualTo: value)
-          .snapshots()
-          .first;
+    User user; // is null
 
-      email = data?.documents?.first?.data["email"];
-    } else if (checkIdentifier == UserCheckIdentifier.email) {
-      final data = await _fireStore
-          .collection(CollectionPath.USERS)
-          .where("email", isEqualTo: value)
-          .snapshots()
-          .first;
+    try {
+      if (checkIdentifier == UserCheckIdentifier.username) {
+        final data = await _fireStore
+            .collection(CollectionPath.USERS)
+            .where("username", isEqualTo: value)
+            .snapshots()
+            .first;
 
-      email = data?.documents?.first?.data["email"];
-    } else {
-      throw StateError('unhandled checkIdentifier type');
+        user = User.fromQuerySnapshot(data);
+      } else if (checkIdentifier == UserCheckIdentifier.email) {
+        final data = await _fireStore
+            .collection(CollectionPath.USERS)
+            .where("email", isEqualTo: value)
+            .snapshots()
+            .first;
+
+        user = User.fromQuerySnapshot(data);
+      } else {
+        throw StateError('unhandled checkIdentifier type');
+      }
+    } catch (error) {
+      debugLog(FirestoreHelper).info(error);
     }
 
-    return email;
+    return user;
   }
 }

@@ -65,7 +65,7 @@ class Family {
       // TODO: handle non existent value
       return Family(
         id: parsedJson['id'],
-        fullName: parsedJson['fullname'],
+        fullName: parsedJson['fullName'],
         nickName: parsedJson['nick'],
         role: parsedJson['role'],
         phoneNumber: parsedJson['phoneNumber'],

@@ -45,7 +45,7 @@ class BoardingHomeScreen extends StatelessWidget {
 
     if (user != null && user.username != null) {
       goToMainPage(context);
-    } else if (user != null && user.email != null) {
+    } else if (user != null && user.email.isNotEmpty) {
       goToRegisterPage(context, user);
     } else {
       RelieveBottomModal.create(context, <Widget>[

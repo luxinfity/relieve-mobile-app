@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/base.dart';
 
@@ -42,7 +43,6 @@ class User {
   final String email;
   final List<Phone> phones;
   final String birthDate;
-  final bool isComplete;
   final String gender;
   final Address address;
 
@@ -53,7 +53,6 @@ class User {
     this.email,
     this.phones,
     this.birthDate,
-    this.isComplete,
     this.gender,
     this.address,
   });
@@ -62,9 +61,9 @@ class User {
     var data = {
       'username': username,
       'password': password,
-      'fullname': fullName,
+      'fullName': fullName,
       'email': email,
-      'birthdate': birthDate,
+      'birthDate': birthDate,
       'gender': gender,
       'address': address.toMap(),
     };
@@ -78,14 +77,29 @@ class User {
     return jsonEncode(data);
   }
 
+  factory User.fromQuerySnapshot(QuerySnapshot snapShot) {
+    try {
+      final rawData = snapShot?.documents?.first;
+
+      return User(
+        username: rawData.data['username'],
+        fullName: rawData.data['fullName'],
+        email: rawData.data['email'],
+        birthDate: rawData.data['birthDate'],
+        gender: rawData.data['gender'],
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return User(
         username: parsedJson['username'],
-        fullName: parsedJson['fullname'],
+        fullName: parsedJson['fullName'],
         email: parsedJson['email'],
-        birthDate: parsedJson['birthdate'],
-        isComplete: parsedJson['is_complete'],
+        birthDate: parsedJson['birthDate'],
         gender: parsedJson['gender'],
       );
     } catch (e) {

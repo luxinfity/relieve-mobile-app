@@ -62,7 +62,6 @@ class RegisterScreenState extends State<RegisterScreen> {
       fullName: _user.fullName,
       phones: _user.phones,
       birthDate: _user.birthDate,
-      isComplete: false,
       gender: _user.gender == 'Perempuan' ? 'f' : 'm',
       address: Address(
         uuid: '1',

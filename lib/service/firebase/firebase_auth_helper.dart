@@ -20,15 +20,15 @@ class FirebaseAuthHelper implements AuthApi {
 
   @override
   Future<bool> login(String username, String password) async {
-    final email = await FirestoreHelper.instance
+    final user = await FirestoreHelper.instance
         .findUserBy(UserCheckIdentifier.username, username);
 
-    if (email == null) return false;
+    if (user == null) return false;
 
-    FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+    FirebaseUser firebaseUser = await _firebaseAuth.signInWithEmailAndPassword(
+        email: user.email, password: password);
 
-    if (user == null) {
+    if (firebaseUser == null) {
       return false;
     } else {
       return true;
@@ -71,15 +71,14 @@ class FirebaseAuthHelper implements AuthApi {
 
       if (!isSuccess) return null;
 
-      final isCompleteRegister =
-          await isUserExist(UserCheckIdentifier.email, user.email);
+      final completeProfile = await FirestoreHelper.instance
+          .findUserBy(UserCheckIdentifier.email, user.email);
 
-      if (!isCompleteRegister) return null;
+      if (completeProfile == null)
+        return User(email: user.email, fullName: user.displayName);
 
-      return User(
-        email: user.email,
-        fullName: user.displayName,
-      );
+      return FirestoreHelper.instance
+          .findUserBy(UserCheckIdentifier.email, user.email);
     } catch (error) {
       // sign-in failed due to any error
       debugLog(FirebaseAuthHelper).info(error);
