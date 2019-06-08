@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_keychain/flutter_keychain.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 
 abstract class PreferenceUtils {
   // logout
@@ -26,9 +27,15 @@ abstract class PreferenceUtils {
   }
 
   static Future<bool> isGoogleLogin() async {
+    final user = await FirebaseAuth.instance.currentUser();
+    if (user == null) return false;
+
+    for (UserInfo info in user.providerData) {
+      debugLog(PreferenceUtils).info(info.providerId);
+      if (info.providerId == "google.com") return true;
+    }
+
     return false;
-    //  final googleId = await getGoogleId();
-    //  return googleId != null && googleId.isNotEmpty;
   }
 
   // Google Sign In
