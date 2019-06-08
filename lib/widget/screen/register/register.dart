@@ -43,7 +43,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   }
 
   /// redirect user to logged in screen
-  void onRegisterSuccess(String username) {
+  void onRegisterSuccess() {
     PreferenceUtils.setLogin(true);
     // auto login
     Navigator.pushAndRemoveUntil(
@@ -51,6 +51,19 @@ class RegisterScreenState extends State<RegisterScreen> {
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
       (_) => false, // clean all back stack
     );
+  }
+
+  void onRegisterFailed() {
+    RelieveBottomModal.create(context, <Widget>[
+      Container(height: Dimen.x21),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+        child: Text(
+          'Username atau Email telah terdaftar',
+          style: CircularStdFont.book.getStyle(size: Dimen.x16),
+        ),
+      ),
+    ]);
   }
 
   void doRegister(MapAddress mapAddress) async {
@@ -73,23 +86,14 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
-    final email = await FirebaseAuthHelper.instance.register(user);
+    final isSuccess = await FirebaseAuthHelper.instance.register(user);
 
     RelieveLoadingDialog.dismiss(context);
 
-    if (email != null) {
-      onRegisterSuccess(email);
+    if (isSuccess) {
+      onRegisterSuccess();
     } else {
-      RelieveBottomModal.create(context, <Widget>[
-        Container(height: Dimen.x21),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
-          child: Text(
-            'Username atau Email telah terdaftar',
-            style: CircularStdFont.book.getStyle(size: Dimen.x16),
-          ),
-        ),
-      ]);
+      onRegisterFailed();
     }
   }
 

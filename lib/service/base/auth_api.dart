@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:relieve_app/datamodel/token.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 
@@ -15,5 +14,5 @@ abstract class AuthApi {
 
   Future<User> googleLoginWrap();
 
-  Future<String> register(User user);
+  Future<bool> register(User user);
 }

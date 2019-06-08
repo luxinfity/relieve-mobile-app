@@ -106,6 +106,28 @@ class User {
       return null;
     }
   }
+
+  User copyWith({
+    String username,
+    String password,
+    String fullName,
+    String email,
+    List<Phone> phones,
+    String birthDate,
+    String gender,
+    Address address,
+  }) {
+    return User(
+      username: username ?? this.username,
+      password: password ?? this.password,
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phones: phones ?? this.phones,
+      birthDate: birthDate ?? this.birthDate,
+      gender: gender ?? this.gender,
+      address: address ?? this.address,
+    );
+  }
 }
 
 class UserResponse extends BaseResponse {

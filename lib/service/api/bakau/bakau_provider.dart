@@ -83,7 +83,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<String> register(User user) async {
+  Future<bool> register(User user) async {
     this.checkProvider();
 
     var url = '$completeUri/auth/register';

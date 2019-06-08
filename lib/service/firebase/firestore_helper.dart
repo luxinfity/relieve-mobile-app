@@ -25,6 +25,10 @@ class FirestoreHelper {
     }
   }
 
+  Future<bool> storeUser(String uid, User user) async {
+    return false;
+  }
+
   /// return email if found, and null if not found
   Future<User> findUserBy(
       UserCheckIdentifier checkIdentifier, String value) async {

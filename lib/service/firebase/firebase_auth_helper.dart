@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:relieve_app/datamodel/token.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/service/base/auth_api.dart';
@@ -91,13 +90,32 @@ class FirebaseAuthHelper implements AuthApi {
     return true;
   }
 
-  /// nullable return
-  ///
   /// if success will return email,
   /// else return null (user might already been registered before).
   @override
-  Future<String> register(User user) {
-    // TODO: implement register
-    return null;
+  Future<bool> register(User user) async {
+    String uid = await PreferenceUtils.uid();
+    bool isExist = await isUserExist(UserCheckIdentifier.email, user.email);
+
+    if (isExist) {
+      // if user exist, don't register new user
+      return false;
+    } else if (uid != null) {
+      // if login with google. uid is not null
+      // drop password, so can not be seen on DB
+      user = user.copyWith(password: '');
+      await FirestoreHelper.instance.storeUser(uid, user);
+    } else {
+      FirebaseUser firebaseUser =
+          await _firebaseAuth.createUserWithEmailAndPassword(
+              email: user.email, password: user.password);
+
+      uid = firebaseUser.uid;
+      // drop password, so not be seen on DB
+      user = user.copyWith(password: '');
+      await FirestoreHelper.instance.storeUser(uid, user);
+    }
+
+    return true;
   }
 }
