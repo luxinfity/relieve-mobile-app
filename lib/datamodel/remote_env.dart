@@ -1,4 +1,4 @@
-import 'package:flutter_keychain/flutter_keychain.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 
 const String PROTOCOL = 'https';
 const String DOMAIN = 'relieve.id';
@@ -29,17 +29,18 @@ class RemoteEnv {
   }
 
   static Future<RemoteEnv> loadEnv() async {
-    String envName = await FlutterKeychain.get(key: 'envName');
-    String protocol = await FlutterKeychain.get(key: 'protocol');
-    String domain = await FlutterKeychain.get(key: 'domain');
-    String port = await FlutterKeychain.get(key: 'port');
-    String secret = await FlutterKeychain.get(key: 'secret');
+    String envName = (await PreferenceUtils.storage.read(key: 'envName')) ?? '';
+    String protocol =
+        (await PreferenceUtils.storage.read(key: 'protocol')) ?? '';
+    String domain = (await PreferenceUtils.storage.read(key: 'domain')) ?? '';
+    String port = (await PreferenceUtils.storage.read(key: 'port')) ?? '';
+    String secret = (await PreferenceUtils.storage.read(key: 'secret')) ?? '';
 
-    if (envName == null ||
-        protocol == null ||
-        domain == null ||
-        port == null ||
-        secret == null) {
+    if (envName.isEmpty ||
+        protocol.isEmpty ||
+        domain.isEmpty ||
+        port.isEmpty ||
+        secret.isEmpty) {
       _singleton = RemoteEnv.PRODUCTION;
     } else {
       _singleton = RemoteEnv(envName, protocol, domain, port, secret);
@@ -48,11 +49,11 @@ class RemoteEnv {
   }
 
   static void storeEnv(RemoteEnv env) async {
-    await FlutterKeychain.put(key: 'envName', value: env.envName);
-    await FlutterKeychain.put(key: 'protocol', value: env.protocol);
-    await FlutterKeychain.put(key: 'domain', value: env.domain);
-    await FlutterKeychain.put(key: 'port', value: env.port);
-    await FlutterKeychain.put(key: 'secret', value: env.secret);
+    await PreferenceUtils.storage.write(key: 'envName', value: env.envName);
+    await PreferenceUtils.storage.write(key: 'protocol', value: env.protocol);
+    await PreferenceUtils.storage.write(key: 'domain', value: env.domain);
+    await PreferenceUtils.storage.write(key: 'port', value: env.port);
+    await PreferenceUtils.storage.write(key: 'secret', value: env.secret);
     _singleton = env;
   }
 

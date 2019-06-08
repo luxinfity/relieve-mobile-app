@@ -46,7 +46,7 @@ class BoardingHomeScreen extends StatelessWidget {
 
     if (user != null && user.username != null) {
       // login success
-      PreferenceUtils.setUsername(user.username);
+      PreferenceUtils.setLogin(true);
       goToMainPage(context);
     } else if (user != null && user.email.isNotEmpty) {
       goToRegisterPage(context, user);

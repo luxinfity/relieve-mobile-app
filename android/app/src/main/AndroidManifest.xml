@@ -25,6 +25,8 @@
         android:name="io.flutter.app.FlutterApplication"
         android:supportsRtl="false"
         android:label="Relieve ID"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:icon="@mipmap/ic_launcher">
         <!-- Default channel id for notification -->
@@ -45,6 +47,16 @@
             <meta-data
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.relieve.id/app” -->
+                <data android:scheme="https"
+                    android:host="www.relieveid"
+                    android:pathPrefix="/app" />
+                <!-- note that the leading "/" is required for pathPrefix-->
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

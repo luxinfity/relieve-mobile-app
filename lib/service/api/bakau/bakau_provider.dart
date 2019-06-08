@@ -83,7 +83,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<TokenResponse> register(User user) async {
+  Future<String> register(User user) async {
     this.checkProvider();
 
     var url = '$completeUri/auth/register';
@@ -96,7 +96,8 @@ class BakauProvider extends Provider implements BakauApi {
       body: user.toJson(),
     );
 
-    return TokenResponse.fromJson(jsonDecode(response.body));
+    throw Exception('Bakau not implemented register yet');
+//    return TokenResponse.fromJson(jsonDecode(response.body));
   }
 
   /// endregion

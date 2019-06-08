@@ -1,18 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_keychain/flutter_keychain.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 
 abstract class PreferenceUtils {
-  static const _USERNAME_KEY = "username";
+  static const _LOG_IN_KEY = "login_stat";
 
-  static const _KEYS = [_USERNAME_KEY];
+  static final storage = FlutterSecureStorage();
 
   /// Clear all pref on user phone.
   /// don't forget to call this method on logout action
   static void clearData() {
-    _KEYS.forEach((key) {
-      FlutterKeychain.put(key: key, value: null);
-    });
+    storage.deleteAll();
   }
 
   static Future<String> uid() async {
@@ -25,8 +23,12 @@ abstract class PreferenceUtils {
   }
 
   static Future<bool> isLogin() async {
-    final username = await getUsername();
-    return username.isNotEmpty;
+    String data = (await storage.read(key: _LOG_IN_KEY)) ?? '0';
+    return data == '1';
+  }
+
+  static void setLogin(bool status) async {
+    return await storage.write(key: _LOG_IN_KEY, value: status ? '1' : '0');
   }
 
   static Future<bool> isGoogleLogin() async {
@@ -39,15 +41,5 @@ abstract class PreferenceUtils {
     }
 
     return false;
-  }
-
-  // Username
-  static Future<String> getUsername() async {
-    String data = (await FlutterKeychain.get(key: _USERNAME_KEY)) ?? '';
-    return data;
-  }
-
-  static void setUsername(String username) async {
-    return await FlutterKeychain.put(key: _USERNAME_KEY, value: username);
   }
 }

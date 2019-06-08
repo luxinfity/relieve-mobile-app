@@ -27,7 +27,7 @@ class BoardingLoginScreenState extends State {
   var passwordVisible = false;
 
   void onLoginSuccess(String username) {
-    PreferenceUtils.setUsername(username);
+    PreferenceUtils.setLogin(true);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),

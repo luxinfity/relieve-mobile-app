@@ -15,5 +15,5 @@ abstract class AuthApi {
 
   Future<User> googleLoginWrap();
 
-  Future<TokenResponse> register(User user);
+  Future<String> register(User user);
 }

@@ -91,8 +91,12 @@ class FirebaseAuthHelper implements AuthApi {
     return true;
   }
 
+  /// nullable return
+  ///
+  /// if success will return email,
+  /// else return null (user might already been registered before).
   @override
-  Future<TokenResponse> register(User user) {
+  Future<String> register(User user) {
     // TODO: implement register
     return null;
   }

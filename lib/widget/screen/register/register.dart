@@ -42,9 +42,10 @@ class RegisterScreenState extends State<RegisterScreen> {
     progressCount = widget.progressCount;
   }
 
-  void onRegisterSuccess() {
+  /// redirect user to logged in screen
+  void onRegisterSuccess(String username) {
+    PreferenceUtils.setLogin(true);
     // auto login
-    PreferenceUtils.setUsername(_user.username);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -54,6 +55,7 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   void doRegister(MapAddress mapAddress) async {
     RelieveLoadingDialog.show(context);
+
     final location = mapAddress.coordinate.split(',');
     final user = User(
       username: _user.username,
@@ -71,17 +73,12 @@ class RegisterScreenState extends State<RegisterScreen> {
       ),
     );
 
-    final tokenResponse =
-        await Api.get().setProvider(BakauProvider()).register(user);
+    final email = await FirebaseAuthHelper.instance.register(user);
 
     RelieveLoadingDialog.dismiss(context);
 
-    if (tokenResponse?.status == REQUEST_SUCCESS) {
-//      PreferenceUtils.setToken(tokenResponse.content.token);
-//      PreferenceUtils.setRefreshToken(tokenResponse.content.refreshToken);
-//      PreferenceUtils.setExpireIn(tokenResponse.content.expiresIn);
-
-      onRegisterSuccess();
+    if (email != null) {
+      onRegisterSuccess(email);
     } else {
       RelieveBottomModal.create(context, <Widget>[
         Container(height: Dimen.x21),
