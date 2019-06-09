@@ -13,6 +13,14 @@
             }
         },
         "oauth_client": [{
+                "client_id": "380354838173-r2srl47i8mt77703b1ilc6bcekp7v9n9.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.relieve.android.debug",
+                    "certificate_hash": "8c560ef7ad8351b45a52c088c2d863909d482302"
+                }
+            },
+            {
                 "client_id": "380354838173-c8t4k5f9e2nvpsk640e1pvpr209ddiuc.apps.googleusercontent.com",
                 "client_type": 1,
                 "android_info": {
