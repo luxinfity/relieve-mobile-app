@@ -14,7 +14,7 @@ abstract class PreferenceUtils {
   }
 
   static Future<String> uid() async {
-    if (await isLogin()) {
+    if (await isLogin() || await isGoogleLogin()) {
       final user = await FirebaseAuth.instance.currentUser();
       return user.uid;
     } else {
