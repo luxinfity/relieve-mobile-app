@@ -5,6 +5,7 @@ import 'package:relieve_app/utils/common_utils.dart';
 
 abstract class CollectionPath {
   static const String USERS = "users";
+  static const String ADDRESSES = "address";
 }
 
 /// singleton
@@ -31,13 +32,24 @@ class FirestoreHelper {
     }
   }
 
+  /// save user as a document,
+  /// but save address as a collection inside user document
+  /// to optimize query
   Future<bool> storeUser(String uid, User user) async {
-    Map userMap = user.toMap();
     try {
       await _fireStore
           .collection(CollectionPath.USERS)
           .document(uid)
-          .setData(userMap);
+          .setData(user.toMap());
+
+      final addresses = user.addressesToListMap();
+      for (Map address in addresses) {
+        await _fireStore
+            .collection(CollectionPath.USERS)
+            .document(uid)
+            .collection(CollectionPath.ADDRESSES)
+            .add(address);
+      }
 
       return true;
     } catch (error) {

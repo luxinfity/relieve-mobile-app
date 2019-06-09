@@ -42,7 +42,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
 
   void onSaveClick() {
     setState(() {
-      isUsernameValid = _usernameController.text.length >= 4;
+      isUsernameValid = _usernameController.text.length >= 4 && !_usernameController.text.trim().contains(" ");
       isEmailValid = EmailValidator.validate(_emailController.text);
       isPasswordValid = _passwordController.text.length >= 5;
       isPasswordMatch =

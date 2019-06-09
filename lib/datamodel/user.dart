@@ -13,7 +13,7 @@ class User {
   final String phone;
   final String birthDate;
   final Gender gender;
-  final Address address;
+  final List<Address> addresses;
 
   const User({
     this.username,
@@ -23,11 +23,14 @@ class User {
     this.phone,
     this.birthDate,
     this.gender,
-    this.address,
+    this.addresses,
   });
 
-  Map toMap() {
-    return {
+  /// addresses will be dropped by default
+  /// get address map from `addressesToMap()`
+  /// or set param: withAddress to `true`
+  Map<String, dynamic> toMap({bool withAddress = false}) {
+    Map data = {
       'username': username,
       'password': password,
       'fullName': fullName,
@@ -35,8 +38,17 @@ class User {
       'phone': phone,
       'birthDate': birthDate,
       'gender': gender.label,
-      'address': address.toMap(),
     };
+    if (withAddress) {
+      data.addAll(addressesToListMap().asMap());
+    }
+
+    return data;
+  }
+
+  /// list of addresses in Map`
+  List<Map<String, dynamic>> addressesToListMap() {
+    return addresses.map((address) => address.toMap());
   }
 
   String toJson() {
@@ -83,7 +95,7 @@ class User {
     String phone,
     String birthDate,
     Gender gender,
-    Address address,
+    List<Address> addresses,
   }) {
     return User(
       username: username ?? this.username,
@@ -93,7 +105,7 @@ class User {
       phone: phone ?? this.phone,
       birthDate: birthDate ?? this.birthDate,
       gender: gender ?? this.gender,
-      address: address ?? this.address,
+      addresses: addresses ?? this.addresses,
     );
   }
 }

@@ -24,7 +24,7 @@ class AddressDetail {
     this.zipCode,
   });
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'country': country,
       'zip_code': zipCode,
@@ -78,9 +78,9 @@ class Address {
     @required this.coordinate,
   });
 
-  Map toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'uuid': uuid,
+      'uuid': uuid ?? '',
       'label': label,
       'street': street,
       'coordinates': coordinate.toString()
