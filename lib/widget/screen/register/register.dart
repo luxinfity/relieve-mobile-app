@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
+import 'package:relieve_app/widget/common/loading_dialog.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/screen/register/register_form_account.dart';
 import 'package:relieve_app/widget/screen/register/register_form_address.dart';
 import 'package:relieve_app/widget/screen/register/register_form_profile.dart';
 import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
-import 'package:relieve_app/service/model/address.dart';
-import 'package:relieve_app/service/model/location.dart';
-import 'package:relieve_app/service/model/user.dart';
-import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/common_utils.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
-import 'package:relieve_app/widget/common/bottom_modal.dart';
-import 'package:relieve_app/widget/common/loading_dialog.dart';
-import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
-  final Account initialData;
+  final User initialData;
 
-  RegisterScreen({this.progressCount = 1, this.initialData});
+  RegisterScreen({this.progressCount = 1, this.initialData = const User()});
 
   @override
   State<StatefulWidget> createState() {
@@ -33,20 +29,19 @@ class RegisterScreenState extends State<RegisterScreen> {
   int progressCount = 1;
   int progressTotal = 3;
 
-  Account _account;
-  Profile _profile;
-  MapAddress _mapAddress;
+  User _user;
 
   @override
   void initState() {
     super.initState();
-    _account = widget.initialData;
+    _user = widget.initialData;
     progressCount = widget.progressCount;
   }
 
+  /// redirect user to logged in screen
   void onRegisterSuccess() {
+    PreferenceUtils.setLogin(true);
     // auto login
-    pref.setUsername(_account.username);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -54,46 +49,34 @@ class RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void doRegister(MapAddress mapAddress) async {
-    showLoadingDialog(context);
-    final location = mapAddress.coordinate.split(',');
-    final user = User(
-      username: _account.username,
-      email: _account.email,
-      password: _account.password,
-      fullname: _profile.fullName,
-      phones: <Phone>[Phone('+62${_profile.phoneNum}', 1)],
-      birthdate: _profile.dob,
-      isComplete: false,
-      gender: _profile.gender == 'Perempuan' ? 'f' : 'm',
-      address: Address(
-        uuid: '1',
-        location:
-            Location(double.parse(location[0]), double.parse(location[1])),
-        name: '${mapAddress.name}|${mapAddress.address}',
+  void onRegisterFailed() {
+    RelieveBottomModal.create(context, <Widget>[
+      Container(height: Dimen.x21),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+        child: Text(
+          'Username atau Email telah terdaftar',
+          style: CircularStdFont.book.getStyle(size: Dimen.x16),
+        ),
       ),
-    );
+    ]);
+  }
 
-    final tokenResponse = await BakauApi(AppConfig.of(context)).register(user);
-    dismissLoadingDialog(context);
+  /// only call this method after checking all field
+  /// (param: completeUser) is correct
+  /// the field will be stored as is
+  void doRegister(User completeUser) async {
+    RelieveLoadingDialog.show(context);
 
-    if (tokenResponse?.status == REQUEST_SUCCESS) {
-      pref.setToken(tokenResponse.content.token);
-      pref.setRefreshToken(tokenResponse.content.refreshToken);
-      pref.setExpireIn(tokenResponse.content.expiresIn);
+    // final user will be stored as is
+    final isSuccess = await FirebaseAuthHelper.instance.register(completeUser);
 
+    RelieveLoadingDialog.dismiss(context);
+
+    if (isSuccess) {
       onRegisterSuccess();
     } else {
-      createRelieveBottomModal(context, <Widget>[
-        Container(height: Dimen.x21),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
-          child: Text(
-            'Username atau Email telah terdaftar',
-            style: CircularStdFont.book.getStyle(size: Dimen.x16),
-          ),
-        ),
-      ]);
+      onRegisterFailed();
     }
   }
 
@@ -101,38 +84,42 @@ class RegisterScreenState extends State<RegisterScreen> {
     switch (progressCount) {
       case 1:
         return RegisterFormAccount(
-          initialData: _account,
-          onNextClick: (account) {
+          initialData: _user,
+          onNextClick: (user) {
             setState(() {
-              _account = account;
+              _user = user;
               progressCount += 1;
             });
           },
         );
       case 2:
         return RegisterFormProfile(
-          initialData: _profile,
-          onNextClick: (profile) {
+          initialData: _user,
+          onNextClick: (user) {
             setState(() {
-              _profile = profile;
+              _user = user;
               progressCount += 1;
             });
           },
         );
       default:
         return RegisterFormAddress(
-          initialData: _mapAddress,
-          onNextClick: (mapAddress) {
-            _mapAddress = mapAddress;
-            doRegister(mapAddress);
+          initialData: _user,
+          onNextClick: (user) {
+            _user = user;
+            doRegister(_user);
           },
         );
     }
   }
 
+  /// pick back press flow
+  /// if user register using google let user back until screen 2
+  /// else let user back until screen 1
   void onBackButtonClick(context) async {
-    String googleId = await getGoogleId();
-    int limit = googleId.isEmpty ? 1 : 2;
+    bool isGoogleLogin = await PreferenceUtils.isGoogleLogin();
+
+    int limit = isGoogleLogin ? 2 : 1;
 
     if (progressCount > limit) {
       setState(() {
@@ -141,11 +128,8 @@ class RegisterScreenState extends State<RegisterScreen> {
     } else {
       defaultBackPressed(context);
 
-      // remove google data
-      if (googleId.isNotEmpty) {
-        googleSignInScope.signOut();
-        clearData();
-      }
+      // clear google credential
+      FirebaseAuthHelper.instance.logout();
     }
   }
 

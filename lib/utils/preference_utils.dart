@@ -1,75 +1,45 @@
-import 'package:flutter_keychain/flutter_keychain.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 
-// logout
-void clearData() {
-  setGoogleId('');
-  setUsername('');
-  setToken('');
-  setRefreshToken('');
-  setExpireIn(0);
-}
+abstract class PreferenceUtils {
+  static const _LOG_IN_KEY = "login_stat";
 
-Future<bool> isLogin() async {
-  final username = await getUsername();
-  return username != null && username.isNotEmpty;
-}
+  static final storage = FlutterSecureStorage();
 
-Future<bool> isGoogleLogin() async {
-  final googleId = await getGoogleId();
-  return googleId != null && googleId.isNotEmpty;
-}
+  /// Clear all pref on user phone.
+  /// don't forget to call this method on logout action
+  static void clearData() {
+    storage.deleteAll();
+  }
 
-// Google Sign In
-Future<String> getGoogleId() async {
-  String data = await FlutterKeychain.get(key: 'googleId');
-  if (data == null) data = '';
-  return data;
-}
+  static Future<String> uid() async {
+    if (await isLogin() || await isGoogleLogin()) {
+      final user = await FirebaseAuth.instance.currentUser();
+      return user.uid;
+    } else {
+      return null;
+    }
+  }
 
-void setGoogleId(String id) async {
-  return await FlutterKeychain.put(key: 'googleId', value: id);
-}
+  static Future<bool> isLogin() async {
+    String data = (await storage.read(key: _LOG_IN_KEY)) ?? '0';
+    return data == '1';
+  }
 
-// Username
-Future<String> getUsername() async {
-  String data = await FlutterKeychain.get(key: 'username');
-  if (data == null) data = '';
-  return data;
-}
+  static void setLogin(bool status) async {
+    return await storage.write(key: _LOG_IN_KEY, value: status ? '1' : '0');
+  }
 
-void setUsername(String username) async {
-  return await FlutterKeychain.put(key: 'username', value: username);
-}
+  static Future<bool> isGoogleLogin() async {
+    final user = await FirebaseAuth.instance.currentUser();
+    if (user == null) return false;
 
-// TOKEN
-Future<String> getToken() async {
-  String data = await FlutterKeychain.get(key: 'token');
-  if (data == null) data = '';
-  return data;
-}
+    for (UserInfo info in user.providerData) {
+      debugLog(PreferenceUtils).info(info.providerId);
+      if (info.providerId == "google.com") return true;
+    }
 
-void setToken(String token) async {
-  return await FlutterKeychain.put(key: 'token', value: token);
-}
-
-// refresh token
-Future<String> getRefreshToken() async {
-  String data = await FlutterKeychain.get(key: 'refreshToken');
-  if (data == null) data = '';
-  return data;
-}
-
-void setRefreshToken(String refreshToken) async {
-  return await FlutterKeychain.put(key: 'refreshToken', value: refreshToken);
-}
-
-// expire in
-Future<int> getExpireIn() async {
-  String data = await FlutterKeychain.get(key: 'expireIn');
-  if (data == null) data = '0';
-  return int.parse(data);
-}
-
-void setExpireIn(int expireIn) async {
-  return await FlutterKeychain.put(key: 'expireIn', value: expireIn.toString());
+    return false;
+  }
 }

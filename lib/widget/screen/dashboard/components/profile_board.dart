@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
-import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/datamodel/family.dart';
+import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/api/base.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/service/source/api/base.dart';
-import 'package:relieve_app/service/model/family.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
 
 class ProfileBoard extends StatefulWidget {
@@ -16,10 +15,10 @@ class ProfileBoard extends StatefulWidget {
 
 class ProfileBoardState extends State {
   String locationName;
-  User user = User(fullname: '');
+  User user = User(fullName: '');
 
   void loadUser() async {
-    final userResponse = await BakauApi(AppConfig.of(context)).getUser();
+    final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
     if (userResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         user = userResponse.content;
@@ -30,10 +29,10 @@ class ProfileBoardState extends State {
   void loadPositionName() async {
     var location = 'Kamu belum punya alamat';
     final addressResponse =
-        await BakauApi(AppConfig.of(context)).getUserAddress();
+        await Api.get().setProvider(BakauProvider()).getUserAddress();
     if (addressResponse?.status == REQUEST_SUCCESS &&
         addressResponse.content.length > 0) {
-      location = addressResponse.content[0].name;
+      location = addressResponse.content[0].label;
     }
     setState(() {
       locationName = location;
@@ -83,7 +82,7 @@ class ProfileBoardState extends State {
                   bottom: Dimen.x21,
                 ),
                 child: Text(
-                  ReCase(user.fullname).titleCase,
+                  ReCase(user.fullName).titleCase,
                   style: CircularStdFont.medium.getStyle(
                     size: Dimen.x21,
                     color: Colors.white,

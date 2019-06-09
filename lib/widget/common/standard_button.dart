@@ -50,7 +50,9 @@ class StandardButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(Dimen.x4),
         side: isHollow
             ? BorderSide.none
-            : BorderSide(color: isEnabled ? backgroundColor : Colors.transparent, width: 2),
+            : BorderSide(
+                color: isEnabled ? backgroundColor : Colors.transparent,
+                width: 2),
       ),
       onPressed: isEnabled ? buttonClick : null,
     );

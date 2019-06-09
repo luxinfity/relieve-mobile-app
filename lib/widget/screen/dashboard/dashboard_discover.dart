@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/datamodel/disaster.dart';
+import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/disaster.dart';
-import 'package:relieve_app/service/model/location.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/widget/disaster/disaster_item.dart';
 import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/widget/disaster/disaster_item.dart';
 
 class DashboardDiscoverScreen extends StatefulWidget {
   @override
@@ -18,7 +17,7 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
 
   void loadDisaster() async {
     final disasterResponse =
-        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 5);
+        await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
     if (disasterResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         listDisaster = disasterResponse.content.data;
@@ -60,7 +59,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -91,7 +91,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -105,7 +106,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -118,7 +120,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -131,7 +134,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -144,7 +148,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -157,7 +162,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -170,7 +176,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -183,7 +190,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Location(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),

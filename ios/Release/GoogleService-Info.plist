@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>493846467133-0v4cgd0idb55m8ko988i9d6lt21b9oin.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.493846467133-0v4cgd0idb55m8ko988i9d6lt21b9oin</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>493846467133-ltthb3b00974lamqdo96of375m18vr49.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>IOS_API_KEY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>493846467133</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.relieve.ios</string>
+	<key>PROJECT_ID</key>
+	<string>relieve-production</string>
+	<key>STORAGE_BUCKET</key>
+	<string>relieve-production.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:493846467133:ios:18200ea699064c01</string>
+	<key>DATABASE_URL</key>
+	<string>https://relieve-production.firebaseio.com</string>
+</dict>
+</plist>

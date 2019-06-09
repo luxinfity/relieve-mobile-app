@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
+import 'package:relieve_app/datamodel/family.dart';
+import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/family.dart';
-import 'package:relieve_app/service/model/location.dart';
-import 'package:relieve_app/service/model/user.dart';
+import 'package:relieve_app/service/api/base.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/service/source/api/base.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/dashboard_title.dart';
 
@@ -52,10 +51,10 @@ class UserAppBarState extends State {
   IndonesiaPlace indonesiaPlace;
   bool isSafe = false;
 
-  User user = User(fullname: '');
+  User user = User(fullName: '');
 
   void loadUser() async {
-    final userResponse = await BakauApi(AppConfig.of(context)).getUser();
+    final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
     if (userResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         user = userResponse.content;
@@ -106,7 +105,7 @@ class UserAppBarState extends State {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Greeting(name: ReCase(user.fullname).titleCase),
+                Greeting(name: ReCase(user.fullName).titleCase),
                 Padding(
                   padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserLocation(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/datamodel/disaster.dart';
+import 'package:relieve_app/datamodel/map_data.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/disaster.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/map/static_map.dart';
@@ -72,7 +72,7 @@ class DiscoverItem extends StatelessWidget {
           fit: StackFit.expand,
           overflow: Overflow.clip,
           children: <Widget>[
-            _buildMap(context),
+            _buildMap(),
             _buildRedDot(),
             Container(color: Colors.transparent)
           ],
@@ -94,12 +94,12 @@ class DiscoverItem extends StatelessWidget {
     );
   }
 
-  Widget _buildMap(BuildContext context) {
-    return StaticMap(
+  Widget _buildMap() {
+    return StaticMap(MapData(
       disaster.coordinate,
       300,
       220,
-    ).toMapWidget(context);
+    ));
   }
 }
 
@@ -195,7 +195,7 @@ class DisasterItem extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            _buildMap(context),
+            _buildMap(),
             _buildRedDot(),
             disaster.isLive ? _buildLiveTag() : null,
             Container(color: Colors.transparent)
@@ -218,12 +218,12 @@ class DisasterItem extends StatelessWidget {
     );
   }
 
-  Widget _buildMap(BuildContext context) {
-    return StaticMap(
+  Widget _buildMap() {
+    return StaticMap(MapData(
       disaster.coordinate,
       width.toInt() + 1,
       144,
-    ).toMapWidget(context);
+    ));
   }
 
   Widget _buildLiveTag() {
@@ -269,7 +269,7 @@ class DisasterItemListState extends State {
 
   void loadDisaster() async {
     final disasterResponse =
-        await KalomangApi(AppConfig.of(context)).getDisasterList(1, 5);
+        await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
     if (disasterResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         listDisaster = disasterResponse.content.data;
@@ -307,7 +307,7 @@ class DisasterItemListState extends State {
   }
 
   void testSheet(BuildContext context) {
-    createRelieveBottomModal(context, <Widget>[
+    RelieveBottomModal.create(context, <Widget>[
       Container(height: 150, color: AppColor.colorEmptyRect),
       Container(height: Dimen.x24),
       Text(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/screen/call/call.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/dashboard_bottom_bar.dart';
 import 'package:relieve_app/widget/screen/dashboard/dashboard_chat.dart';
 import 'package:relieve_app/widget/screen/dashboard/dashboard_discover.dart';
 import 'package:relieve_app/widget/screen/dashboard/dashboard_home.dart';
 import 'package:relieve_app/widget/screen/dashboard/dashboard_profile.dart';
-import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key, this.title}) : super(key: key);
@@ -20,8 +20,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int currentIndex = 0;
 
   void _goToCall(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (builder) => CallScreen()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (builder) => CallScreen()));
   }
 
   @override

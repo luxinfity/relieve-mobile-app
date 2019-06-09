@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/datamodel/weather.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/weather.dart';
 import 'package:relieve_app/service/service.dart';
 
 enum WeatherType { Temparature, Rain, Wind, UV }
@@ -132,10 +131,11 @@ class WeatherItemListState extends State {
 
     final userLocation = await LocationService.getLastKnownLocation();
     if (userLocation != null) {
-      final response = await KalomangApi(AppConfig.of(context)).weatherCheck(
-        userLocation.latitude,
-        userLocation.longitude,
-      );
+      final response =
+          await Api.get().setProvider(KalomangProvider()).weatherCheck(
+                userLocation.latitude,
+                userLocation.longitude,
+              );
       setState(() {
         _weatherResponse = response;
       });

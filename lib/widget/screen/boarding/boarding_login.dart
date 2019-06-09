@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
-import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
-import 'package:relieve_app/widget/common/standard_button.dart';
-import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
-import 'package:relieve_app/widget/common/snackbar.dart';
+import 'package:relieve_app/widget/common/relieve_snackbar.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/common/title.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -27,7 +26,8 @@ class BoardingLoginScreenState extends State {
   var isWrongCredential = false;
   var passwordVisible = false;
 
-  void onLoginSuccess() {
+  void onLoginSuccess(String username) {
+    PreferenceUtils.setLogin(true);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -46,23 +46,15 @@ class BoardingLoginScreenState extends State {
         isWrongCredential = false;
       });
 
-      showLoadingDialog(context);
+      RelieveLoadingDialog.show(context);
+      final isSuccess = await FirebaseAuthHelper.instance
+          .login(usernameController.text, passwordController.text);
+      RelieveLoadingDialog.dismiss(context);
 
-      final tokenResponse = await BakauApi(AppConfig.of(context)).login(
-        usernameController.text,
-        passwordController.text,
-      );
-
-      dismissLoadingDialog(context);
-
-      if (tokenResponse?.status == REQUEST_SUCCESS) {
-        pref.setToken(tokenResponse.content.token);
-        pref.setRefreshToken(tokenResponse.content.refreshToken);
-        pref.setExpireIn(tokenResponse.content.expiresIn);
-        pref.setUsername(usernameController.text);
-        onLoginSuccess();
+      if (isSuccess) {
+        onLoginSuccess(usernameController.text);
       } else {
-        showSnackBar(context, 'Ups! Username atau password salah',
+        RelieveSnackBar.show(context, 'Ups! Username atau password salah',
             buttonText: 'Mengerti');
         setState(() {
           isWrongCredential = true;

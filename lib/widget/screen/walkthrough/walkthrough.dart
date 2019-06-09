@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_page_indicator/flutter_page_indicator.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/screen/dashboard/dashboard.dart';
-import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
+import 'package:relieve_app/widget/common/standard_button.dart';
+import 'package:relieve_app/widget/screen/dashboard/dashboard.dart';
 
 class WalkthroughScreen extends StatefulWidget {
   WalkthroughScreen({Key key}) : super(key: key);

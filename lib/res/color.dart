@@ -9,7 +9,7 @@ class HexColor extends Color {
     hexColor = hexColor.toUpperCase().replaceAll('#', '');
     transparency = transparency <= 1 ? transparency : 1;
     transparency = transparency >= 0 ? transparency : 0;
-    final hexTransparency = (transparency  * 255).toInt().toRadixString(16);
+    final hexTransparency = (transparency * 255).toInt().toRadixString(16);
 
     if (hexColor.length == 6) {
       hexColor = hexTransparency + hexColor;
@@ -18,6 +18,7 @@ class HexColor extends Color {
   }
 
   final String hexColor;
+
   HexColor(
     this.hexColor, {
     double transparency = 1.0, // 100% or FF

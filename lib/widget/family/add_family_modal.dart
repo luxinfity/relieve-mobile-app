@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 
@@ -18,7 +18,7 @@ class AddFamilyModal extends StatefulWidget {
   }
 
   static showModal(BuildContext context, VoidCallback onExitModal) {
-    createRelieveBottomModal(
+    RelieveBottomModal.create(
       context,
       <Widget>[
         AddFamilyModal(
@@ -47,7 +47,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
   bool setFriendUsername(UserCheckResponse checkResponse) {
     if (checkResponse?.status == REQUEST_SUCCESS &&
         checkResponse?.content?.isExsist == true) {
-      print(checkResponse?.content?.value);
+      debugLog(AddFamilyModalState).info(checkResponse?.content?.value);
       friendUsername = checkResponse?.content?.value;
       return true;
     }
@@ -55,18 +55,19 @@ class AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   void findUsername(String username) async {
-    var checkResponse = await BakauApi(AppConfig.of(context))
-        .checkUser(UserCheckIdentifier.username, username);
-
-    var found = setFriendUsername(checkResponse);
-
-    print(found);
-    if (!found) {
-      checkResponse = await BakauApi(AppConfig.of(context))
-          .checkUser(UserCheckIdentifier.email, username);
-      found = setFriendUsername(checkResponse);
-    }
-
+//    var checkResponse = await Api.get()
+//        .setProvider(BakauProvider())
+//        .isUserExist(UserCheckIdentifier.username, username);
+//
+//    var found = setFriendUsername(checkResponse);
+//
+//    debugLog(AddFamilyModalState).info(found);
+//    if (!found) {
+//      checkResponse = await Api.get()
+//          .setProvider(BakauProvider())
+//          .isUserExist(UserCheckIdentifier.email, username);
+//      found = setFriendUsername(checkResponse);
+//    }
 //    setState(() {
 //      friendSearchFound = found;
 //      if (found) {

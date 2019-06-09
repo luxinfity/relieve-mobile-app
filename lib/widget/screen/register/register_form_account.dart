@@ -1,22 +1,14 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
-class Account {
-  final String email;
-  final String username;
-  final String password;
-
-  Account(this.email, this.username, this.password);
-}
-
-typedef AccountFormCallback = void Function(Account account);
-
 class RegisterFormAccount extends StatefulWidget {
-  final AccountFormCallback onNextClick;
-  final Account initialData;
+  final VoidCallbackUser onNextClick;
+  final User initialData;
 
   const RegisterFormAccount({
     Key key,
@@ -50,17 +42,20 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
 
   void onSaveClick() {
     setState(() {
-      isUsernameValid = _usernameController.text.length >= 4;
+      isUsernameValid = _usernameController.text.length >= 4 && !_usernameController.text.trim().contains(" ");
       isEmailValid = EmailValidator.validate(_emailController.text);
       isPasswordValid = _passwordController.text.length >= 5;
       isPasswordMatch =
           _passwordController.text == _confirmPasswordController.text;
 
-      if (isEmailValid && isPasswordValid && isPasswordMatch) {
-        widget.onNextClick(Account(
-          _emailController.text.toLowerCase(),
-          _usernameController.text.toLowerCase(),
-          _passwordController.text,
+      if (isUsernameValid &&
+          isEmailValid &&
+          isPasswordValid &&
+          isPasswordMatch) {
+        widget.onNextClick(widget.initialData.copyWith(
+          email: _emailController.text.toLowerCase(),
+          username: _usernameController.text.toLowerCase(),
+          password: _passwordController.text,
         ));
       }
     });

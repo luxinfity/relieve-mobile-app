@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
+import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/address.dart';
 
 class AddressBar extends StatelessWidget {
   final List<Address> addressList;
@@ -10,7 +10,7 @@ class AddressBar extends StatelessWidget {
 
   String getCurrentAddress() {
     if (addressList.length > 0) {
-      return addressList[0].name;
+      return addressList[0].label;
     } else
       return '';
   }

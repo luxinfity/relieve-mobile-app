@@ -1,55 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/model/user_check.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
-import 'package:relieve_app/utils/preference_utils.dart' as pref;
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
 import 'package:relieve_app/widget/screen/register/register.dart';
-import 'package:relieve_app/widget/screen/register/register_form_account.dart';
 import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
 
 class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);
 
-  void loginButtonClicked(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
+  void goToMainPage(BuildContext context) async {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
+      (_) => false, // clean all back stack
+    );
   }
 
-  void doGoogleLogin(BuildContext context, String email, String token) async {
-    showLoadingDialog(context);
+  void goToRegisterPage(BuildContext context, User user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (builder) => RegisterScreen(
+              progressCount: 2,
+              initialData: User(email: user.email, fullName: user.fullName),
+            ),
+      ),
+    );
+  }
 
-    final tokenResponse =
-        await BakauApi(AppConfig.of(context)).login(email, token);
+  /// if (username exist) go to home page
+  /// else if (email exist) go to register
+  /// else login failed
+  void googleButtonClicked(BuildContext context) async {
+    RelieveLoadingDialog.show(context);
+    var user = await FirebaseAuthHelper.instance.googleLoginWrap();
+    RelieveLoadingDialog.dismiss(context);
 
-    dismissLoadingDialog(context);
-
-    if (tokenResponse?.status == REQUEST_SUCCESS) {
-      pref.setToken(tokenResponse.content.token);
-      pref.setRefreshToken(tokenResponse.content.refreshToken);
-      pref.setExpireIn(tokenResponse.content.expiresIn);
-      pref.setUsername(email);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
-        (_) => false, // clean all back stack
-      );
+    if (user != null && user.username != null) {
+      // login success
+      PreferenceUtils.setLogin(true);
+      goToMainPage(context);
+    } else if (user != null && user.email.isNotEmpty) {
+      goToRegisterPage(context, user);
     } else {
-      createRelieveBottomModal(context, <Widget>[
+      RelieveBottomModal.create(context, <Widget>[
         Container(height: Dimen.x21),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
           child: Text(
-            'Google login sedang tidak bisa digunakan, Gunakan metode login yang lain',
+            'Otentikasi Google tidak bisa digunakan, Silahkan gunakan metode lain',
             style: CircularStdFont.book.getStyle(size: Dimen.x16),
           ),
         ),
@@ -57,36 +64,9 @@ class BoardingHomeScreen extends StatelessWidget {
     }
   }
 
-  void googleButtonClicked(BuildContext context) async {
-    try {
-      final account = await googleSignInScope.signIn();
-      if (account.email.isNotEmpty) {
-        // final idToken = (await account.authentication).idToken;
-        setGoogleId(account.id);
-
-        // check, has user already registered before
-        final checkResponse = await BakauApi(AppConfig.of(context))
-            .checkUser(UserCheckIdentifier.email, account.email);
-
-        if (checkResponse?.status == REQUEST_SUCCESS &&
-            checkResponse?.content?.isExsist == true) {
-          doGoogleLogin(context, account.email, account.id);
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (builder) => RegisterScreen(
-                    progressCount: 2,
-                    initialData:
-                        Account(account.email, account.email, account.id),
-                  ),
-            ),
-          );
-        }
-      }
-    } catch (error) {
-      print(error);
-    }
+  void loginButtonClicked(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => BoardingLoginScreen()));
   }
 
   void registerButtonClicked(BuildContext context) {

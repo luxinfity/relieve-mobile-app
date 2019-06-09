@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:relieve_app/datamodel/gender.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:validators/validators.dart';
 
-class Profile {
-  final String fullName;
-  final String phoneNum;
-  final String dob;
-  final String gender;
-
-  Profile(this.fullName, this.phoneNum, this.dob, this.gender);
-}
-
-typedef ProfileFormCallback = void Function(Profile profile);
-
 class RegisterFormProfile extends StatefulWidget {
-  final ProfileFormCallback onNextClick;
-  final Profile initialData;
+  final VoidCallbackUser onNextClick;
+  final User initialData;
 
   const RegisterFormProfile({
     Key key,
@@ -52,9 +44,9 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
     super.initState();
     if (widget.initialData != null) {
       fullNameController.text = widget.initialData.fullName;
-      phoneController.text = widget.initialData.phoneNum;
-      dobController.text = widget.initialData.dob;
-      genderController.text = widget.initialData.gender;
+      phoneController.text = widget.initialData.phone;
+      dobController.text = widget.initialData.birthDate;
+      genderController.text = (widget.initialData.gender ?? "").toString();
     }
   }
 
@@ -65,11 +57,11 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           phoneController.text.replaceFirst('0', '').length >= 7;
 
       if (isFullNameValid && isPhoneValid) {
-        widget.onNextClick(Profile(
-          fullNameController.text.toLowerCase(),
-          phoneController.text.replaceFirst('0', ''),
-          dobController.text,
-          genderController.text,
+        widget.onNextClick(widget.initialData.copyWith(
+          fullName: fullNameController.text.toLowerCase(),
+          phone: phoneController.text.replaceFirst('0', ''),
+          birthDate: dobController.text,
+          gender: Gender.parseString(genderController.text),
         ));
       }
     });
@@ -97,34 +89,35 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
   void onDoBClick() {
     DatePicker.showDatePicker(
       context,
-      showTitleActions: true,
-      locale: 'i18n',
-      cancel: Text(
-        'Batal',
-        style: CircularStdFont.book.getStyle(
-          size: Dimen.x12,
-          color: AppColor.colorDanger,
+      locale: DateTimePickerLocale.en_us,
+      pickerTheme: DateTimePickerTheme(
+        showTitle: true,
+        cancel: Text(
+          'Batal',
+          style: CircularStdFont.book.getStyle(
+            size: Dimen.x12,
+            color: AppColor.colorDanger,
+          ),
+        ),
+        confirm: Text(
+          'Pilih',
+          style: CircularStdFont.book.getStyle(
+            size: Dimen.x12,
+            color: AppColor.colorPrimary,
+          ),
         ),
       ),
-      confirm: Text(
-        'Pilih',
-        style: CircularStdFont.book.getStyle(
-          size: Dimen.x12,
-          color: AppColor.colorPrimary,
-        ),
-      ),
-      dateFormat: 'yyyy-mm-dd',
-      onConfirm: (year, month, date) {
-        final monthStr = month.toString().padLeft(2, '0');
-        final dateStr = date.toString().padLeft(2, '0');
-        dobController.text = '$year-$monthStr-$dateStr';
+      onConfirm: (dateTime, selectedIndex) {
+        final monthStr = dateTime.month.toString().padLeft(2, '0');
+        final dateStr = dateTime.day.toString().padLeft(2, '0');
+        dobController.text = '${dateTime.year.toString()}-$monthStr-$dateStr';
         setState(() {});
       },
     );
   }
 
   void onGenderClick() {
-    createRelieveBottomModal(context, <Widget>[
+    RelieveBottomModal.create(context, <Widget>[
       ThemedTitle(
         title: 'Pilih jenis kelamin',
       ),
@@ -136,12 +129,12 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
               side: BorderSide(color: AppColor.colorPrimary)),
           padding: EdgeInsets.symmetric(vertical: Dimen.x16),
           child: Text(
-            'Perempuan',
+            Gender.female.toString(),
             style: CircularStdFont.medium
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
           onPressed: () {
-            genderController.text = 'Perempuan';
+            genderController.text = Gender.female.toString();
             Navigator.pop(context);
             setState(() {});
           },
@@ -156,12 +149,12 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
               side: BorderSide(color: AppColor.colorPrimary)),
           padding: EdgeInsets.symmetric(vertical: Dimen.x16),
           child: Text(
-            'Laki - Laki',
+            Gender.male.toString(),
             style: CircularStdFont.medium
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
           onPressed: () {
-            genderController.text = 'Laki - Laki';
+            genderController.text = Gender.male.toString();
             Navigator.pop(context);
             setState(() {});
           },

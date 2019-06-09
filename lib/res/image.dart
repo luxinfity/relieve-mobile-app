@@ -1,7 +1,8 @@
 import 'dart:ui';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BackgroundImage {
   final String imageName;
@@ -69,7 +70,8 @@ class RemoteImage {
 
   static RemoteImage get ic_app_circle => RemoteImage('ic_app_circle.png');
 
-  static RemoteImage get bg_dki_jakarta => RemoteImage('home-bg/dki-jakarta.png');
+  static RemoteImage get bg_dki_jakarta =>
+      RemoteImage('home-bg/dki-jakarta.png');
 }
 
 class LocalImage {

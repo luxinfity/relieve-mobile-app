@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
+import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/widget/screen/call/call_list.dart';
-import 'package:relieve_app/widget/screen/call/components/address_bar.dart';
-import 'package:relieve_app/widget/screen/call/components/item_button.dart';
-import 'package:relieve_app/service/model/address.dart';
-import 'package:relieve_app/service/source/api/bakau/bakau_api.dart';
-import 'package:relieve_app/service/source/api/config.dart';
+import 'package:relieve_app/service/api/base.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/family/family_list.dart';
+import 'package:relieve_app/widget/screen/call/call_list.dart';
+import 'package:relieve_app/widget/screen/call/components/address_bar.dart';
+import 'package:relieve_app/widget/screen/call/components/item_button.dart';
 
 class CallScreen extends StatefulWidget {
   @override
@@ -21,7 +19,7 @@ class CallScreenState extends State {
 
   void getUserAddress() async {
     final addressResponse =
-        await BakauApi(AppConfig.of(context)).getUserAddress();
+        await Api.get().setProvider(BakauProvider()).getUserAddress();
 
     if (addressResponse?.status == REQUEST_SUCCESS) {
       setState(() {

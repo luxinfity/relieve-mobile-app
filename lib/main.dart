@@ -1,19 +1,27 @@
+import 'package:catcher/catcher_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:relieve_app/widget/inherited/app_config.dart';
-import 'package:relieve_app/widget/inherited/app_container.dart';
-import 'package:relieve_app/widget/screen/landing_screen.dart';
+import 'package:flutter_stetho/flutter_stetho.dart';
+import 'package:logging/logging.dart';
+import 'package:relieve_app/home_decider.dart';
 import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/widget/inherited/app_container.dart';
 
 void main() {
-  var configuredApp = new AppConfig(
-    flavorName: 'production',
-    apiProtocol: 'https',
-    apiUrlPrefix: '',
-    child: new MyApp(),
-  );
+  // http logger
+  Stetho.initialize();
 
-  runApp(configuredApp);
+  // console logger
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((LogRecord rec) {
+    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
+
+  // exception catcher
+  CatcherOptions debugOptions =
+      CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+
+  Catcher(MyApp(), debugConfig: debugOptions);
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +33,8 @@ class MyApp extends StatelessWidget {
     return AppContainer(
       plugins: [NotificationPlugin()],
       child: MaterialApp(
-          title: 'Relieve ID',
+          title: 'Relieve ID Debug',
+          navigatorKey: Catcher.navigatorKey,
           theme: ThemeData(
             primaryColor: AppColor.colorPrimary,
             primaryColorDark: AppColor.colorPrimaryDark,
@@ -35,7 +44,7 @@ class MyApp extends StatelessWidget {
             fontFamily: CircularStdFont.book.fontFamily,
             hintColor: AppColor.colorEmptyRect,
           ),
-          home: LandingScreen()),
+          home: HomeDecider()),
     );
   }
 }
