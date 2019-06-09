@@ -48,7 +48,10 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
       isPasswordMatch =
           _passwordController.text == _confirmPasswordController.text;
 
-      if (isEmailValid && isPasswordValid && isPasswordMatch) {
+      if (isUsernameValid &&
+          isEmailValid &&
+          isPasswordValid &&
+          isPasswordMatch) {
         widget.onNextClick(widget.initialData.copyWith(
           email: _emailController.text.toLowerCase(),
           username: _usernameController.text.toLowerCase(),

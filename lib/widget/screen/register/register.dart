@@ -62,14 +62,17 @@ class RegisterScreenState extends State<RegisterScreen> {
     ]);
   }
 
-  void doRegister() async {
+  /// only call this method after checking all field
+  /// (param: completeUser) is correct
+  /// the field will be stored as is
+  void doRegister(User completeUser) async {
     RelieveLoadingDialog.show(context);
 
-    final user = _user.copyWith(
-      gender: _user.gender == 'Perempuan' ? 'f' : 'm',
+    final user = completeUser.copyWith(
+      gender: completeUser.gender == 'Perempuan' ? 'f' : 'm',
     );
 
-    // TODO: check whether fields already filled
+    // final user will be stored as is
     final isSuccess = await FirebaseAuthHelper.instance.register(user);
 
     RelieveLoadingDialog.dismiss(context);
@@ -108,7 +111,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           initialData: _user,
           onNextClick: (user) {
             _user = user;
-            doRegister();
+            doRegister(_user);
           },
         );
     }
