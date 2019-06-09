@@ -32,7 +32,7 @@ class ProfileBoardState extends State {
         await Api.get().setProvider(BakauProvider()).getUserAddress();
     if (addressResponse?.status == REQUEST_SUCCESS &&
         addressResponse.content.length > 0) {
-      location = addressResponse.content[0].name;
+      location = addressResponse.content[0].label;
     }
     setState(() {
       locationName = location;

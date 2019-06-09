@@ -7,7 +7,7 @@ class Disaster {
   final String title;
   final String location;
   final DateTime time;
-  final Location coordinate;
+  final Coordinate coordinate;
 
   const Disaster({
     @required this.isLive,
@@ -44,7 +44,7 @@ class DisasterMeta {
 
 class DisasterDesc {
   final String id;
-  final Location coordinate;
+  final Coordinate coordinate;
   final double magnitude;
   final double depth;
   final DateTime occursAt;
@@ -61,7 +61,7 @@ class DisasterDesc {
     try {
       return DisasterDesc(
         id: parsedJson['id'],
-        coordinate: Location.parseString(parsedJson['coordinates']),
+        coordinate: Coordinate.parseString(parsedJson['coordinates']),
         magnitude: parsedJson['magnitude'].toDouble(),
         depth: parsedJson['depth'].toDouble(),
         occursAt: DateTime.parse(parsedJson['occurs_at']),

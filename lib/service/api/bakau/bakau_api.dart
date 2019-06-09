@@ -10,12 +10,12 @@ abstract class BakauApi implements AuthApi {
   Future<FamilyResponse> getFamilies();
 
   /// Map resource
-  Future<AddressDetailResponse> getAddressDetailOfPosition(Location position);
+  Future<AddressDetailResponse> getAddressDetailOfPosition(Coordinate position);
 
   /// Profile resource
   Future<UserResponse> getUser();
 
-  Future<ContactResponse> getNearbyEmergencyContact(Location location);
+  Future<ContactResponse> getNearbyEmergencyContact(Coordinate location);
 
   Future<AddressResponse> getUserAddress();
 }

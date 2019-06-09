@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/map_address.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
@@ -91,7 +91,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
         final position = mapCenter.target;
         IndonesiaPlace locationDetail = await LocationService.getPlaceDetail(
           context,
-          Location.parseFromLatLng(position),
+          position,
         );
 
         if (locationDetail != null) {
@@ -119,9 +119,11 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   }
 
   void buttonClick() {
-    final coordinateString =
-        '${currentPositionCamera.target.latitude},${currentPositionCamera.target.longitude}';
-    Navigator.of(context).pop(MapAddress(coordinateString, addressDetail, ''));
+    final address = Address(
+        label: '',
+        street: addressDetail,
+        coordinate: currentPositionCamera.target);
+    Navigator.of(context).pop(address);
   }
 
   @override

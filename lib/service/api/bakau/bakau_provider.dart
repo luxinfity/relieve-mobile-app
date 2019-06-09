@@ -105,7 +105,7 @@ class BakauProvider extends Provider implements BakauApi {
   /// region Map resource
   @override
   Future<AddressDetailResponse> getAddressDetailOfPosition(
-      Location position) async {
+      Coordinate position) async {
     this.checkProvider();
 
     var url =
@@ -154,7 +154,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<ContactResponse> getNearbyEmergencyContact(Location location) async {
+  Future<ContactResponse> getNearbyEmergencyContact(Coordinate location) async {
     this.checkProvider();
 
     var url = '$completeUri/emergency-contact/nearby';

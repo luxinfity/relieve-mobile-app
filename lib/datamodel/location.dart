@@ -6,14 +6,14 @@ class IndonesiaPlace {
   final String city;
   final String district;
   final String street;
-  final Location coordinate;
+  final Coordinate coordinate;
 
   IndonesiaPlace(
       this.province, this.city, this.district, this.street, this.coordinate);
 }
 
-class Location extends LatLng {
-  const Location(double latitude, double longitude)
+class Coordinate extends LatLng {
+  const Coordinate(double latitude, double longitude)
       : super(latitude, longitude);
 
   @override
@@ -21,17 +21,13 @@ class Location extends LatLng {
     return '$latitude,$longitude';
   }
 
-  factory Location.parseString(String coordinate) {
-    final splited =
+  factory Coordinate.parseString(String coordinate) {
+    final splitted =
         coordinate.split(',').map((s) => double.parse(s.trim())).toList();
-    return Location(splited[0], splited[1]);
+    return Coordinate(splitted[0], splitted[1]);
   }
 
-  factory Location.parseFromPosition(Position position) {
-    return Location(position.latitude, position.longitude);
-  }
-
-  factory Location.parseFromLatLng(LatLng position) {
-    return Location(position.latitude, position.longitude);
+  factory Coordinate.parseFromPosition(Position position) {
+    return Coordinate(position.latitude, position.longitude);
   }
 }

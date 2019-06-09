@@ -47,7 +47,7 @@ class LocationService {
 
   /// nullable return value
   static Future<IndonesiaPlace> getPlaceDetail(
-      BuildContext context, Location position) async {
+      BuildContext context, Coordinate position) async {
     final locationResponse = await Api.get()
         .setProvider(BakauProvider())
         .getAddressDetailOfPosition(position);
@@ -85,7 +85,7 @@ class LocationService {
       final position = await getLastKnownLocation();
       if (position != null) {
         indonesiaPlace =
-            await getPlaceDetail(context, Location.parseFromPosition(position));
+            await getPlaceDetail(context, Coordinate.parseFromPosition(position));
       }
     }
     return indonesiaPlace;

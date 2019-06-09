@@ -10,7 +10,7 @@ class AddressBar extends StatelessWidget {
 
   String getCurrentAddress() {
     if (addressList.length > 0) {
-      return addressList[0].name;
+      return addressList[0].label;
     } else
       return '';
   }

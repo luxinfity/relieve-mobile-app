@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/address.dart';
-import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/map_address.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
@@ -33,7 +31,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   int progressTotal = 3;
 
   User _user;
-  MapAddress _mapAddress;
+  Address _address;
 
   @override
   void initState() {
@@ -66,10 +64,9 @@ class RegisterScreenState extends State<RegisterScreen> {
     ]);
   }
 
-  void doRegister(MapAddress mapAddress) async {
+  void doRegister(Address address) async {
     RelieveLoadingDialog.show(context);
 
-    final location = mapAddress.coordinate.split(',');
     final user = User(
       username: _user.username,
       email: _user.email,
@@ -78,12 +75,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       phone: _user.phone,
       birthDate: _user.birthDate,
       gender: _user.gender == 'Perempuan' ? 'f' : 'm',
-      address: Address(
-        uuid: '1',
-        location:
-            Location(double.parse(location[0]), double.parse(location[1])),
-        name: '${mapAddress.name}|${mapAddress.address}',
-      ),
+      address: address,
     );
 
     // TODO: check whether fields already filled
@@ -122,10 +114,10 @@ class RegisterScreenState extends State<RegisterScreen> {
         );
       default:
         return RegisterFormAddress(
-          initialData: _mapAddress,
-          onNextClick: (mapAddress) {
-            _mapAddress = mapAddress;
-            doRegister(mapAddress);
+          initialData: _address,
+          onNextClick: (address) {
+            _address = address;
+            doRegister(address);
           },
         );
     }

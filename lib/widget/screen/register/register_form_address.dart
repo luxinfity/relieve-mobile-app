@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/map_address.dart';
-import 'package:relieve_app/utils/relieve_callback.dart';
+import 'package:relieve_app/datamodel/address.dart';
+import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/register/register_form_map.dart';
@@ -13,8 +14,8 @@ export 'package:relieve_app/widget/screen/register/register_form_map.dart';
 
 class RegisterFormAddress extends StatefulWidget {
   final VoidCallbackContext onBackClick;
-  final VoidCallbackMapAddress onNextClick;
-  final MapAddress initialData;
+  final VoidCallbackAddress onNextClick;
+  final Address initialData;
 
   const RegisterFormAddress({
     Key key,
@@ -34,8 +35,8 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   var isNameValid = true;
 
   final coordinateController = TextEditingController();
-  final addressController = TextEditingController();
-  final nameController = TextEditingController();
+  final streetController = TextEditingController();
+  final labelController = TextEditingController();
 
   final FocusNode _addressFocus = FocusNode();
   final FocusNode _nameFocus = FocusNode();
@@ -44,9 +45,9 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   void initState() {
     super.initState();
     if (widget.initialData != null) {
-      coordinateController.text = widget.initialData.coordinate;
-      addressController.text = widget.initialData.address;
-      nameController.text = widget.initialData.name;
+      coordinateController.text = widget.initialData.coordinate.toString();
+      streetController.text = widget.initialData.street;
+      labelController.text = widget.initialData.label;
     }
   }
 
@@ -60,10 +61,10 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       final result = await Navigator.push(
           context, MaterialPageRoute(builder: (builder) => RegisterFormMap()));
       if (result != null) {
-        final mapAddress = (result as MapAddress);
+        final address = (result as Address);
         setState(() {
-          coordinateController.text = mapAddress.coordinate;
-          addressController.text = mapAddress.address;
+          coordinateController.text = address.coordinate.toString();
+          streetController.text = address.street;
         });
       }
     }
@@ -71,28 +72,28 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
 
   void onSaveClick() {
     setState(() {
-      isAddressValid = addressController.text.length >= 2;
-      isNameValid = nameController.text.length >= 2;
+      isAddressValid = streetController.text.length >= 2;
+      isNameValid = labelController.text.length >= 2;
 
       if (isAddressValid && isNameValid) {
-        widget.onNextClick(MapAddress(
-          coordinateController.text,
-          addressController.text.toLowerCase(),
-          nameController.text.toLowerCase(),
+        widget.onNextClick(Address(
+          label: labelController.text.toLowerCase(),
+          street: streetController.text.toLowerCase(),
+          coordinate: Coordinate.parseString(coordinateController.text),
         ));
       }
     });
   }
 
   bool isFormFilled() {
-    return ![coordinateController, addressController, nameController]
+    return ![coordinateController, streetController, labelController]
         .any((controller) => controller.text.isEmpty);
   }
 
   String getErrorText(TextEditingController controller) {
-    if (!isAddressValid && controller == addressController) {
+    if (!isAddressValid && controller == streetController) {
       return 'Alamat minimal 2 huruf';
-    } else if (!isNameValid && controller == nameController) {
+    } else if (!isNameValid && controller == labelController) {
       return 'Nama tempat minimal 2 huruf';
     } else {
       return null;
@@ -146,14 +147,14 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
-                  controller: addressController,
+                  controller: streetController,
                   maxLines: null,
                   decoration: InputDecoration(
                       labelText: 'Alamat Lengkap',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
-                      errorText: getErrorText(addressController)),
+                      errorText: getErrorText(streetController)),
                   focusNode: _addressFocus,
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (term) {
@@ -170,7 +171,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                   right: Dimen.x16,
                 ),
                 child: TextFormField(
-                  controller: nameController,
+                  controller: labelController,
                   decoration: InputDecoration(
                     labelText: 'Nama Rumah',
                     helperText: 'Contoh : Rumah, Kantor, Rumah Bandung',

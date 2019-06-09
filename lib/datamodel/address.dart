@@ -67,32 +67,32 @@ class AddressDetail {
 
 class Address {
   final String uuid;
-  final String name;
-  final Location location;
-  final AddressDetail details;
+  final String label;
+  final String street;
+  final Coordinate coordinate;
 
   const Address({
-    @required this.uuid,
-    @required this.name,
-    @required this.location,
-    this.details,
+    this.uuid,
+    @required this.label,
+    @required this.street,
+    @required this.coordinate,
   });
 
   Map toMap() {
     return {
       'uuid': uuid,
-      'name': name,
-      'coordinates': location.toString(),
-      'details': details?.toMap(),
+      'label': label,
+      'street': street,
+      'coordinates': coordinate.toString()
     };
   }
 
   String toJson() {
     return jsonEncode({
       'uuid': uuid,
-      'name': name,
-      'coordinates': location.toString(),
-      'details': details?.toMap(),
+      'label': label,
+      'street': street,
+      'coordinate': coordinate.toString(),
     });
   }
 
@@ -100,9 +100,9 @@ class Address {
     try {
       return Address(
         uuid: parsedJson['uuid'],
-        name: parsedJson['name'],
-        location: Location.parseString(parsedJson['coordinates']),
-        details: AddressDetail.fromJson(parsedJson['details']),
+        label: parsedJson['label'],
+        street: parsedJson['street'],
+        coordinate: Coordinate.parseString(parsedJson['coordinate']),
       );
     } catch (e) {
       return null;

@@ -6,12 +6,12 @@ enum PersonHealth { Fine, Bad, None }
 
 class Condition {
   final PersonHealth health;
-  final Location location;
+  final Coordinate location;
   final String date;
 
   const Condition({
     this.health = PersonHealth.Fine,
-    this.location = const Location(0.0, 0.0),
+    this.location = const Coordinate(0.0, 0.0),
     this.date = '01-01-2019', // TODO: remove default date
   });
 
@@ -29,7 +29,7 @@ class Condition {
       }
       return Condition(
         health: health,
-        location: Location.parseString(parsedJson['location']),
+        location: Coordinate.parseString(parsedJson['location']),
         date: parsedJson['date'],
       );
     } catch (e) {

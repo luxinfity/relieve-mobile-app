@@ -5,7 +5,7 @@ enum ImageFormat { JPEG, PNG, GIF }
 
 class MapData {
   /// Location Parameter
-  final Location center;
+  final Coordinate center;
   final int zoom;
 
   /// Location Parameter

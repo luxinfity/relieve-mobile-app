@@ -29,7 +29,7 @@ class CallListScreenState extends State {
     final position = await LocationService.getCurrentLocation();
     final contactResponse = await Api.get()
         .setProvider(BakauProvider())
-        .getNearbyEmergencyContact(Location.parseFromPosition(position));
+        .getNearbyEmergencyContact(Coordinate.parseFromPosition(position));
 
     if (contactResponse?.status == REQUEST_SUCCESS) {
       setState(() {

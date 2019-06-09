@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:relieve_app/datamodel/map_address.dart';
+import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/user.dart';
 
 /// Naming Convention for custom `datamodel` callback
@@ -12,7 +12,7 @@ typedef VoidCallbackUser(User user);
 
 typedef RelieveBottomAction(int index, bool isCall); // non data model
 
-typedef VoidCallbackMapAddress(MapAddress profile);
+typedef VoidCallbackAddress(Address profile);
 
 // flutter
 typedef VoidCallbackContext(BuildContext context);
