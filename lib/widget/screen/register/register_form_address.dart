@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
@@ -10,12 +11,10 @@ import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/register/register_form_map.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-export 'package:relieve_app/widget/screen/register/register_form_map.dart';
-
 class RegisterFormAddress extends StatefulWidget {
   final VoidCallbackContext onBackClick;
-  final VoidCallbackAddress onNextClick;
-  final Address initialData;
+  final VoidCallbackUser onNextClick;
+  final User initialData;
 
   const RegisterFormAddress({
     Key key,
@@ -45,9 +44,10 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
   void initState() {
     super.initState();
     if (widget.initialData != null) {
-      coordinateController.text = widget.initialData.coordinate.toString();
-      streetController.text = widget.initialData.street;
-      labelController.text = widget.initialData.label;
+      coordinateController.text =
+          widget.initialData.address.coordinate.toString();
+      streetController.text = widget.initialData.address.street;
+      labelController.text = widget.initialData.address.label;
     }
   }
 
@@ -76,10 +76,12 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       isNameValid = labelController.text.length >= 2;
 
       if (isAddressValid && isNameValid) {
-        widget.onNextClick(Address(
-          label: labelController.text.toLowerCase(),
-          street: streetController.text.toLowerCase(),
-          coordinate: Coordinate.parseString(coordinateController.text),
+        widget.onNextClick(widget.initialData.copyWith(
+          address: Address(
+            label: labelController.text.toLowerCase(),
+            street: streetController.text.toLowerCase(),
+            coordinate: Coordinate.parseString(coordinateController.text),
+          ),
         ));
       }
     });

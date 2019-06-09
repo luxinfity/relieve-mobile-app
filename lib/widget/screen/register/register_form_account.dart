@@ -1,8 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
@@ -49,7 +49,7 @@ class RegisterFormAccountState extends State<RegisterFormAccount> {
           _passwordController.text == _confirmPasswordController.text;
 
       if (isEmailValid && isPasswordValid && isPasswordMatch) {
-        widget.onNextClick(User(
+        widget.onNextClick(widget.initialData.copyWith(
           email: _emailController.text.toLowerCase(),
           username: _usernameController.text.toLowerCase(),
           password: _passwordController.text,

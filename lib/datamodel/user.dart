@@ -14,7 +14,7 @@ class User {
   final String gender;
   final Address address;
 
-  User({
+  const User({
     this.username,
     this.password,
     this.fullName,

@@ -56,7 +56,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           phoneController.text.replaceFirst('0', '').length >= 7;
 
       if (isFullNameValid && isPhoneValid) {
-        widget.onNextClick(User(
+        widget.onNextClick(widget.initialData.copyWith(
           fullName: fullNameController.text.toLowerCase(),
           phone: phoneController.text.replaceFirst('0', ''),
           birthDate: dobController.text,
@@ -106,7 +106,6 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           ),
         ),
       ),
-      dateFormat: 'yyyy-mm-dd',
       onConfirm: (dateTime, selectedIndex) {
         final monthStr = dateTime.month.toString().padLeft(2, '0');
         final dateStr = dateTime.day.toString().padLeft(2, '0');

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
@@ -17,7 +16,7 @@ class RegisterScreen extends StatefulWidget {
   final int progressCount;
   final User initialData;
 
-  RegisterScreen({this.progressCount = 1, this.initialData});
+  RegisterScreen({this.progressCount = 1, this.initialData = const User()});
 
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +30,6 @@ class RegisterScreenState extends State<RegisterScreen> {
   int progressTotal = 3;
 
   User _user;
-  Address _address;
 
   @override
   void initState() {
@@ -64,18 +62,11 @@ class RegisterScreenState extends State<RegisterScreen> {
     ]);
   }
 
-  void doRegister(Address address) async {
+  void doRegister() async {
     RelieveLoadingDialog.show(context);
 
-    final user = User(
-      username: _user.username,
-      email: _user.email,
-      password: _user.password,
-      fullName: _user.fullName,
-      phone: _user.phone,
-      birthDate: _user.birthDate,
+    final user = _user.copyWith(
       gender: _user.gender == 'Perempuan' ? 'f' : 'm',
-      address: address,
     );
 
     // TODO: check whether fields already filled
@@ -114,10 +105,10 @@ class RegisterScreenState extends State<RegisterScreen> {
         );
       default:
         return RegisterFormAddress(
-          initialData: _address,
-          onNextClick: (address) {
-            _address = address;
-            doRegister(address);
+          initialData: _user,
+          onNextClick: (user) {
+            _user = user;
+            doRegister();
           },
         );
     }
