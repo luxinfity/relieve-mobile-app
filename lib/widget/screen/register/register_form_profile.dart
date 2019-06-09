@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
-import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
@@ -43,7 +43,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
     super.initState();
     if (widget.initialData != null) {
       fullNameController.text = widget.initialData.fullName;
-//      phoneController.text = widget.initialData.phones[];
+      phoneController.text = widget.initialData.phone;
       dobController.text = widget.initialData.birthDate;
       genderController.text = widget.initialData.gender;
     }
@@ -58,7 +58,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
       if (isFullNameValid && isPhoneValid) {
         widget.onNextClick(User(
           fullName: fullNameController.text.toLowerCase(),
-//          phones: phoneController.text.replaceFirst('0', ''),
+          phone: phoneController.text.replaceFirst('0', ''),
           birthDate: dobController.text,
           gender: genderController.text,
         ));

@@ -105,8 +105,6 @@ class FirebaseAuthHelper implements AuthApi {
       if (user.email == null || user.email.isEmpty)
         throw ArgumentError(
             'some user data is empty, recheck before calling register');
-
-      await FirestoreHelper.instance.storeUser(uid, user);
     } else {
       if (user.email == null ||
           user.email.isEmpty ||
@@ -120,11 +118,11 @@ class FirebaseAuthHelper implements AuthApi {
               email: user.email, password: user.password);
 
       uid = firebaseUser.uid;
-      // drop password, so not be seen on DB
-      user = user.copyWith(password: '');
-      await FirestoreHelper.instance.storeUser(uid, user);
     }
 
+    // drop password, so not be seen on DB
+    user = user.copyWith(password: '');
+    await FirestoreHelper.instance.storeUser(uid, user);
     return true;
   }
 }

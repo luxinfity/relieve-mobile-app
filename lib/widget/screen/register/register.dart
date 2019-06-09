@@ -75,7 +75,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       email: _user.email,
       password: _user.password,
       fullName: _user.fullName,
-      phones: _user.phones,
+      phone: _user.phone,
       birthDate: _user.birthDate,
       gender: _user.gender == 'Perempuan' ? 'f' : 'm',
       address: Address(
