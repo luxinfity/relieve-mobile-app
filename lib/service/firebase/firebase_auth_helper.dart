@@ -18,7 +18,6 @@ class FirebaseAuthHelper implements AuthApi {
 
   FirebaseAuthHelper._internal();
 
-
   @override
   Future<bool> isUserExist(UserCheckIdentifier checkIdentifier, String value) {
     return FirestoreHelper.instance.isUserExist(checkIdentifier, value);
@@ -129,7 +128,6 @@ class FirebaseAuthHelper implements AuthApi {
 
     // drop password, so not be seen on DB
     user = user.copyWith(password: '');
-    await FirestoreHelper.instance.storeUser(uid, user);
-    return true;
+    return await FirestoreHelper.instance.storeUser(uid, user);
   }
 }

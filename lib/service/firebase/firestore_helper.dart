@@ -32,7 +32,18 @@ class FirestoreHelper {
   }
 
   Future<bool> storeUser(String uid, User user) async {
-    return false;
+    Map userMap = user.toMap();
+    try {
+      await _fireStore
+          .collection(CollectionPath.USERS)
+          .document(uid)
+          .setData(userMap);
+
+      return true;
+    } catch (error) {
+      debugLog(FirestoreHelper).info(error);
+      return false;
+    }
   }
 
   /// return email if found, and null if not found

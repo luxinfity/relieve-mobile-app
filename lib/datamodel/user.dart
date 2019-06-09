@@ -26,8 +26,8 @@ class User {
     this.address,
   });
 
-  String toJson({bool onlyFirstPhone = true}) {
-    var data = {
+  Map toMap() {
+    return {
       'username': username,
       'password': password,
       'fullName': fullName,
@@ -37,8 +37,10 @@ class User {
       'gender': gender.label,
       'address': address.toMap(),
     };
+  }
 
-    return jsonEncode(data);
+  String toJson() {
+    return jsonEncode(toMap());
   }
 
   factory User.fromQuerySnapshot(QuerySnapshot snapShot) {

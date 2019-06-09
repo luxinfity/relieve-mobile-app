@@ -31,9 +31,7 @@ class HomeDecider extends StatelessWidget {
       // not login but has google ID,
       // may be user has trying to register before, but not complete
       // so sign out user
-      if (await PreferenceUtils.isGoogleLogin()) {
-        FirebaseAuthHelper.instance.logout();
-      }
+      FirebaseAuthHelper.instance.logout();
       goToLoggedOutHomeScreen(context);
     }
   }
