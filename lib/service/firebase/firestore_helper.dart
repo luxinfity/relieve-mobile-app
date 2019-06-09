@@ -43,7 +43,7 @@ class FirestoreHelper {
           .setData(user.toMap());
 
       final addresses = user.addressesToListMap();
-      for (Map address in addresses) {
+      for (Map<String, dynamic> address in addresses) {
         await _fireStore
             .collection(CollectionPath.USERS)
             .document(uid)

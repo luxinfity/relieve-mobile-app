@@ -45,9 +45,9 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
     super.initState();
     if (widget.initialData != null) {
       coordinateController.text =
-          widget.initialData.addresses.first.coordinate.toString();
-      streetController.text = widget.initialData.addresses.first.street;
-      labelController.text = widget.initialData.addresses.first.label;
+          widget.initialData.addresses?.first?.coordinate?.toString() ?? '';
+      streetController.text = widget.initialData.addresses?.first?.street ?? '';
+      labelController.text = widget.initialData.addresses?.first?.label ?? '';
     }
   }
 

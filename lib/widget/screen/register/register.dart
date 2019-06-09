@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/address.dart';
-import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
@@ -18,18 +16,7 @@ class RegisterScreen extends StatefulWidget {
   final int progressCount;
   final User initialData;
 
-  // RegisterScreen({this.progressCount = 1, this.initialData = const User()});
-
-  // TODO: temp test
-  RegisterScreen({
-    this.progressCount = 1,
-    this.initialData = const User(addresses: [
-      Address(
-          coordinate: Coordinate(37.42796133580664, -122.085749655962),
-          label: "Rumah",
-          street: "Jalan Dago no 16")
-    ]),
-  });
+  RegisterScreen({this.progressCount = 1, this.initialData = const User()});
 
   @override
   State<StatefulWidget> createState() {

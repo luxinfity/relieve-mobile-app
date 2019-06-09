@@ -101,6 +101,10 @@ class FirebaseAuthHelper implements AuthApi {
   @override
   Future<bool> register(User user) async {
     bool isExist = await isUserExist(UserCheckIdentifier.email, user.email);
+    if (user.username != null) {
+      isExist = isExist &&
+          await isUserExist(UserCheckIdentifier.username, user.username);
+    }
     String uid = await PreferenceUtils.uid();
 
     if (isExist) {

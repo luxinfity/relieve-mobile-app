@@ -26,11 +26,10 @@ class User {
     this.addresses,
   });
 
-  /// addresses will be dropped by default
+  /// addresses will be dropped
   /// get address map from `addressesToMap()`
-  /// or set param: withAddress to `true`
   Map<String, dynamic> toMap({bool withAddress = false}) {
-    Map data = {
+    Map<String, dynamic> data = {
       'username': username,
       'password': password,
       'fullName': fullName,
@@ -39,8 +38,11 @@ class User {
       'birthDate': birthDate,
       'gender': gender.label,
     };
+
     if (withAddress) {
-      data.addAll(addressesToListMap().asMap());
+      data.addAll(addressesToListMap()
+          .asMap()
+          .map((i, val) => MapEntry(i.toString(), val)));
     }
 
     return data;
@@ -48,7 +50,7 @@ class User {
 
   /// list of addresses in Map`
   List<Map<String, dynamic>> addressesToListMap() {
-    return addresses.map((address) => address.toMap());
+    return addresses.map((address) => address.toMap()).toList();
   }
 
   String toJson() {

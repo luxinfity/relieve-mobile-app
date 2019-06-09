@@ -80,7 +80,6 @@ class Address {
 
   Map<String, dynamic> toMap() {
     return {
-      'uuid': uuid ?? '',
       'label': label,
       'street': street,
       'coordinates': coordinate.toString()
