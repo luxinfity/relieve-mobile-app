@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:relieve_app/datamodel/remote_env.dart';
-import 'package:relieve_app/widget/inherited/app_container.dart';
 import 'package:relieve_app/home_decider.dart';
+import 'package:relieve_app/widget/inherited/app_container.dart';
 
 import 'res/res.dart';
 

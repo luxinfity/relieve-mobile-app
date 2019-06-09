@@ -6,7 +6,6 @@ import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/contact.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/token.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';

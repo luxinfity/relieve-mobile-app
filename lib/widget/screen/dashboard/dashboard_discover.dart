@@ -59,7 +59,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -90,7 +91,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -104,7 +106,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -117,7 +120,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -130,7 +134,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -143,7 +148,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -156,7 +162,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -169,7 +176,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),
@@ -182,7 +190,8 @@ class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
                     title: 'Gunung Semeru Meletus',
                     location: 'Jawa Timur',
                     time: DateTime.now(),
-                    coordinate: Coordinate(37.42796133580664, -122.085749655962),
+                    coordinate:
+                        Coordinate(37.42796133580664, -122.085749655962),
                   ),
                 ),
               ),

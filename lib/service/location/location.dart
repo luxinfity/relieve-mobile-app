@@ -84,8 +84,8 @@ class LocationService {
     if (indonesiaPlace == null || isRefresh) {
       final position = await getLastKnownLocation();
       if (position != null) {
-        indonesiaPlace =
-            await getPlaceDetail(context, Coordinate.parseFromPosition(position));
+        indonesiaPlace = await getPlaceDetail(
+            context, Coordinate.parseFromPosition(position));
       }
     }
     return indonesiaPlace;
