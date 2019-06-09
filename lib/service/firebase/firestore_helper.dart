@@ -7,10 +7,16 @@ abstract class CollectionPath {
   static const String USERS = "users";
 }
 
+/// singleton
 class FirestoreHelper {
-  static FirestoreHelper instance = FirestoreHelper();
-
+  static final FirestoreHelper instance = FirestoreHelper._internal();
   final Firestore _fireStore = Firestore.instance;
+
+  factory FirestoreHelper() {
+    return instance;
+  }
+
+  FirestoreHelper._internal();
 
   Future<bool> isUserExist(
       UserCheckIdentifier checkIdentifier, String value) async {

@@ -175,7 +175,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                 child: TextFormField(
                   controller: labelController,
                   decoration: InputDecoration(
-                    labelText: 'Nama Rumah',
+                    labelText: 'Label Alamat',
                     helperText: 'Contoh : Rumah, Kantor, Rumah Bandung',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(Dimen.x6),

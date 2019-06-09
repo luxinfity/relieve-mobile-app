@@ -68,12 +68,8 @@ class RegisterScreenState extends State<RegisterScreen> {
   void doRegister(User completeUser) async {
     RelieveLoadingDialog.show(context);
 
-    final user = completeUser.copyWith(
-      gender: completeUser.gender == 'Perempuan' ? 'f' : 'm',
-    );
-
     // final user will be stored as is
-    final isSuccess = await FirebaseAuthHelper.instance.register(user);
+    final isSuccess = await FirebaseAuthHelper.instance.register(completeUser);
 
     RelieveLoadingDialog.dismiss(context);
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+import 'package:relieve_app/datamodel/gender.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
@@ -45,7 +46,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
       fullNameController.text = widget.initialData.fullName;
       phoneController.text = widget.initialData.phone;
       dobController.text = widget.initialData.birthDate;
-      genderController.text = widget.initialData.gender;
+      genderController.text = (widget.initialData.gender ?? "").toString();
     }
   }
 
@@ -60,7 +61,7 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
           fullName: fullNameController.text.toLowerCase(),
           phone: phoneController.text.replaceFirst('0', ''),
           birthDate: dobController.text,
-          gender: genderController.text,
+          gender: Gender.parseString(genderController.text),
         ));
       }
     });
@@ -128,12 +129,12 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
               side: BorderSide(color: AppColor.colorPrimary)),
           padding: EdgeInsets.symmetric(vertical: Dimen.x16),
           child: Text(
-            'Perempuan',
+            Gender.female.toString(),
             style: CircularStdFont.medium
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
           onPressed: () {
-            genderController.text = 'Perempuan';
+            genderController.text = Gender.female.toString();
             Navigator.pop(context);
             setState(() {});
           },
@@ -148,12 +149,12 @@ class RegisterFormProfileState extends State<RegisterFormProfile> {
               side: BorderSide(color: AppColor.colorPrimary)),
           padding: EdgeInsets.symmetric(vertical: Dimen.x16),
           child: Text(
-            'Laki - Laki',
+            Gender.male.toString(),
             style: CircularStdFont.medium
                 .getStyle(size: Dimen.x14, color: AppColor.colorPrimary),
           ),
           onPressed: () {
-            genderController.text = 'Laki - Laki';
+            genderController.text = Gender.male.toString();
             Navigator.pop(context);
             setState(() {});
           },

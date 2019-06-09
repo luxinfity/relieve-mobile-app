@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/gender.dart';
 
 class User {
   final String username;
@@ -11,7 +12,7 @@ class User {
   final String email;
   final String phone;
   final String birthDate;
-  final String gender;
+  final Gender gender;
   final Address address;
 
   const User({
@@ -33,7 +34,7 @@ class User {
       'email': email,
       'phone': phone,
       'birthDate': birthDate,
-      'gender': gender,
+      'gender': gender.label,
       'address': address.toMap(),
     };
 
@@ -50,7 +51,7 @@ class User {
         email: rawData.data['email'],
         phone: rawData.data['phone'],
         birthDate: rawData.data['birthDate'],
-        gender: rawData.data['gender'],
+        gender: Gender(rawData.data['gender']),
       );
     } catch (e) {
       return null;
@@ -65,7 +66,7 @@ class User {
         email: parsedJson['email'],
         phone: parsedJson['phone'],
         birthDate: parsedJson['birthDate'],
-        gender: parsedJson['gender'],
+        gender: Gender(parsedJson['gender']),
       );
     } catch (e) {
       return null;
@@ -79,7 +80,7 @@ class User {
     String email,
     String phone,
     String birthDate,
-    String gender,
+    Gender gender,
     Address address,
   }) {
     return User(

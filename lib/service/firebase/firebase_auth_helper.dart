@@ -7,10 +7,17 @@ import 'package:relieve_app/service/google/base.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 
+/// singleton
 class FirebaseAuthHelper implements AuthApi {
-  static FirebaseAuthHelper instance = FirebaseAuthHelper();
+  static final FirebaseAuthHelper instance = FirebaseAuthHelper._internal();
+  final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  factory FirebaseAuthHelper() {
+    return instance;
+  }
+
+  FirebaseAuthHelper._internal();
+
 
   @override
   Future<bool> isUserExist(UserCheckIdentifier checkIdentifier, String value) {
@@ -24,7 +31,7 @@ class FirebaseAuthHelper implements AuthApi {
 
     if (completeProfile == null) return false;
 
-    FirebaseUser firebaseUser = await _firebaseAuth.signInWithEmailAndPassword(
+    FirebaseUser firebaseUser = await _fireBaseAuth.signInWithEmailAndPassword(
         email: completeProfile.email, password: password);
 
     return firebaseUser != null;
@@ -39,7 +46,7 @@ class FirebaseAuthHelper implements AuthApi {
       );
 
       final FirebaseUser user =
-          await _firebaseAuth.signInWithCredential(credential);
+          await _fireBaseAuth.signInWithCredential(credential);
 
       return user != null;
     } catch (error) {
@@ -82,7 +89,7 @@ class FirebaseAuthHelper implements AuthApi {
       await googleSignInScope.signOut();
     }
 
-    await _firebaseAuth.signOut();
+    await _fireBaseAuth.signOut();
 
     // delete pref username
     PreferenceUtils.clearData();
@@ -114,7 +121,7 @@ class FirebaseAuthHelper implements AuthApi {
             'some user data is empty, recheck before calling register');
 
       FirebaseUser firebaseUser =
-          await _firebaseAuth.createUserWithEmailAndPassword(
+          await _fireBaseAuth.createUserWithEmailAndPassword(
               email: user.email, password: user.password);
 
       uid = firebaseUser.uid;
