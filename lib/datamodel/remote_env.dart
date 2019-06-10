@@ -48,6 +48,7 @@ class RemoteEnv {
     return _singleton;
   }
 
+  /// After storing new env don't forget to call `Api.reset()`
   static void storeEnv(RemoteEnv env) async {
     await PreferenceUtils.storage.write(key: 'envName', value: env.envName);
     await PreferenceUtils.storage.write(key: 'protocol', value: env.protocol);
