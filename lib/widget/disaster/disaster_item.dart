@@ -274,6 +274,7 @@ class DisasterItemListState extends State {
     correctlyParsedData.removeWhere((obj) => obj == null);
 
     if (disasterResponse?.status == REQUEST_SUCCESS) {
+      if (!mounted) return;
       setState(() {
         listDisaster = correctlyParsedData;
       });

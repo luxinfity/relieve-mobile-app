@@ -24,6 +24,7 @@ class ProfileBoardState extends State {
 //        addressResponse.content.length > 0) {
 //      location = addressResponse.content[0].label;
 //    }
+    if (!mounted) return;
     setState(() {
       locationName = location;
     });
@@ -87,7 +88,7 @@ class ProfileBoardState extends State {
                       ? 'Menunggu Lokasi...'
                       : locationName,
                   icon: LocalImage.icMap,
-                  personHealth: PersonHealth.None,
+                  personHealth: Health.None,
                 ),
               ),
             ],

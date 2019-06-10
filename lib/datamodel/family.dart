@@ -3,30 +3,30 @@ import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
 
-enum PersonHealth { Fine, Bad, None }
+enum Health { Fine, Bad, None }
 
 class Condition {
-  final PersonHealth health;
+  final Health health;
   final Coordinate location;
   final String date;
 
   const Condition({
-    this.health = PersonHealth.Fine,
+    this.health = Health.Fine,
     this.location = const Coordinate(0.0, 0.0),
-    this.date = '01-01-2019', // TODO: remove default date
+    this.date = '2019-01-01', // TODO: remove default date
   });
 
   factory Condition.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      PersonHealth health = PersonHealth.None;
+      Health health = Health.None;
       int status = parsedJson['status'];
       // enum from backend = [10,20,30] => none, fine, bad
       if (status == 20) {
-        health = PersonHealth.Fine;
+        health = Health.Fine;
       } else if (status == 30) {
-        health = PersonHealth.Bad;
+        health = Health.Bad;
       } else {
-        health = PersonHealth.None;
+        health = Health.None;
       }
       return Condition(
         health: health,
@@ -40,15 +40,12 @@ class Condition {
 }
 
 class Family extends RelieveUser {
-  // TODO: move image to profile
-  final String imageUrl;
   final Condition condition;
 
   const Family({
     @required String uid,
     @required Profile profile,
     String label = '',
-    this.imageUrl = '',
     this.condition = const Condition(),
   }) : super(uid, null, label: label);
 

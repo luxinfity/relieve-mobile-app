@@ -31,6 +31,7 @@ class CallListScreenState extends State {
         .setProvider(BakauProvider())
         .getNearbyEmergencyContact(Coordinate.parseFromPosition(position));
 
+    if (!mounted) return;
     if (contactResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         contactList = contactResponse.content;

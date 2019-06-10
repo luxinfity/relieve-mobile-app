@@ -32,7 +32,7 @@ class FamilyItem extends StatelessWidget {
       child: ClipOval(
         child: Material(
           child: Ink.image(
-            image: CachedNetworkImageProvider(family.imageUrl),
+            image: CachedNetworkImageProvider(family.profile.imageUrl),
             fit: BoxFit.cover,
             child: InkWell(
               onTap: onClick,
@@ -44,10 +44,9 @@ class FamilyItem extends StatelessWidget {
   }
 
   Color _pickColorItem() {
-    if (family.condition == null ||
-        family.condition.health == PersonHealth.None) {
+    if (family.condition == null || family.condition.health == Health.None) {
       return HexColor(AppColor.colorEmptyRect.hexColor, transparency: 0.50);
-    } else if (family.condition.health == PersonHealth.Bad) {
+    } else if (family.condition.health == Health.Bad) {
       return AppColor.colorDanger;
     } else {
       return AppColor.colorPrimary;
@@ -99,7 +98,7 @@ class FamilyItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: Dimen.x4),
       child: Text(
-        family.profile.fullName,
+        family?.profile?.fullName ?? '',
         style: CircularStdFont.medium.getStyle(
           color: (type == FamilyItemType.Empty)
               ? AppColor.colorTextGrey

@@ -14,6 +14,7 @@ class Profile {
   final String phone;
   final String birthDate;
   final Gender gender;
+  final String imageUrl;
   final List<Address> addresses;
 
   const Profile({
@@ -24,6 +25,7 @@ class Profile {
     this.phone,
     this.birthDate,
     this.gender,
+    this.imageUrl,
     this.addresses,
   });
 
@@ -38,6 +40,7 @@ class Profile {
       'phone': phone,
       'birthDate': birthDate,
       'gender': gender.label,
+      'imageUrl': imageUrl,
     };
 
     if (withAddress) {
@@ -67,6 +70,7 @@ class Profile {
         phone: snapShot['phone'],
         birthDate: snapShot['birthDate'],
         gender: Gender(snapShot['gender']),
+        imageUrl: snapShot['imageUrl'] ?? '',
       );
     } catch (e) {
       return null;
@@ -81,6 +85,7 @@ class Profile {
     String phone,
     String birthDate,
     Gender gender,
+    String imageUrl,
     List<Address> addresses,
   }) {
     return Profile(
@@ -91,6 +96,7 @@ class Profile {
       phone: phone ?? this.phone,
       birthDate: birthDate ?? this.birthDate,
       gender: gender ?? this.gender,
+      imageUrl: imageUrl ?? this.imageUrl,
       addresses: addresses ?? this.addresses,
     );
   }

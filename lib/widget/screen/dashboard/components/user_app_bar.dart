@@ -31,6 +31,7 @@ class _UserAppBarState extends State<UserAppBar> {
 
     final place = await LocationService.getLastKnownPlaceDetail(context);
     if (place != null) {
+      if (!mounted) return;
       setState(() {
         indonesiaPlace = place;
       });
@@ -71,7 +72,7 @@ class _UserAppBarState extends State<UserAppBar> {
                         ? 'Menunggu Lokasi...'
                         : '${indonesiaPlace.city}, ${indonesiaPlace.province}',
                     icon: LocalImage.icLive,
-                    personHealth: PersonHealth.Fine,
+                    personHealth: Health.Fine,
                   ),
                 )
               ],

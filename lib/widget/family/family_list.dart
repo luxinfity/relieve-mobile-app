@@ -17,6 +17,7 @@ class FamilyItemListState extends State {
 
   void loadFamilyList() async {
     final families = await FirestoreHelper.get().getFamilies() ?? [];
+    if (!mounted) return;
     setState(() {
       familyList = families;
     });

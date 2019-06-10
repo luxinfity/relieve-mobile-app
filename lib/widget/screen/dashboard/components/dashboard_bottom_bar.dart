@@ -44,7 +44,7 @@ class _RelieveBottomNavigationBarState
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            this.setState(() {
+            setState(() {
               currentIndex = index;
             });
             if (widget.onPress != null) {

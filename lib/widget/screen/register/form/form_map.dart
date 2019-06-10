@@ -45,6 +45,7 @@ class _FormMapState extends State<FormMap> {
 
     final position = await LocationService.getCurrentPosition();
 
+    if (!mounted) return;
     setState(() {
       currentPositionCamera = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
@@ -60,6 +61,7 @@ class _FormMapState extends State<FormMap> {
   void moveToMyLocation() async {
     if (!hasPermission) {
       LocationService.showAskPermissionModal(context, () {
+        if (!mounted) return;
         setState(() {});
         moveToMyLocation();
       });
@@ -95,6 +97,7 @@ class _FormMapState extends State<FormMap> {
         );
 
         if (locationDetail != null) {
+          if (!mounted) return;
           setState(() {
             addressTitle = locationDetail.street;
             addressDetail = '${locationDetail.street}, ' +

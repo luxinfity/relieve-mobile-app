@@ -35,10 +35,12 @@ class BoardingLoginScreenState extends State {
 
   void onLoginClick() async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+      if (!mounted) return;
       setState(() {
         isFormEmpty = true;
       });
     } else {
+      if (!mounted) return;
       setState(() {
         isFormEmpty = false;
         isWrongCredential = false;
@@ -54,6 +56,8 @@ class BoardingLoginScreenState extends State {
       } else {
         RelieveSnackBar.show(context, 'Ups! Username atau password salah',
             buttonText: 'Mengerti');
+
+        if (!mounted) return;
         setState(() {
           isWrongCredential = true;
         });

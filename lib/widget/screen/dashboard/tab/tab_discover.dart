@@ -21,6 +21,7 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
     final correctlyParsedData = (disasterResponse.content.data ?? listDisaster);
     correctlyParsedData.removeWhere((obj) => obj == null);
 
+    if (!mounted) return;
     if (disasterResponse?.status == REQUEST_SUCCESS) {
       setState(() {
         listDisaster = correctlyParsedData;

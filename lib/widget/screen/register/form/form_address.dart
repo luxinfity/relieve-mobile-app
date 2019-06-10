@@ -62,6 +62,7 @@ class _FormAddressState extends State<FormAddress> {
           context, MaterialPageRoute(builder: (builder) => FormMap()));
       if (result != null) {
         final address = (result as Address);
+        if (!mounted) return;
         setState(() {
           coordinateController.text = address.coordinate.toString();
           streetController.text = address.street;

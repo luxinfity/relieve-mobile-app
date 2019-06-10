@@ -121,6 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     int limit = isGoogleLogin ? 2 : 1;
 
     if (progressCount > limit) {
+      if (!mounted) return;
       setState(() {
         progressCount -= 1;
       });
