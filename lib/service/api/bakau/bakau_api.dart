@@ -4,7 +4,7 @@ import 'package:relieve_app/datamodel/location.dart';
 
 abstract class BakauApi {
   /// Families resource
-  Future<FamilyResponse> getFamilies();
+  Future<Family> getFamilies();
 
   /// Map resource
   Future<ContactResponse> getNearbyEmergencyContact(Coordinate location);

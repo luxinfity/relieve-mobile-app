@@ -14,7 +14,7 @@ class BakauProvider extends Provider implements BakauApi {
 
   /// region Families resource
   @override
-  Future<FamilyResponse> getFamilies() async {
+  Future<Family> getFamilies() async {
     this.checkProvider();
 
     var url = '$completeUri/family';
@@ -24,7 +24,9 @@ class BakauProvider extends Provider implements BakauApi {
       'secret': secret,
     });
 
-    return FamilyResponse.fromJson(jsonDecode(response.body));
+    throw Exception('not implemented yet');
+
+//    return FamilyResponse.fromJson(jsonDecode(response.body));
   }
 
   /// endregion

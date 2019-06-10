@@ -5,5 +5,5 @@ class RelieveUser {
   final Profile profile;
   final String label;
 
-  RelieveUser(this.uid, this.profile, {this.label});
+  const RelieveUser(this.uid, this.profile, {this.label});
 }

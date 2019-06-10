@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:relieve_app/datamodel/base_response.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/profile.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
 
 enum PersonHealth { Fine, Bad, None }
 
@@ -38,67 +39,23 @@ class Condition {
   }
 }
 
-class Family {
-  final String id;
-  final String fullName;
-  final String nickName;
-  final String role;
-  final String phoneNumber;
+class Family extends RelieveUser {
+  // TODO: move image to profile
   final String imageUrl;
   final Condition condition;
 
   const Family({
-    this.id = '',
-    @required this.fullName,
-    this.nickName = '',
-    this.role = '',
-    this.phoneNumber = '',
+    @required String uid,
+    @required Profile profile,
+    String label = '',
     this.imageUrl = '',
     this.condition = const Condition(),
-  });
+  }) : super(uid, null, label: label);
 
-  String get initials =>
-      fullName.toUpperCase().split(' ').map((word) => word[0]).join(' ');
-
-  factory Family.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      // TODO: handle non existent value
-      return Family(
-        id: parsedJson['id'],
-        fullName: parsedJson['fullName'],
-        nickName: parsedJson['nick'],
-        role: parsedJson['role'],
-        phoneNumber: parsedJson['phoneNumber'],
-        imageUrl: parsedJson['imageUrl'],
-        condition: Condition.fromJson(parsedJson['condition']),
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-}
-
-class FamilyResponse extends BaseResponse {
-  @override
-  final List<Family> content;
-
-  FamilyResponse({
-    String message,
-    int status,
-    this.content,
-  }) : super(message, status, content);
-
-  factory FamilyResponse.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      return FamilyResponse(
-        message: parsedJson['message'],
-        status: parsedJson['status'],
-        content: (parsedJson['content'] as List)
-            .map((content) => Family.fromJson(content))
-            .toList(),
-      );
-    } catch (e) {
-      return null;
-    }
-  }
+  String get initials => super
+      .profile
+      .fullName
+      .split(' ')
+      .map((word) => word[0].toUpperCase())
+      .join('');
 }

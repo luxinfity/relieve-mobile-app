@@ -73,21 +73,6 @@ class Profile {
     }
   }
 
-  factory Profile.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      return Profile(
-        username: parsedJson['username'],
-        fullName: parsedJson['fullName'],
-        email: parsedJson['email'],
-        phone: parsedJson['phone'],
-        birthDate: parsedJson['birthDate'],
-        gender: Gender(parsedJson['gender']),
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-
   Profile copyWith({
     String username,
     String password,
@@ -126,7 +111,7 @@ class ProfileResponse extends BaseResponse {
       return ProfileResponse(
         message: parsedJson['message'],
         status: parsedJson['status'],
-        content: Profile.fromJson(parsedJson['content']),
+        content: Profile.fromMap(parsedJson['content']),
       );
     } catch (e) {
       return null;

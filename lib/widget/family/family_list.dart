@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/family/add_family_modal.dart';
 import 'package:relieve_app/widget/family/family_item.dart';
 
@@ -15,12 +16,10 @@ class FamilyItemListState extends State {
   List<Family> familyList = [];
 
   void loadFamilyList() async {
-//    final response = await Api.get().setProvider(BakauProvider()).getFamilies();
-//    if (response?.status == REQUEST_SUCCESS && response?.content != null) {
-//      setState(() {
-//        familyList = response?.content;
-//      });
-//    }
+    final families = await FirestoreHelper.get().getFamilies() ?? [];
+    setState(() {
+      familyList = families;
+    });
   }
 
   @override
