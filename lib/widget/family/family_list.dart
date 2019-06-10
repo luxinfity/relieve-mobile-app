@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/family.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/family/add_family_modal.dart';
@@ -13,14 +14,45 @@ class FamilyItemList extends StatefulWidget {
 }
 
 class FamilyItemListState extends State {
-  List<Family> familyList = [];
+  static const List<Family> _defaultFamilyList = const [
+    Family(
+      uid: '',
+      profile: Profile(
+        fullName: 'Ayah',
+        imageUrl:
+            'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg',
+      ),
+      condition: Condition(health: Health.Fine),
+    ),
+    Family(
+      uid: '',
+      profile: Profile(
+        fullName: 'Ibu',
+        imageUrl:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
+      ),
+      condition: Condition(health: Health.Bad),
+    ),
+    Family(
+      uid: '',
+      profile: Profile(
+        fullName: 'Kak dinda',
+        imageUrl:
+            'https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg',
+      ),
+      condition: Condition(health: Health.None),
+    )
+  ];
+
+//  List<Family> familyList = [];
+  List<Family> familyList = _defaultFamilyList;
 
   void loadFamilyList() async {
-    final families = await FirestoreHelper.get().getFamilies() ?? [];
-    if (!mounted) return;
-    setState(() {
-      familyList = families;
-    });
+//    final families = await FirestoreHelper.get().getFamilies() ?? _defaultFamilyList;
+//    if (!mounted) return;
+//    setState(() {
+//      familyList = families;
+//    });
   }
 
   @override
@@ -28,27 +60,6 @@ class FamilyItemListState extends State {
     super.didChangeDependencies();
     loadFamilyList();
   }
-
-//  List<Family> _defaultFamilyList = [
-//    Family(
-//      fullName: 'Ayah',
-//      condition: Condition(health: PersonHealth.Fine),
-//      imageUrl:
-//          'https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1511853177/jedac0gixzhcnuozw7c4.jpg',
-//    ),
-//    Family(
-//      fullName: 'Ibu',
-//      condition: Condition(health: PersonHealth.Bad),
-//      imageUrl:
-//          'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg/220px-Suzy_Bae_at_fansigning_on_February_3%2C_2018_%284%29.jpg',
-//    ),
-//    Family(
-//      fullName: 'Kak dinda',
-//      condition: Condition(health: PersonHealth.None),
-//      imageUrl:
-//          'https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/twice-tzuyu-7.jpg',
-//    )
-//  ];
 
   @override
   Widget build(BuildContext context) {

@@ -32,7 +32,7 @@ class FamilyItem extends StatelessWidget {
       child: ClipOval(
         child: Material(
           child: Ink.image(
-            image: CachedNetworkImageProvider(family.profile.imageUrl),
+            image: CachedNetworkImageProvider(family.profile?.imageUrl ?? ''),
             fit: BoxFit.cover,
             child: InkWell(
               onTap: onClick,

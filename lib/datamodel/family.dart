@@ -47,7 +47,7 @@ class Family extends RelieveUser {
     @required Profile profile,
     String label = '',
     this.condition = const Condition(),
-  }) : super(uid, null, label: label);
+  }) : super(uid, profile, label: label);
 
   String get initials => super
       .profile
