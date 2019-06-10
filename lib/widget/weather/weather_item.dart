@@ -3,7 +3,7 @@ import 'package:relieve_app/datamodel/weather.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 
-enum WeatherType { Temparature, Rain, Wind, UV }
+enum WeatherType { Temperature, Rain, Wind, UV }
 
 class WeatherItem extends StatelessWidget {
   final WeatherType weatherType;
@@ -19,7 +19,7 @@ class WeatherItem extends StatelessWidget {
 
   Widget createImage() {
     switch (weatherType) {
-      case WeatherType.Temparature:
+      case WeatherType.Temperature:
         return LocalImage.icTemperature.toSvg(width: 24);
       case WeatherType.Wind:
         return LocalImage.icWind.toSvg(width: 24);
@@ -32,7 +32,7 @@ class WeatherItem extends StatelessWidget {
 
   String getMetric() {
     switch (weatherType) {
-      case WeatherType.Temparature:
+      case WeatherType.Temperature:
         return 'c';
       case WeatherType.Wind:
         return 'kph';
@@ -47,7 +47,7 @@ class WeatherItem extends StatelessWidget {
     var strVal = '';
 
     switch (weatherType) {
-      case WeatherType.Temparature:
+      case WeatherType.Temperature:
         strVal += '${value.toInt()}°';
         break;
       case WeatherType.Rain:
@@ -158,7 +158,7 @@ class WeatherItemListState extends State {
         children: <Widget>[
           Expanded(
             child: WeatherItem(
-              weatherType: WeatherType.Temparature,
+              weatherType: WeatherType.Temperature,
               classification:
                   _weatherResponse.content.temparature.desc?.id ?? 'Normal',
               value: _weatherResponse.content.temparature.value,

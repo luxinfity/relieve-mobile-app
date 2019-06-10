@@ -61,7 +61,7 @@ class DisasterDesc {
     try {
       return DisasterDesc(
         id: parsedJson['id'],
-        coordinate: Coordinate.parseString(parsedJson['coordinates']),
+        coordinate: Coordinate.parseString(parsedJson['coordinate']),
         magnitude: parsedJson['magnitude'].toDouble(),
         depth: parsedJson['depth'].toDouble(),
         occursAt: DateTime.parse(parsedJson['occurs_at']),

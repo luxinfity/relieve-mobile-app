@@ -16,12 +16,12 @@ class FamilyItemListState extends State {
   List<Family> familyList = [];
 
   void loadFamilyList() async {
-    final response = await Api.get().setProvider(BakauProvider()).getFamilies();
-    if (response?.status == REQUEST_SUCCESS && response?.content != null) {
-      setState(() {
-        familyList = response?.content;
-      });
-    }
+//    final response = await Api.get().setProvider(BakauProvider()).getFamilies();
+//    if (response?.status == REQUEST_SUCCESS && response?.content != null) {
+//      setState(() {
+//        familyList = response?.content;
+//      });
+//    }
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_stetho/flutter_stetho.dart';
 import 'package:logging/logging.dart';
+import 'package:relieve_app/datamodel/remote_env.dart';
 import 'package:relieve_app/home_decider.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/inherited/app_container.dart';
@@ -20,6 +21,12 @@ void main() {
   // exception catcher
   CatcherOptions debugOptions =
       CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+
+  // TODO: delete later
+  // Temporary: Mock Server
+  final mockServer = RemoteEnv('Postman Mock', 'https',
+      'c119ba48-3e35-48bd-8334-75cfe80c20d8.mock.pstmn.io', '', '');
+  RemoteEnv.storeEnv(mockServer);
 
   Catcher(MyApp(), debugConfig: debugOptions);
 }
