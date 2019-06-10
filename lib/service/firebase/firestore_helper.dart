@@ -106,9 +106,9 @@ class FirestoreHelper implements ProfileApi {
     if (uid == null) return throw StateError('User is not logged in');
 
     final famDocuments = (await _fireStore
-            .collection(CollectionPath.USERS)
-            .document(uid)
             .collection(CollectionPath.FAMILIES)
+            .document(uid)
+            .collection(CollectionPath.USERS)
             .getDocuments())
         .documents;
 

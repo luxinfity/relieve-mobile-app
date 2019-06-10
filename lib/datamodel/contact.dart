@@ -35,14 +35,11 @@ class Contact {
   }
 }
 
-class ContactResponse extends BaseResponse {
-  @override
-  final List<Contact> content;
-
+class ContactResponse extends BaseResponse<List<Contact>> {
   ContactResponse({
     String message,
     int status,
-    this.content,
+    List<Contact> content,
   }) : super(message, status, content);
 
   factory ContactResponse.fromJson(Map<String, dynamic> parsedJson) {

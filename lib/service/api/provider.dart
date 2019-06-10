@@ -15,8 +15,8 @@ class Provider {
 
   /// Always invoke this function before call get / post resource
   void checkProvider() {
-    if (name.isEmpty) throw Exception('name is Empty');
-    if (completeUri.isEmpty) throw Exception('completeUri is Empty');
-    if (secret.isEmpty) throw Exception('secret is Empty');
+    if (name.isEmpty) throw StateError('name is Empty');
+    if (completeUri.isEmpty) throw StateError('completeUri is Empty');
+    if (secret.isEmpty) throw StateError('secret is Empty');
   }
 }

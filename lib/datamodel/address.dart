@@ -48,15 +48,11 @@ class Address {
   }
 }
 
-
-class AddressResponse extends BaseResponse {
-  @override
-  final List<Address> content;
-
+class AddressResponse extends BaseResponse<List<Address>> {
   AddressResponse({
     String message,
     int status,
-    this.content,
+    List<Address> content,
   }) : super(message, status, content);
 
   factory AddressResponse.fromJson(Map<String, dynamic> parsedJson) {

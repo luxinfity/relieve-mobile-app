@@ -64,14 +64,11 @@ class WeatherItem {
   }
 }
 
-class WeatherResponse extends BaseResponse {
-  @override
-  final WeatherItem content;
-
+class WeatherResponse extends BaseResponse<WeatherItem> {
   WeatherResponse({
     String message,
     int status,
-    this.content = const WeatherItem(),
+    WeatherItem content = const WeatherItem(),
   }) : super(message, status, content);
 
   factory WeatherResponse.fromJson(Map<String, dynamic> parsedJson) {

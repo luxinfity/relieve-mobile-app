@@ -1,7 +1,7 @@
-class BaseResponse {
+class BaseResponse<T> {
   final String message;
   final int status;
-  final dynamic content;
+  final T content;
 
   BaseResponse(
     this.message,

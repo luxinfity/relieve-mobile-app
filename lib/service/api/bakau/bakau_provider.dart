@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -9,6 +10,8 @@ import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';
 import 'package:relieve_app/service/api/provider.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
+import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 
 class BakauProvider extends Provider implements BakauApi {
   @override
@@ -24,7 +27,7 @@ class BakauProvider extends Provider implements BakauApi {
       url,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-//        'authorization': await PreferenceUtils.getToken(),
+        'authorization': await PreferenceUtils.get().getIdToken(),
         'secret': secret,
       },
       body: jsonEncode({
@@ -39,19 +42,41 @@ class BakauProvider extends Provider implements BakauApi {
   /// endregion
 
   /// wrapper of `FirestoreHelper.get().getFamilies()`
-  /// because query can be done directly to fire store
+  /// so didn't need to run `this.checkProvider()`;
   @override
   Future<List<Family>> getFamilies() async {
     return FirestoreHelper.get().getFamilies();
   }
 
   @override
-  Future<bool> addFamily(RelieveUser other) async {
-    return false;
+  Future<AddFamilyState> addFamily(RelieveUser other) async {
+    this.checkProvider();
+    var url = '$completeUri/families/add';
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          'authorization': await PreferenceUtils.get().getIdToken(),
+          'secret': secret,
+        },
+        body: jsonEncode({'uid': other.uid}),
+      );
+
+      final parsed = AddFamilyResponse.fromJson(jsonDecode(response.body));
+      return parsed.content;
+    } on TimeoutException catch (error) {
+      debugLog(BakauProvider).info(error);
+    } catch (error) {
+      debugLog(BakauProvider).shout(error);
+    }
+    return AddFamilyState.CANCELED;
   }
 
   @override
-  Future<bool> confirmFamilyAuth(String code) async {
-    return false;
+  Future<AddFamilyState> confirmFamilyAuth(String code) async {
+    this.checkProvider();
+    return AddFamilyState.CANCELED;
   }
 }

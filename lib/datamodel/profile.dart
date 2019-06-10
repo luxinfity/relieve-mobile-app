@@ -102,14 +102,11 @@ class Profile {
   }
 }
 
-class ProfileResponse extends BaseResponse {
-  @override
-  final Profile content;
-
+class ProfileResponse extends BaseResponse<Profile> {
   ProfileResponse({
     String message,
     int status,
-    this.content,
+    Profile content,
   }) : super(message, status, content);
 
   factory ProfileResponse.fromJson(Map<String, dynamic> parsedJson) {

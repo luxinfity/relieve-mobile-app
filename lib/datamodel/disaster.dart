@@ -127,14 +127,11 @@ class DisasterContent {
   }
 }
 
-class DisasterResponse extends BaseResponse {
-  @override
-  final DisasterContent content;
-
+class DisasterResponse extends BaseResponse<DisasterContent> {
   DisasterResponse({
     String message,
     int status,
-    this.content,
+    DisasterContent content,
   }) : super(message, status, content);
 
   factory DisasterResponse.fromJson(Map<String, dynamic> parsedJson) {

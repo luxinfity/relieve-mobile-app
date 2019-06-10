@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
@@ -68,5 +69,48 @@ class Family extends RelieveUser {
       label: label ?? this.label,
       condition: condition ?? this.condition,
     );
+  }
+}
+
+class AddFamilyState {
+  final String name;
+
+  static const PENDING = AddFamilyState._internal('pending');
+  static const SUCCESS = AddFamilyState._internal('success');
+  static const CANCELED = AddFamilyState._internal('canceled');
+
+  const AddFamilyState._internal(this.name);
+
+  factory AddFamilyState(String name) {
+    switch (name) {
+      case 'pending':
+        return PENDING;
+      case 'success':
+        return SUCCESS;
+      case 'canceled':
+        return PENDING;
+      default:
+        throw StateError('AddFamily state unrecognized');
+    }
+  }
+}
+
+class AddFamilyResponse extends BaseResponse<AddFamilyState> {
+  AddFamilyResponse({
+    String message,
+    int status,
+    AddFamilyState content,
+  }) : super(message, status, content);
+
+  factory AddFamilyResponse.fromJson(Map<String, dynamic> parsedJson) {
+    try {
+      return AddFamilyResponse(
+        message: parsedJson['message'],
+        status: parsedJson['status'],
+        content: AddFamilyState(parsedJson['content']),
+      );
+    } catch (e) {
+      return null;
+    }
   }
 }
