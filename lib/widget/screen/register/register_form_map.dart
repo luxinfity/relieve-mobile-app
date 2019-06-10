@@ -204,9 +204,8 @@ class RegisterFormMapState extends State<RegisterFormMap> {
           child: Stack(
             children: <Widget>[
               GoogleMap(
-                initialCameraPosition: currentPositionCamera == null
-                    ? jakartaCoordinate
-                    : currentPositionCamera,
+                initialCameraPosition:
+                    currentPositionCamera ?? jakartaCoordinate,
                 myLocationEnabled: hasPermission,
                 onMapCreated: (controller) {
                   _mapController.complete(controller);
