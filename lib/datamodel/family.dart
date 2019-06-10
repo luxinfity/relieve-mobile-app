@@ -55,4 +55,18 @@ class Family extends RelieveUser {
       .split(' ')
       .map((word) => word[0].toUpperCase())
       .join('');
+
+  Family copyWith({
+    String uid,
+    Profile profile,
+    String label,
+    Condition condition,
+  }) {
+    return Family(
+      uid: uid ?? this.uid,
+      profile: profile ?? this.profile,
+      label: label ?? this.label,
+      condition: condition ?? this.condition,
+    );
+  }
 }

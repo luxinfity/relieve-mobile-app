@@ -5,31 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:relieve_app/datamodel/contact.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';
 import 'package:relieve_app/service/api/provider.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 
 class BakauProvider extends Provider implements BakauApi {
   @override
   final String name = "bakau";
-
-  /// region Families resource
-  @override
-  Future<Family> getFamilies() async {
-    this.checkProvider();
-
-    var url = '$completeUri/family';
-    final response = await http.get(url, headers: {
-      HttpHeaders.contentTypeHeader: 'application/json',
-//      'authorization': await PreferenceUtils.getToken(),
-      'secret': secret,
-    });
-
-    throw Exception('not implemented yet');
-
-//    return FamilyResponse.fromJson(jsonDecode(response.body));
-  }
-
-  /// endregion
 
   /// region Map
   @override
@@ -54,4 +37,21 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   /// endregion
+
+  /// wrapper of `FirestoreHelper.get().getFamilies()`
+  /// because query can be done directly to fire store
+  @override
+  Future<List<Family>> getFamilies() async {
+    return FirestoreHelper.get().getFamilies();
+  }
+
+  @override
+  Future<bool> addFamily(RelieveUser other) async {
+    return false;
+  }
+
+  @override
+  Future<bool> confirmFamilyAuth(String code) async {
+    return false;
+  }
 }

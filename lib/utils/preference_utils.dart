@@ -31,6 +31,8 @@ class PreferenceUtils {
     storage.deleteAll();
   }
 
+  /// nullable response,
+  /// will return null when user is not logged in
   Future<String> getUid() async {
     if (await isLogin() || await isGoogleLogin()) {
       final user = await FirebaseAuth.instance.currentUser();
