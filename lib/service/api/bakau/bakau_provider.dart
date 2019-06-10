@@ -48,6 +48,8 @@ class BakauProvider extends Provider implements BakauApi {
     return FirestoreHelper.get().getFamilies();
   }
 
+  /// send request to BE
+  /// TODO: try implementing direct FCM
   @override
   Future<AddFamilyState> addFamily(RelieveUser other) async {
     this.checkProvider();
