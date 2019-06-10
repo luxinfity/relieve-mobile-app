@@ -10,8 +10,6 @@ import Firebase
     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?
   ) -> Bool {
 
-    GMSServices.provideAPIKey("IOS_API_KEY")
-
     // Use Firebase library to configure APIs
     var filePath:String!
 #if DEBUG
@@ -25,6 +23,8 @@ import Firebase
     let options = FirebaseOptions.init(contentsOfFile: filePath)!
     FirebaseApp.configure(options: options)
 
+    // google maps
+    GMSServices.provideAPIKey("IOS_API_KEY")
     GeneratedPluginRegistrant.register(with: self)
     
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
