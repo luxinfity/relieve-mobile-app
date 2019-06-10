@@ -7,7 +7,7 @@ import 'package:relieve_app/datamodel/contact.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/profile.dart';
-import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';
 import 'package:relieve_app/service/api/provider.dart';
 import 'package:relieve_app/service/google/base.dart';
@@ -19,7 +19,7 @@ class BakauProvider extends Provider implements BakauApi {
   /// region Auth resource
   @override
   Future<bool> isUserExist(
-      UserCheckIdentifier checkIdentifier, String value) async {
+      ProfileIdentifier checkIdentifier, String value) async {
     this.checkProvider();
 
     var url = '$completeUri/auth/check';
@@ -67,7 +67,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<Profile> googleLoginWrap() async {
+  Future<RelieveUser> googleLoginWrap() async {
     final user = await googleSignInScope.signIn();
     final authData = await user.authentication;
     throw Exception('Bakau not implemented googleLoginWrap yet');

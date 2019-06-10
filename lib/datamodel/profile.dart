@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/address.dart';
-import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 import 'package:relieve_app/datamodel/gender.dart';
+
+enum ProfileIdentifier { uid, email, username }
 
 class Profile {
   final String username;
@@ -57,17 +58,15 @@ class Profile {
     return jsonEncode(toMap());
   }
 
-  factory Profile.fromQuerySnapshot(QuerySnapshot snapShot) {
+  factory Profile.fromMap(Map snapShot) {
     try {
-      final rawData = snapShot?.documents?.first;
-
       return Profile(
-        username: rawData.data['username'],
-        fullName: rawData.data['fullName'],
-        email: rawData.data['email'],
-        phone: rawData.data['phone'],
-        birthDate: rawData.data['birthDate'],
-        gender: Gender(rawData.data['gender']),
+        username: snapShot['username'],
+        fullName: snapShot['fullName'],
+        email: snapShot['email'],
+        phone: snapShot['phone'],
+        birthDate: snapShot['birthDate'],
+        gender: Gender(snapShot['gender']),
       );
     } catch (e) {
       return null;

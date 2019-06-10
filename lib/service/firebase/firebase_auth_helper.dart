@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:relieve_app/datamodel/profile.dart';
-import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/service/base/auth_api.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/service/google/base.dart';
@@ -22,25 +22,25 @@ class FirebaseAuthHelper implements AuthApi {
   FirebaseAuthHelper._internal();
 
   @override
-  Future<bool> isUserExist(UserCheckIdentifier checkIdentifier, String value) {
-    return FirestoreHelper.get().isUserExist(checkIdentifier, value);
+  Future<bool> isUserExist(ProfileIdentifier checkIdentifier, String value) {
+    return FirestoreHelper.get().isProfileExist(checkIdentifier, value);
   }
 
   @override
   Future<bool> login(String username, String password) async {
     final completeProfile = await FirestoreHelper.get()
-        .findProfileBy(UserCheckIdentifier.username, username);
+        .findUserBy(ProfileIdentifier.username, username);
 
     if (completeProfile == null) return false;
 
     try {
       FirebaseUser firebaseUser =
           await _fireBaseAuth.signInWithEmailAndPassword(
-              email: completeProfile.email, password: password);
+              email: completeProfile.profile.email, password: password);
 
       final signedInUser = await FirestoreHelper.get()
-          .findProfileBy(UserCheckIdentifier.username, username);
-      PreferenceUtils.get().saveCurrentProfile(signedInUser);
+          .findUserBy(ProfileIdentifier.username, username);
+      PreferenceUtils.get().saveCurrentProfile(signedInUser.profile);
 
       return firebaseUser != null;
     } catch (error) {
@@ -75,22 +75,27 @@ class FirebaseAuthHelper implements AuthApi {
   /// null means, user might be never register before
   /// or haven't complete registration flow
   @override
-  Future<Profile> googleLoginWrap() async {
+  Future<RelieveUser> googleLoginWrap() async {
     try {
-      final user = await googleSignInScope.signIn();
-      final authData = await user.authentication;
+      final googleUser = await googleSignInScope.signIn();
+      final authData = await googleUser.authentication;
 
       final isSuccess =
           await googleLogin(authData.accessToken, authData.idToken);
 
       if (!isSuccess) return null;
 
-      final completeProfile = await FirestoreHelper.get()
-          .findProfileBy(UserCheckIdentifier.email, user.email);
-      PreferenceUtils.get().saveCurrentProfile(completeProfile);
+      final relieveUser = await FirestoreHelper.get()
+          .findUserBy(ProfileIdentifier.email, googleUser.email);
+      PreferenceUtils.get().saveCurrentProfile(relieveUser.profile);
 
-      return completeProfile ??
-          Profile(email: user.email, fullName: user.displayName);
+      return relieveUser ??
+          RelieveUser(
+              '',
+              Profile(
+                email: googleUser.email,
+                fullName: googleUser.displayName,
+              ));
     } catch (error) {
       // sign-in failed due to any error
       debugLog(FirebaseAuthHelper).info(error);
@@ -117,10 +122,10 @@ class FirebaseAuthHelper implements AuthApi {
   /// else return null (user might already been registered before).
   @override
   Future<bool> register(Profile profile) async {
-    bool isExist = await isUserExist(UserCheckIdentifier.email, profile.email);
+    bool isExist = await isUserExist(ProfileIdentifier.email, profile.email);
     if (profile.username != null) {
       isExist = isExist &&
-          await isUserExist(UserCheckIdentifier.username, profile.username);
+          await isUserExist(ProfileIdentifier.username, profile.username);
     }
     String uid = await PreferenceUtils.get().getUid();
 
@@ -150,6 +155,6 @@ class FirebaseAuthHelper implements AuthApi {
     // drop password, so not be seen on DB
     profile = profile.copyWith(password: '');
     PreferenceUtils.get().saveCurrentProfile(profile);
-    return await FirestoreHelper.get().storeUser(uid, profile);
+    return await FirestoreHelper.get().storeProfile(uid, profile);
   }
 }

@@ -29,7 +29,8 @@ class BoardingHomeScreen extends StatelessWidget {
       MaterialPageRoute(
         builder: (builder) => RegisterScreen(
               progressCount: 2,
-              initialData: Profile(email: profile.email, fullName: profile.fullName),
+              initialData:
+                  Profile(email: profile.email, fullName: profile.fullName),
             ),
       ),
     );
@@ -43,11 +44,11 @@ class BoardingHomeScreen extends StatelessWidget {
     var user = await FirebaseAuthHelper.get().googleLoginWrap();
     RelieveLoadingDialog.dismiss(context);
 
-    if (user != null && user.username != null) {
+    if (user != null && user.profile.username != null) {
       // login success
       goToMainPage(context);
-    } else if (user != null && user.email.isNotEmpty) {
-      goToRegisterPage(context, user);
+    } else if (user != null && user.profile.email.isNotEmpty) {
+      goToRegisterPage(context, user.profile);
     } else {
       RelieveBottomModal.create(context, <Widget>[
         Container(height: Dimen.x21),

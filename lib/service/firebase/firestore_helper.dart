@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/profile.dart';
-import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
+import 'package:relieve_app/service/base/profile_api.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 
 abstract class CollectionPath {
@@ -9,7 +10,7 @@ abstract class CollectionPath {
 }
 
 /// singleton
-class FirestoreHelper {
+class FirestoreHelper implements ProfileApi {
   static final FirestoreHelper _instance = FirestoreHelper._internal();
 
   static FirestoreHelper get() => _instance;
@@ -21,23 +22,10 @@ class FirestoreHelper {
 
   FirestoreHelper._internal();
 
-  Future<bool> isUserExist(
-      UserCheckIdentifier checkIdentifier, String value) async {
-    try {
-      Profile profile = await findProfileBy(checkIdentifier, value);
-      return profile != null;
-    } catch (error) {
-      debugLog(FirestoreHelper).info(error);
-
-      // if query not allowed, return false
-      return false;
-    }
-  }
-
   /// save user as a document,
   /// but save address as a collection inside user document
   /// to optimize query
-  Future<bool> storeUser(String uid, Profile profile) async {
+  Future<bool> storeProfile(String uid, Profile profile) async {
     try {
       await _fireStore
           .collection(CollectionPath.USERS)
@@ -60,31 +48,47 @@ class FirestoreHelper {
     }
   }
 
+  Future<bool> isProfileExist(
+      ProfileIdentifier checkIdentifier, String value) async {
+    RelieveUser profile = await findUserBy(checkIdentifier, value);
+    return profile != null;
+  }
+
   /// return email if found, and null if not found
-  Future<Profile> findProfileBy(
-      UserCheckIdentifier checkIdentifier, String value) async {
+  Future<RelieveUser> findUserBy(
+      ProfileIdentifier checkIdentifier, String value) async {
     if (value == null || value.isEmpty)
       throw ArgumentError('value must bot empty');
 
-    Profile profile;
+    RelieveUser user;
 
     try {
-      if (checkIdentifier == UserCheckIdentifier.username) {
-        final data = await _fireStore
+      if (checkIdentifier == ProfileIdentifier.uid) {
+        final document = await _fireStore
             .collection(CollectionPath.USERS)
-            .where("username", isEqualTo: value)
+            .document(value)
             .snapshots()
             .first;
 
-        profile = Profile.fromQuerySnapshot(data);
-      } else if (checkIdentifier == UserCheckIdentifier.email) {
-        final data = await _fireStore
+        user = RelieveUser(document.documentID, Profile.fromMap(document.data));
+      } else if (checkIdentifier == ProfileIdentifier.username) {
+        final snapshot = (await _fireStore
+            .collection(CollectionPath.USERS)
+            .where("username", isEqualTo: value)
+            .snapshots()
+            .first);
+
+        final document = snapshot.documents.first;
+        user = RelieveUser(document.documentID, Profile.fromMap(document.data));
+      } else if (checkIdentifier == ProfileIdentifier.email) {
+        final snapshot = await _fireStore
             .collection(CollectionPath.USERS)
             .where("email", isEqualTo: value)
             .snapshots()
             .first;
 
-        profile = Profile.fromQuerySnapshot(data);
+        final document = snapshot.documents.first;
+        user = RelieveUser(document.documentID, Profile.fromMap(document.data));
       } else {
         throw StateError('unhandled checkIdentifier type');
       }
@@ -92,6 +96,6 @@ class FirestoreHelper {
       debugLog(FirestoreHelper).info(error);
     }
 
-    return profile;
+    return user;
   }
 }

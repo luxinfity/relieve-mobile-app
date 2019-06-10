@@ -1,4 +1,4 @@
-import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 
 class Token {
   final String token;
