@@ -6,7 +6,7 @@ import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/contact.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';
 import 'package:relieve_app/service/api/provider.dart';
@@ -67,7 +67,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<User> googleLoginWrap() async {
+  Future<Profile> googleLoginWrap() async {
     final user = await googleSignInScope.signIn();
     final authData = await user.authentication;
     throw Exception('Bakau not implemented googleLoginWrap yet');
@@ -82,7 +82,7 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   @override
-  Future<bool> register(User user) async {
+  Future<bool> register(Profile profile) async {
     this.checkProvider();
 
     var url = '$completeUri/auth/register';
@@ -92,7 +92,7 @@ class BakauProvider extends Provider implements BakauApi {
         HttpHeaders.contentTypeHeader: 'application/json',
         'secret': secret
       },
-      body: user.toJson(),
+      body: profile.toJson(),
     );
 
     throw Exception('Bakau not implemented register yet');
@@ -139,7 +139,7 @@ class BakauProvider extends Provider implements BakauApi {
 
   /// region Profile resouce
   @override
-  Future<UserResponse> getUser() async {
+  Future<ProfileResponse> getUser() async {
     this.checkProvider();
 
     var url = '$completeUri/user/profile';
@@ -149,7 +149,7 @@ class BakauProvider extends Provider implements BakauApi {
       'secret': secret,
     });
 
-    return UserResponse.fromJson(jsonDecode(response.body));
+    return ProfileResponse.fromJson(jsonDecode(response.body));
   }
 
   @override

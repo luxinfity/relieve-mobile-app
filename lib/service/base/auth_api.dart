@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 
 abstract class AuthApi {
@@ -12,7 +12,7 @@ abstract class AuthApi {
   @protected
   Future<bool> googleLogin(String accessToken, String idToken);
 
-  Future<User> googleLoginWrap();
+  Future<Profile> googleLoginWrap();
 
-  Future<bool> register(User user);
+  Future<bool> register(Profile profile);
 }

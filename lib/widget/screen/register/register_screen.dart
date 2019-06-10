@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
@@ -14,9 +14,9 @@ import 'package:relieve_app/widget/screen/walkthrough/walkthrough_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
-  final User initialData;
+  final Profile initialData;
 
-  RegisterScreen({this.progressCount = 1, this.initialData = const User()});
+  RegisterScreen({this.progressCount = 1, this.initialData = const Profile()});
 
   @override
   State<StatefulWidget> createState() {
@@ -29,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   int progressCount = 1;
   int progressTotal = 3;
 
-  User _user;
+  Profile _user;
 
   @override
   void initState() {
@@ -40,7 +40,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   /// redirect user to logged in screen
   void onRegisterSuccess() {
-    PreferenceUtils.setLogin(true);
     // auto login
     Navigator.pushAndRemoveUntil(
       context,
@@ -65,7 +64,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   /// only call this method after checking all field
   /// (param: completeUser) is correct
   /// the field will be stored as is
-  void doRegister(User completeUser) async {
+  void doRegister(Profile completeUser) async {
     RelieveLoadingDialog.show(context);
 
     // final user will be stored as is
@@ -117,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   /// if user register using google let user back until screen 2
   /// else let user back until screen 1
   void onBackButtonClick(context) async {
-    bool isGoogleLogin = await PreferenceUtils.isGoogleLogin();
+    bool isGoogleLogin = await PreferenceUtils.get().isGoogleLogin();
 
     int limit = isGoogleLogin ? 2 : 1;
 

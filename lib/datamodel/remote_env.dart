@@ -29,12 +29,15 @@ class RemoteEnv {
   }
 
   static Future<RemoteEnv> loadEnv() async {
-    String envName = (await PreferenceUtils.storage.read(key: 'envName')) ?? '';
+    String envName =
+        (await PreferenceUtils.get().storage.read(key: 'envName')) ?? '';
     String protocol =
-        (await PreferenceUtils.storage.read(key: 'protocol')) ?? '';
-    String domain = (await PreferenceUtils.storage.read(key: 'domain')) ?? '';
-    String port = (await PreferenceUtils.storage.read(key: 'port')) ?? '';
-    String secret = (await PreferenceUtils.storage.read(key: 'secret')) ?? '';
+        (await PreferenceUtils.get().storage.read(key: 'protocol')) ?? '';
+    String domain =
+        (await PreferenceUtils.get().storage.read(key: 'domain')) ?? '';
+    String port = (await PreferenceUtils.get().storage.read(key: 'port')) ?? '';
+    String secret =
+        (await PreferenceUtils.get().storage.read(key: 'secret')) ?? '';
 
     if (envName.isEmpty ||
         protocol.isEmpty ||
@@ -50,11 +53,15 @@ class RemoteEnv {
 
   /// After storing new env don't forget to call `Api.reset()`
   static void storeEnv(RemoteEnv env) async {
-    await PreferenceUtils.storage.write(key: 'envName', value: env.envName);
-    await PreferenceUtils.storage.write(key: 'protocol', value: env.protocol);
-    await PreferenceUtils.storage.write(key: 'domain', value: env.domain);
-    await PreferenceUtils.storage.write(key: 'port', value: env.port);
-    await PreferenceUtils.storage.write(key: 'secret', value: env.secret);
+    await PreferenceUtils.get()
+        .storage
+        .write(key: 'envName', value: env.envName);
+    await PreferenceUtils.get()
+        .storage
+        .write(key: 'protocol', value: env.protocol);
+    await PreferenceUtils.get().storage.write(key: 'domain', value: env.domain);
+    await PreferenceUtils.get().storage.write(key: 'port', value: env.port);
+    await PreferenceUtils.get().storage.write(key: 'secret', value: env.secret);
     _singleton = env;
   }
 

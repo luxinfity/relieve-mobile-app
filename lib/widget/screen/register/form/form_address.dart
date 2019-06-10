@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
@@ -13,8 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class FormAddress extends StatefulWidget {
   final VoidCallbackContext onBackClick;
-  final VoidCallbackUser onNextClick;
-  final User initialData;
+  final VoidCallbackProfile onNextClick;
+  final Profile initialData;
 
   const FormAddress({
     Key key,

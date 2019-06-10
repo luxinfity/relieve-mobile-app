@@ -25,7 +25,7 @@ class HomeDecider extends StatelessWidget {
   }
 
   void pickHomeScreenBasedOn(BuildContext context) async {
-    if (await PreferenceUtils.isLogin()) {
+    if (await PreferenceUtils.get().isLogin()) {
       goToLoggedInHomeScreen(context);
     } else {
       // not login but has google ID,

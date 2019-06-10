@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 import 'package:relieve_app/datamodel/family.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/api/base.dart';
 import 'package:relieve_app/service/service.dart';
@@ -15,13 +15,13 @@ class ProfileBoard extends StatefulWidget {
 
 class ProfileBoardState extends State {
   String locationName;
-  User user = User(fullName: '');
+  Profile profile = Profile(fullName: '');
 
   void loadUser() async {
     final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
     if (userResponse?.status == REQUEST_SUCCESS) {
       setState(() {
-        user = userResponse.content;
+        profile = userResponse.content;
       });
     }
   }
@@ -82,7 +82,7 @@ class ProfileBoardState extends State {
                   bottom: Dimen.x21,
                 ),
                 child: Text(
-                  ReCase(user.fullName).titleCase,
+                  ReCase(profile.fullName).titleCase,
                   style: CircularStdFont.medium.getStyle(
                     size: Dimen.x21,
                     color: Colors.white,

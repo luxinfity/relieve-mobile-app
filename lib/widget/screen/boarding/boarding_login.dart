@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/relieve_snackbar.dart';
@@ -27,7 +26,6 @@ class BoardingLoginScreenState extends State {
   var passwordVisible = false;
 
   void onLoginSuccess(String username) {
-    PreferenceUtils.setLogin(true);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),

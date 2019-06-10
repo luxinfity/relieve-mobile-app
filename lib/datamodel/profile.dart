@@ -5,7 +5,7 @@ import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/base.dart';
 import 'package:relieve_app/datamodel/gender.dart';
 
-class User {
+class Profile {
   final String username;
   final String password;
   final String fullName;
@@ -15,7 +15,7 @@ class User {
   final Gender gender;
   final List<Address> addresses;
 
-  const User({
+  const Profile({
     this.username,
     this.password,
     this.fullName,
@@ -57,11 +57,11 @@ class User {
     return jsonEncode(toMap());
   }
 
-  factory User.fromQuerySnapshot(QuerySnapshot snapShot) {
+  factory Profile.fromQuerySnapshot(QuerySnapshot snapShot) {
     try {
       final rawData = snapShot?.documents?.first;
 
-      return User(
+      return Profile(
         username: rawData.data['username'],
         fullName: rawData.data['fullName'],
         email: rawData.data['email'],
@@ -74,9 +74,9 @@ class User {
     }
   }
 
-  factory User.fromJson(Map<String, dynamic> parsedJson) {
+  factory Profile.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      return User(
+      return Profile(
         username: parsedJson['username'],
         fullName: parsedJson['fullName'],
         email: parsedJson['email'],
@@ -89,7 +89,7 @@ class User {
     }
   }
 
-  User copyWith({
+  Profile copyWith({
     String username,
     String password,
     String fullName,
@@ -99,7 +99,7 @@ class User {
     Gender gender,
     List<Address> addresses,
   }) {
-    return User(
+    return Profile(
       username: username ?? this.username,
       password: password ?? this.password,
       fullName: fullName ?? this.fullName,
@@ -112,22 +112,22 @@ class User {
   }
 }
 
-class UserResponse extends BaseResponse {
+class ProfileResponse extends BaseResponse {
   @override
-  final User content;
+  final Profile content;
 
-  UserResponse({
+  ProfileResponse({
     String message,
     int status,
     this.content,
   }) : super(message, status, content);
 
-  factory UserResponse.fromJson(Map<String, dynamic> parsedJson) {
+  factory ProfileResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      return UserResponse(
+      return ProfileResponse(
         message: parsedJson['message'],
         status: parsedJson['status'],
-        content: User.fromJson(parsedJson['content']),
+        content: Profile.fromJson(parsedJson['content']),
       );
     } catch (e) {
       return null;

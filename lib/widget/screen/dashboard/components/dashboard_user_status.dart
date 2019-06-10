@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/api/base.dart';
 import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/dashboard_title.dart';
 
@@ -51,16 +51,7 @@ class _UserAppBarState extends State<UserAppBar> {
   IndonesiaPlace indonesiaPlace;
   bool isSafe = false;
 
-  User user = User(fullName: '');
-
-  void loadUser() async {
-//    final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
-//    if (userResponse?.status == REQUEST_SUCCESS) {
-//      setState(() {
-//        user = userResponse.content;
-//      });
-//    }
-  }
+  Profile profile = PreferenceUtils.get().currentUserProfile;
 
   void loadPositionName() async {
     if (!await LocationService.isLocationRequestPermitted()) {
@@ -81,7 +72,6 @@ class _UserAppBarState extends State<UserAppBar> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    loadUser();
     loadPositionName();
   }
 
@@ -105,7 +95,7 @@ class _UserAppBarState extends State<UserAppBar> {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Greeting(name: ReCase(user.fullName).titleCase),
+                Greeting(name: ReCase(profile?.fullName ?? '...').titleCase),
                 Padding(
                   padding: EdgeInsets.only(top: Dimen.x24, bottom: Dimen.x18),
                   child: UserLocation(

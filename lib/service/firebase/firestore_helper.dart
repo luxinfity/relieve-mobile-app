@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 
@@ -22,8 +22,8 @@ class FirestoreHelper {
   Future<bool> isUserExist(
       UserCheckIdentifier checkIdentifier, String value) async {
     try {
-      User user = await findUserBy(checkIdentifier, value);
-      return user != null;
+      Profile profile = await findProfileBy(checkIdentifier, value);
+      return profile != null;
     } catch (error) {
       debugLog(FirestoreHelper).info(error);
 
@@ -35,14 +35,14 @@ class FirestoreHelper {
   /// save user as a document,
   /// but save address as a collection inside user document
   /// to optimize query
-  Future<bool> storeUser(String uid, User user) async {
+  Future<bool> storeUser(String uid, Profile profile) async {
     try {
       await _fireStore
           .collection(CollectionPath.USERS)
           .document(uid)
-          .setData(user.toMap());
+          .setData(profile.toMap());
 
-      final addresses = user.addressesToListMap();
+      final addresses = profile.addressesToListMap();
       for (Map<String, dynamic> address in addresses) {
         await _fireStore
             .collection(CollectionPath.USERS)
@@ -59,12 +59,12 @@ class FirestoreHelper {
   }
 
   /// return email if found, and null if not found
-  Future<User> findUserBy(
+  Future<Profile> findProfileBy(
       UserCheckIdentifier checkIdentifier, String value) async {
     if (value == null || value.isEmpty)
       throw ArgumentError('value must bot empty');
 
-    User user; // is null
+    Profile profile; // is null
 
     try {
       if (checkIdentifier == UserCheckIdentifier.username) {
@@ -74,7 +74,7 @@ class FirestoreHelper {
             .snapshots()
             .first;
 
-        user = User.fromQuerySnapshot(data);
+        profile = Profile.fromQuerySnapshot(data);
       } else if (checkIdentifier == UserCheckIdentifier.email) {
         final data = await _fireStore
             .collection(CollectionPath.USERS)
@@ -82,7 +82,7 @@ class FirestoreHelper {
             .snapshots()
             .first;
 
-        user = User.fromQuerySnapshot(data);
+        profile = Profile.fromQuerySnapshot(data);
       } else {
         throw StateError('unhandled checkIdentifier type');
       }
@@ -90,6 +90,6 @@ class FirestoreHelper {
       debugLog(FirestoreHelper).info(error);
     }
 
-    return user;
+    return profile;
   }
 }
