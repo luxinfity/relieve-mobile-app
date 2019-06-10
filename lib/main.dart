@@ -25,7 +25,7 @@ void main() {
   // TODO: delete later
   // Temporary: Mock Server
   final mockServer = RemoteEnv('Postman Mock', 'https',
-      'c119ba48-3e35-48bd-8334-75cfe80c20d8.mock.pstmn.io', '', '');
+      'c119ba48-3e35-48bd-8334-75cfe80c20d8.mock.pstmn.io', '', 'alif-test');
   RemoteEnv.storeEnv(mockServer);
 
   Catcher(MyApp(), debugConfig: debugOptions);

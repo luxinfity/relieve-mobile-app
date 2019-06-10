@@ -114,11 +114,11 @@ class WeatherItem extends StatelessWidget {
 class WeatherItemList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return WeatherItemListState();
+    return _WeatherItemListState();
   }
 }
 
-class WeatherItemListState extends State {
+class _WeatherItemListState extends State<WeatherItemList> {
   WeatherResponse _weatherResponse = WeatherResponse();
 
   void fetchData() async {

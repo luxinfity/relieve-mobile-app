@@ -44,22 +44,22 @@ class Greeting extends StatelessWidget {
 
 class UserAppBar extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => UserAppBarState();
+  State<StatefulWidget> createState() => _UserAppBarState();
 }
 
-class UserAppBarState extends State {
+class _UserAppBarState extends State<UserAppBar> {
   IndonesiaPlace indonesiaPlace;
   bool isSafe = false;
 
   User user = User(fullName: '');
 
   void loadUser() async {
-    final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
-    if (userResponse?.status == REQUEST_SUCCESS) {
-      setState(() {
-        user = userResponse.content;
-      });
-    }
+//    final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
+//    if (userResponse?.status == REQUEST_SUCCESS) {
+//      setState(() {
+//        user = userResponse.content;
+//      });
+//    }
   }
 
   void loadPositionName() async {
