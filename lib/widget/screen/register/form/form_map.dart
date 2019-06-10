@@ -177,8 +177,7 @@ class _FormMapState extends State<FormMap> {
           height: Dimen.x42,
           width: Dimen.x42,
           alignment: Alignment.center,
-          child:
-              LocalImage.icMap.toSvg(color: Colors.white, height: Dimen.x21),
+          child: LocalImage.icMap.toSvg(color: Colors.white, height: Dimen.x21),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: AppColor.colorPrimary,

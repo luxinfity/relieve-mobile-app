@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/family/add_family_modal.dart';
 import 'package:relieve_app/widget/family/family_item.dart';
 

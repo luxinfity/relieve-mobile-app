@@ -70,8 +70,7 @@ class RemoteImage {
 
   static RemoteImage get icAppCircle => RemoteImage('ic_app_circle.png');
 
-  static RemoteImage get bgDkiJakarta =>
-      RemoteImage('home-bg/dki-jakarta.png');
+  static RemoteImage get bgDkiJakarta => RemoteImage('home-bg/dki-jakarta.png');
 }
 
 class LocalImage {
@@ -118,8 +117,7 @@ class LocalImage {
 
   static LocalImage get icFaq => LocalImage('ic_faq');
 
-  static LocalImage get icInfoContributor =>
-      LocalImage('ic_info_contributor');
+  static LocalImage get icInfoContributor => LocalImage('ic_info_contributor');
 
   static LocalImage get icNotification => LocalImage('ic_notif');
 
