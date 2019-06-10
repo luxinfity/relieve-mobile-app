@@ -40,7 +40,7 @@ class BoardingHomeScreen extends StatelessWidget {
   /// else login failed
   void googleButtonClicked(BuildContext context) async {
     RelieveLoadingDialog.show(context);
-    var user = await FirebaseAuthHelper.instance.googleLoginWrap();
+    var user = await FirebaseAuthHelper.get().googleLoginWrap();
     RelieveLoadingDialog.dismiss(context);
 
     if (user != null && user.username != null) {

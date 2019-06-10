@@ -68,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     RelieveLoadingDialog.show(context);
 
     // final user will be stored as is
-    final isSuccess = await FirebaseAuthHelper.instance.register(completeUser);
+    final isSuccess = await FirebaseAuthHelper.get().register(completeUser);
 
     RelieveLoadingDialog.dismiss(context);
 
@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       defaultBackPressed(context);
 
       // clear google credential
-      FirebaseAuthHelper.instance.logout();
+      FirebaseAuthHelper.get().logout();
     }
   }
 

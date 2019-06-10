@@ -45,7 +45,7 @@ class BoardingLoginScreenState extends State {
       });
 
       RelieveLoadingDialog.show(context);
-      final isSuccess = await FirebaseAuthHelper.instance
+      final isSuccess = await FirebaseAuthHelper.get()
           .login(usernameController.text, passwordController.text);
       RelieveLoadingDialog.dismiss(context);
 

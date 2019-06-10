@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TabProfileScreen extends StatelessWidget {
   void onLogout(BuildContext context) async {
-    FirebaseAuthHelper.instance.logout();
+    FirebaseAuthHelper.get().logout();
 
     Navigator.pushAndRemoveUntil(
       context,

@@ -10,23 +10,25 @@ import 'package:relieve_app/utils/preference_utils.dart';
 
 /// singleton
 class FirebaseAuthHelper implements AuthApi {
-  static final FirebaseAuthHelper instance = FirebaseAuthHelper._internal();
+  static final FirebaseAuthHelper _instance = FirebaseAuthHelper._internal();
+
+  static FirebaseAuthHelper get() => _instance;
   final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
 
   factory FirebaseAuthHelper() {
-    return instance;
+    return _instance;
   }
 
   FirebaseAuthHelper._internal();
 
   @override
   Future<bool> isUserExist(UserCheckIdentifier checkIdentifier, String value) {
-    return FirestoreHelper.instance.isUserExist(checkIdentifier, value);
+    return FirestoreHelper.get().isUserExist(checkIdentifier, value);
   }
 
   @override
   Future<bool> login(String username, String password) async {
-    final completeProfile = await FirestoreHelper.instance
+    final completeProfile = await FirestoreHelper.get()
         .findProfileBy(UserCheckIdentifier.username, username);
 
     if (completeProfile == null) return false;
@@ -36,7 +38,7 @@ class FirebaseAuthHelper implements AuthApi {
           await _fireBaseAuth.signInWithEmailAndPassword(
               email: completeProfile.email, password: password);
 
-      final signedInUser = await FirestoreHelper.instance
+      final signedInUser = await FirestoreHelper.get()
           .findProfileBy(UserCheckIdentifier.username, username);
       PreferenceUtils.get().saveCurrentProfile(signedInUser);
 
@@ -83,7 +85,7 @@ class FirebaseAuthHelper implements AuthApi {
 
       if (!isSuccess) return null;
 
-      final completeProfile = await FirestoreHelper.instance
+      final completeProfile = await FirestoreHelper.get()
           .findProfileBy(UserCheckIdentifier.email, user.email);
       PreferenceUtils.get().saveCurrentProfile(completeProfile);
 
@@ -148,6 +150,6 @@ class FirebaseAuthHelper implements AuthApi {
     // drop password, so not be seen on DB
     profile = profile.copyWith(password: '');
     PreferenceUtils.get().saveCurrentProfile(profile);
-    return await FirestoreHelper.instance.storeUser(uid, profile);
+    return await FirestoreHelper.get().storeUser(uid, profile);
   }
 }

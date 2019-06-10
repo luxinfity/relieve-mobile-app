@@ -10,11 +10,13 @@ abstract class CollectionPath {
 
 /// singleton
 class FirestoreHelper {
-  static final FirestoreHelper instance = FirestoreHelper._internal();
+  static final FirestoreHelper _instance = FirestoreHelper._internal();
+
+  static FirestoreHelper get() => _instance;
   final Firestore _fireStore = Firestore.instance;
 
   factory FirestoreHelper() {
-    return instance;
+    return _instance;
   }
 
   FirestoreHelper._internal();
@@ -64,7 +66,7 @@ class FirestoreHelper {
     if (value == null || value.isEmpty)
       throw ArgumentError('value must bot empty');
 
-    Profile profile; // is null
+    Profile profile;
 
     try {
       if (checkIdentifier == UserCheckIdentifier.username) {
