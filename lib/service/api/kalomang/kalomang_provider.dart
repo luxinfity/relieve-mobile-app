@@ -35,8 +35,8 @@ class KalomangProvider extends Provider implements KalomangApi {
 
   /// return null if cannot connect or response is in wrong format
   @override
-  Future<DisasterResponse> getDisasterList(
-      int page, int limit, List<DisasterType> filters) async {
+  Future<DisasterResponse> getDisasterList(int page, int limit,
+      {List<DisasterType> filters = const []}) async {
     this.checkProvider();
 
     String filterQuery = '';
