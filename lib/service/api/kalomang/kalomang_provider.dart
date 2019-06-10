@@ -32,11 +32,12 @@ class KalomangProvider extends Provider implements KalomangApi {
   }
 
   /// return null if cannot connect
+  /// TODO: implement filter type
   @override
   Future<DisasterResponse> getDisasterList(int page, int limit) async {
     this.checkProvider();
 
-    var uri = '$completeUri/earthquake?page=$page&limit=$limit';
+    var uri = '$completeUri/disaster?page=$page&limit=$limit';
     final headers = {
       'authorization': await PreferenceUtils.get().getIdToken(),
       'secret': secret,

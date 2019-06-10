@@ -48,8 +48,7 @@ class DiscoverItem extends StatelessWidget {
       spacing: Dimen.x8,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
-        LocalImage.icLive
-            .toSvg(height: Dimen.x14, color: AppColor.colorDanger),
+        LocalImage.icLive.toSvg(height: Dimen.x14, color: AppColor.colorDanger),
         Text(
           'Sekarang!',
           style: CircularStdFont.black.getStyle(
@@ -270,9 +269,13 @@ class DisasterItemListState extends State {
   void loadDisaster() async {
     final disasterResponse =
         await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
+
+    final correctlyParsedData = (disasterResponse.content.data ?? listDisaster);
+    correctlyParsedData.removeWhere((obj) => obj == null);
+
     if (disasterResponse?.status == REQUEST_SUCCESS) {
       setState(() {
-        listDisaster = disasterResponse.content.data;
+        listDisaster = correctlyParsedData;
       });
     }
   }

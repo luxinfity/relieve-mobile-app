@@ -8,8 +8,7 @@ import 'package:relieve_app/widget/disaster/disaster_item.dart';
 
 class TabDiscoverScreen extends StatefulWidget {
   @override
-  _TabDiscoverScreenState createState() =>
-      _TabDiscoverScreenState();
+  _TabDiscoverScreenState createState() => _TabDiscoverScreenState();
 }
 
 class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
@@ -18,9 +17,13 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
   void loadDisaster() async {
     final disasterResponse =
         await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
+
+    final correctlyParsedData = (disasterResponse.content.data ?? listDisaster);
+    correctlyParsedData.removeWhere((obj) => obj == null);
+
     if (disasterResponse?.status == REQUEST_SUCCESS) {
       setState(() {
-        listDisaster = disasterResponse.content.data;
+        listDisaster = correctlyParsedData;
       });
     }
   }
