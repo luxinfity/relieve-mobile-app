@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:relieve_app/datamodel/user.dart';
 import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/service/base/auth_api.dart';
@@ -30,10 +31,18 @@ class FirebaseAuthHelper implements AuthApi {
 
     if (completeProfile == null) return false;
 
-    FirebaseUser firebaseUser = await _fireBaseAuth.signInWithEmailAndPassword(
-        email: completeProfile.email, password: password);
-
-    return firebaseUser != null;
+    try {
+      FirebaseUser firebaseUser =
+          await _fireBaseAuth.signInWithEmailAndPassword(
+              email: completeProfile.email, password: password);
+      return firebaseUser != null;
+    } catch (error) {
+      if (error is PlatformException && error.code == "ERROR_WRONG_PASSWORD") {
+        debugLog(FirebaseAuthHelper).info(error);
+        return false;
+      } else
+        throw error;
+    }
   }
 
   @override
