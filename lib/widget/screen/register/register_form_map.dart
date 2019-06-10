@@ -91,7 +91,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
         final position = mapCenter.target;
         IndonesiaPlace locationDetail = await LocationService.getPlaceDetail(
           context,
-          position,
+          Coordinate.parseFromLatLng(position),
         );
 
         if (locationDetail != null) {
@@ -122,7 +122,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     final address = Address(
         label: '',
         street: addressDetail,
-        coordinate: currentPositionCamera.target);
+        coordinate: Coordinate.parseFromLatLng(currentPositionCamera.target));
     Navigator.of(context).pop(address);
   }
 

@@ -12,14 +12,20 @@ class IndonesiaPlace {
       this.province, this.city, this.district, this.street, this.coordinate);
 }
 
-class Coordinate extends LatLng {
-  const Coordinate(double latitude, double longitude)
-      : super(latitude, longitude);
+class Coordinate {
+  final double latitude;
+  final double longitude;
+
+  const Coordinate(this.latitude, this.longitude);
 
   @override
   String toString() {
     return '$latitude,$longitude';
   }
+
+  LatLng toLatLng() => LatLng(latitude, longitude);
+
+  Position toPosition() => Position(latitude: latitude, longitude: longitude);
 
   factory Coordinate.parseString(String coordinate) {
     final splitted =
@@ -29,5 +35,9 @@ class Coordinate extends LatLng {
 
   factory Coordinate.parseFromPosition(Position position) {
     return Coordinate(position.latitude, position.longitude);
+  }
+
+  factory Coordinate.parseFromLatLng(LatLng latLng) {
+    return Coordinate(latLng.latitude, latLng.longitude);
   }
 }
