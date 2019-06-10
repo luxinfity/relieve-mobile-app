@@ -26,7 +26,7 @@ class CallListScreenState extends State {
 
   void getAllContact() async {
     // TODO: handle getCurrentLocation(...) null value
-    final position = await LocationService.getCurrentLocation();
+    final position = await LocationService.getCurrentPosition();
     final contactResponse = await Api.get()
         .setProvider(BakauProvider())
         .getNearbyEmergencyContact(Coordinate.parseFromPosition(position));

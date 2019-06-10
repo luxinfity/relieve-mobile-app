@@ -43,7 +43,7 @@ class _FormMapState extends State<FormMap> {
       return;
     }
 
-    final position = await LocationService.getCurrentLocation();
+    final position = await LocationService.getCurrentPosition();
 
     setState(() {
       currentPositionCamera = CameraPosition(
@@ -68,7 +68,7 @@ class _FormMapState extends State<FormMap> {
     }
 
     if (currentPositionCamera == null) {
-      final position = await LocationService.getCurrentLocation();
+      final position = await LocationService.getCurrentPosition();
       currentPositionCamera = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
         zoom: 14,

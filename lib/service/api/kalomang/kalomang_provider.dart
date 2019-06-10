@@ -14,14 +14,13 @@ class KalomangProvider extends Provider implements KalomangApi {
   Future<WeatherResponse> weatherCheck(double lat, double lang) async {
     this.checkProvider();
 
-    var uri = '$completeUri/weather/$lat,$lang';
+    var uri = '$completeUri/weather/?loc=$lat,$lang';
     final headers = {
 //      'authorization': await PreferenceUtils.getToken(),
       'secret': secret,
     };
 
     final response = await http.get(uri, headers: headers);
-
     return WeatherResponse.fromJson(jsonDecode(response.body));
   }
 

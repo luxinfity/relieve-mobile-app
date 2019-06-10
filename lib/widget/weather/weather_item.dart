@@ -129,7 +129,7 @@ class _WeatherItemListState extends State<WeatherItemList> {
       return;
     }
 
-    final userLocation = await LocationService.getLastKnownLocation();
+    final userLocation = await LocationService.getLastKnownPosition();
     if (userLocation != null) {
       final response =
           await Api.get().setProvider(KalomangProvider()).weatherCheck(
@@ -137,7 +137,7 @@ class _WeatherItemListState extends State<WeatherItemList> {
                 userLocation.longitude,
               );
       setState(() {
-        _weatherResponse = response;
+        _weatherResponse = response ?? _weatherResponse;
       });
     }
   }
@@ -159,9 +159,8 @@ class _WeatherItemListState extends State<WeatherItemList> {
           Expanded(
             child: WeatherItem(
               weatherType: WeatherType.Temperature,
-              classification:
-                  _weatherResponse.content.temparature.desc?.id ?? 'Normal',
-              value: _weatherResponse.content.temparature.value,
+              classification: _weatherResponse.content.temperature.desc.id,
+              value: _weatherResponse.content.temperature.value,
             ),
           ),
           Container(width: Dimen.x4),
