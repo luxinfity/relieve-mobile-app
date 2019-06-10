@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_home.dart';
-import 'package:relieve_app/widget/screen/dashboard/dashboard.dart';
+import 'package:relieve_app/widget/screen/dashboard/dashboard_screen.dart';
 
 /// Decision page, select main page base on login condition
 class HomeDecider extends StatelessWidget {

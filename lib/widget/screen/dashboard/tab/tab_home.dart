@@ -6,7 +6,7 @@ import 'package:relieve_app/widget/family/family_list.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/dashboard_user_status.dart';
 import 'package:relieve_app/widget/weather/weather_item.dart';
 
-class DashboardHomeScreen extends StatelessWidget {
+class TabHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(

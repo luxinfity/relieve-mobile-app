@@ -8,15 +8,15 @@ import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-import 'package:relieve_app/widget/screen/register/register_form_map.dart';
+import 'package:relieve_app/widget/screen/register/form/form_map.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class RegisterFormAddress extends StatefulWidget {
+class FormAddress extends StatefulWidget {
   final VoidCallbackContext onBackClick;
   final VoidCallbackUser onNextClick;
   final User initialData;
 
-  const RegisterFormAddress({
+  const FormAddress({
     Key key,
     this.onBackClick,
     this.onNextClick,
@@ -25,11 +25,11 @@ class RegisterFormAddress extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormAddressState();
+    return _FormAddressState();
   }
 }
 
-class RegisterFormAddressState extends State<RegisterFormAddress> {
+class _FormAddressState extends State<FormAddress> {
   var isAddressValid = true;
   var isNameValid = true;
 
@@ -59,7 +59,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       });
     } else {
       final result = await Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => RegisterFormMap()));
+          context, MaterialPageRoute(builder: (builder) => FormMap()));
       if (result != null) {
         final address = (result as Address);
         setState(() {

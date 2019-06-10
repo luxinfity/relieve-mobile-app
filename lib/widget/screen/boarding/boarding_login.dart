@@ -7,7 +7,7 @@ import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/relieve_snackbar.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough_screen.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override

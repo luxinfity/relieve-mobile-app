@@ -8,12 +8,12 @@ class RelieveBottomNavigationBar extends StatefulWidget {
   final RelieveBottomAction onPress;
 
   @override
-  RelieveBottomNavigationBarState createState() {
-    return new RelieveBottomNavigationBarState();
+  _RelieveBottomNavigationBarState createState() {
+    return new _RelieveBottomNavigationBarState();
   }
 }
 
-class RelieveBottomNavigationBarState
+class _RelieveBottomNavigationBarState
     extends State<RelieveBottomNavigationBar> {
   int currentIndex = 0;
 

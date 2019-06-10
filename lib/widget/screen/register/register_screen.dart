@@ -7,10 +7,10 @@ import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
-import 'package:relieve_app/widget/screen/register/register_form_account.dart';
-import 'package:relieve_app/widget/screen/register/register_form_address.dart';
-import 'package:relieve_app/widget/screen/register/register_form_profile.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/widget/screen/register/form/form_account.dart';
+import 'package:relieve_app/widget/screen/register/form/form_address.dart';
+import 'package:relieve_app/widget/screen/register/form/form_profile.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
@@ -20,11 +20,11 @@ class RegisterScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterScreenState();
+    return _RegisterScreenState();
   }
 }
 
-class RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool isPermissionDenied = false;
   int progressCount = 1;
   int progressTotal = 3;
@@ -83,7 +83,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   Widget createPage() {
     switch (progressCount) {
       case 1:
-        return RegisterFormAccount(
+        return FormAccount(
           initialData: _user,
           onNextClick: (user) {
             setState(() {
@@ -93,7 +93,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           },
         );
       case 2:
-        return RegisterFormProfile(
+        return FormProfile(
           initialData: _user,
           onNextClick: (user) {
             setState(() {
@@ -103,7 +103,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           },
         );
       default:
-        return RegisterFormAddress(
+        return FormAddress(
           initialData: _user,
           onNextClick: (user) {
             _user = user;

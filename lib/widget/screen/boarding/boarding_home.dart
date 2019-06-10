@@ -10,8 +10,8 @@ import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
-import 'package:relieve_app/widget/screen/register/register.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/widget/screen/register/register_screen.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough_screen.dart';
 
 class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);

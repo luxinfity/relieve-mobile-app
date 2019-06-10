@@ -7,7 +7,7 @@ import 'package:relieve_app/widget/screen/setting/notification.dart';
 import 'package:relieve_app/widget/screen/setting/profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DashboardProfileScreen extends StatelessWidget {
+class TabProfileScreen extends StatelessWidget {
   void onLogout(BuildContext context) async {
     FirebaseAuthHelper.instance.logout();
 

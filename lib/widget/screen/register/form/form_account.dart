@@ -6,11 +6,11 @@ import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
-class RegisterFormAccount extends StatefulWidget {
+class FormAccount extends StatefulWidget {
   final VoidCallbackUser onNextClick;
   final User initialData;
 
-  const RegisterFormAccount({
+  const FormAccount({
     Key key,
     this.onNextClick,
     this.initialData,
@@ -18,11 +18,11 @@ class RegisterFormAccount extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormAccountState();
+    return _FormAccountState();
   }
 }
 
-class RegisterFormAccountState extends State<RegisterFormAccount> {
+class _FormAccountState extends State<FormAccount> {
   bool passwordVisible = false;
 
   var isUsernameValid = true;

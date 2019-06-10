@@ -4,14 +4,14 @@ import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/chat/chat_item.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
-class DashboardChatScreen extends StatefulWidget {
+class TabChatScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return DashboardChatScreenState();
+    return TabChatScreenState();
   }
 }
 
-class DashboardChatScreenState extends State {
+class TabChatScreenState extends State {
   List<Chat> chatList = [
     Chat(
       isRead: false,

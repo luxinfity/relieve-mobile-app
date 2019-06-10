@@ -12,18 +12,18 @@ import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
-class RegisterFormMap extends StatefulWidget {
+class FormMap extends StatefulWidget {
   final VoidCallback onNextClick;
 
-  const RegisterFormMap({Key key, this.onNextClick}) : super(key: key);
+  const FormMap({Key key, this.onNextClick}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormMapState();
+    return _FormMapState();
   }
 }
 
-class RegisterFormMapState extends State<RegisterFormMap> {
+class _FormMapState extends State<FormMap> {
   CameraPosition currentPositionCamera;
   CameraPosition mapCenter;
   Completer<GoogleMapController> _mapController = Completer();

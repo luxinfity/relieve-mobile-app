@@ -6,13 +6,13 @@ import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/disaster/disaster_item.dart';
 
-class DashboardDiscoverScreen extends StatefulWidget {
+class TabDiscoverScreen extends StatefulWidget {
   @override
-  _DashboardDiscoverScreenState createState() =>
-      _DashboardDiscoverScreenState();
+  _TabDiscoverScreenState createState() =>
+      _TabDiscoverScreenState();
 }
 
-class _DashboardDiscoverScreenState extends State<DashboardDiscoverScreen> {
+class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
   List<DisasterDesc> listDisaster = [];
 
   void loadDisaster() async {

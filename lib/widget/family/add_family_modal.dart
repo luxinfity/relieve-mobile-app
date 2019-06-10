@@ -14,7 +14,7 @@ class AddFamilyModal extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return AddFamilyModalState();
+    return _AddFamilyModalState();
   }
 
   static showModal(BuildContext context, VoidCallback onExitModal) {
@@ -37,7 +37,7 @@ class AddFamilyModal extends StatefulWidget {
 
 enum AddPersonStep { Search, Found, Confirmation, Naming, Finish }
 
-class AddFamilyModalState extends State<AddFamilyModal> {
+class _AddFamilyModalState extends State<AddFamilyModal> {
   var step = AddPersonStep.Search;
   final _usernameController = TextEditingController();
   var friendUsername = '';
@@ -47,7 +47,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
   bool setFriendUsername(UserCheckResponse checkResponse) {
     if (checkResponse?.status == REQUEST_SUCCESS &&
         checkResponse?.content?.isExsist == true) {
-      debugLog(AddFamilyModalState).info(checkResponse?.content?.value);
+      debugLog(_AddFamilyModalState).info(checkResponse?.content?.value);
       friendUsername = checkResponse?.content?.value;
       return true;
     }

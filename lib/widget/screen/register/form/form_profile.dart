@@ -9,11 +9,11 @@ import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:validators/validators.dart';
 
-class RegisterFormProfile extends StatefulWidget {
+class FormProfile extends StatefulWidget {
   final VoidCallbackUser onNextClick;
   final User initialData;
 
-  const RegisterFormProfile({
+  const FormProfile({
     Key key,
     this.onNextClick,
     this.initialData,
@@ -21,11 +21,11 @@ class RegisterFormProfile extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormProfileState();
+    return _FormProfileState();
   }
 }
 
-class RegisterFormProfileState extends State<RegisterFormProfile> {
+class _FormProfileState extends State<FormProfile> {
   bool passwordVisible = false;
 
   var isFullNameValid = true;
