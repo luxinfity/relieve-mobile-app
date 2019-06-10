@@ -54,7 +54,7 @@ class ItemButton extends StatelessWidget {
               Container(
                 alignment: Alignment.topRight,
                 child: isEditMode
-                    ? LocalImage.ic_check.toSvg(
+                    ? LocalImage.icCheck.toSvg(
                         width: Dimen.x16,
                         color: isSelected
                             ? AppColor.colorPrimary

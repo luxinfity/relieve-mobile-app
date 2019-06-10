@@ -116,7 +116,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
               labelText: 'Tulis username / email',
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(Dimen.x14),
-                child: LocalImage.ic_search
+                child: LocalImage.icSearch
                     .toSvg(width: Dimen.x18, height: Dimen.x18),
               ),
               border: OutlineInputBorder(

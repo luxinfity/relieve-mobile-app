@@ -178,7 +178,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
           width: Dimen.x42,
           alignment: Alignment.center,
           child:
-              LocalImage.ic_map.toSvg(color: Colors.white, height: Dimen.x21),
+              LocalImage.icMap.toSvg(color: Colors.white, height: Dimen.x21),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: AppColor.colorPrimary,
@@ -216,7 +216,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
                 onCameraMoveStarted: cameraStartMoving,
               ),
               Align(
-                child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
+                child: LocalImage.icMapPin.toSvg(width: Dimen.x64),
                 alignment: Theme.of(context).platform == TargetPlatform.iOS
                     ? Alignment(0, -0.11)
                     : Alignment(0, -0.2),
@@ -228,7 +228,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
                   backgroundColor: Colors.white,
                   elevation: Dimen.x4,
                   highlightElevation: Dimen.x4,
-                  child: LocalImage.ic_back_arrow.toSvg(height: 26),
+                  child: LocalImage.icBackArrow.toSvg(height: 26),
                   onPressed: () => defaultBackPressed(context),
                 ),
               ),

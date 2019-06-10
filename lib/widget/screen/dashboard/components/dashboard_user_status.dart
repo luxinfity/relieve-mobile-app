@@ -112,7 +112,7 @@ class UserAppBarState extends State {
                     location: indonesiaPlace == null
                         ? 'Menunggu Lokasi...'
                         : '${indonesiaPlace.city}, ${indonesiaPlace.province}',
-                    icon: LocalImage.ic_live,
+                    icon: LocalImage.icLive,
                     personHealth: PersonHealth.Fine,
                   ),
                 )
@@ -136,7 +136,7 @@ class UserAppBarState extends State {
   Container buildBgImage() {
     return Container(
         child: indonesiaPlace == null
-            ? RemoteImage.bg_dki_jakarta.toImage(fit: BoxFit.cover)
+            ? RemoteImage.bgDkiJakarta.toImage(fit: BoxFit.cover)
             : BackgroundImage(indonesiaPlace.province)
                 .toImage(fit: BoxFit.cover));
   }

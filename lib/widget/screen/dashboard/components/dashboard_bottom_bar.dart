@@ -91,7 +91,7 @@ class RelieveBottomNavigationBarState
               }
             },
             child: Padding(
-              child: LocalImage.ic_call.toSvg(width: 20, height: 20),
+              child: LocalImage.icCall.toSvg(width: 20, height: 20),
               padding: EdgeInsets.all(14),
             )),
       ),
@@ -102,11 +102,11 @@ class RelieveBottomNavigationBarState
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        buildItem(0, LocalImage.ic_home, 'Home'),
-        buildItem(1, LocalImage.ic_discover, 'Discover'),
+        buildItem(0, LocalImage.icHome, 'Home'),
+        buildItem(1, LocalImage.icDiscover, 'Discover'),
         buildCallWidget(),
-        buildItem(3, LocalImage.ic_chat, 'Chat'),
-        buildItem(4, LocalImage.ic_user, 'Profile')
+        buildItem(3, LocalImage.icChat, 'Chat'),
+        buildItem(4, LocalImage.icUser, 'Profile')
       ],
     );
   }

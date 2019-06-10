@@ -136,7 +136,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
                       suffixIcon: IconButton(
-                        icon: LocalImage.ic_map.toSvg(),
+                        icon: LocalImage.icMap.toSvg(),
                         onPressed: () {},
                       ),
                     ),

@@ -97,7 +97,7 @@ class ProfileBoardState extends State {
                   location: locationName == null
                       ? 'Menunggu Lokasi...'
                       : locationName,
-                  icon: LocalImage.ic_map,
+                  icon: LocalImage.icMap,
                   personHealth: PersonHealth.None,
                 ),
               ),

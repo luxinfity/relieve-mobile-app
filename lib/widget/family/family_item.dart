@@ -55,7 +55,7 @@ class FamilyItem extends StatelessWidget {
 
   Widget _createEmptyItem() {
     return Center(
-      child: LocalImage.dashed_circle.toSvg(
+      child: LocalImage.dashedCircle.toSvg(
         height: Dimen.x64,
         width: Dimen.x64,
       ),
@@ -72,7 +72,7 @@ class FamilyItem extends StatelessWidget {
             height: Dimen.x64,
             width: Dimen.x64,
             child: Center(
-              child: LocalImage.ic_add_user.toSvg(
+              child: LocalImage.icAddUser.toSvg(
                 height: Dimen.x18,
                 width: Dimen.x18,
               ),

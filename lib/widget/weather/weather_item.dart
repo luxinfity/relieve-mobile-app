@@ -20,13 +20,13 @@ class WeatherItem extends StatelessWidget {
   Widget createImage() {
     switch (weatherType) {
       case WeatherType.Temparature:
-        return LocalImage.ic_temperature.toSvg(width: 24);
+        return LocalImage.icTemperature.toSvg(width: 24);
       case WeatherType.Wind:
-        return LocalImage.ic_wind.toSvg(width: 24);
+        return LocalImage.icWind.toSvg(width: 24);
       case WeatherType.UV:
-        return LocalImage.ic_sun.toSvg(width: 24);
+        return LocalImage.icSun.toSvg(width: 24);
       default:
-        return LocalImage.ic_rain.toSvg(width: 24);
+        return LocalImage.icRain.toSvg(width: 24);
     }
   }
 

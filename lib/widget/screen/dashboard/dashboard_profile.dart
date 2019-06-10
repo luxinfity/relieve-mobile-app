@@ -35,7 +35,7 @@ class DashboardProfileScreen extends StatelessWidget {
                     right: Dimen.x8,
                   ),
                   child: _buildButton(
-                    LocalImage.ic_user,
+                    LocalImage.icUser,
                     'Profil dan password',
                     axis: Axis.vertical,
                     onClick: () {
@@ -56,7 +56,7 @@ class DashboardProfileScreen extends StatelessWidget {
                     left: Dimen.x8,
                   ),
                   child: _buildButton(
-                    LocalImage.ic_notif,
+                    LocalImage.icNotification,
                     'Notifkasi dan getar',
                     axis: Axis.vertical,
                     onClick: () {
@@ -82,7 +82,7 @@ class DashboardProfileScreen extends StatelessWidget {
               bottom: Dimen.x8,
             ),
             child: _buildButton(
-              LocalImage.ic_faq,
+              LocalImage.icFaq,
               'Bantuan dan FAQ',
               onClick: () {
                 launch('https://github.com/RelieveID/terms-and-conditions/');
@@ -96,7 +96,7 @@ class DashboardProfileScreen extends StatelessWidget {
               bottom: Dimen.x8,
             ),
             child: _buildButton(
-              LocalImage.ic_syarat,
+              LocalImage.icTerm,
               'Syarat-syarat dan kondisi',
               onClick: () {
                 launch('https://github.com/RelieveID/terms-and-conditions/');
@@ -110,7 +110,7 @@ class DashboardProfileScreen extends StatelessWidget {
               bottom: Dimen.x8,
             ),
             child: _buildButton(
-              LocalImage.ic_privacy,
+              LocalImage.icPrivacy,
               'Privasi dan kebijakan',
               onClick: () {
                 launch('https://github.com/RelieveID/terms-and-conditions/');
@@ -124,7 +124,7 @@ class DashboardProfileScreen extends StatelessWidget {
               bottom: Dimen.x8,
             ),
             child: _buildButton(
-              LocalImage.ic_info_contributor,
+              LocalImage.icInfoContributor,
               'Tentang relieve dan kontributor',
               onClick: () {
                 launch('https://github.com/RelieveID/terms-and-conditions/');
@@ -139,7 +139,7 @@ class DashboardProfileScreen extends StatelessWidget {
               bottom: Dimen.x32,
             ),
             child: _buildButton(
-              LocalImage.ic_exit,
+              LocalImage.icExit,
               'Keluar',
               isExit: true,
               onClick: () => onLogout(context),

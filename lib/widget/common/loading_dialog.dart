@@ -13,7 +13,7 @@ abstract class RelieveLoadingDialog {
           backgroundColor: Colors.transparent,
           child: SpinKitPumpingHeart(
             itemBuilder: (context, index) {
-              return RemoteImage.ic_app_circle.toImage(
+              return RemoteImage.icAppCircle.toImage(
                 height: 100,
                 fadeInDuration: Duration(milliseconds: 0),
               );

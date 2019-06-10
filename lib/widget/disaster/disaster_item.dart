@@ -48,7 +48,7 @@ class DiscoverItem extends StatelessWidget {
       spacing: Dimen.x8,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
-        LocalImage.ic_live
+        LocalImage.icLive
             .toSvg(height: Dimen.x14, color: AppColor.colorDanger),
         Text(
           'Sekarang!',
@@ -240,7 +240,7 @@ class DisasterItem extends StatelessWidget {
           spacing: Dimen.x6,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: <Widget>[
-            LocalImage.ic_live.toSvg(
+            LocalImage.icLive.toSvg(
               height: Dimen.x10,
               width: Dimen.x12,
               color: Colors.white,
@@ -292,7 +292,7 @@ class DisasterItemListState extends State {
         onTap: () {},
         child: Container(
           alignment: Alignment.center,
-          child: LocalImage.ic_warning.toSvg(height: 20),
+          child: LocalImage.icWarning.toSvg(height: 20),
           padding: EdgeInsets.only(
             top: Dimen.x16,
             bottom: Dimen.x16,
@@ -337,7 +337,7 @@ class DisasterItemListState extends State {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: LocalImage.ic_guard.toSvg(height: 20),
+                    child: LocalImage.icGuard.toSvg(height: 20),
                   ),
                   Expanded(
                     flex: 2,

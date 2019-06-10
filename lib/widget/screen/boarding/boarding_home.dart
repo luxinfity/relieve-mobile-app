@@ -93,7 +93,7 @@ class BoardingHomeScreen extends StatelessWidget {
         StandardButton(
           key: Key('home-google-sign-in'),
           text: 'Sign In With Google',
-          svgIcon: LocalImage.ic_google,
+          svgIcon: LocalImage.icGoogle,
           backgroundColor: AppColor.colorDanger,
           buttonClick: () => googleButtonClicked(context),
         ),

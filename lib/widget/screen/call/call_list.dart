@@ -53,23 +53,23 @@ class CallListScreenState extends State {
   LocalImage getIcon(String type) {
     switch (type) {
       case 'hospital':
-        return LocalImage.ic_ambulance;
+        return LocalImage.icAmbulance;
       case 'police':
-        return LocalImage.ic_police;
+        return LocalImage.icPolice;
       case 'fire_station':
-        return LocalImage.ic_fire_fighter;
+        return LocalImage.icFireFighter;
       case 'red_cross':
-        return LocalImage.ic_red_cross;
+        return LocalImage.icRedCross;
       case 'bmkg':
-        return LocalImage.ic_bmkg;
+        return LocalImage.icBmkg;
       case 'sar':
-        return LocalImage.ic_sar;
+        return LocalImage.icSar;
       case 'bpjs':
-        return LocalImage.ic_medic;
+        return LocalImage.icMedic;
       case 'pln':
-        return LocalImage.ic_pln;
+        return LocalImage.icPln;
       default:
-        return LocalImage.ic_ambulance;
+        return LocalImage.icAmbulance;
     }
   }
 
@@ -88,7 +88,7 @@ class CallListScreenState extends State {
     buttons.insert(
       0,
       ItemButton(
-        icon: LocalImage.ic_add_other,
+        icon: LocalImage.icAddOther,
         title: 'Tambah Lainnya',
         isTintBlue: true,
         onClick: () {
