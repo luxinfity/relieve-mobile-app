@@ -3,7 +3,7 @@ import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/disaster/disaster_item.dart';
 import 'package:relieve_app/widget/family/family_list.dart';
-import 'package:relieve_app/widget/screen/dashboard/components/dashboard_user_status.dart';
+import 'package:relieve_app/widget/screen/dashboard/components/user_app_bar.dart';
 import 'package:relieve_app/widget/weather/weather_item.dart';
 
 class TabHomeScreen extends StatelessWidget {
