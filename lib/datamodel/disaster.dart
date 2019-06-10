@@ -2,6 +2,38 @@ import 'package:flutter/foundation.dart';
 import 'package:relieve_app/datamodel/base.dart';
 import 'package:relieve_app/datamodel/location.dart';
 
+class DisasterType {
+  final String name;
+
+  factory DisasterType(String name) {
+    switch (name) {
+      case 'quake':
+        return QUAKES;
+      case 'fire':
+        return FIRE;
+      case 'flood':
+        return FLOOD;
+      case 'slide':
+        return SLIDE;
+      case 'crash':
+        return CRASH;
+      case 'typhoon':
+        return TYPHOON;
+      default:
+        throw ArgumentError('unidentified DisasterType');
+    }
+  }
+
+  const DisasterType._internal(this.name);
+
+  static const DisasterType QUAKES = DisasterType._internal("quake");
+  static const DisasterType FIRE = DisasterType._internal("fire");
+  static const DisasterType FLOOD = DisasterType._internal("flood");
+  static const DisasterType SLIDE = DisasterType._internal("slide");
+  static const DisasterType CRASH = DisasterType._internal("crash");
+  static const DisasterType TYPHOON = DisasterType._internal("typhoon");
+}
+
 class Disaster {
   final bool isLive;
   final String title;
@@ -44,6 +76,7 @@ class DisasterMeta {
 
 class DisasterDesc {
   final String id;
+  final DisasterType disasterType;
   final Coordinate coordinate;
   final double magnitude;
   final double depth;
@@ -51,6 +84,7 @@ class DisasterDesc {
 
   DisasterDesc({
     this.id,
+    this.disasterType,
     this.coordinate,
     this.magnitude,
     this.depth,
@@ -61,6 +95,7 @@ class DisasterDesc {
     try {
       return DisasterDesc(
         id: parsedJson['id'],
+        disasterType: DisasterType(parsedJson['type']),
         coordinate: Coordinate.parseString(parsedJson['coordinate']),
         magnitude: parsedJson['magnitude'].toDouble(),
         depth: parsedJson['depth'].toDouble(),
