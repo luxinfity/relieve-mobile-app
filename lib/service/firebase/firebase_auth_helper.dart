@@ -120,7 +120,7 @@ class FirebaseAuthHelper implements AuthApi {
       isExist = isExist &&
           await isUserExist(UserCheckIdentifier.username, profile.username);
     }
-    String uid = await PreferenceUtils.get().uid();
+    String uid = await PreferenceUtils.get().getUid();
 
     if (isExist) {
       // if user exist, don't register new user

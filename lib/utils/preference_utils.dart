@@ -31,10 +31,19 @@ class PreferenceUtils {
     storage.deleteAll();
   }
 
-  Future<String> uid() async {
+  Future<String> getUid() async {
     if (await isLogin() || await isGoogleLogin()) {
       final user = await FirebaseAuth.instance.currentUser();
       return user.uid;
+    } else {
+      return null;
+    }
+  }
+
+  Future<String> getIdToken() async {
+    if (await isLogin() || await isGoogleLogin()) {
+      final user = await FirebaseAuth.instance.currentUser();
+      return user.getIdToken();
     } else {
       return null;
     }
