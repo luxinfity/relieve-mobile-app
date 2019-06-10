@@ -3,7 +3,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 
 class LocationService {
@@ -48,17 +47,15 @@ class LocationService {
   /// nullable return value
   static Future<IndonesiaPlace> getPlaceDetail(
       BuildContext context, Coordinate position) async {
-    final locationResponse = await Api.get()
-        .setProvider(BakauProvider())
-        .getAddressDetailOfPosition(position);
+    final placeMarks = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
 
-    if (locationResponse?.status == REQUEST_SUCCESS &&
-        locationResponse.content != null) {
+    if (placeMarks != null && placeMarks.isNotEmpty) {
       indonesiaPlace = IndonesiaPlace(
-          locationResponse.content.area1,
-          locationResponse.content.area2,
-          locationResponse.content.area3,
-          locationResponse.content.street,
+          placeMarks.first.administrativeArea,
+          placeMarks.first.subAdministrativeArea,
+          "${placeMarks.first.subLocality}, ${placeMarks.first.locality}",
+          "${placeMarks.first.thoroughfare} ${placeMarks.first.subThoroughfare}",
           position);
       return indonesiaPlace;
     } else {
