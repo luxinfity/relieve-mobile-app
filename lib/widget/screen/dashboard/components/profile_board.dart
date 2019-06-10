@@ -4,8 +4,7 @@ import 'package:recase/recase.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/api/base.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
 
 class ProfileBoard extends StatefulWidget {
@@ -15,25 +14,16 @@ class ProfileBoard extends StatefulWidget {
 
 class ProfileBoardState extends State {
   String locationName;
-  Profile profile = Profile(fullName: '');
-
-  void loadUser() async {
-    final userResponse = await Api.get().setProvider(BakauProvider()).getUser();
-    if (userResponse?.status == REQUEST_SUCCESS) {
-      setState(() {
-        profile = userResponse.content;
-      });
-    }
-  }
+  Profile profile = PreferenceUtils.get().currentUserProfile;
 
   void loadPositionName() async {
     var location = 'Kamu belum punya alamat';
-    final addressResponse =
-        await Api.get().setProvider(BakauProvider()).getUserAddress();
-    if (addressResponse?.status == REQUEST_SUCCESS &&
-        addressResponse.content.length > 0) {
-      location = addressResponse.content[0].label;
-    }
+//    final addressResponse =
+//        await Api.get().setProvider(BakauProvider()).getUserAddress();
+//    if (addressResponse?.status == REQUEST_SUCCESS &&
+//        addressResponse.content.length > 0) {
+//      location = addressResponse.content[0].label;
+//    }
     setState(() {
       locationName = location;
     });
@@ -42,7 +32,6 @@ class ProfileBoardState extends State {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    loadUser();
     loadPositionName();
   }
 
@@ -82,7 +71,7 @@ class ProfileBoardState extends State {
                   bottom: Dimen.x21,
                 ),
                 child: Text(
-                  ReCase(profile.fullName).titleCase,
+                  ReCase(profile?.fullName ?? '...').titleCase,
                   style: CircularStdFont.medium.getStyle(
                     size: Dimen.x21,
                     color: Colors.white,
