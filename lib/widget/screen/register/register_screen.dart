@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
@@ -7,29 +7,29 @@ import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
-import 'package:relieve_app/widget/screen/register/register_form_account.dart';
-import 'package:relieve_app/widget/screen/register/register_form_address.dart';
-import 'package:relieve_app/widget/screen/register/register_form_profile.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/widget/screen/register/form/form_account.dart';
+import 'package:relieve_app/widget/screen/register/form/form_address.dart';
+import 'package:relieve_app/widget/screen/register/form/form_profile.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   final int progressCount;
-  final User initialData;
+  final Profile initialData;
 
-  RegisterScreen({this.progressCount = 1, this.initialData = const User()});
+  RegisterScreen({this.progressCount = 1, this.initialData = const Profile()});
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterScreenState();
+    return _RegisterScreenState();
   }
 }
 
-class RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool isPermissionDenied = false;
   int progressCount = 1;
   int progressTotal = 3;
 
-  User _user;
+  Profile _user;
 
   @override
   void initState() {
@@ -40,7 +40,6 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   /// redirect user to logged in screen
   void onRegisterSuccess() {
-    PreferenceUtils.setLogin(true);
     // auto login
     Navigator.pushAndRemoveUntil(
       context,
@@ -65,11 +64,11 @@ class RegisterScreenState extends State<RegisterScreen> {
   /// only call this method after checking all field
   /// (param: completeUser) is correct
   /// the field will be stored as is
-  void doRegister(User completeUser) async {
+  void doRegister(Profile completeUser) async {
     RelieveLoadingDialog.show(context);
 
     // final user will be stored as is
-    final isSuccess = await FirebaseAuthHelper.instance.register(completeUser);
+    final isSuccess = await FirebaseAuthHelper.get().register(completeUser);
 
     RelieveLoadingDialog.dismiss(context);
 
@@ -83,7 +82,7 @@ class RegisterScreenState extends State<RegisterScreen> {
   Widget createPage() {
     switch (progressCount) {
       case 1:
-        return RegisterFormAccount(
+        return FormAccount(
           initialData: _user,
           onNextClick: (user) {
             setState(() {
@@ -93,7 +92,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           },
         );
       case 2:
-        return RegisterFormProfile(
+        return FormProfile(
           initialData: _user,
           onNextClick: (user) {
             setState(() {
@@ -103,7 +102,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           },
         );
       default:
-        return RegisterFormAddress(
+        return FormAddress(
           initialData: _user,
           onNextClick: (user) {
             _user = user;
@@ -117,11 +116,12 @@ class RegisterScreenState extends State<RegisterScreen> {
   /// if user register using google let user back until screen 2
   /// else let user back until screen 1
   void onBackButtonClick(context) async {
-    bool isGoogleLogin = await PreferenceUtils.isGoogleLogin();
+    bool isGoogleLogin = await PreferenceUtils.get().isGoogleLogin();
 
     int limit = isGoogleLogin ? 2 : 1;
 
     if (progressCount > limit) {
+      if (!mounted) return;
       setState(() {
         progressCount -= 1;
       });
@@ -129,7 +129,7 @@ class RegisterScreenState extends State<RegisterScreen> {
       defaultBackPressed(context);
 
       // clear google credential
-      FirebaseAuthHelper.instance.logout();
+      FirebaseAuthHelper.get().logout();
     }
   }
 

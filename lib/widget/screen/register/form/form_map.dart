@@ -12,18 +12,18 @@ import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
-class RegisterFormMap extends StatefulWidget {
+class FormMap extends StatefulWidget {
   final VoidCallback onNextClick;
 
-  const RegisterFormMap({Key key, this.onNextClick}) : super(key: key);
+  const FormMap({Key key, this.onNextClick}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormMapState();
+    return _FormMapState();
   }
 }
 
-class RegisterFormMapState extends State<RegisterFormMap> {
+class _FormMapState extends State<FormMap> {
   CameraPosition currentPositionCamera;
   CameraPosition mapCenter;
   Completer<GoogleMapController> _mapController = Completer();
@@ -43,8 +43,9 @@ class RegisterFormMapState extends State<RegisterFormMap> {
       return;
     }
 
-    final position = await LocationService.getCurrentLocation();
+    final position = await LocationService.getCurrentPosition();
 
+    if (!mounted) return;
     setState(() {
       currentPositionCamera = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
@@ -60,6 +61,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
   void moveToMyLocation() async {
     if (!hasPermission) {
       LocationService.showAskPermissionModal(context, () {
+        if (!mounted) return;
         setState(() {});
         moveToMyLocation();
       });
@@ -68,7 +70,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
     }
 
     if (currentPositionCamera == null) {
-      final position = await LocationService.getCurrentLocation();
+      final position = await LocationService.getCurrentPosition();
       currentPositionCamera = CameraPosition(
         target: LatLng(position.latitude, position.longitude),
         zoom: 14,
@@ -95,6 +97,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
         );
 
         if (locationDetail != null) {
+          if (!mounted) return;
           setState(() {
             addressTitle = locationDetail.street;
             addressDetail = '${locationDetail.street}, ' +
@@ -177,8 +180,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
           height: Dimen.x42,
           width: Dimen.x42,
           alignment: Alignment.center,
-          child:
-              LocalImage.ic_map.toSvg(color: Colors.white, height: Dimen.x21),
+          child: LocalImage.icMap.toSvg(color: Colors.white, height: Dimen.x21),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: AppColor.colorPrimary,
@@ -216,7 +218,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
                 onCameraMoveStarted: cameraStartMoving,
               ),
               Align(
-                child: LocalImage.ic_map_pin.toSvg(width: Dimen.x64),
+                child: LocalImage.icMapPin.toSvg(width: Dimen.x64),
                 alignment: Theme.of(context).platform == TargetPlatform.iOS
                     ? Alignment(0, -0.11)
                     : Alignment(0, -0.2),
@@ -228,7 +230,7 @@ class RegisterFormMapState extends State<RegisterFormMap> {
                   backgroundColor: Colors.white,
                   elevation: Dimen.x4,
                   highlightElevation: Dimen.x4,
-                  child: LocalImage.ic_back_arrow.toSvg(height: 26),
+                  child: LocalImage.icBackArrow.toSvg(height: 26),
                   onPressed: () => defaultBackPressed(context),
                 ),
               ),

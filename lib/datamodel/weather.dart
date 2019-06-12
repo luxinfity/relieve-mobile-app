@@ -1,4 +1,4 @@
-import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 
 class WeatherDescription {
   final String id;
@@ -38,13 +38,13 @@ class Weather {
 }
 
 class WeatherItem {
-  final Weather temparature;
+  final Weather temperature;
   final Weather wind;
   final Weather uv;
   final Weather rain;
 
   const WeatherItem({
-    this.temparature = const Weather(),
+    this.temperature = const Weather(),
     this.wind = const Weather(),
     this.uv = const Weather(),
     this.rain = const Weather(),
@@ -53,7 +53,7 @@ class WeatherItem {
   factory WeatherItem.fromJson(Map<String, dynamic> parsedJson) {
     try {
       return WeatherItem(
-        temparature: Weather.fromJson(parsedJson['temperature']),
+        temperature: Weather.fromJson(parsedJson['temperature']),
         wind: Weather.fromJson(parsedJson['wind_speed']),
         uv: Weather.fromJson(parsedJson['uv_index']),
         rain: Weather.fromJson(parsedJson['rain_intensity']),
@@ -64,14 +64,11 @@ class WeatherItem {
   }
 }
 
-class WeatherResponse extends BaseResponse {
-  @override
-  final WeatherItem content;
-
+class WeatherResponse extends BaseResponse<WeatherItem> {
   WeatherResponse({
     String message,
     int status,
-    this.content = const WeatherItem(),
+    WeatherItem content = const WeatherItem(),
   }) : super(message, status, content);
 
   factory WeatherResponse.fromJson(Map<String, dynamic> parsedJson) {

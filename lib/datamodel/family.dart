@@ -1,31 +1,33 @@
 import 'package:flutter/foundation.dart';
-import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/datamodel/profile.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
 
-enum PersonHealth { Fine, Bad, None }
+enum Health { Fine, Bad, None }
 
 class Condition {
-  final PersonHealth health;
+  final Health health;
   final Coordinate location;
   final String date;
 
   const Condition({
-    this.health = PersonHealth.Fine,
+    this.health = Health.Fine,
     this.location = const Coordinate(0.0, 0.0),
-    this.date = '01-01-2019', // TODO: remove default date
+    this.date = '2019-01-01', // TODO: remove default date
   });
 
   factory Condition.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      PersonHealth health = PersonHealth.None;
+      Health health = Health.None;
       int status = parsedJson['status'];
       // enum from backend = [10,20,30] => none, fine, bad
       if (status == 20) {
-        health = PersonHealth.Fine;
+        health = Health.Fine;
       } else if (status == 30) {
-        health = PersonHealth.Bad;
+        health = Health.Bad;
       } else {
-        health = PersonHealth.None;
+        health = Health.None;
       }
       return Condition(
         health: health,
@@ -38,64 +40,74 @@ class Condition {
   }
 }
 
-class Family {
-  final String id;
-  final String fullName;
-  final String nickName;
-  final String role;
-  final String phoneNumber;
-  final String imageUrl;
+class Family extends RelieveUser {
   final Condition condition;
 
   const Family({
-    this.id = '',
-    @required this.fullName,
-    this.nickName = '',
-    this.role = '',
-    this.phoneNumber = '',
-    this.imageUrl = '',
+    @required String uid,
+    @required Profile profile,
+    String label = '',
     this.condition = const Condition(),
-  });
+  }) : super(uid, profile, label: label);
 
-  String get initials =>
-      fullName.toUpperCase().split(' ').map((word) => word[0]).join(' ');
+  String get initials => super
+      .profile
+      .fullName
+      .split(' ')
+      .map((word) => word[0].toUpperCase())
+      .join('');
 
-  factory Family.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      // TODO: handle non existent value
-      return Family(
-        id: parsedJson['id'],
-        fullName: parsedJson['fullName'],
-        nickName: parsedJson['nick'],
-        role: parsedJson['role'],
-        phoneNumber: parsedJson['phoneNumber'],
-        imageUrl: parsedJson['imageUrl'],
-        condition: Condition.fromJson(parsedJson['condition']),
-      );
-    } catch (e) {
-      return null;
+  Family copyWith({
+    String uid,
+    Profile profile,
+    String label,
+    Condition condition,
+  }) {
+    return Family(
+      uid: uid ?? this.uid,
+      profile: profile ?? this.profile,
+      label: label ?? this.label,
+      condition: condition ?? this.condition,
+    );
+  }
+}
+
+class AddFamilyState {
+  final String name;
+
+  static const PENDING = AddFamilyState._internal('pending');
+  static const SUCCESS = AddFamilyState._internal('success');
+  static const CANCELED = AddFamilyState._internal('canceled');
+
+  const AddFamilyState._internal(this.name);
+
+  factory AddFamilyState(String name) {
+    switch (name) {
+      case 'pending':
+        return PENDING;
+      case 'success':
+        return SUCCESS;
+      case 'canceled':
+        return PENDING;
+      default:
+        throw StateError('AddFamily state unrecognized');
     }
   }
 }
 
-class FamilyResponse extends BaseResponse {
-  @override
-  final List<Family> content;
-
-  FamilyResponse({
+class AddFamilyResponse extends BaseResponse<AddFamilyState> {
+  AddFamilyResponse({
     String message,
     int status,
-    this.content,
+    AddFamilyState content,
   }) : super(message, status, content);
 
-  factory FamilyResponse.fromJson(Map<String, dynamic> parsedJson) {
+  factory AddFamilyResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      return FamilyResponse(
+      return AddFamilyResponse(
         message: parsedJson['message'],
         status: parsedJson['status'],
-        content: (parsedJson['content'] as List)
-            .map((content) => Family.fromJson(content))
-            .toList(),
+        content: AddFamilyState(parsedJson['content']),
       );
     } catch (e) {
       return null;

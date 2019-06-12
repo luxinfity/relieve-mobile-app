@@ -41,4 +41,9 @@ class Api {
 
     return _singleton;
   }
+
+  /// only call `Api.reset()` after storing new Env
+  static void reset() {
+    _singleton = null;
+  }
 }

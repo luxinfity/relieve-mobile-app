@@ -46,7 +46,7 @@ class ProfileScreenState extends State {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            LocalImage.ic_gallery.toSvg(width: Dimen.x16),
+                            LocalImage.icGallery.toSvg(width: Dimen.x16),
                             Container(width: Dimen.x16),
                             Text(
                               'Galeri',
@@ -68,7 +68,7 @@ class ProfileScreenState extends State {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            LocalImage.ic_camera.toSvg(width: Dimen.x16),
+                            LocalImage.icCamera.toSvg(width: Dimen.x16),
                             Container(width: Dimen.x16),
                             Text(
                               'Kamera',

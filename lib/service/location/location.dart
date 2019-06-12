@@ -33,7 +33,7 @@ class LocationService {
   }
 
   /// nullable return value
-  static Future<Position> getCurrentLocation() async {
+  static Future<Position> getCurrentPosition() async {
     if (await isLocationRequestPermitted()) {
       position = await Geolocator()
           .getCurrentPosition()
@@ -66,9 +66,9 @@ class LocationService {
   /// Use these function to minimize google api call
   /// only one request at a time
   /// nullable return value
-  static Future<Position> getLastKnownLocation({bool isRefresh = false}) async {
+  static Future<Position> getLastKnownPosition({bool isRefresh = false}) async {
     if (position == null || isRefresh) {
-      position = await getCurrentLocation();
+      position = await getCurrentPosition();
     }
     return position;
   }
@@ -79,7 +79,7 @@ class LocationService {
     bool isRefresh = false,
   }) async {
     if (indonesiaPlace == null || isRefresh) {
-      final position = await getLastKnownLocation();
+      final position = await getLastKnownPosition();
       if (position != null) {
         indonesiaPlace = await getPlaceDetail(
             context, Coordinate.parseFromPosition(position));

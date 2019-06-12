@@ -52,7 +52,7 @@ class RelieveScaffold extends StatelessWidget {
   Widget _createBackButton(BuildContext context) {
     return IconButton(
       padding: EdgeInsets.all(Dimen.x8),
-      icon: (backIcon ?? LocalImage.ic_back_arrow).toSvg(height: 26),
+      icon: (backIcon ?? LocalImage.icBackArrow).toSvg(height: 26),
       onPressed: () => onBackPressed(context),
     );
   }

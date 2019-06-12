@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/relieve_snackbar.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough_screen.dart';
 
 class BoardingLoginScreen extends StatefulWidget {
   @override
@@ -27,7 +26,6 @@ class BoardingLoginScreenState extends State {
   var passwordVisible = false;
 
   void onLoginSuccess(String username) {
-    PreferenceUtils.setLogin(true);
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (builder) => WalkthroughScreen()),
@@ -37,17 +35,19 @@ class BoardingLoginScreenState extends State {
 
   void onLoginClick() async {
     if (usernameController.text.isEmpty || passwordController.text.isEmpty) {
+      if (!mounted) return;
       setState(() {
         isFormEmpty = true;
       });
     } else {
+      if (!mounted) return;
       setState(() {
         isFormEmpty = false;
         isWrongCredential = false;
       });
 
       RelieveLoadingDialog.show(context);
-      final isSuccess = await FirebaseAuthHelper.instance
+      final isSuccess = await FirebaseAuthHelper.get()
           .login(usernameController.text, passwordController.text);
       RelieveLoadingDialog.dismiss(context);
 
@@ -56,6 +56,8 @@ class BoardingLoginScreenState extends State {
       } else {
         RelieveSnackBar.show(context, 'Ups! Username atau password salah',
             buttonText: 'Mengerti');
+
+        if (!mounted) return;
         setState(() {
           isWrongCredential = true;
         });

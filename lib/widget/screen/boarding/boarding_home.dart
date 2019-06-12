@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/loading_dialog.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
@@ -10,8 +9,8 @@ import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_login.dart';
 import 'package:relieve_app/widget/screen/boarding/components/boarding_register_here.dart';
-import 'package:relieve_app/widget/screen/register/register.dart';
-import 'package:relieve_app/widget/screen/walkthrough/walkthrough.dart';
+import 'package:relieve_app/widget/screen/register/register_screen.dart';
+import 'package:relieve_app/widget/screen/walkthrough/walkthrough_screen.dart';
 
 class BoardingHomeScreen extends StatelessWidget {
   BoardingHomeScreen({Key key}) : super(key: key);
@@ -24,13 +23,14 @@ class BoardingHomeScreen extends StatelessWidget {
     );
   }
 
-  void goToRegisterPage(BuildContext context, User user) {
+  void goToRegisterPage(BuildContext context, Profile profile) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (builder) => RegisterScreen(
               progressCount: 2,
-              initialData: User(email: user.email, fullName: user.fullName),
+              initialData:
+                  Profile(email: profile.email, fullName: profile.fullName),
             ),
       ),
     );
@@ -41,15 +41,14 @@ class BoardingHomeScreen extends StatelessWidget {
   /// else login failed
   void googleButtonClicked(BuildContext context) async {
     RelieveLoadingDialog.show(context);
-    var user = await FirebaseAuthHelper.instance.googleLoginWrap();
+    var user = await FirebaseAuthHelper.get().googleLoginWrap();
     RelieveLoadingDialog.dismiss(context);
 
-    if (user != null && user.username != null) {
+    if (user != null && user.profile.username != null) {
       // login success
-      PreferenceUtils.setLogin(true);
       goToMainPage(context);
-    } else if (user != null && user.email.isNotEmpty) {
-      goToRegisterPage(context, user);
+    } else if (user != null && user.profile.email.isNotEmpty) {
+      goToRegisterPage(context, user.profile);
     } else {
       RelieveBottomModal.create(context, <Widget>[
         Container(height: Dimen.x21),
@@ -93,7 +92,7 @@ class BoardingHomeScreen extends StatelessWidget {
         StandardButton(
           key: Key('home-google-sign-in'),
           text: 'Sign In With Google',
-          svgIcon: LocalImage.ic_google,
+          svgIcon: LocalImage.icGoogle,
           backgroundColor: AppColor.colorDanger,
           buttonClick: () => googleButtonClicked(context),
         ),

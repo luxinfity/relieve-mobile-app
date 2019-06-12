@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/screen/call/call.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/dashboard_bottom_bar.dart';
-import 'package:relieve_app/widget/screen/dashboard/dashboard_chat.dart';
-import 'package:relieve_app/widget/screen/dashboard/dashboard_discover.dart';
-import 'package:relieve_app/widget/screen/dashboard/dashboard_home.dart';
-import 'package:relieve_app/widget/screen/dashboard/dashboard_profile.dart';
+import 'package:relieve_app/widget/screen/dashboard/tab/tab_chat.dart';
+import 'package:relieve_app/widget/screen/dashboard/tab/tab_discover.dart';
+import 'package:relieve_app/widget/screen/dashboard/tab/tab_home.dart';
+import 'package:relieve_app/widget/screen/dashboard/tab/tab_profile.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key key, this.title}) : super(key: key);
@@ -46,13 +46,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget buildBody() {
     switch (currentIndex) {
       case 0:
-        return DashboardHomeScreen();
+        return TabHomeScreen();
       case 1:
-        return DashboardDiscoverScreen();
+        return TabDiscoverScreen();
       case 3:
-        return DashboardChatScreen();
+        return TabChatScreen();
       case 4:
-        return DashboardProfileScreen();
+        return TabProfileScreen();
       default:
         return Text('Dashboard');
     }

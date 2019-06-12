@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/family.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 
 enum FamilyItemType { Normal, Empty, Add }
@@ -31,7 +32,7 @@ class FamilyItem extends StatelessWidget {
       child: ClipOval(
         child: Material(
           child: Ink.image(
-            image: CachedNetworkImageProvider(family.imageUrl),
+            image: CachedNetworkImageProvider(family.profile?.imageUrl ?? ''),
             fit: BoxFit.cover,
             child: InkWell(
               onTap: onClick,
@@ -43,10 +44,9 @@ class FamilyItem extends StatelessWidget {
   }
 
   Color _pickColorItem() {
-    if (family.condition == null ||
-        family.condition.health == PersonHealth.None) {
+    if (family.condition == null || family.condition.health == Health.None) {
       return HexColor(AppColor.colorEmptyRect.hexColor, transparency: 0.50);
-    } else if (family.condition.health == PersonHealth.Bad) {
+    } else if (family.condition.health == Health.Bad) {
       return AppColor.colorDanger;
     } else {
       return AppColor.colorPrimary;
@@ -55,7 +55,7 @@ class FamilyItem extends StatelessWidget {
 
   Widget _createEmptyItem() {
     return Center(
-      child: LocalImage.dashed_circle.toSvg(
+      child: LocalImage.dashedCircle.toSvg(
         height: Dimen.x64,
         width: Dimen.x64,
       ),
@@ -72,7 +72,7 @@ class FamilyItem extends StatelessWidget {
             height: Dimen.x64,
             width: Dimen.x64,
             child: Center(
-              child: LocalImage.ic_add_user.toSvg(
+              child: LocalImage.icAddUser.toSvg(
                 height: Dimen.x18,
                 width: Dimen.x18,
               ),
@@ -98,7 +98,7 @@ class FamilyItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: Dimen.x4),
       child: Text(
-        family.fullName,
+        family?.profile?.fullName ?? '',
         style: CircularStdFont.medium.getStyle(
           color: (type == FamilyItemType.Empty)
               ? AppColor.colorTextGrey
@@ -123,14 +123,14 @@ class FamilyItem extends StatelessWidget {
   }
 
   FamilyItem.empty({
-    this.family = const Family(fullName: 'Kerabat'),
+    this.family = const Family(uid: '', profile: Profile(), label: 'Kerabat'),
     this.type = FamilyItemType.Empty,
     this.onClick,
     this.hideName = false,
   });
 
   FamilyItem.add({
-    this.family = const Family(fullName: 'Tambah'),
+    this.family = const Family(uid: '', profile: Profile(), label: 'Tambah'),
     this.type = FamilyItemType.Add,
     this.onClick,
     this.hideName = false,

@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/address.dart';
-import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 import 'package:relieve_app/datamodel/gender.dart';
 
-class User {
+enum ProfileIdentifier { uid, email, username }
+
+class Profile {
   final String username;
   final String password;
   final String fullName;
@@ -13,9 +14,10 @@ class User {
   final String phone;
   final String birthDate;
   final Gender gender;
+  final String imageUrl;
   final List<Address> addresses;
 
-  const User({
+  const Profile({
     this.username,
     this.password,
     this.fullName,
@@ -23,6 +25,7 @@ class User {
     this.phone,
     this.birthDate,
     this.gender,
+    this.imageUrl,
     this.addresses,
   });
 
@@ -37,6 +40,7 @@ class User {
       'phone': phone,
       'birthDate': birthDate,
       'gender': gender.label,
+      'imageUrl': imageUrl,
     };
 
     if (withAddress) {
@@ -57,39 +61,23 @@ class User {
     return jsonEncode(toMap());
   }
 
-  factory User.fromQuerySnapshot(QuerySnapshot snapShot) {
+  factory Profile.fromMap(Map snapShot) {
     try {
-      final rawData = snapShot?.documents?.first;
-
-      return User(
-        username: rawData.data['username'],
-        fullName: rawData.data['fullName'],
-        email: rawData.data['email'],
-        phone: rawData.data['phone'],
-        birthDate: rawData.data['birthDate'],
-        gender: Gender(rawData.data['gender']),
+      return Profile(
+        username: snapShot['username'],
+        fullName: snapShot['fullName'],
+        email: snapShot['email'],
+        phone: snapShot['phone'],
+        birthDate: snapShot['birthDate'],
+        gender: Gender(snapShot['gender']),
+        imageUrl: snapShot['imageUrl'] ?? '',
       );
     } catch (e) {
       return null;
     }
   }
 
-  factory User.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      return User(
-        username: parsedJson['username'],
-        fullName: parsedJson['fullName'],
-        email: parsedJson['email'],
-        phone: parsedJson['phone'],
-        birthDate: parsedJson['birthDate'],
-        gender: Gender(parsedJson['gender']),
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-
-  User copyWith({
+  Profile copyWith({
     String username,
     String password,
     String fullName,
@@ -97,9 +85,10 @@ class User {
     String phone,
     String birthDate,
     Gender gender,
+    String imageUrl,
     List<Address> addresses,
   }) {
-    return User(
+    return Profile(
       username: username ?? this.username,
       password: password ?? this.password,
       fullName: fullName ?? this.fullName,
@@ -107,27 +96,25 @@ class User {
       phone: phone ?? this.phone,
       birthDate: birthDate ?? this.birthDate,
       gender: gender ?? this.gender,
+      imageUrl: imageUrl ?? this.imageUrl,
       addresses: addresses ?? this.addresses,
     );
   }
 }
 
-class UserResponse extends BaseResponse {
-  @override
-  final User content;
-
-  UserResponse({
+class ProfileResponse extends BaseResponse<Profile> {
+  ProfileResponse({
     String message,
     int status,
-    this.content,
+    Profile content,
   }) : super(message, status, content);
 
-  factory UserResponse.fromJson(Map<String, dynamic> parsedJson) {
+  factory ProfileResponse.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      return UserResponse(
+      return ProfileResponse(
         message: parsedJson['message'],
         status: parsedJson['status'],
-        content: User.fromJson(parsedJson['content']),
+        content: Profile.fromMap(parsedJson['content']),
       );
     } catch (e) {
       return null;

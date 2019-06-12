@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 
 class Contact {
   final String name;
@@ -35,14 +35,11 @@ class Contact {
   }
 }
 
-class ContactResponse extends BaseResponse {
-  @override
-  final List<Contact> content;
-
+class ContactResponse extends BaseResponse<List<Contact>> {
   ContactResponse({
     String message,
     int status,
-    this.content,
+    List<Contact> content,
   }) : super(message, status, content);
 
   factory ContactResponse.fromJson(Map<String, dynamic> parsedJson) {

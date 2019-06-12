@@ -1,9 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:relieve_app/datamodel/user_check.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/service.dart';
-import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 
@@ -14,7 +11,7 @@ class AddFamilyModal extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return AddFamilyModalState();
+    return _AddFamilyModalState();
   }
 
   static showModal(BuildContext context, VoidCallback onExitModal) {
@@ -37,22 +34,22 @@ class AddFamilyModal extends StatefulWidget {
 
 enum AddPersonStep { Search, Found, Confirmation, Naming, Finish }
 
-class AddFamilyModalState extends State<AddFamilyModal> {
+class _AddFamilyModalState extends State<AddFamilyModal> {
   var step = AddPersonStep.Search;
   final _usernameController = TextEditingController();
   var friendUsername = '';
   var friendSearchFound = true;
 
   /// return true if friend found
-  bool setFriendUsername(UserCheckResponse checkResponse) {
-    if (checkResponse?.status == REQUEST_SUCCESS &&
-        checkResponse?.content?.isExsist == true) {
-      debugLog(AddFamilyModalState).info(checkResponse?.content?.value);
-      friendUsername = checkResponse?.content?.value;
-      return true;
-    }
-    return false;
-  }
+//  bool setFriendUsername(UserCheckResponse checkResponse) {
+//    if (checkResponse?.status == REQUEST_SUCCESS &&
+//        checkResponse?.content?.isExsist == true) {
+//      debugLog(_AddFamilyModalState).info(checkResponse?.content?.value);
+//      friendUsername = checkResponse?.content?.value;
+//      return true;
+//    }
+//    return false;
+//  }
 
   void findUsername(String username) async {
 //    var checkResponse = await Api.get()
@@ -116,7 +113,7 @@ class AddFamilyModalState extends State<AddFamilyModal> {
               labelText: 'Tulis username / email',
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(Dimen.x14),
-                child: LocalImage.ic_search
+                child: LocalImage.icSearch
                     .toSvg(width: Dimen.x18, height: Dimen.x18),
               ),
               border: OutlineInputBorder(

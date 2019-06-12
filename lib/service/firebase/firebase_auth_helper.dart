@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:relieve_app/datamodel/user.dart';
-import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/datamodel/profile.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/service/base/auth_api.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/service/google/base.dart';
@@ -10,31 +10,38 @@ import 'package:relieve_app/utils/preference_utils.dart';
 
 /// singleton
 class FirebaseAuthHelper implements AuthApi {
-  static final FirebaseAuthHelper instance = FirebaseAuthHelper._internal();
+  static final FirebaseAuthHelper _instance = FirebaseAuthHelper._internal();
+
+  static FirebaseAuthHelper get() => _instance;
   final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
 
   factory FirebaseAuthHelper() {
-    return instance;
+    return _instance;
   }
 
   FirebaseAuthHelper._internal();
 
   @override
-  Future<bool> isUserExist(UserCheckIdentifier checkIdentifier, String value) {
-    return FirestoreHelper.instance.isUserExist(checkIdentifier, value);
+  Future<bool> isUserExist(ProfileIdentifier checkIdentifier, String value) {
+    return FirestoreHelper.get().isProfileExist(checkIdentifier, value);
   }
 
   @override
   Future<bool> login(String username, String password) async {
-    final completeProfile = await FirestoreHelper.instance
-        .findUserBy(UserCheckIdentifier.username, username);
+    final completeProfile = await FirestoreHelper.get()
+        .findUserBy(ProfileIdentifier.username, username);
 
     if (completeProfile == null) return false;
 
     try {
       FirebaseUser firebaseUser =
           await _fireBaseAuth.signInWithEmailAndPassword(
-              email: completeProfile.email, password: password);
+              email: completeProfile.profile.email, password: password);
+
+      final signedInUser = await FirestoreHelper.get()
+          .findUserBy(ProfileIdentifier.username, username);
+      PreferenceUtils.get().saveCurrentProfile(signedInUser.profile);
+
       return firebaseUser != null;
     } catch (error) {
       if (error is PlatformException && error.code == "ERROR_WRONG_PASSWORD") {
@@ -68,21 +75,27 @@ class FirebaseAuthHelper implements AuthApi {
   /// null means, user might be never register before
   /// or haven't complete registration flow
   @override
-  Future<User> googleLoginWrap() async {
+  Future<RelieveUser> googleLoginWrap() async {
     try {
-      final user = await googleSignInScope.signIn();
-      final authData = await user.authentication;
+      final googleUser = await googleSignInScope.signIn();
+      final authData = await googleUser.authentication;
 
       final isSuccess =
           await googleLogin(authData.accessToken, authData.idToken);
 
       if (!isSuccess) return null;
 
-      final completeProfile = await FirestoreHelper.instance
-          .findUserBy(UserCheckIdentifier.email, user.email);
+      final relieveUser = await FirestoreHelper.get()
+          .findUserBy(ProfileIdentifier.email, googleUser.email);
+      PreferenceUtils.get().saveCurrentProfile(relieveUser.profile);
 
-      return completeProfile ??
-          User(email: user.email, fullName: user.displayName);
+      return relieveUser ??
+          RelieveUser(
+              '',
+              Profile(
+                email: googleUser.email,
+                fullName: googleUser.displayName,
+              ));
     } catch (error) {
       // sign-in failed due to any error
       debugLog(FirebaseAuthHelper).info(error);
@@ -93,14 +106,14 @@ class FirebaseAuthHelper implements AuthApi {
   @override
   Future<bool> logout() async {
     // handle google credential
-    if (await PreferenceUtils.isGoogleLogin()) {
+    if (await PreferenceUtils.get().isGoogleLogin()) {
       await googleSignInScope.signOut();
     }
 
     await _fireBaseAuth.signOut();
 
-    // delete pref username
-    PreferenceUtils.clearData();
+    // delete all pref
+    PreferenceUtils.get().clearData();
 
     return true;
   }
@@ -108,39 +121,40 @@ class FirebaseAuthHelper implements AuthApi {
   /// if success will return email,
   /// else return null (user might already been registered before).
   @override
-  Future<bool> register(User user) async {
-    bool isExist = await isUserExist(UserCheckIdentifier.email, user.email);
-    if (user.username != null) {
+  Future<bool> register(Profile profile) async {
+    bool isExist = await isUserExist(ProfileIdentifier.email, profile.email);
+    if (profile.username != null) {
       isExist = isExist &&
-          await isUserExist(UserCheckIdentifier.username, user.username);
+          await isUserExist(ProfileIdentifier.username, profile.username);
     }
-    String uid = await PreferenceUtils.uid();
+    String uid = await PreferenceUtils.get().getUid();
 
     if (isExist) {
       // if user exist, don't register new user
       return false;
     } else if (uid != null) {
       // if uid is not null, user already login with google.
-      if (user.email == null || user.email.isEmpty)
+      if (profile.email == null || profile.email.isEmpty)
         throw ArgumentError(
             'some user data is empty, recheck before calling register');
     } else {
-      if (user.email == null ||
-          user.email.isEmpty ||
-          user.password == null ||
-          user.password.isEmpty)
+      if (profile.email == null ||
+          profile.email.isEmpty ||
+          profile.password == null ||
+          profile.password.isEmpty)
         throw ArgumentError(
             'some user data is empty, recheck before calling register');
 
       FirebaseUser firebaseUser =
           await _fireBaseAuth.createUserWithEmailAndPassword(
-              email: user.email, password: user.password);
+              email: profile.email, password: profile.password);
 
       uid = firebaseUser.uid;
     }
 
     // drop password, so not be seen on DB
-    user = user.copyWith(password: '');
-    return await FirestoreHelper.instance.storeUser(uid, user);
+    profile = profile.copyWith(password: '');
+    PreferenceUtils.get().saveCurrentProfile(profile);
+    return await FirestoreHelper.get().storeProfile(uid, profile);
   }
 }

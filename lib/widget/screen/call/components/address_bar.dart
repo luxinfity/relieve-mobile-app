@@ -26,7 +26,7 @@ class AddressBar extends StatelessWidget {
       )
     ];
     if (addressList.length > 1)
-      widgets.add(LocalImage.ic_drop_down.toSvg(width: Dimen.x12));
+      widgets.add(LocalImage.icDropDown.toSvg(width: Dimen.x12));
 
     return Card(
       margin: EdgeInsets.symmetric(horizontal: Dimen.x16),

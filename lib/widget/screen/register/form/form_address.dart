@@ -2,21 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/user.dart';
+import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 import 'package:relieve_app/widget/common/title.dart';
-import 'package:relieve_app/widget/screen/register/register_form_map.dart';
+import 'package:relieve_app/widget/screen/register/form/form_map.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class RegisterFormAddress extends StatefulWidget {
+class FormAddress extends StatefulWidget {
   final VoidCallbackContext onBackClick;
-  final VoidCallbackUser onNextClick;
-  final User initialData;
+  final VoidCallbackProfile onNextClick;
+  final Profile initialData;
 
-  const RegisterFormAddress({
+  const FormAddress({
     Key key,
     this.onBackClick,
     this.onNextClick,
@@ -25,11 +25,11 @@ class RegisterFormAddress extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return RegisterFormAddressState();
+    return _FormAddressState();
   }
 }
 
-class RegisterFormAddressState extends State<RegisterFormAddress> {
+class _FormAddressState extends State<FormAddress> {
   var isAddressValid = true;
   var isNameValid = true;
 
@@ -59,9 +59,10 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
       });
     } else {
       final result = await Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => RegisterFormMap()));
+          context, MaterialPageRoute(builder: (builder) => FormMap()));
       if (result != null) {
         final address = (result as Address);
+        if (!mounted) return;
         setState(() {
           coordinateController.text = address.coordinate.toString();
           streetController.text = address.street;
@@ -136,7 +137,7 @@ class RegisterFormAddressState extends State<RegisterFormAddress> {
                         borderRadius: BorderRadius.circular(Dimen.x6),
                       ),
                       suffixIcon: IconButton(
-                        icon: LocalImage.ic_map.toSvg(),
+                        icon: LocalImage.icMap.toSvg(),
                         onPressed: () {},
                       ),
                     ),

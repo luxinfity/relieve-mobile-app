@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/api/base.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/family/family_list.dart';
@@ -18,14 +17,14 @@ class CallScreenState extends State {
   List<Address> addressList = List();
 
   void getUserAddress() async {
-    final addressResponse =
-        await Api.get().setProvider(BakauProvider()).getUserAddress();
-
-    if (addressResponse?.status == REQUEST_SUCCESS) {
-      setState(() {
-        addressList = addressResponse.content;
-      });
-    }
+//    final addressResponse =
+//        await Api.get().setProvider(BakauProvider()).getUserAddress();
+//
+//    if (addressResponse?.status == REQUEST_SUCCESS) {
+//      setState(() {
+//        addressList = addressResponse.content;
+//      });
+//    }
   }
 
   @override
@@ -38,7 +37,7 @@ class CallScreenState extends State {
   Widget build(BuildContext context) {
     return RelieveScaffold(
       hasBackButton: true,
-      backIcon: LocalImage.ic_cross,
+      backIcon: LocalImage.icCross,
       crossAxisAlignment: CrossAxisAlignment.start,
       childs: <Widget>[
         Expanded(
@@ -70,27 +69,27 @@ class CallScreenState extends State {
                   mainAxisSpacing: Dimen.x6,
                   children: <Widget>[
                     ItemButton(
-                      icon: LocalImage.ic_police,
+                      icon: LocalImage.icPolice,
                       title: 'Kantor Polisi',
                     ),
                     ItemButton(
-                      icon: LocalImage.ic_ambulance,
+                      icon: LocalImage.icAmbulance,
                       title: 'Ambulance',
                     ),
                     ItemButton(
-                      icon: LocalImage.ic_red_cross,
+                      icon: LocalImage.icRedCross,
                       title: 'Palang Merah',
                     ),
                     ItemButton(
-                      icon: LocalImage.ic_fire_fighter,
+                      icon: LocalImage.icFireFighter,
                       title: 'Pemadam Kebakaran',
                     ),
                     ItemButton(
-                      icon: LocalImage.ic_sar,
+                      icon: LocalImage.icSar,
                       title: 'Badan SAR',
                     ),
                     ItemButton(
-                      icon: LocalImage.ic_others,
+                      icon: LocalImage.icOthers,
                       title: 'Lainnya',
                       isTintBlue: true,
                       onClick: () {

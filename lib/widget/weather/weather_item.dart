@@ -3,7 +3,7 @@ import 'package:relieve_app/datamodel/weather.dart';
 import 'package:relieve_app/res/res.dart';
 import 'package:relieve_app/service/service.dart';
 
-enum WeatherType { Temparature, Rain, Wind, UV }
+enum WeatherType { Temperature, Rain, Wind, UV }
 
 class WeatherItem extends StatelessWidget {
   final WeatherType weatherType;
@@ -19,20 +19,20 @@ class WeatherItem extends StatelessWidget {
 
   Widget createImage() {
     switch (weatherType) {
-      case WeatherType.Temparature:
-        return LocalImage.ic_temperature.toSvg(width: 24);
+      case WeatherType.Temperature:
+        return LocalImage.icTemperature.toSvg(width: 24);
       case WeatherType.Wind:
-        return LocalImage.ic_wind.toSvg(width: 24);
+        return LocalImage.icWind.toSvg(width: 24);
       case WeatherType.UV:
-        return LocalImage.ic_sun.toSvg(width: 24);
+        return LocalImage.icSun.toSvg(width: 24);
       default:
-        return LocalImage.ic_rain.toSvg(width: 24);
+        return LocalImage.icRain.toSvg(width: 24);
     }
   }
 
   String getMetric() {
     switch (weatherType) {
-      case WeatherType.Temparature:
+      case WeatherType.Temperature:
         return 'c';
       case WeatherType.Wind:
         return 'kph';
@@ -47,7 +47,7 @@ class WeatherItem extends StatelessWidget {
     var strVal = '';
 
     switch (weatherType) {
-      case WeatherType.Temparature:
+      case WeatherType.Temperature:
         strVal += '${value.toInt()}°';
         break;
       case WeatherType.Rain:
@@ -114,11 +114,11 @@ class WeatherItem extends StatelessWidget {
 class WeatherItemList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return WeatherItemListState();
+    return _WeatherItemListState();
   }
 }
 
-class WeatherItemListState extends State {
+class _WeatherItemListState extends State<WeatherItemList> {
   WeatherResponse _weatherResponse = WeatherResponse();
 
   void fetchData() async {
@@ -129,7 +129,8 @@ class WeatherItemListState extends State {
       return;
     }
 
-    final userLocation = await LocationService.getLastKnownLocation();
+    final userLocation = await LocationService.getLastKnownPosition();
+    if (!mounted) return;
     if (userLocation != null) {
       final response =
           await Api.get().setProvider(KalomangProvider()).weatherCheck(
@@ -137,7 +138,7 @@ class WeatherItemListState extends State {
                 userLocation.longitude,
               );
       setState(() {
-        _weatherResponse = response;
+        _weatherResponse = response ?? _weatherResponse;
       });
     }
   }
@@ -158,10 +159,9 @@ class WeatherItemListState extends State {
         children: <Widget>[
           Expanded(
             child: WeatherItem(
-              weatherType: WeatherType.Temparature,
-              classification:
-                  _weatherResponse.content.temparature.desc?.id ?? 'Normal',
-              value: _weatherResponse.content.temparature.value,
+              weatherType: WeatherType.Temperature,
+              classification: _weatherResponse.content.temperature.desc.id,
+              value: _weatherResponse.content.temperature.value,
             ),
           ),
           Container(width: Dimen.x4),

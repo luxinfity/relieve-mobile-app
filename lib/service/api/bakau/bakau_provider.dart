@@ -1,157 +1,23 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/contact.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/datamodel/user.dart';
-import 'package:relieve_app/datamodel/user_check.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';
 import 'package:relieve_app/service/api/provider.dart';
-import 'package:relieve_app/service/google/base.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
+import 'package:relieve_app/utils/common_utils.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 
 class BakauProvider extends Provider implements BakauApi {
   @override
   final String name = "bakau";
 
-  /// region Auth resource
-  @override
-  Future<bool> isUserExist(
-      UserCheckIdentifier checkIdentifier, String value) async {
-    this.checkProvider();
-
-    var url = '$completeUri/auth/check';
-    final response = await http.post(
-      url,
-      headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-        'secret': secret
-      },
-      body: jsonEncode({
-        'param': checkIdentifier.toString().split('.')[1],
-        'value': value,
-      }),
-    );
-
-    throw Exception('Bakau not implemented isUserExist yet');
-    // return UserCheckResponse.fromJson(jsonDecode(response.body));
-  }
-
-  @override
-  Future<bool> login(String username, String password) async {
-    this.checkProvider();
-
-    var url = '$completeUri/auth/login';
-    final response = await http.post(
-      url,
-      headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-        'secret': secret
-      },
-      body: jsonEncode({
-        'username': username,
-        'password': password,
-      }),
-    );
-
-    throw Exception('Bakau not implemented login yet');
-    // return TokenResponse.fromJson(jsonDecode(response.body));
-  }
-
-  /// Not Implemented
-  @override
-  Future<bool> googleLogin(String accessToken, String idToken) {
-    throw Exception('Bakau not implemented googleLogin yet');
-  }
-
-  @override
-  Future<User> googleLoginWrap() async {
-    final user = await googleSignInScope.signIn();
-    final authData = await user.authentication;
-    throw Exception('Bakau not implemented googleLoginWrap yet');
-    // return googleLogin(user.accessToken, user.idToken);
-  }
-
-  @override
-  Future<bool> logout() {
-    googleSignInScope.signOut();
-
-    throw Exception('Bakau not implemented logout yet');
-  }
-
-  @override
-  Future<bool> register(User user) async {
-    this.checkProvider();
-
-    var url = '$completeUri/auth/register';
-    final response = await http.post(
-      url,
-      headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-        'secret': secret
-      },
-      body: user.toJson(),
-    );
-
-    throw Exception('Bakau not implemented register yet');
-//    return TokenResponse.fromJson(jsonDecode(response.body));
-  }
-
-  /// endregion
-
-  /// region Map resource
-  @override
-  Future<AddressDetailResponse> getAddressDetailOfPosition(
-      Coordinate position) async {
-    this.checkProvider();
-
-    var url =
-        '$completeUri/discover/address-detail?coordinates=${position.toString()}';
-    final response = await http.get(url, headers: {
-      HttpHeaders.contentTypeHeader: 'application/json',
-//      'authorization': await PreferenceUtils.getToken(),
-      'secret': secret,
-    });
-
-    return AddressDetailResponse.fromJson(jsonDecode(response.body));
-  }
-
-  /// endregion
-
-  /// region Families resource
-  @override
-  Future<FamilyResponse> getFamilies() async {
-    this.checkProvider();
-
-    var url = '$completeUri/family';
-    final response = await http.get(url, headers: {
-      HttpHeaders.contentTypeHeader: 'application/json',
-//      'authorization': await PreferenceUtils.getToken(),
-      'secret': secret,
-    });
-
-    return FamilyResponse.fromJson(jsonDecode(response.body));
-  }
-
-  /// endregion
-
-  /// region Profile resouce
-  @override
-  Future<UserResponse> getUser() async {
-    this.checkProvider();
-
-    var url = '$completeUri/user/profile';
-    final response = await http.get(url, headers: {
-      HttpHeaders.contentTypeHeader: 'application/json',
-//      'authorization': await PreferenceUtils.getToken(),
-      'secret': secret,
-    });
-
-    return UserResponse.fromJson(jsonDecode(response.body));
-  }
-
+  /// region Map
   @override
   Future<ContactResponse> getNearbyEmergencyContact(Coordinate location) async {
     this.checkProvider();
@@ -161,7 +27,7 @@ class BakauProvider extends Provider implements BakauApi {
       url,
       headers: {
         HttpHeaders.contentTypeHeader: 'application/json',
-//        'authorization': await PreferenceUtils.getToken(),
+        'authorization': await PreferenceUtils.get().getIdToken(),
         'secret': secret,
       },
       body: jsonEncode({
@@ -173,19 +39,46 @@ class BakauProvider extends Provider implements BakauApi {
     return ContactResponse.fromJson(jsonDecode(response.body));
   }
 
+  /// endregion
+
+  /// wrapper of `FirestoreHelper.get().getFamilies()`
+  /// so didn't need to run `this.checkProvider()`;
   @override
-  Future<AddressResponse> getUserAddress() async {
-    this.checkProvider();
-
-    var url = '$completeUri/address';
-    final response = await http.get(url, headers: {
-      HttpHeaders.contentTypeHeader: 'application/json',
-//      'authorization': await PreferenceUtils.getToken(),
-      'secret': secret,
-    });
-
-    return AddressResponse.fromJson(jsonDecode(response.body));
+  Future<List<Family>> getFamilies() async {
+    return FirestoreHelper.get().getFamilies();
   }
 
-  /// endregion
+  /// send request to BE
+  /// TODO: try implementing direct FCM
+  @override
+  Future<AddFamilyState> addFamily(RelieveUser other) async {
+    this.checkProvider();
+    var url = '$completeUri/families/add';
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          'authorization': await PreferenceUtils.get().getIdToken(),
+          'secret': secret,
+        },
+        body: jsonEncode({'uid': other.uid}),
+      );
+
+      final parsed = AddFamilyResponse.fromJson(jsonDecode(response.body));
+      return parsed.content;
+    } on TimeoutException catch (error) {
+      debugLog(BakauProvider).info(error);
+    } catch (error) {
+      debugLog(BakauProvider).shout(error);
+    }
+    return AddFamilyState.CANCELED;
+  }
+
+  @override
+  Future<AddFamilyState> confirmFamilyAuth(String code) async {
+    this.checkProvider();
+    return AddFamilyState.CANCELED;
+  }
 }

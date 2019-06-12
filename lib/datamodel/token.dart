@@ -1,4 +1,4 @@
-import 'package:relieve_app/datamodel/base.dart';
+import 'package:relieve_app/datamodel/base_response.dart';
 
 class Token {
   final String token;
@@ -20,14 +20,11 @@ class Token {
   }
 }
 
-class TokenResponse extends BaseResponse {
-  @override
-  final Token content;
-
+class TokenResponse extends BaseResponse<Token> {
   TokenResponse({
     String message,
     int status,
-    this.content,
+    Token content,
   }) : super(message, status, content);
 
   factory TokenResponse.fromJson(Map<String, dynamic> parsedJson) {

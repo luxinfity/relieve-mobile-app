@@ -48,8 +48,7 @@ class DiscoverItem extends StatelessWidget {
       spacing: Dimen.x8,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: <Widget>[
-        LocalImage.ic_live
-            .toSvg(height: Dimen.x14, color: AppColor.colorDanger),
+        LocalImage.icLive.toSvg(height: Dimen.x14, color: AppColor.colorDanger),
         Text(
           'Sekarang!',
           style: CircularStdFont.black.getStyle(
@@ -240,7 +239,7 @@ class DisasterItem extends StatelessWidget {
           spacing: Dimen.x6,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: <Widget>[
-            LocalImage.ic_live.toSvg(
+            LocalImage.icLive.toSvg(
               height: Dimen.x10,
               width: Dimen.x12,
               color: Colors.white,
@@ -270,9 +269,14 @@ class DisasterItemListState extends State {
   void loadDisaster() async {
     final disasterResponse =
         await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
+
+    final correctlyParsedData = (disasterResponse.content.data ?? listDisaster);
+    correctlyParsedData.removeWhere((obj) => obj == null);
+
     if (disasterResponse?.status == REQUEST_SUCCESS) {
+      if (!mounted) return;
       setState(() {
-        listDisaster = disasterResponse.content.data;
+        listDisaster = correctlyParsedData;
       });
     }
   }
@@ -292,7 +296,7 @@ class DisasterItemListState extends State {
         onTap: () {},
         child: Container(
           alignment: Alignment.center,
-          child: LocalImage.ic_warning.toSvg(height: 20),
+          child: LocalImage.icWarning.toSvg(height: 20),
           padding: EdgeInsets.only(
             top: Dimen.x16,
             bottom: Dimen.x16,
@@ -337,7 +341,7 @@ class DisasterItemListState extends State {
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: LocalImage.ic_guard.toSvg(height: 20),
+                    child: LocalImage.icGuard.toSvg(height: 20),
                   ),
                   Expanded(
                     flex: 2,

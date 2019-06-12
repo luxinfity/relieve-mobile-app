@@ -4,7 +4,7 @@ import 'package:relieve_app/res/res.dart';
 
 class UserLocation extends StatelessWidget {
   final String location;
-  final PersonHealth personHealth;
+  final Health personHealth;
   final LocalImage icon;
 
   const UserLocation({
@@ -17,9 +17,9 @@ class UserLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color tint = AppColor.colorTextBlack;
-    if (personHealth == PersonHealth.Fine) {
+    if (personHealth == Health.Fine) {
       tint = AppColor.colorPrimary;
-    } else if (personHealth == PersonHealth.Bad) {
+    } else if (personHealth == Health.Bad) {
       tint = AppColor.colorDanger;
     }
 
