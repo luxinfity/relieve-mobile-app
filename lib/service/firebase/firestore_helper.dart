@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
-import 'package:relieve_app/service/base/profile_api.dart';
+import 'package:relieve_app/service/base/profile_service.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 
@@ -13,7 +13,7 @@ abstract class CollectionPath {
 }
 
 /// singleton
-class FirestoreHelper implements ProfileApi {
+class FirestoreHelper implements ProfileService {
   static final FirestoreHelper _instance = FirestoreHelper._internal();
 
   static FirestoreHelper get() => _instance;

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/weather.dart';
+import 'package:relieve_app/service/api/base/provider.dart';
 import 'package:relieve_app/service/api/kalomang/kalomang_api.dart';
-import 'package:relieve_app/service/api/provider.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 

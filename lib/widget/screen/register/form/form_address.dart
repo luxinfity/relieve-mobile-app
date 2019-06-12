@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/profile.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';

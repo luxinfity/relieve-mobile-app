@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/family.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/api/base.dart';
+import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/api/bakau/bakau_provider.dart';
+import 'package:relieve_app/service/api/base/export.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/family/add_family_modal.dart';
 import 'package:relieve_app/widget/family/family_item.dart';
 
@@ -112,14 +114,15 @@ class FamilyItemListState extends State {
   }
 
   void personClick(int position) {
-//    setState(() {
-//      if (position == 0) {
-//        familyList = [];
-//      } else if (position == 1) {
-////        testSheet3(context);
-//      } else if (position == 2) {
-////        testSheet(context);
-//      }
-//    });
+    RelieveBottomModal.create(context, <Widget>[
+      Container(height: Dimen.x21),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+        child: Text(
+          'Otentikasi Google tidak bisa digunakan, Silahkan gunakan metode lain',
+          style: CircularStdFont.book.getStyle(size: Dimen.x16),
+        ),
+      ),
+    ]);
   }
 }

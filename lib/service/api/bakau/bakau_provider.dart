@@ -8,7 +8,7 @@ import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/service/api/bakau/bakau_api.dart';
-import 'package:relieve_app/service/api/provider.dart';
+import 'package:relieve_app/service/api/base/provider.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';

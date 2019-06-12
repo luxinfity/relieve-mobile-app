@@ -1,5 +1,5 @@
 import 'package:relieve_app/datamodel/remote_env.dart';
-import 'package:relieve_app/service/api/provider.dart';
+import 'package:relieve_app/service/api/base/provider.dart';
 
 const String PROTOCOL = 'https';
 const String DOMAIN = 'relieve.id';

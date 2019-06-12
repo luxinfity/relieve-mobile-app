@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_home.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/profile_board.dart';

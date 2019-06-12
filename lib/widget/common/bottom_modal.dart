@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 
 abstract class RelieveBottomModal {
   static double _calculatePaddingBottom(BuildContext context) {

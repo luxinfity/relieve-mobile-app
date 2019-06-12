@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 
 abstract class RelieveLoadingDialog {
   static void show(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
 
-abstract class AuthApi {
+abstract class AuthService {
   Future<bool> isUserExist(ProfileIdentifier checkIdentifier, String value);
 
   Future<bool> login(String username, String password);

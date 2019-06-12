@@ -2,14 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
-import 'package:relieve_app/service/base/auth_api.dart';
+import 'package:relieve_app/service/base/auth_service.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
-import 'package:relieve_app/service/google/base.dart';
+import 'package:relieve_app/service/google/google_helper.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 
 /// singleton
-class FirebaseAuthHelper implements AuthApi {
+class FirebaseAuthHelper implements AuthService {
   static final FirebaseAuthHelper _instance = FirebaseAuthHelper._internal();
 
   static FirebaseAuthHelper get() => _instance;
@@ -77,7 +77,7 @@ class FirebaseAuthHelper implements AuthApi {
   @override
   Future<RelieveUser> googleLoginWrap() async {
     try {
-      final googleUser = await googleSignInScope.signIn();
+      final googleUser = await GoogleHelper.googleSignInScope.signIn();
       final authData = await googleUser.authentication;
 
       final isSuccess =
@@ -107,7 +107,7 @@ class FirebaseAuthHelper implements AuthApi {
   Future<bool> logout() async {
     // handle google credential
     if (await PreferenceUtils.get().isGoogleLogin()) {
-      await googleSignInScope.signOut();
+      await GoogleHelper.googleSignInScope.signOut();
     }
 
     await _fireBaseAuth.signOut();
