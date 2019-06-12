@@ -112,8 +112,12 @@ class FamilyItemListState extends State {
     );
   }
 
-  void addFamilyClick() {
-    AddFamilyModal.showModal(context, () {});
+  void addFamilyClick() async {
+    final isSuccess = await AddFamilyModal.showModal(context);
+    if (isSuccess is! bool || !isSuccess) return;
+
+    // reload family list
+    loadFamilyList();
   }
 
   void personClick(int position) {

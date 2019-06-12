@@ -57,27 +57,27 @@ class FirestoreHelper implements ProfileService {
     return profile != null;
   }
 
-  /// return email if found, and null if not found
+  /// return `RelieveUser` if found, and null if not found
   Future<RelieveUser> findUserBy(
-      ProfileIdentifier checkIdentifier, String value) async {
+      ProfileIdentifier profileIdentifier, String value) async {
     if (value == null || value.isEmpty)
       throw ArgumentError('value must bot empty');
 
     DocumentSnapshot document;
     try {
-      if (checkIdentifier == ProfileIdentifier.uid) {
+      if (profileIdentifier == ProfileIdentifier.uid) {
         document = await _fireStore
             .collection(CollectionPath.USERS)
             .document(value)
             .get();
-      } else if (checkIdentifier == ProfileIdentifier.username) {
+      } else if (profileIdentifier == ProfileIdentifier.username) {
         final snapshot = await _fireStore
             .collection(CollectionPath.USERS)
             .where("username", isEqualTo: value)
             .getDocuments();
 
         document = snapshot?.documents?.first;
-      } else if (checkIdentifier == ProfileIdentifier.email) {
+      } else if (profileIdentifier == ProfileIdentifier.email) {
         final snapshot = await _fireStore
             .collection(CollectionPath.USERS)
             .where("email", isEqualTo: value)

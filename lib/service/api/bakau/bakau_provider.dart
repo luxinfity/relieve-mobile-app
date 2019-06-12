@@ -49,7 +49,6 @@ class BakauProvider extends Provider implements BakauApi {
   }
 
   /// send request to BE
-  /// TODO: try implementing direct FCM
   @override
   Future<AddFamilyState> addFamily(RelieveUser other) async {
     this.checkProvider();
@@ -68,12 +67,16 @@ class BakauProvider extends Provider implements BakauApi {
 
       final parsed = AddFamilyResponse.fromJson(jsonDecode(response.body));
       return parsed.content;
-    } on TimeoutException catch (error) {
-      debugLog(BakauProvider).info(error);
     } catch (error) {
       debugLog(BakauProvider).shout(error);
     }
     return AddFamilyState.CANCELED;
+  }
+
+  @override
+  Future<bool> editFamilyLabel(RelieveUser other, String label) async {
+    // TODO: implement edit label
+    return false;
   }
 
   @override
