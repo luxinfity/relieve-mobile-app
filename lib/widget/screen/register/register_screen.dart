@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/export.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';

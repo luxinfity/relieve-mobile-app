@@ -4,7 +4,7 @@ import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/export.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/service/location/location.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/dashboard_title.dart';

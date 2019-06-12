@@ -95,7 +95,7 @@ class ProfileScreenState extends State {
   }
 
   Container createSpace() =>
-      Container(height: Dimen.x12, color: AppColor.colorStandardBackgroud);
+      Container(height: Dimen.x12, color: AppColor.colorStandardBackground);
 
   Padding buildNameCard() {
     return Padding(

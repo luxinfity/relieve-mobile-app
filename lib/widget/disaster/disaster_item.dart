@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/map_data.dart';
 import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/api/base/api.dart';
 import 'package:relieve_app/service/api/kalomang/kalomang_provider.dart';
-import 'package:relieve_app/service/service.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/map/static_map.dart';
 
