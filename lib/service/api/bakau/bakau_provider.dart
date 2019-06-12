@@ -48,8 +48,12 @@ class BakauProvider extends Provider implements BakauApi {
     return FirestoreHelper.get().getFamilies();
   }
 
-  /// send request to BE
+  /// send request to other user
   @override
+  // TODO: implement direct fcm
+  // generate Firebase doc ID, set direction as field.
+  // send fcm to uid with request code
+  // only other can see the request code
   Future<AddFamilyState> addFamily(RelieveUser other) async {
     this.checkProvider();
     var url = '$completeUri/families/add';
@@ -82,6 +86,7 @@ class BakauProvider extends Provider implements BakauApi {
   @override
   Future<AddFamilyState> confirmFamilyAuth(String code) async {
     this.checkProvider();
+    // TODO: implement check code
     return AddFamilyState.CANCELED;
   }
 }
