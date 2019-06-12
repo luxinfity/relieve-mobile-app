@@ -47,6 +47,7 @@ class FamilyItemListState extends State {
 //  ];
 
   List<Family> familyList = const [];
+  int allowedFamilyCount = 3;
 
   void loadFamilyList() async {
     final families =
@@ -99,7 +100,9 @@ class FamilyItemListState extends State {
           ),
         ));
     content.addAll([
-      FamilyItem.add(),
+      allowedFamilyCount > 0
+          ? FamilyItem.add(onClick: addFamilyClick)
+          : Container(),
       Container(width: Dimen.x12),
     ]);
 
@@ -119,7 +122,7 @@ class FamilyItemListState extends State {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
         child: Text(
-          'Otentikasi Google tidak bisa digunakan, Silahkan gunakan metode lain',
+          'Clicked on ${familyList[position].label}',
           style: CircularStdFont.book.getStyle(size: Dimen.x16),
         ),
       ),

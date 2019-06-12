@@ -33,8 +33,8 @@ class ThemedTitle extends StatelessWidget {
                   style: CircularStdFont.book
                       .getStyle(size: 14, color: AppColor.colorTextGrey),
                 )
-              : null,
-        ].where((widget) => widget != null).toList(),
+              : Container(),
+        ],
       ),
     );
   }

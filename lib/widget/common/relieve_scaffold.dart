@@ -45,8 +45,8 @@ class RelieveScaffold extends StatelessWidget {
                   progressCount,
               color: AppColor.colorPrimary,
             )
-          : null,
-    ].where((widget) => widget != null).toList();
+          : Container(),
+    ];
   }
 
   Widget _createBackButton(BuildContext context) {

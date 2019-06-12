@@ -73,8 +73,8 @@ class _RelieveBottomNavigationBarState
           ),
           isActive
               ? Text(text, style: TextStyle(fontSize: 10, color: Colors.blue))
-              : null
-        ].where((o) => o != null).toList(),
+              : Container()
+        ],
       ),
     );
   }

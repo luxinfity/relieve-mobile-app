@@ -197,9 +197,9 @@ class DisasterItem extends StatelessWidget {
           children: <Widget>[
             _buildMap(),
             _buildRedDot(),
-            disaster.isLive ? _buildLiveTag() : null,
+            disaster.isLive ? _buildLiveTag() : Container(),
             Container(color: Colors.transparent)
-          ].where((widget) => widget != null).toList(),
+          ],
         ),
       ),
     );
