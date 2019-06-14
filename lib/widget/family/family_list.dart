@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/res/export.dart';
-import 'package:relieve_app/service/api/bakau/bakau_provider.dart';
-import 'package:relieve_app/service/api/base/api.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/family/add_family_modal.dart';
 import 'package:relieve_app/widget/family/family_item.dart';
@@ -50,8 +49,7 @@ class FamilyItemListState extends State {
   int allowedFamilyCount = 3;
 
   void loadFamilyList() async {
-    final families =
-        await Api.get().setProvider(BakauProvider()).getFamilies() ?? const [];
+    final families = await FirestoreHelper.get().getFamilies() ?? const [];
     if (!mounted) return;
     setState(() {
       familyList = families;
