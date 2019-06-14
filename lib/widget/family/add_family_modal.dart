@@ -4,6 +4,8 @@ import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
 import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/api/bakau/bakau_provider.dart';
+import 'package:relieve_app/service/api/base/api.dart';
 import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
@@ -62,7 +64,8 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
   /// call only if user already found
   void requestFamilyAdd() async {
     if (family == null) throw StateError('Family is still not found');
-    final addFamilyState = await FirestoreHelper.get().addFamily(family);
+    final addFamilyState =
+        await Api.get().setProvider(BakauProvider()).addFamily(family);
 
     if (!mounted) return;
     switch (addFamilyState) {
@@ -88,8 +91,9 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   void confirmUserAddCode(String secretCode) async {
-    final addFamilyState =
-        await FirestoreHelper.get().confirmFamilyAuth(secretCode);
+    final addFamilyState = await Api.get()
+        .setProvider(BakauProvider())
+        .confirmFamilyAuth(secretCode);
 
     if (!mounted) return;
     switch (addFamilyState) {
@@ -117,8 +121,9 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   void putFamilyLabel(String label) async {
-    final isSuccess =
-        await FirestoreHelper.get().editFamilyLabel(family, label);
+    final isSuccess = await Api.get()
+        .setProvider(BakauProvider())
+        .editFamilyLabel(family, label);
 
     if (!mounted || !isSuccess) return;
     setState(() {
