@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 import 'package:relieve_app/datamodel/family.dart';
-import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/res/export.dart';
 import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/profile/user_location.dart';
@@ -13,20 +12,16 @@ class ProfileBoard extends StatefulWidget {
 }
 
 class ProfileBoardState extends State {
+  final addressIndex = PreferenceUtils.get().currentActiveAddress;
+  final profile = PreferenceUtils.get().currentUserProfile;
   String locationName;
-  Profile profile = PreferenceUtils.get().currentUserProfile;
 
   void loadPositionName() async {
     var location = 'Kamu belum punya alamat';
-//    final addressResponse =
-//        await Api.get().setProvider(BakauProvider()).getUserAddress();
-//    if (addressResponse?.status == REQUEST_SUCCESS &&
-//        addressResponse.content.length > 0) {
-//      location = addressResponse.content[0].label;
-//    }
+
     if (!mounted) return;
     setState(() {
-      locationName = location;
+      locationName = profile.addresses[addressIndex].label ?? location;
     });
   }
 
