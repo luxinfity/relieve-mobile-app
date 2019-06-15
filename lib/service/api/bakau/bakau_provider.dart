@@ -100,8 +100,8 @@ class BakauProvider extends Provider implements BakauApi {
   /// return empty on no more data
   @override
   Future<List<Message>> getAllMessage(
-      String otherId, int page, int limit) async {
-    return FirestoreHelper.get().getAllMessage(otherId, page, limit);
+      String chatId, int page, int limit) async {
+    return FirestoreHelper.get().getAllMessage(chatId, page, limit);
   }
 
   /// start from page 1, must access the data on order, page 1..2..3..n

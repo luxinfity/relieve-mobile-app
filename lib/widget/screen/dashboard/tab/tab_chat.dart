@@ -14,29 +14,11 @@ class TabChatScreen extends StatefulWidget {
 }
 
 class TabChatScreenState extends State {
-  List<Chat> chatList = [
-    Chat(
-      isRead: false,
-      userId: '1111',
-      lastMessage: 'aldada',
-      lastTimeSend: 100,
-    ),
-    Chat(
-      isRead: true,
-      userId: '1111',
-      lastMessage: 'aldada',
-      lastTimeSend: 100,
-    ),
-    Chat(
-      isRead: false,
-      userId: '1111',
-      lastMessage: 'aldada',
-      lastTimeSend: 100,
-    ),
-  ];
+  List<Chat> chatList = [];
 
   void loadChat() async {
-    final chats = await Api.get().setProvider(BakauProvider()).getAllChat(1, 10);
+    final chats =
+        await Api.get().setProvider(BakauProvider()).getAllChat(1, 10);
 
     if (chats == null || !mounted) return;
 

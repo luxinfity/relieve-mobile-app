@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+
+abstract class ChatConst {
+  static const String MEMBERS = "members";
+}
 
 class Chat {
   final String userId;
@@ -14,6 +19,24 @@ class Chat {
     @required this.isRead,
     this.totalMessage,
   });
+
+  factory Chat.fromMap(Map<String, dynamic> data) {
+    // TODO: parse chat data
+    return Chat(
+      isRead: false,
+      userId: '1111',
+      lastMessage: 'aldada',
+      lastTimeSend: 100,
+    );
+  }
+}
+
+class ChatMeta {
+  final DocumentSnapshot lastRetrievedDoc;
+  final int currentPage;
+  final int totalData;
+
+  const ChatMeta({this.lastRetrievedDoc, this.currentPage, this.totalData});
 }
 
 class Message {
