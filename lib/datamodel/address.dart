@@ -34,10 +34,10 @@ class Address {
     });
   }
 
-  factory Address.fromJson(Map<String, dynamic> parsedJson) {
+  factory Address.fromJson(Map<String, dynamic> parsedJson, [String uuid]) {
     try {
       return Address(
-        uuid: parsedJson['uuid'],
+        uuid: parsedJson['uuid'] ?? uuid,
         label: parsedJson['label'],
         street: parsedJson['street'],
         coordinate: Coordinate.parseString(parsedJson['coordinate']),

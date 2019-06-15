@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/profile.dart';
@@ -39,19 +40,75 @@ class FirestoreHelper implements ProfileService, DisasterService {
           .document(uid)
           .setData(profile.toMap());
 
-      final addresses = profile.addressesToListMap();
-      for (Map<String, dynamic> address in addresses) {
-        await _fireStore
-            .collection(CollectionPath.PROFILES)
-            .document(uid)
-            .collection(CollectionPath.PROFILE_ADDRESSES)
-            .add(address);
+      var success = true;
+      for (Address address in profile.addresses) {
+        success &= await addAddress(uid, address);
       }
 
+      return success;
+    } catch (error) {
+      debugLog(FirestoreHelper).info(error);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> addAddress(String uid, Address address) async {
+    try {
+      await _fireStore
+          .collection(CollectionPath.PROFILES)
+          .document(uid)
+          .collection(CollectionPath.PROFILE_ADDRESSES)
+          .add(address.toMap());
       return true;
     } catch (error) {
       debugLog(FirestoreHelper).info(error);
       return false;
+    }
+  }
+
+  @override
+  Future<bool> updateAddress(Address address) async {
+    final uid = await PreferenceUtils.get().getUid();
+    if (uid == null) return throw StateError('User is not logged in');
+    if (address.uuid == null)
+      return throw StateError('address do not have uid');
+
+    try {
+      await _fireStore
+          .collection(CollectionPath.PROFILES)
+          .document(uid)
+          .collection(CollectionPath.PROFILE_ADDRESSES)
+          .document(address.uuid)
+          .setData(address.toMap());
+
+      return true;
+    } catch (error) {
+      debugLog(FirestoreHelper).info(error);
+      return null;
+    }
+  }
+
+  @override
+  Future<List<Address>> getAddress() async {
+    final uid = await PreferenceUtils.get().getUid();
+    if (uid == null) return throw StateError('User is not logged in');
+
+    try {
+      final querySnap = await _fireStore
+          .collection(CollectionPath.PROFILES)
+          .document(uid)
+          .collection(CollectionPath.PROFILE_ADDRESSES)
+          .getDocuments();
+      final addresses = querySnap.documents
+          .map((addressSnap) =>
+              Address.fromJson(addressSnap.data, addressSnap.documentID))
+          .toList();
+
+      return addresses;
+    } catch (error) {
+      debugLog(FirestoreHelper).info(error);
+      return null;
     }
   }
 

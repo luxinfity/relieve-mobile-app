@@ -3,7 +3,7 @@ import 'package:relieve_app/res/export.dart';
 import 'package:relieve_app/service/firebase/firebase_auth_helper.dart';
 import 'package:relieve_app/widget/screen/boarding/boarding_home.dart';
 import 'package:relieve_app/widget/screen/dashboard/components/profile_board.dart';
-import 'package:relieve_app/widget/screen/setting/notification.dart';
+import 'package:relieve_app/widget/screen/setting/family_setting.dart';
 import 'package:relieve_app/widget/screen/setting/profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -57,14 +57,14 @@ class TabProfileScreen extends StatelessWidget {
                   ),
                   child: _buildButton(
                     LocalImage.icNotification,
-                    'Notifkasi dan getar',
+                    'Daftar Keluarga',
                     axis: Axis.vertical,
                     onClick: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              NotificationScreen(),
+                              FamilySettingScreen(),
                         ),
                       );
                     },
