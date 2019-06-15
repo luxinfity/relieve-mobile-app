@@ -56,8 +56,8 @@ class TabProfileScreen extends StatelessWidget {
                     left: Dimen.x8,
                   ),
                   child: _buildButton(
-                    LocalImage.icNotification,
-                    'Daftar Keluarga',
+                    LocalImage.icHome,
+                    'Daftar keluarga',
                     axis: Axis.vertical,
                     onClick: () {
                       Navigator.push(
@@ -74,7 +74,7 @@ class TabProfileScreen extends StatelessWidget {
             ],
           ),
           Container(height: Dimen.x14),
-          _buildTitle('Lainnya', 'Temukan informasi lainnya tentang relieve'),
+          _buildTitle('Lainnya', 'Temukan informasi lainnya tentang RelieveId'),
           Padding(
             padding: const EdgeInsets.only(
               left: Dimen.x16,
@@ -125,7 +125,7 @@ class TabProfileScreen extends StatelessWidget {
             ),
             child: _buildButton(
               LocalImage.icInfoContributor,
-              'Tentang relieve dan kontributor',
+              'Tentang RelieveId dan kontributor',
               onClick: () {
                 launch('https://github.com/RelieveID/terms-and-conditions/');
               },

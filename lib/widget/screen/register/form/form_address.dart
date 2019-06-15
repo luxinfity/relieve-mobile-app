@@ -80,8 +80,8 @@ class _FormAddressState extends State<FormAddress> {
         widget.onNextClick(widget.initialData.copyWith(
           addresses: [
             Address(
-              label: labelController.text.toLowerCase(),
-              street: streetController.text.toLowerCase(),
+              label: labelController.text,
+              street: streetController.text,
               coordinate: Coordinate.parseString(coordinateController.text),
             )
           ],
