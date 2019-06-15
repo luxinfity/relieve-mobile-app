@@ -31,7 +31,7 @@ class RelieveScaffold extends StatelessWidget {
     return <Widget>[
       // status bar
       hasAppBarScreen
-          ? null
+          ? Container()
           : Container(
               color: AppColor.colorPrimary,
               height: padding.top,
