@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/map_data.dart';
 import 'package:relieve_app/res/export.dart';
-import 'package:relieve_app/service/api/base/api.dart';
-import 'package:relieve_app/service/api/kalomang/kalomang_provider.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/map/static_map.dart';
 
@@ -268,18 +267,14 @@ class DisasterItemListState extends State {
   List<DisasterDesc> listDisaster = [];
 
   void loadDisaster() async {
-    final disasterResponse =
-        await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
+    final disasters =
+        await FirestoreHelper.get().getDisasterList(1, 5, resetMeta: true);
 
-    final correctlyParsedData = (disasterResponse.content.data ?? listDisaster);
-    correctlyParsedData.removeWhere((obj) => obj == null);
+    if (disasters == null || !mounted) return;
 
-    if (disasterResponse?.status == REQUEST_SUCCESS) {
-      if (!mounted) return;
-      setState(() {
-        listDisaster = correctlyParsedData;
-      });
-    }
+    setState(() {
+      listDisaster = disasters;
+    });
   }
 
   @override

@@ -15,10 +15,6 @@ class FirebaseAuthHelper implements AuthService {
   static FirebaseAuthHelper get() => _instance;
   final FirebaseAuth _fireBaseAuth = FirebaseAuth.instance;
 
-  factory FirebaseAuthHelper() {
-    return _instance;
-  }
-
   FirebaseAuthHelper._internal();
 
   @override

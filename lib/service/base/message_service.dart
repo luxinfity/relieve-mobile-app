@@ -1,5 +1,7 @@
 abstract class MessageService {
-  void sendChatMessage(String otherUserToken, String message);
+  void getAllTopic();
 
-  void sendFamilyRequest(String otherUserToken, Map requestData);
+  void getAllMessage(String topic);
+
+  void sendChatMessage(String otherUserId, String message);
 }

@@ -7,15 +7,21 @@ class CloudMessageHelper implements MessageService {
   static CloudMessageHelper get() => _instance;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  factory CloudMessageHelper() {
-    return _instance;
-  }
-
   CloudMessageHelper._internal();
 
   @override
-  void sendFamilyRequest(String otherUserToken, Map requestData) {}
+  void sendChatMessage(String otherUserId, String message) {
+
+  }
 
   @override
-  void sendChatMessage(String otherUserToken, String message) {}
+  void getAllMessage(String topic) {
+
+  }
+
+  @override
+  void getAllTopic() {
+
+  }
+
 }
