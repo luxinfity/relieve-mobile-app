@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:relieve_app/datamodel/address.dart';
 import 'package:relieve_app/datamodel/gender.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/utils/common_utils.dart';
@@ -81,8 +84,9 @@ class PreferenceUtils {
     await storage.write(key: "phone", value: profile?.phone);
     await storage.write(key: "birthDate", value: profile?.birthDate);
     await storage.write(key: "gender", value: profile?.gender?.label);
-
-    /// TODO: save address to storage
+    await storage.write(
+        key: "addresses",
+        value: jsonEncode(profile?.addressesToListMap()) ?? []);
   }
 
   /// profile's address will be null, not handled yet
@@ -93,6 +97,10 @@ class PreferenceUtils {
     final phone = await storage.read(key: "phone");
     final birthDate = await storage.read(key: "birthDate");
     final gender = await storage.read(key: "gender");
+    final addresses = await storage.read(key: "addresses");
+
+    final jsonDecoded = jsonDecode(addresses) as List<Map<String, dynamic>>;
+    final decodedAddress = jsonDecoded.map((data) => Address.fromJson(data));
 
     final hasNull = [
       username,
@@ -112,9 +120,8 @@ class PreferenceUtils {
       phone: phone,
       birthDate: birthDate,
       gender: Gender(gender),
+      addresses: decodedAddress,
     );
-
-    /// TODO: load address from storage
 
     return currentUserProfile;
   }
