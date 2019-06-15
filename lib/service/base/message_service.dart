@@ -1,7 +1,9 @@
+import 'package:relieve_app/datamodel/chat.dart';
+
 abstract class MessageService {
-  void getAllTopic();
+  Future<List<Chat>> getAllChat(int page, int limit);
 
-  void getAllMessage(String topic);
+  Future<List<Message>> getAllMessage(String otherId, int page, int limit);
 
-  void sendChatMessage(String otherUserId, String message);
+  Future<bool> sendChatMessage(String otherUserId, Message message);
 }

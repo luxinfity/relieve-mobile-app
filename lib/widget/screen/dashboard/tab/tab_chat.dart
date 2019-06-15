@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/chat.dart';
 import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/api/bakau/bakau_provider.dart';
+import 'package:relieve_app/service/api/base/api.dart';
 import 'package:relieve_app/widget/chat/chat_item.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
@@ -32,6 +34,22 @@ class TabChatScreenState extends State {
       lastTimeSend: 100,
     ),
   ];
+
+  void loadChat() async {
+    final chats = await Api.get().setProvider(BakauProvider()).getAllChat(1, 10);
+
+    if (chats == null || !mounted) return;
+
+    setState(() {
+      chatList = chats;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadChat();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/address.dart';
+import 'package:relieve_app/datamodel/chat.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/profile.dart';
@@ -266,5 +267,23 @@ class FirestoreHelper implements ProfileService, DisasterService {
       debugLog(FirestoreHelper).info(error);
       return null;
     }
+  }
+
+  /// start from page 1, must access the data on order, page 1..2..3..n
+  /// return null on error
+  /// return empty on no more data
+  Future<List<Message>> getAllMessage(String otherId, int page, int limit) async {
+
+
+    return null;
+  }
+
+  /// start from page 1, must access the data on order, page 1..2..3..n
+  /// return null on error
+  /// return empty on no more data
+  Future<List<Chat>> getAllChat(int page, int limit) async {
+
+
+    return null;
   }
 }
