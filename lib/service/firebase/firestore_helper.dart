@@ -295,7 +295,8 @@ class FirestoreHelper implements ProfileService, DisasterService {
         .limit(limit)
         .getDocuments();
 
-    final chats = chatDocs.documents.map<Chat>((ref) => Chat.fromMap(ref.data));
+    final chats =
+        chatDocs.documents.map<Chat>((ref) => Chat.fromMap(ref.data)).toList();
 
     return chats;
   }
