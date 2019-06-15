@@ -21,7 +21,7 @@ class Address {
     return {
       'label': label,
       'street': street,
-      'coordinates': coordinate.toString()
+      'coordinate': coordinate.toString()
     };
   }
 

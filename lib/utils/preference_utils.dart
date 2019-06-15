@@ -72,7 +72,7 @@ class PreferenceUtils {
     final user = await FirebaseAuth.instance.currentUser();
     if (user == null) return false;
 
-    return await _loadCurrentProfile() == null;
+    return await _loadCurrentProfile() != null;
   }
 
   Future<bool> isGoogleLogin() async {
@@ -94,7 +94,7 @@ class PreferenceUtils {
 
   Future<int> _getActiveAddressIndex() async {
     final indexStr = await storage.read(key: PreferenceKey.ADDRESS_ACTIVE);
-    return int.tryParse(indexStr) ?? 0;
+    return int.tryParse(indexStr ?? '0');
   }
 
   void saveCurrentProfile(Profile profile) async {
@@ -123,8 +123,10 @@ class PreferenceUtils {
     final gender = await storage.read(key: PreferenceKey.GENDER);
     final addresses = await storage.read(key: PreferenceKey.ADDRESSES);
 
-    final jsonDecoded = jsonDecode(addresses) as List<Map<String, dynamic>>;
-    final decodedAddress = jsonDecoded.map((data) => Address.fromJson(data));
+    final jsonDecoded = jsonDecode(addresses ?? '[]');
+    final decodedAddress = jsonDecoded
+        .map<Address>((data) => Address.fromJson(data))
+        .toList();
 
     final hasNull = [
       username,

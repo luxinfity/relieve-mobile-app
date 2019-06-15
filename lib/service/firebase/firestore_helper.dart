@@ -11,7 +11,7 @@ import 'package:relieve_app/utils/preference_utils.dart';
 
 abstract class CollectionPath {
   static const String PROFILES = "profiles";
-  static const String PROFILE_ADDRESSES = "address";
+  static const String PROFILE_ADDRESSES = "addresses";
   static const String PROFILE_FAMILIES = "families";
 
   static const String DISASTERS = "disasters";
@@ -90,9 +90,8 @@ class FirestoreHelper implements ProfileService, DisasterService {
   }
 
   @override
-  Future<List<Address>> getAddress() async {
-    final uid = await PreferenceUtils.get().getUid();
-    if (uid == null) return throw StateError('User is not logged in');
+  Future<List<Address>> getAddress(String uid) async {
+    if (uid == null) return throw StateError('uid must not empty');
 
     try {
       final querySnap = await _fireStore

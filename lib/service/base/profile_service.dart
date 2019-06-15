@@ -9,7 +9,7 @@ abstract class ProfileService {
 
   Future<bool> updateAddress(Address address);
 
-  Future<List<Address>> getAddress();
+  Future<List<Address>> getAddress(String uid);
 
   Future<bool> isProfileExist(ProfileIdentifier checkIdentifier, String value);
 
