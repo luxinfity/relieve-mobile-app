@@ -1,8 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/datamodel/family.dart';
+import 'package:relieve_app/datamodel/profile.dart';
+import 'package:relieve_app/datamodel/relieve_user.dart';
+import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/api/bakau/bakau_provider.dart';
+import 'package:relieve_app/service/api/base/api.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
+
+enum AddFamilyStep {
+  Search,
+  NotFound,
+  Found,
+  Confirmation,
+  WrongCode, // TODO: show animation about wrong code
+  Naming,
+  Finish
+}
 
 class AddFamilyModal extends StatefulWidget {
   final VoidCallback onFinishClick;
@@ -14,80 +30,129 @@ class AddFamilyModal extends StatefulWidget {
     return _AddFamilyModalState();
   }
 
-  static showModal(BuildContext context, VoidCallback onExitModal) {
-    RelieveBottomModal.create(
-      context,
-      <Widget>[
-        AddFamilyModal(
-          onFinishClick: () {
-            Navigator.pop(context);
-//          setState(() {
-//            familyList = _defaultFamilyList;
-//          });
-          },
-        )
-      ],
-      onWillPop: onExitModal,
-    );
+  static Future showModal(BuildContext context) {
+    return RelieveBottomModal.create(context, <Widget>[
+      AddFamilyModal(
+        onFinishClick: () {
+          Navigator.of(context).pop(true);
+        },
+      )
+    ]);
   }
 }
 
-enum AddPersonStep { Search, Found, Confirmation, Naming, Finish }
-
 class _AddFamilyModalState extends State<AddFamilyModal> {
-  var step = AddPersonStep.Search;
-  final _usernameController = TextEditingController();
-  var friendUsername = '';
-  var friendSearchFound = true;
+  var step = AddFamilyStep.Search;
 
-  /// return true if friend found
-//  bool setFriendUsername(UserCheckResponse checkResponse) {
-//    if (checkResponse?.status == REQUEST_SUCCESS &&
-//        checkResponse?.content?.isExsist == true) {
-//      debugLog(_AddFamilyModalState).info(checkResponse?.content?.value);
-//      friendUsername = checkResponse?.content?.value;
-//      return true;
-//    }
-//    return false;
-//  }
+  RelieveUser family;
 
   void findUsername(String username) async {
-//    var checkResponse = await Api.get()
-//        .setProvider(BakauProvider())
-//        .isUserExist(UserCheckIdentifier.username, username);
-//
-//    var found = setFriendUsername(checkResponse);
-//
-//    debugLog(AddFamilyModalState).info(found);
-//    if (!found) {
-//      checkResponse = await Api.get()
-//          .setProvider(BakauProvider())
-//          .isUserExist(UserCheckIdentifier.email, username);
-//      found = setFriendUsername(checkResponse);
-//    }
-//    setState(() {
-//      friendSearchFound = found;
-//      if (found) {
-//        step = AddPersonStep.Found;
-//      }
-//    });
+    final user = await FirestoreHelper.get()
+        .findUserBy(ProfileIdentifier.username, username);
+
+    if (!mounted) return;
+    setState(() {
+      if (user == null) {
+        step = AddFamilyStep.NotFound;
+      } else {
+        step = AddFamilyStep.Found;
+        family = user;
+      }
+    });
   }
 
-  void buttonClick() {
+  /// call only if user already found
+  void requestFamilyAdd() async {
+    if (family == null) throw StateError('Family is still not found');
+    final addFamilyState =
+        await Api.get().setProvider(BakauProvider()).addFamily(family);
+
+    if (!mounted) return;
+    switch (addFamilyState) {
+      case AddFamilyState.PENDING:
+        setState(() {
+          step = AddFamilyStep.Confirmation;
+        });
+        break;
+      case AddFamilyState.SUCCESS:
+        // impossible state on add request
+        throw StateError('BE respond succes without confirmation code');
+        break;
+      case AddFamilyState.CANCELED:
+        // back-end got unknown error
+        // or can't send confirmation code to other user
+        // or current user's family quota exceeded
+        // return to search step
+        setState(() {
+          step = AddFamilyStep.Search;
+        });
+        break;
+    }
+  }
+
+  void confirmUserAddCode(String secretCode) async {
+    final addFamilyState = await Api.get()
+        .setProvider(BakauProvider())
+        .confirmFamilyAuth(secretCode);
+
+    if (!mounted) return;
+    switch (addFamilyState) {
+      case AddFamilyState.PENDING:
+        setState(() {
+          step = AddFamilyStep.WrongCode;
+        });
+        break;
+      case AddFamilyState.SUCCESS:
+        // impossible state on add request
+        setState(() {
+          step = AddFamilyStep.Naming;
+        });
+        break;
+      case AddFamilyState.CANCELED:
+        // back-end got unknown error
+        // or can't send confirmation code to other user
+        // or current user's family quota exceeded
+        // return to search step
+        setState(() {
+          step = AddFamilyStep.Search;
+        });
+        break;
+    }
+  }
+
+  void putFamilyLabel(String label) async {
+    final isSuccess = await Api.get()
+        .setProvider(BakauProvider())
+        .editFamilyLabel(family, label);
+
+    if (!mounted || !isSuccess) return;
+    setState(() {
+      step = AddFamilyStep.Finish;
+    });
+  }
+
+  void buttonNextClick(String value) {
     switch (step) {
-      case AddPersonStep.Search:
-        findUsername(_usernameController.value.text);
+      case AddFamilyStep.Search:
+        findUsername(value);
         break;
-      case AddPersonStep.Found:
-        step = AddPersonStep.Confirmation;
+      case AddFamilyStep.NotFound:
+        findUsername(value);
         break;
-      case AddPersonStep.Confirmation:
-        step = AddPersonStep.Naming;
+      case AddFamilyStep.Found:
+        requestFamilyAdd();
         break;
-      case AddPersonStep.Naming:
-        step = AddPersonStep.Finish;
+      case AddFamilyStep.Confirmation:
+        confirmUserAddCode(value);
         break;
-      case AddPersonStep.Finish:
+      case AddFamilyStep.WrongCode:
+        confirmUserAddCode(value);
+        break;
+      case AddFamilyStep.Naming:
+        putFamilyLabel(value);
+        break;
+      case AddFamilyStep.Finish:
+        // don't need input value
         widget.onFinishClick();
         break;
     }
@@ -95,6 +160,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   List<Widget> getSearchStep(bool isUserNameExist) {
+    final _usernameController = TextEditingController();
     return <Widget>[
       Padding(
         padding: const EdgeInsets.symmetric(
@@ -119,8 +185,9 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(Dimen.x6),
               ),
-              errorText:
-                  friendSearchFound ? null : 'Opps.. user tidak ditemukan'),
+              errorText: step == AddFamilyStep.NotFound
+                  ? 'Opps.. user tidak ditemukan'
+                  : null),
         ),
       ),
       Container(height: isUserNameExist ? Dimen.x16 : 0),
@@ -149,7 +216,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
                 Container(width: Dimen.x16),
                 Expanded(
                   child: Text(
-                    friendUsername,
+                    family?.label ?? '',
                     style: CircularStdFont.medium.getStyle(size: Dimen.x18),
                   ),
                 ),
@@ -161,12 +228,38 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
       StandardButton(
         text: isUserNameExist ? 'Tambahkan ke Daftar' : 'Cari Username',
         backgroundColor: AppColor.colorPrimary,
-        buttonClick: buttonClick,
+        buttonClick: () =>
+            buttonNextClick(_usernameController.value?.text ?? ''),
       )
     ];
   }
 
   List<Widget> getConfirmationStep() {
+    final _inputControllers = [
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController(),
+      TextEditingController()
+    ];
+
+    final boxInput = _inputControllers
+        .expand((control) => [
+              Container(
+                width: Dimen.x42,
+                child: TextFormField(
+                  controller: control,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(Dimen.x6),
+                    ),
+                  ),
+                ),
+              ),
+              Container(width: Dimen.x16), // padding
+            ])
+        .toList()
+          ..removeLast(); // don't need last container padding
+
     return <Widget>[
       Padding(
         padding: const EdgeInsets.symmetric(
@@ -179,62 +272,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
       Container(height: Dimen.x32),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: Dimen.x42,
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimen.x6),
-                ),
-              ),
-            ),
-          ),
-          Container(width: Dimen.x16),
-          Container(
-            width: Dimen.x42,
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimen.x6),
-                ),
-              ),
-            ),
-          ),
-          Container(width: Dimen.x16),
-          Container(
-            width: Dimen.x42,
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimen.x6),
-                ),
-              ),
-            ),
-          ),
-          Container(width: Dimen.x16),
-          Container(
-            width: Dimen.x42,
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimen.x6),
-                ),
-              ),
-            ),
-          ),
-          Container(width: Dimen.x16),
-          Container(
-            width: Dimen.x42,
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(Dimen.x6),
-                ),
-              ),
-            ),
-          ),
-        ],
+        children: boxInput,
       ),
       Container(height: Dimen.x18),
       Center(
@@ -248,12 +286,15 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
       StandardButton(
         text: 'Simpan',
         backgroundColor: AppColor.colorPrimary,
-        buttonClick: buttonClick,
+        buttonClick: () => buttonNextClick(_inputControllers
+            .map((control) => control.value?.text ?? '')
+            .join('')),
       )
     ];
   }
 
   List<Widget> getNamingStep() {
+    final nameController = TextEditingController();
     return <Widget>[
       Padding(
         padding: const EdgeInsets.symmetric(
@@ -292,6 +333,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x8),
         child: TextFormField(
+          controller: nameController,
           decoration: InputDecoration(
             labelText: 'Nama Panggilan',
             border: OutlineInputBorder(
@@ -304,7 +346,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
       StandardButton(
         text: 'Simpan',
         backgroundColor: AppColor.colorPrimary,
-        buttonClick: buttonClick,
+        buttonClick: () => buttonNextClick(nameController.value?.text ?? ''),
       )
     ];
   }
@@ -325,7 +367,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
       StandardButton(
         text: 'Mulai Komunikasi!',
         backgroundColor: AppColor.colorPrimary,
-        buttonClick: buttonClick,
+        buttonClick: () => buttonNextClick(null),
       )
     ];
   }
@@ -334,19 +376,25 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
   Widget build(BuildContext context) {
     var children = [];
     switch (step) {
-      case AddPersonStep.Search:
+      case AddFamilyStep.Search:
         children = getSearchStep(false);
         break;
-      case AddPersonStep.Found:
+      case AddFamilyStep.NotFound:
+        children = getSearchStep(false);
+        break;
+      case AddFamilyStep.Found:
         children = getSearchStep(true);
         break;
-      case AddPersonStep.Confirmation:
+      case AddFamilyStep.Confirmation:
         children = getConfirmationStep();
         break;
-      case AddPersonStep.Naming:
+      case AddFamilyStep.WrongCode:
+        children = getConfirmationStep();
+        break;
+      case AddFamilyStep.Naming:
         children = getNamingStep();
         break;
-      case AddPersonStep.Finish:
+      case AddFamilyStep.Finish:
         children = getSuccessStep();
         break;
     }

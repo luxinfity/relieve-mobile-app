@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/weather.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/api/base/api.dart';
+import 'package:relieve_app/service/api/kalomang/kalomang_provider.dart';
+import 'package:relieve_app/service/location/location.dart';
 
 enum WeatherType { Temperature, Rain, Wind, UV }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
 
 class RelieveBottomNavigationBar extends StatefulWidget {
@@ -73,8 +73,8 @@ class _RelieveBottomNavigationBarState
           ),
           isActive
               ? Text(text, style: TextStyle(fontSize: 10, color: Colors.blue))
-              : null
-        ].where((o) => o != null).toList(),
+              : Container()
+        ],
       ),
     );
   }

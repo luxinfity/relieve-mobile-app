@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:relieve_app/datamodel/base_response.dart';
 import 'package:relieve_app/datamodel/location.dart';
+import 'package:relieve_app/utils/common_utils.dart';
 
 class DisasterType {
   final String name;
@@ -51,27 +52,11 @@ class Disaster {
 }
 
 class DisasterMeta {
-  final int totalPage;
-  final int page;
-  final int limit;
+  final DocumentSnapshot lastRetrievedDoc;
+  final int currentPage;
+  final int totalData;
 
-  DisasterMeta({
-    this.totalPage,
-    this.page,
-    this.limit,
-  });
-
-  factory DisasterMeta.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      return DisasterMeta(
-        totalPage: parsedJson['total_page'],
-        page: parsedJson['page'],
-        limit: parsedJson['limit'],
-      );
-    } catch (e) {
-      return null;
-    }
-  }
+  const DisasterMeta({this.lastRetrievedDoc, this.currentPage, this.totalData});
 }
 
 class DisasterDesc {
@@ -102,46 +87,7 @@ class DisasterDesc {
         occursAt: DateTime.parse(parsedJson['occurs_at']),
       );
     } catch (e) {
-      return null;
-    }
-  }
-}
-
-class DisasterContent {
-  final List<DisasterDesc> data;
-  final DisasterMeta meta;
-
-  DisasterContent({this.data, this.meta});
-
-  factory DisasterContent.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      return DisasterContent(
-        data: (parsedJson['data'] as List)
-            .map((content) => DisasterDesc.fromJson(content))
-            .toList(),
-        meta: DisasterMeta.fromJson(parsedJson['meta']),
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-}
-
-class DisasterResponse extends BaseResponse<DisasterContent> {
-  DisasterResponse({
-    String message,
-    int status,
-    DisasterContent content,
-  }) : super(message, status, content);
-
-  factory DisasterResponse.fromJson(Map<String, dynamic> parsedJson) {
-    try {
-      return DisasterResponse(
-        message: parsedJson['message'],
-        status: parsedJson['status'],
-        content: DisasterContent.fromJson(parsedJson['content']),
-      );
-    } catch (e) {
+      debugLog(DisasterDesc).shout(e);
       return null;
     }
   }

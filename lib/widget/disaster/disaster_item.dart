@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/map_data.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/map/static_map.dart';
 
@@ -196,9 +196,9 @@ class DisasterItem extends StatelessWidget {
           children: <Widget>[
             _buildMap(),
             _buildRedDot(),
-            disaster.isLive ? _buildLiveTag() : null,
+            disaster.isLive ? _buildLiveTag() : Container(),
             Container(color: Colors.transparent)
-          ].where((widget) => widget != null).toList(),
+          ],
         ),
       ),
     );
@@ -267,18 +267,14 @@ class DisasterItemListState extends State {
   List<DisasterDesc> listDisaster = [];
 
   void loadDisaster() async {
-    final disasterResponse =
-        await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
+    final disasters =
+        await FirestoreHelper.get().getDisasterList(1, 5, resetMeta: true);
 
-    final correctlyParsedData = (disasterResponse.content.data ?? listDisaster);
-    correctlyParsedData.removeWhere((obj) => obj == null);
+    if (disasters == null || !mounted) return;
 
-    if (disasterResponse?.status == REQUEST_SUCCESS) {
-      if (!mounted) return;
-      setState(() {
-        listDisaster = correctlyParsedData;
-      });
-    }
+    setState(() {
+      listDisaster = disasters;
+    });
   }
 
   @override

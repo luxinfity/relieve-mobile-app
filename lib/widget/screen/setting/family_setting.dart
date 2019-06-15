@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 
-class NotificationScreen extends StatefulWidget {
+class FamilySettingScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return NotificationScreenState();
+    return FamilySettingScreenState();
   }
 }
 
-class NotificationScreenState extends State {
+class FamilySettingScreenState extends State {
   @override
   Widget build(BuildContext context) {
     return RelieveScaffold(

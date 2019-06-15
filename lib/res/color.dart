@@ -35,5 +35,5 @@ class AppColor {
   static final colorTextGrey = HexColor('929292');
   static final colorEmptyRect = HexColor('C4C4C4');
   static final colorEmptyChip = HexColor('E5E5E5');
-  static final colorStandardBackgroud = HexColor('f9f9f9');
+  static final colorStandardBackground = HexColor('f9f9f9');
 }

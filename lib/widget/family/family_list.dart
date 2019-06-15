@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/family.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/api/base.dart';
+import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
+import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/family/add_family_modal.dart';
 import 'package:relieve_app/widget/family/family_item.dart';
 
@@ -45,10 +46,10 @@ class FamilyItemListState extends State {
 //  ];
 
   List<Family> familyList = const [];
+  int allowedFamilyCount = 3;
 
   void loadFamilyList() async {
-    final families =
-        await Api.get().setProvider(BakauProvider()).getFamilies() ?? const [];
+    final families = await FirestoreHelper.get().getFamilies() ?? const [];
     if (!mounted) return;
     setState(() {
       familyList = families;
@@ -97,7 +98,9 @@ class FamilyItemListState extends State {
           ),
         ));
     content.addAll([
-      FamilyItem.add(),
+      allowedFamilyCount > 0
+          ? FamilyItem.add(onClick: addFamilyClick)
+          : Container(),
       Container(width: Dimen.x12),
     ]);
 
@@ -107,19 +110,24 @@ class FamilyItemListState extends State {
     );
   }
 
-  void addFamilyClick() {
-    AddFamilyModal.showModal(context, () {});
+  void addFamilyClick() async {
+    final isSuccess = await AddFamilyModal.showModal(context);
+    if (isSuccess is! bool || !isSuccess) return;
+
+    // reload family list
+    loadFamilyList();
   }
 
   void personClick(int position) {
-//    setState(() {
-//      if (position == 0) {
-//        familyList = [];
-//      } else if (position == 1) {
-////        testSheet3(context);
-//      } else if (position == 2) {
-////        testSheet(context);
-//      }
-//    });
+    RelieveBottomModal.create(context, <Widget>[
+      Container(height: Dimen.x21),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+        child: Text(
+          'Clicked on ${familyList[position].label}',
+          style: CircularStdFont.book.getStyle(size: Dimen.x16),
+        ),
+      ),
+    ]);
   }
 }

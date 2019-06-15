@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/location.dart';
-import 'package:relieve_app/res/res.dart';
-import 'package:relieve_app/service/service.dart';
+import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/disaster/disaster_item.dart';
 
@@ -15,18 +15,13 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
   List<DisasterDesc> listDisaster = [];
 
   void loadDisaster() async {
-    final disasterResponse =
-        await Api.get().setProvider(KalomangProvider()).getDisasterList(1, 5);
+    final disasters = await FirestoreHelper.get().getDisasterList(1, 5);
 
-    final correctlyParsedData = (disasterResponse.content.data ?? listDisaster);
-    correctlyParsedData.removeWhere((obj) => obj == null);
+    if (disasters == null || !mounted) return;
 
-    if (!mounted) return;
-    if (disasterResponse?.status == REQUEST_SUCCESS) {
-      setState(() {
-        listDisaster = correctlyParsedData;
-      });
-    }
+    setState(() {
+      listDisaster = disasters;
+    });
   }
 
   @override

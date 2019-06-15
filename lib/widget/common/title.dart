@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 
 class ThemedTitle extends StatelessWidget {
   final String title;
@@ -33,8 +33,8 @@ class ThemedTitle extends StatelessWidget {
                   style: CircularStdFont.book
                       .getStyle(size: 14, color: AppColor.colorTextGrey),
                 )
-              : null,
-        ].where((widget) => widget != null).toList(),
+              : Container(),
+        ],
       ),
     );
   }

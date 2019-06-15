@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:relieve_app/res/res.dart';
+import 'package:relieve_app/res/export.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 import 'package:relieve_app/utils/relieve_callback.dart';
 import 'package:relieve_app/widget/inherited/app_container.dart';
@@ -31,7 +31,7 @@ class RelieveScaffold extends StatelessWidget {
     return <Widget>[
       // status bar
       hasAppBarScreen
-          ? null
+          ? Container()
           : Container(
               color: AppColor.colorPrimary,
               height: padding.top,
@@ -45,8 +45,8 @@ class RelieveScaffold extends StatelessWidget {
                   progressCount,
               color: AppColor.colorPrimary,
             )
-          : null,
-    ].where((widget) => widget != null).toList();
+          : Container(),
+    ];
   }
 
   Widget _createBackButton(BuildContext context) {

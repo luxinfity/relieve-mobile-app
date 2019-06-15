@@ -13,6 +13,3 @@ typedef RelieveBottomAction(int index, bool isCall); // non data model
 
 // flutter
 typedef VoidCallbackContext(BuildContext context);
-
-// dart
-typedef String StringCallback();
