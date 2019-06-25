@@ -401,6 +401,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
     return ListView(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        children: children);
+        children: children
+          ..add(Container(height: MediaQuery.of(context).viewInsets.bottom)));
   }
 }

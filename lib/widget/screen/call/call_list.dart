@@ -25,6 +25,7 @@ class CallListScreenState extends State {
   final uniqueTypes = List<String>();
   List<bool> isSelectedList = List<bool>();
 
+  // TODO: load from database
   void getAllContact() async {
     // TODO: handle getCurrentLocation(...) null value
     final position = await LocationService.getCurrentPosition();
