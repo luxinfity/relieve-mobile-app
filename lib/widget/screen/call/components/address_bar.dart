@@ -22,6 +22,10 @@ class AddressBar extends StatelessWidget {
         child: Text(
           ReCase(getCurrentAddress()).titleCase,
           overflow: TextOverflow.ellipsis,
+          style: CircularStdFont.medium.getStyle(
+            size: Dimen.x14,
+            color: AppColor.colorTextBlack,
+          ),
         ),
       )
     ];

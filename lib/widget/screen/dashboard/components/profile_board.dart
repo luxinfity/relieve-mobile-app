@@ -80,7 +80,7 @@ class ProfileBoardState extends State {
                 ),
                 child: UserLocation(
                   location: locationName == null
-                      ? 'Menunggu Lokasi...'
+                      ? 'Mendeteksi Lokasi...'
                       : locationName,
                   icon: LocalImage.icMap,
                   personHealth: Health.None,

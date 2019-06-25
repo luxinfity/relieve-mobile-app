@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 import 'package:relieve_app/datamodel/address.dart';
+import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/utils/preference_utils.dart';
 import 'package:relieve_app/widget/common/relieve_scaffold.dart';
 import 'package:relieve_app/widget/common/title.dart';
 import 'package:relieve_app/widget/family/family_list.dart';
+import 'package:relieve_app/widget/profile/user_location.dart';
 import 'package:relieve_app/widget/screen/call/call_list.dart';
-import 'package:relieve_app/widget/screen/call/components/address_bar.dart';
 import 'package:relieve_app/widget/screen/call/components/item_button.dart';
 
 class CallScreen extends StatefulWidget {
@@ -14,17 +17,16 @@ class CallScreen extends StatefulWidget {
 }
 
 class CallScreenState extends State {
-  List<Address> addressList = List();
+  final addressIndex = PreferenceUtils.get().currentActiveAddress;
+  final profile = PreferenceUtils.get().currentUserProfile;
+
+  Address address;
 
   void getUserAddress() async {
-//    final addressResponse =
-//        await Api.get().setProvider(BakauProvider()).getUserAddress();
-//
-//    if (addressResponse?.status == REQUEST_SUCCESS) {
-//      setState(() {
-//        addressList = addressResponse.content;
-//      });
-//    }
+    if (!mounted) return;
+    setState(() {
+      address = profile.addresses[addressIndex];
+    });
   }
 
   @override
@@ -51,9 +53,14 @@ class CallScreenState extends State {
                       top: Dimen.x16,
                       bottom: Dimen.x12,
                     ),
-                    child: ScreenTitle(title: 'Panggilan Darurat'),
+                    child: ScreenTitle(title: 'Lokasi Saat Ini'),
                   ),
-                  AddressBar(addressList: addressList),
+                  UserLocation(
+                    location: ReCase(address?.label ?? 'Mendeteksi Lokasi...')
+                        .titleCase,
+                    icon: LocalImage.icMap,
+                    personHealth: Health.None,
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: Dimen.x32),
                     child: ThemedTitle(title: 'Lembaga Penanganan Darurat'),
