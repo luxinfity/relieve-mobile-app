@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:relieve_app/datamodel/address.dart';
+import 'package:relieve_app/datamodel/chat.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/profile.dart';
@@ -16,6 +17,8 @@ abstract class CollectionPath {
 
   static const String DISASTERS = "disasters";
   static const String DISASTER_EVENT = "events";
+
+  static const String CHATS = "chats";
 }
 
 /// singleton
@@ -28,7 +31,9 @@ class FirestoreHelper implements ProfileService, DisasterService {
 
   final Firestore _fireStore = Firestore.instance;
 
+  // TODO: save meta to local Database
   DisasterMeta disasterMeta;
+  ChatMeta chatMeta;
 
   /// save user as a document,
   /// but save address as a collection inside user document
@@ -266,5 +271,33 @@ class FirestoreHelper implements ProfileService, DisasterService {
       debugLog(FirestoreHelper).info(error);
       return null;
     }
+  }
+
+  /// start from page 1, must access the data on order, page 1..2..3..n
+  /// return null on error
+  /// return empty on no more data
+  Future<List<Message>> getAllMessage(
+      String chatId, int page, int limit) async {
+    return null;
+  }
+
+  /// start from page 1, must access the data on order, page 1..2..3..n
+  /// return null on error
+  /// return empty on no more data
+  Future<List<Chat>> getAllChat(int page, int limit) async {
+    final uid = await PreferenceUtils.get().getUid();
+    if (uid == null) return throw StateError('User is not logged in');
+
+    // TODO: do pagination
+    final chatDocs = await _fireStore
+        .collection(CollectionPath.CHATS)
+        .where('members', arrayContains: uid)
+        .limit(limit)
+        .getDocuments();
+
+    final chats =
+        chatDocs.documents.map<Chat>((ref) => Chat.fromMap(ref.data)).toList();
+
+    return chats;
   }
 }

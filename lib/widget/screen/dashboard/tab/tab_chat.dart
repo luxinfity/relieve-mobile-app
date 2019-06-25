@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/chat.dart';
 import 'package:relieve_app/res/export.dart';
+import 'package:relieve_app/service/api/bakau/bakau_provider.dart';
+import 'package:relieve_app/service/api/base/api.dart';
 import 'package:relieve_app/widget/chat/chat_item.dart';
 import 'package:relieve_app/widget/common/title.dart';
 
@@ -12,26 +14,23 @@ class TabChatScreen extends StatefulWidget {
 }
 
 class TabChatScreenState extends State {
-  List<Chat> chatList = [
-    Chat(
-      isRead: false,
-      userId: '1111',
-      lastMessage: 'aldada',
-      lastTimeSend: 100,
-    ),
-    Chat(
-      isRead: true,
-      userId: '1111',
-      lastMessage: 'aldada',
-      lastTimeSend: 100,
-    ),
-    Chat(
-      isRead: false,
-      userId: '1111',
-      lastMessage: 'aldada',
-      lastTimeSend: 100,
-    ),
-  ];
+  List<Chat> chatList = [];
+
+  void loadChat() async {
+    final chats =
+        await Api.get().setProvider(BakauProvider()).getAllChat(1, 10);
+
+    if (chats == null || !mounted) return;
+    setState(() {
+      chatList = chats;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadChat();
+  }
 
   @override
   Widget build(BuildContext context) {

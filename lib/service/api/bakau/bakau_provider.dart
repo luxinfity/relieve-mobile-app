@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:relieve_app/datamodel/chat.dart';
 import 'package:relieve_app/datamodel/contact.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/location.dart';
@@ -48,6 +49,8 @@ class BakauProvider extends Provider implements BakauApi {
   // only other can see the request code
   @override
   Future<AddFamilyState> addFamily(RelieveUser other) async {
+    this.checkProvider();
+
     final uid = await PreferenceUtils.get().getUid();
     if (uid == null) return throw StateError('User is not logged in');
 
@@ -71,13 +74,41 @@ class BakauProvider extends Provider implements BakauApi {
 
   @override
   Future<AddFamilyState> confirmFamilyAuth(String code) async {
+    this.checkProvider();
+
     // TODO: implement check code
     return AddFamilyState.CANCELED;
   }
 
   @override
   Future<bool> editFamilyLabel(RelieveUser other, String label) async {
+    this.checkProvider();
+
     // TODO: implement edit label
     return false;
+  }
+
+  @override
+  Future<bool> sendChatMessage(String otherUserId, Message message) async {
+    this.checkProvider();
+
+    return false;
+  }
+
+  /// start from page 1, must access the data on order, page 1..2..3..n
+  /// return null on error
+  /// return empty on no more data
+  @override
+  Future<List<Message>> getAllMessage(
+      String chatId, int page, int limit) async {
+    return FirestoreHelper.get().getAllMessage(chatId, page, limit);
+  }
+
+  /// start from page 1, must access the data on order, page 1..2..3..n
+  /// return null on error
+  /// return empty on no more data
+  @override
+  Future<List<Chat>> getAllChat(int page, int limit) async {
+    return FirestoreHelper.get().getAllChat(page, limit);
   }
 }

@@ -42,12 +42,9 @@ class _WalkthroughScreenState extends State<WalkthroughScreen> {
   @override
   Widget build(BuildContext context) {
     final EdgeInsets padding = MediaQuery.of(context).padding;
-    final walkThroughItem = [
-      buildWalkthroughItem(0),
-      buildWalkthroughItem(1),
-      buildWalkthroughItem(2),
-      buildWalkthroughItem(3),
-    ];
+    final walkThroughItem =
+        List.generate(WALKTHROUGH_SIZE, (i) => buildWalkthroughItem(i));
+    
     return RelieveScaffold(
       crossAxisAlignment: CrossAxisAlignment.start,
       childs: <Widget>[

@@ -132,13 +132,13 @@ class _WeatherItemListState extends State<WeatherItemList> {
     }
 
     final userLocation = await LocationService.getLastKnownPosition();
-    if (!mounted) return;
     if (userLocation != null) {
       final response =
           await Api.get().setProvider(KalomangProvider()).weatherCheck(
                 userLocation.latitude,
                 userLocation.longitude,
               );
+      if (!mounted) return;
       setState(() {
         _weatherResponse = response ?? _weatherResponse;
       });
