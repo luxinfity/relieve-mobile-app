@@ -12,10 +12,10 @@ class TabDiscoverScreen extends StatefulWidget {
 }
 
 class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
-  // TODO: get live event
-  bool hasLiveEvent = true;
+  Disaster liveEvent;
+  List<Disaster> listDisaster = [];
 
-  List<DisasterDesc> listDisaster = [];
+  bool get hasLiveEvent => liveEvent != null;
 
   void loadDisaster() async {
     final disasters = await FirestoreHelper.get().getDisasterList(1, 5);
@@ -27,9 +27,20 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
     });
   }
 
+  void loadLiveEvent() async {
+    final disaster = await FirestoreHelper.get().getLiveEvent();
+
+    if (disaster == null || !mounted) return;
+
+    setState(() {
+      liveEvent = disaster;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    loadLiveEvent();
     loadDisaster();
   }
 
@@ -57,8 +68,8 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
                         disaster: Disaster(
                           isLive: true,
                           title: 'Gunung Semeru Meletus',
-                          location: 'Jawa Timur',
-                          time: DateTime.now(),
+                          address: 'Jawa Timur',
+                          occursAt: DateTime.now(),
                           coordinate:
                               Coordinate(37.42796133580664, -122.085749655962),
                         ),
@@ -91,8 +102,8 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
                         disaster: Disaster(
                             isLive: false,
                             title: 'Gunung Semeru Meletus',
-                            location: 'Jawa Timur',
-                            time: DateTime.now(),
+                            address: 'Jawa Timur',
+                            occursAt: DateTime.now(),
                             coordinate: Coordinate(
                                 37.42796133580664, -122.085749655962)),
                       ),

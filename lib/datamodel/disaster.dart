@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:relieve_app/datamodel/location.dart';
 import 'package:relieve_app/utils/common_utils.dart';
 
@@ -35,22 +34,6 @@ class DisasterType {
   static const DisasterType TYPHOON = DisasterType._internal("typhoon");
 }
 
-class Disaster {
-  final bool isLive;
-  final String title;
-  final String location;
-  final DateTime time;
-  final Coordinate coordinate;
-
-  const Disaster({
-    @required this.isLive,
-    @required this.title,
-    @required this.location,
-    @required this.time,
-    @required this.coordinate,
-  });
-}
-
 class DisasterMeta {
   final DocumentSnapshot lastRetrievedDoc;
   final int currentPage;
@@ -59,16 +42,22 @@ class DisasterMeta {
   const DisasterMeta({this.lastRetrievedDoc, this.currentPage, this.totalData});
 }
 
-class DisasterDesc {
+class Disaster {
   final String id;
+  final bool isLive;
+  final String title;
+  final String address;
   final DisasterType disasterType;
   final Coordinate coordinate;
   final double magnitude;
   final double depth;
   final DateTime occursAt;
 
-  DisasterDesc({
+  Disaster({
     this.id,
+    this.isLive,
+    this.title,
+    this.address,
     this.disasterType,
     this.coordinate,
     this.magnitude,
@@ -76,10 +65,13 @@ class DisasterDesc {
     this.occursAt,
   });
 
-  factory DisasterDesc.fromJson(Map<String, dynamic> parsedJson) {
+  factory Disaster.fromJson(Map<String, dynamic> parsedJson) {
     try {
-      return DisasterDesc(
+      return Disaster(
         id: parsedJson['id'],
+        isLive: parsedJson['is_live'] ?? false,
+        title: parsedJson['title'].toString(),
+        address: parsedJson['address'].toString(),
         disasterType: DisasterType(parsedJson['type']),
         coordinate: Coordinate.parseString(parsedJson['coordinate']),
         magnitude: parsedJson['magnitude'].toDouble(),
@@ -87,7 +79,7 @@ class DisasterDesc {
         occursAt: DateTime.parse(parsedJson['occurs_at']),
       );
     } catch (e) {
-      debugLog(DisasterDesc).shout(e);
+      debugLog(Disaster).shout(e);
       return null;
     }
   }

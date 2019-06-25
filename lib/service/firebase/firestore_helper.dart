@@ -207,11 +207,40 @@ class FirestoreHelper implements ProfileService, DisasterService {
     return families;
   }
 
+  Future<Disaster> getLiveEvent() async {
+    final disasterRef =
+        _fireStore.collection(CollectionPath.DISASTERS).document('meta');
+
+    try {
+      final docs = await disasterRef
+          .collection(CollectionPath.DISASTER_EVENT)
+          .limit(1)
+          .where('is_live', isEqualTo: true)
+          .getDocuments();
+
+      final lastDoc = docs.documents.first;
+      disasterMeta = DisasterMeta(
+          lastRetrievedDoc: lastDoc,
+          totalData: disasterMeta.totalData,
+          currentPage: disasterMeta.totalData + 1);
+
+      final disasters = docs.documents
+          .map((snap) => Disaster.fromJson(snap.data))
+          .toList();
+
+      // if no result found, return null
+      return disasters.isNotEmpty ? disasters.first : null;
+    } catch (error) {
+      debugLog(FirestoreHelper).info(error);
+      return null;
+    }
+  }
+
   /// start from page 1, must access the data on order, page 1..2..3..n
   /// return null on error
   /// return empty on no more data
   @override
-  Future<List<DisasterDesc>> getDisasterList(int page, int limit,
+  Future<List<Disaster>> getDisasterList(int page, int limit,
       {DisasterType typeFilter, bool resetMeta = false}) async {
     final disasterRef =
         _fireStore.collection(CollectionPath.DISASTERS).document('meta');
@@ -259,7 +288,7 @@ class FirestoreHelper implements ProfileService, DisasterService {
             currentPage: disasterMeta.totalData + 1);
 
         final disasters = doc.documents
-            .map((snap) => DisasterDesc.fromJson(snap.data))
+            .map((snap) => Disaster.fromJson(snap.data))
             .toList();
 
         return disasters;

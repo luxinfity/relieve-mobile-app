@@ -30,7 +30,7 @@ class DiscoverItem extends StatelessWidget {
           ),
         ),
         Text(
-          disaster.location,
+          disaster.address,
           style: CircularStdFont.book.getStyle(
             color: AppColor.colorTextBlack,
             size: Dimen.x12,
@@ -149,10 +149,10 @@ class DisasterItem extends StatelessWidget {
   }
 
   RichText _buildSubtitle() {
-    final timeDiff = DateTime.now().difference(disaster.time);
+    final timeDiff = DateTime.now().difference(disaster.occursAt);
     return RichText(
       text: TextSpan(
-        text: disaster.location,
+        text: disaster.address,
         style: CircularStdFont.medium.getStyle(
           color: AppColor.colorDanger,
           size: Dimen.x10,

@@ -14,7 +14,7 @@ class DisasterItemList extends StatefulWidget {
 }
 
 class DisasterItemListState extends State {
-  List<DisasterDesc> listDisaster = [];
+  List<Disaster> listDisaster = [];
 
   void loadDisaster() async {
     final disasters =
@@ -125,8 +125,8 @@ class DisasterItemListState extends State {
                 disaster: Disaster(
                     isLive: false,
                     title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
+                    address: 'Jawa Timur',
+                    occursAt: DateTime.now(),
                     coordinate:
                         Coordinate(37.42796133580664, -122.085749655962)),
               )),

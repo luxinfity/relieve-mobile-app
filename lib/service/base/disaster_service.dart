@@ -1,6 +1,8 @@
 import 'package:relieve_app/datamodel/disaster.dart';
 
 abstract class DisasterService {
-  Future<List<DisasterDesc>> getDisasterList(int page, int limit,
+  Future<Disaster> getLiveEvent();
+
+  Future<List<Disaster>> getDisasterList(int page, int limit,
       {DisasterType typeFilter});
 }
