@@ -124,9 +124,8 @@ class PreferenceUtils {
     final addresses = await storage.read(key: PreferenceKey.ADDRESSES);
 
     final jsonDecoded = jsonDecode(addresses ?? '[]');
-    final decodedAddress = jsonDecoded
-        .map<Address>((data) => Address.fromJson(data))
-        .toList();
+    final decodedAddress =
+        jsonDecoded.map<Address>((data) => Address.fromJson(data)).toList();
 
     final hasNull = [
       username,

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/map_data.dart';
 import 'package:relieve_app/res/export.dart';
-import 'package:relieve_app/service/firebase/firestore_helper.dart';
-import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/map/static_map.dart';
 
 class DiscoverItem extends StatelessWidget {
@@ -32,7 +30,7 @@ class DiscoverItem extends StatelessWidget {
           ),
         ),
         Text(
-          disaster.location,
+          disaster.address,
           style: CircularStdFont.book.getStyle(
             color: AppColor.colorTextBlack,
             size: Dimen.x12,
@@ -66,7 +64,6 @@ class DiscoverItem extends StatelessWidget {
       child: Container(
         color: AppColor.colorEmptyRect,
         height: 220,
-        width: double.infinity,
         child: Stack(
           fit: StackFit.expand,
           overflow: Overflow.clip,
@@ -105,34 +102,37 @@ class DiscoverItem extends StatelessWidget {
 class DisasterItem extends StatelessWidget {
   final Disaster disaster;
   final double width;
-  final VoidCallback onClick;
 
-  const DisasterItem({
+  const DisasterItem._({
+    Key key,
+    @required this.disaster,
+    this.width,
+  }) : super(key: key);
+
+  const DisasterItem.fixedSize({
     Key key,
     @required this.disaster,
     this.width = 180,
-    this.onClick,
+  }) : super(key: key);
+
+  const DisasterItem.flexible({
+    Key key,
+    @required this.disaster,
+    this.width = 0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(Dimen.x6),
-      onTap: onClick,
-      child: Padding(
-        padding: EdgeInsets.only(
-          left: Dimen.x4,
-          right: Dimen.x4,
-        ),
-        child: Wrap(
-          direction: Axis.vertical,
+      onTap: () {},
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _buildItem(context),
             _buildTitle(),
-            _buildSubtitle(),
-          ],
-        ),
-      ),
+            _buildSubtitle()
+          ]),
     );
   }
 
@@ -149,10 +149,10 @@ class DisasterItem extends StatelessWidget {
   }
 
   RichText _buildSubtitle() {
-    final timeDiff = DateTime.now().difference(disaster.time);
+    final timeDiff = DateTime.now().difference(disaster.occursAt);
     return RichText(
       text: TextSpan(
-        text: disaster.location,
+        text: disaster.address,
         style: CircularStdFont.medium.getStyle(
           color: AppColor.colorDanger,
           size: Dimen.x10,
@@ -190,7 +190,7 @@ class DisasterItem extends StatelessWidget {
       child: Container(
         color: AppColor.colorEmptyRect,
         height: 144,
-        width: width,
+        width: width > 0 ? width : null,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -251,140 +251,6 @@ class DisasterItem extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class DisasterItemList extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return DisasterItemListState();
-  }
-}
-
-class DisasterItemListState extends State {
-  List<DisasterDesc> listDisaster = [];
-
-  void loadDisaster() async {
-    final disasters =
-        await FirestoreHelper.get().getDisasterList(1, 5, resetMeta: true);
-
-    if (disasters == null || !mounted) return;
-
-    setState(() {
-      listDisaster = disasters;
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    loadDisaster();
-  }
-
-  Widget _hollowButton() {
-    return Material(
-      elevation: 1,
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(Dimen.x4),
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          alignment: Alignment.center,
-          child: LocalImage.icWarning.toSvg(height: 20),
-          padding: EdgeInsets.only(
-            top: Dimen.x16,
-            bottom: Dimen.x16,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Dimen.x4),
-            border: Border.all(color: AppColor.colorDanger, width: 2),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void testSheet(BuildContext context) {
-    RelieveBottomModal.create(context, <Widget>[
-      Container(height: 150, color: AppColor.colorEmptyRect),
-      Container(height: Dimen.x24),
-      Text(
-        'Awas!! \nGempa terjadi didekatmu',
-        style: CircularStdFont.black.getStyle(size: Dimen.x21),
-      ),
-      Container(height: Dimen.x36),
-      Row(
-        children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: _hollowButton(),
-          ),
-          Container(width: Dimen.x12),
-          Expanded(
-            flex: 3,
-            child: RaisedButton(
-              elevation: 1,
-              highlightElevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Dimen.x4),
-              ),
-              padding: EdgeInsets.symmetric(vertical: Dimen.x16),
-              color: AppColor.colorPrimary,
-              textColor: Colors.white,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: LocalImage.icGuard.toSvg(height: 20),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Saya Aman',
-                      style: CircularStdFont.bold.getStyle(
-                        size: Dimen.x18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
-    ]);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 205,
-      width: double.infinity,
-      padding: EdgeInsets.only(top: Dimen.x12, bottom: Dimen.x4),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (bc, index) {
-          return Container(
-            padding: EdgeInsets.only(
-                left: index == 0 ? 8.0 : 0.0,
-                right: index == listDisaster.length - 1 ? 8.0 : 0.0),
-            child: DisasterItem(
-                disaster: Disaster(
-                    isLive: false,
-                    location: 'Palembang',
-                    time: listDisaster[index].occursAt,
-                    title: 'Gempa ${listDisaster[index].magnitude} SR',
-                    coordinate: listDisaster[index].coordinate),
-                onClick: () {
-                  testSheet(context);
-                }),
-          );
-        },
-        itemCount: listDisaster.length,
       ),
     );
   }
