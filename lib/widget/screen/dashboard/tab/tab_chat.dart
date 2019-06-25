@@ -21,7 +21,6 @@ class TabChatScreenState extends State {
         await Api.get().setProvider(BakauProvider()).getAllChat(1, 10);
 
     if (chats == null || !mounted) return;
-
     setState(() {
       chatList = chats;
     });
