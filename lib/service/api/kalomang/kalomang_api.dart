@@ -1,4 +1,3 @@
-import 'package:relieve_app/datamodel/disaster.dart';
 import 'package:relieve_app/datamodel/weather.dart';
 
 abstract class KalomangApi {

@@ -34,7 +34,8 @@ class FirebaseAuthHelper implements AuthService {
           await _fireBaseAuth.signInWithEmailAndPassword(
               email: completeProfile.profile.email, password: password);
 
-      final addresses = await FirestoreHelper.get().getAddress(firebaseUser.uid);
+      final addresses =
+          await FirestoreHelper.get().getAddress(firebaseUser.uid);
       final completeProfileWithAddress =
           completeProfile.profile.copyWith(addresses: addresses);
       PreferenceUtils.get().saveCurrentProfile(completeProfileWithAddress);

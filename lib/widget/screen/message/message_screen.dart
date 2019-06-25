@@ -176,7 +176,6 @@ class _MessageScreenState extends State<MessageScreen> {
           child: Text(
             message.content,
             style: TextStyle(color: Colors.white),
-
             maxLines: null,
           ),
         ),

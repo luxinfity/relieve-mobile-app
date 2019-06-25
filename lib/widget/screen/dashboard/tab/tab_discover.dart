@@ -12,6 +12,9 @@ class TabDiscoverScreen extends StatefulWidget {
 }
 
 class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
+  // TODO: get live event
+  bool hasLiveEvent = true;
+
   List<DisasterDesc> listDisaster = [];
 
   void loadDisaster() async {
@@ -37,165 +40,65 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
         slivers: <Widget>[
           SliverList(
             delegate: SliverChildListDelegate(<Widget>[
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: Dimen.x16,
-                  top: Dimen.x24,
-                  bottom: Dimen.x12,
-                ),
-                child: ScreenTitle(title: 'Discover'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: Dimen.x16,
-                  right: Dimen.x16,
-                  top: Dimen.x12,
-                  bottom: Dimen.x24,
-                ),
-                child: DiscoverItem(
-                  disaster: Disaster(
-                    isLive: true,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-              ThemedTitle(
-                title: 'Highlight Bencana',
-              )
+              Container(height: hasLiveEvent ? Dimen.x28 : 0),
+              hasLiveEvent
+                  ? Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimen.x16),
+                      child: ScreenTitle(title: 'Discover'),
+                    )
+                  : Container(),
+              Container(height: hasLiveEvent ? Dimen.x28 : 0),
+              hasLiveEvent
+                  ? Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimen.x16),
+                      child: DiscoverItem(
+                        disaster: Disaster(
+                          isLive: true,
+                          title: 'Gunung Semeru Meletus',
+                          location: 'Jawa Timur',
+                          time: DateTime.now(),
+                          coordinate:
+                              Coordinate(37.42796133580664, -122.085749655962),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              Container(height: Dimen.x18),
+              hasLiveEvent
+                  ? ThemedTitle(title: 'Highlight Bencana')
+                  : Padding(
+                      padding: const EdgeInsets.only(
+                        left: Dimen.x16,
+                        right: Dimen.x16,
+                        bottom: Dimen.x21,
+                        top: Dimen.x10,
+                      ),
+                      child: ScreenTitle(title: 'Highlight Bencana'))
             ]),
           ),
-//          SliverGrid(
-//            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//              crossAxisCount: 2,
-//              crossAxisSpacing: 8,
-//              mainAxisSpacing: 8
-//            ),
-//          ),
-          SliverGrid.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
-            children: <Widget>[
-              Container(
-                color: Colors.amber,
-                alignment: Alignment.topRight,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: Dimen.x16),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: Dimen.x8,
+                crossAxisSpacing: Dimen.x8,
               ),
-              Container(
-                color: Colors.red,
-                alignment: Alignment.topLeft,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topRight,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topLeft,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topRight,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topLeft,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topRight,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.topLeft,
-                child: DisasterItem(
-                  width: 185,
-                  disaster: Disaster(
-                    isLive: false,
-                    title: 'Gunung Semeru Meletus',
-                    location: 'Jawa Timur',
-                    time: DateTime.now(),
-                    coordinate:
-                        Coordinate(37.42796133580664, -122.085749655962),
-                  ),
-                ),
-              ),
-            ],
-          )
+              delegate: SliverChildBuilderDelegate(
+                  (ctx, idx) => DisasterItem.flexible(
+                        disaster: Disaster(
+                            isLive: false,
+                            title: 'Gunung Semeru Meletus',
+                            location: 'Jawa Timur',
+                            time: DateTime.now(),
+                            coordinate: Coordinate(
+                                37.42796133580664, -122.085749655962)),
+                      ),
+                  childCount: listDisaster.length),
+            ),
+          ),
         ],
       ),
     );
