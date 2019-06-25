@@ -74,8 +74,8 @@ class Disaster {
         address: parsedJson['address'].toString(),
         disasterType: DisasterType(parsedJson['type']),
         coordinate: Coordinate.parseString(parsedJson['coordinate']),
-        magnitude: parsedJson['magnitude'].toDouble(),
-        depth: parsedJson['depth'].toDouble(),
+        magnitude: parsedJson['magnitude']?.toDouble() ?? 0,
+        depth: parsedJson['depth']?.toDouble() ?? 0,
         occursAt: DateTime.parse(parsedJson['occurs_at']),
       );
     } catch (e) {

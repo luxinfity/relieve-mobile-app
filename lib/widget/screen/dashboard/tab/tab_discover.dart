@@ -18,12 +18,13 @@ class _TabDiscoverScreenState extends State<TabDiscoverScreen> {
   bool get hasLiveEvent => liveEvent != null;
 
   void loadDisaster() async {
-    final disasters = await FirestoreHelper.get().getDisasterList(1, 5);
+    final disasters =
+        await FirestoreHelper.get().getDisasterList(1, 5, resetMeta: true);
 
     if (disasters == null || !mounted) return;
 
     setState(() {
-      listDisaster = disasters;
+      listDisaster = disasters.where((dis) => dis.isLive != true).toList();
     });
   }
 
