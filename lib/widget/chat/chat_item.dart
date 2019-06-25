@@ -13,7 +13,7 @@ class ChatItem extends StatelessWidget {
 
   void onChatClick(BuildContext context) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (ctx) => MessageScreen()));
+        context, MaterialPageRoute(builder: (ctx) => MessageScreen(this.chat)));
   }
 
   @override
