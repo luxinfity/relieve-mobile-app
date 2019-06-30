@@ -209,7 +209,7 @@ class FirestoreHelper implements ProfileService, DisasterService {
 
   Future<Disaster> getLiveEvent() async {
     final disasterRef =
-        _fireStore.collection(CollectionPath.DISASTERS).document('meta');
+    _fireStore.collection(CollectionPath.DISASTERS).document('meta');
 
     try {
       final docs = await disasterRef
@@ -218,18 +218,10 @@ class FirestoreHelper implements ProfileService, DisasterService {
           .where('is_live', isEqualTo: true)
           .getDocuments();
 
-      final lastDoc = docs.documents.first;
-      disasterMeta = DisasterMeta(
-          lastRetrievedDoc: lastDoc,
-          totalData: disasterMeta.totalData,
-          currentPage: disasterMeta.totalData + 1);
-
-      final disasters = docs.documents
-          .map((snap) => Disaster.fromJson(snap.data))
-          .toList();
+      final disaster = Disaster.fromJson(docs.documents.first.data);
 
       // if no result found, return null
-      return disasters.isNotEmpty ? disasters.first : null;
+      return disaster;
     } catch (error) {
       debugLog(FirestoreHelper).info(error);
       return null;
@@ -287,9 +279,8 @@ class FirestoreHelper implements ProfileService, DisasterService {
             totalData: disasterMeta.totalData,
             currentPage: disasterMeta.totalData + 1);
 
-        final disasters = doc.documents
-            .map((snap) => Disaster.fromJson(snap.data))
-            .toList();
+        final disasters =
+            doc.documents.map((snap) => Disaster.fromJson(snap.data)).toList();
 
         return disasters;
       } else {

@@ -28,6 +28,8 @@ class Coordinate {
   Position toPosition() => Position(latitude: latitude, longitude: longitude);
 
   factory Coordinate.parseString(String coordinate) {
+    if (coordinate == null) return null;
+
     final splitted =
         coordinate.split(',').map((s) => double.parse(s.trim())).toList();
     return Coordinate(splitted[0], splitted[1]);
