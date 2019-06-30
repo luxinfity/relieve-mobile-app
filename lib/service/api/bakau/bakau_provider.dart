@@ -69,7 +69,7 @@ class BakauProvider extends Provider implements BakauApi {
 
 //    CloudMessageHelper.get().sendFamilyRequest(otherUserToken, requestData);
 
-    return AddFamilyState.CANCELED;
+    return AddFamilyState.PENDING;
   }
 
   @override
