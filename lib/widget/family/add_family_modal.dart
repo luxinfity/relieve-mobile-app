@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 import 'package:relieve_app/datamodel/family.dart';
 import 'package:relieve_app/datamodel/profile.dart';
 import 'package:relieve_app/datamodel/relieve_user.dart';
@@ -10,15 +13,7 @@ import 'package:relieve_app/service/firebase/firestore_helper.dart';
 import 'package:relieve_app/widget/common/bottom_modal.dart';
 import 'package:relieve_app/widget/common/standard_button.dart';
 
-enum AddFamilyStep {
-  Search,
-  NotFound,
-  Found,
-  Confirmation,
-  WrongCode, // TODO: show animation about wrong code
-  Naming,
-  Finish
-}
+enum AddFamilyStep { Search, NotFound, Found, Confirmation, Naming, Finish }
 
 class AddFamilyModal extends StatefulWidget {
   final VoidCallback onFinishClick;
@@ -42,9 +37,29 @@ class AddFamilyModal extends StatefulWidget {
 }
 
 class _AddFamilyModalState extends State<AddFamilyModal> {
+  static const int CONFIRMATION_TIMEOUT = 300; // in second
+
+  // text controller
+  final _usernameController = TextEditingController();
+
+  // timer
+  Timer _confirmationTiming;
+  int confirmationTimePassed = CONFIRMATION_TIMEOUT; // in second
+
   var step = AddFamilyStep.Search;
 
   RelieveUser family;
+
+  String _printDuration(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
 
   void findUsername(String username) async {
     final user = await FirestoreHelper.get()
@@ -99,7 +114,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
     switch (addFamilyState) {
       case AddFamilyState.PENDING:
         setState(() {
-          step = AddFamilyStep.WrongCode;
+//          step = AddFamilyStep.WrongCode;
         });
         break;
       case AddFamilyState.SUCCESS:
@@ -140,12 +155,23 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
         findUsername(value);
         break;
       case AddFamilyStep.Found:
+        _confirmationTiming = Timer.periodic(
+          Duration(seconds: 1),
+          (t) => setState(() {
+                if (confirmationTimePassed > 0)
+                  confirmationTimePassed -= 1;
+                else {
+                  confirmationTimePassed = CONFIRMATION_TIMEOUT;
+                  _confirmationTiming.cancel();
+                  confirmUserAddCode(value);
+                }
+              }),
+        );
         requestFamilyAdd();
         break;
       case AddFamilyStep.Confirmation:
-        confirmUserAddCode(value);
-        break;
-      case AddFamilyStep.WrongCode:
+        confirmationTimePassed = CONFIRMATION_TIMEOUT;
+        _confirmationTiming.cancel();
         confirmUserAddCode(value);
         break;
       case AddFamilyStep.Naming:
@@ -160,7 +186,6 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   List<Widget> getSearchStep(bool isUserNameExist) {
-    final _usernameController = TextEditingController();
     return <Widget>[
       Padding(
         padding: const EdgeInsets.symmetric(
@@ -173,7 +198,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
       Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x8),
-        child: TextFormField(
+        child: TextField(
           controller: _usernameController,
           decoration: InputDecoration(
               labelText: 'Tulis username / email',
@@ -216,7 +241,7 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
                 Container(width: Dimen.x16),
                 Expanded(
                   child: Text(
-                    family?.label ?? '',
+                    ReCase(family?.profile?.fullName ?? '').titleCase,
                     style: CircularStdFont.medium.getStyle(size: Dimen.x18),
                   ),
                 ),
@@ -235,60 +260,28 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
   }
 
   List<Widget> getConfirmationStep() {
-    final _inputControllers = [
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController(),
-      TextEditingController()
-    ];
-
-    final boxInput = _inputControllers
-        .expand((control) => [
-              Container(
-                width: Dimen.x42,
-                child: TextFormField(
-                  controller: control,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(Dimen.x6),
-                    ),
-                  ),
-                ),
-              ),
-              Container(width: Dimen.x16), // padding
-            ])
-        .toList()
-          ..removeLast(); // don't need last container padding
-
     return <Widget>[
       Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: Dimen.x16, vertical: Dimen.x12),
         child: Text(
-          'Masukkan kode unik',
+          'Menunggu Konfirmasi',
           style: CircularStdFont.black.getStyle(size: Dimen.x21),
         ),
       ),
       Container(height: Dimen.x32),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: boxInput,
-      ),
-      Container(height: Dimen.x18),
       Center(
         child: Text(
-          '05:00',
+          _printDuration(Duration(seconds: confirmationTimePassed)),
           style: CircularStdFont.book
-              .getStyle(size: Dimen.x12, color: AppColor.colorTextGrey),
+              .getStyle(size: Dimen.x21, color: AppColor.colorTextGrey),
         ),
       ),
       Container(height: Dimen.x24),
       StandardButton(
-        text: 'Simpan',
+        text: 'Batal',
         backgroundColor: AppColor.colorPrimary,
-        buttonClick: () => buttonNextClick(_inputControllers
-            .map((control) => control.value?.text ?? '')
-            .join('')),
+        buttonClick: () => buttonNextClick(null),
       )
     ];
   }
@@ -386,9 +379,6 @@ class _AddFamilyModalState extends State<AddFamilyModal> {
         children = getSearchStep(true);
         break;
       case AddFamilyStep.Confirmation:
-        children = getConfirmationStep();
-        break;
-      case AddFamilyStep.WrongCode:
         children = getConfirmationStep();
         break;
       case AddFamilyStep.Naming:
