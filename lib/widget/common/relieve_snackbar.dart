@@ -14,8 +14,7 @@ abstract class RelieveSnackBar {
     Flushbar flush;
     flush = Flushbar(
       flushbarStyle: FlushbarStyle.FLOATING,
-      aroundPadding:
-          EdgeInsets.symmetric(horizontal: Dimen.x16, vertical: Dimen.x16),
+      padding: EdgeInsets.symmetric(horizontal: Dimen.x16, vertical: Dimen.x16),
       backgroundColor:
           (backgroundColor == null) ? AppColor.colorTextBlack : backgroundColor,
       message: text,

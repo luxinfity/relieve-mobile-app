@@ -31,8 +31,11 @@ class FirebaseAuthHelper implements AuthService {
 
     try {
       FirebaseUser firebaseUser =
-          await _fireBaseAuth.signInWithEmailAndPassword(
-              email: completeProfile.profile.email, password: password);
+          (await _fireBaseAuth.signInWithEmailAndPassword(
+        email: completeProfile.profile.email,
+        password: password,
+      ))
+              .user;
 
       final addresses =
           await FirestoreHelper.get().getAddress(firebaseUser.uid);
@@ -59,7 +62,7 @@ class FirebaseAuthHelper implements AuthService {
       );
 
       final FirebaseUser user =
-          await _fireBaseAuth.signInWithCredential(credential);
+          (await _fireBaseAuth.signInWithCredential(credential)).user;
 
       return user != null;
     } catch (error) {
@@ -144,8 +147,11 @@ class FirebaseAuthHelper implements AuthService {
             'some user data is empty, recheck before calling register');
 
       FirebaseUser firebaseUser =
-          await _fireBaseAuth.createUserWithEmailAndPassword(
-              email: profile.email, password: profile.password);
+          (await _fireBaseAuth.createUserWithEmailAndPassword(
+        email: profile.email,
+        password: profile.password,
+      ))
+              .user;
 
       uid = firebaseUser.uid;
     }

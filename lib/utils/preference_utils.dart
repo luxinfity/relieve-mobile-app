@@ -60,7 +60,7 @@ class PreferenceUtils {
   Future<String> getIdToken() async {
     if (await isLogin() || await isGoogleLogin()) {
       final user = await FirebaseAuth.instance.currentUser();
-      return user.getIdToken();
+      return (await user.getIdToken()).token;
     } else {
       return null;
     }
